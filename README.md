@@ -1,4 +1,4 @@
-# 💻 [FAgram Desktop][fagram_desktop] – Unofficial Telegram client based on [FAgram Deskop][telegram_desktop]
+# 💻 [FAgram Desktop][fagram_desktop] – Unofficial Telegram client based on [Telegram Desktop][telegram_desktop]
 
 This is the complete source code of FAgram Desktop.
 
