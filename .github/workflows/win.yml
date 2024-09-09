@@ -37,6 +37,7 @@ on:
       - 'Telegram/Telegram/**'
       - 'Telegram/configure.sh'
       - 'Telegram/Telegram.plist'
+  workflow_dispatch:
 
 jobs:
 
