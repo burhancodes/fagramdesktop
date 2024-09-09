@@ -30,13 +30,11 @@ namespace {
 rpl::producer<TextWithEntities> Text1() {
 	return tr::lng_about_text1(
 		lt_tdesktoplink,
-		rpl::single(Ui::Text::Link(
-			"Telegram Desktop",
-			"https://github.com/telegramdesktop/tdesktop")),
+		tr::lng_about_text1_tdesktoplink(
+		) | Ui::Text::ToLink("https://github.com/telegramdesktop/tdesktop"),
 		lt_fagram,
-		rpl::single(Ui::Text::Link(
-			"FAgram",
-			"https://github.com/fajox1/fagramdesktop")),
+		tr::lng_about_text1_fagram(
+		) | Ui::Text::ToLink("https://github.com/fajox1/fagramdesktop"),
 		Ui::Text::WithEntities);
 }
 
@@ -56,21 +54,15 @@ rpl::producer<TextWithEntities> Text2() {
 rpl::producer<TextWithEntities> Text3() {
 	return tr::lng_about_text3(
 		lt_fagramnews,
-		rpl::single(Ui::Text::Link(
-			"@FagramNews",
-			"https://t.me/FAgramNews")),
+		tr::lng_about_text3_fagramnews() | Ui::Text::ToLink("https://t.me/FAgramNews"),
 		lt_fagramgroup,
-		rpl::single(Ui::Text::Link(
-			"@Fagram_Group",
-			"https://t.me/FAgram_Group")),
+		tr::lng_about_text3_fagramgroup() | Ui::Text::ToLink("https://t.me/FAgram_Group"),
 		lt_developer,
-		rpl::single(Ui::Text::Link(
-			"@vecax",
-			"https://t.me/vecax")),
+		tr::lng_about_text3_developer() | Ui::Text::ToLink("https://t.me/vecax"),
 		Ui::Text::WithEntities);
 }
 
-} // namespace
+ // namespace
 
 AboutBox::AboutBox(QWidget *parent)
 : _version(this, tr::lng_about_version(tr::now, lt_version, currentVersionText()), st::aboutVersionLink)

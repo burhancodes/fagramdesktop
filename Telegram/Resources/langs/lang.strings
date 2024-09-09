@@ -3724,10 +3724,13 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 "lng_about_version" = "version {version}";
 "lng_about_text1" = "{fagram} is unofficial Telegram client that based on {tdesktoplink}\nfor speed and security.";
-"lng_about_text1_api" = "Telegram API";
+"lng_about_text1_tdesktoplink" = "Telegram Desktop";
+"lng_about_text1_fagram" = "FAgram";
 "lng_about_text2" = "This software is licensed under {gpl_link} version 3.\nSource code is available on {github_link}.";
 "lng_about_text3" = "News: {fagramnews}\nGroup: {fagramgroup}\n\nDev: {developer}";
-"lng_about_text3_faq" = "Telegram FAQ";
+"lng_about_text3_fagramnews" = "@FAgramNews";
+"lng_about_text3_fagramgroup" = "@FAgram_Group";
+"lng_about_text3_developer" = "@vecax";
 "lng_about_done" = "Done";
 
 "lng_search_no_results" = "No messages found";
