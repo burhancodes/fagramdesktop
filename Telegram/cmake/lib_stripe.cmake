@@ -1,10 +1,8 @@
-/*
-This file is part of FAgram Desktop,
-the unofficial Telegram client based on Telegram Desktop.
+# This file is part of FAgram Desktop,
+# the unofficial Telegram client based on tgd.
 
-For license and copyright information please follow this link:
-https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
-*/
+# For license and copyright information please follow this link:
+# https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 add_library(lib_stripe OBJECT)
 add_library(desktop-app::lib_stripe ALIAS lib_stripe)

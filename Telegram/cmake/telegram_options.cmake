@@ -1,10 +1,8 @@
-/*
-This file is part of FAgram Desktop,
-the unofficial Telegram client based on Telegram Desktop.
+# This file is part of FAgram Desktop,
+# the unofficial Telegram client based on tgd.
 
-For license and copyright information please follow this link:
-https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
-*/
+# For license and copyright information please follow this link:
+# https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 option(TDESKTOP_API_TEST "Use test API credentials." OFF)
 set(TDESKTOP_API_ID "0" CACHE STRING "Provide 'api_id' for the Telegram API access.")
