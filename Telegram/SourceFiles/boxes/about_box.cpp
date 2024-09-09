@@ -1,9 +1,9 @@
 /*
-This file is part of FAgram Desktop,
+This file is part of Telegram Desktop,
 the official desktop application for the Telegram messaging service.
 
 For license and copyright information please follow this link:
-https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
+https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 */
 #include "boxes/about_box.h"
 
@@ -27,27 +27,21 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 namespace {
 
-constexpr auto kTDesktopLinkTag = lngtag_tdesktoplink; // Если lngtag_tdesktoplink — это тип, нужно использовать его экземпляр
-constexpr auto kFAgramTag = lngtag_fagram; // Аналогично для других тегов
-
 rpl::producer<TextWithEntities> Text1() {
 	return tr::lng_about_text1(
-		kTDesktopLinkTag,  // Исправлено использование типа на константу
-		tr::lng_about_text1_tdesktoplink() | Ui::Text::ToLink("https://github.com/telegramdesktop/tdesktop"),
-		kFAgramTag,  // Исправлено использование типа на константу
-		tr::lng_about_text1_fagram() | Ui::Text::ToLink("https://github.com/fajox1/fagramdesktop"),
+		lt_api_link,
+		tr::lng_about_text1_api(
+		) | Ui::Text::ToLink("https://core.telegram.org/api"),
 		Ui::Text::WithEntities);
 }
 
 rpl::producer<TextWithEntities> Text2() {
-	constexpr auto kGPLLinkTag = lngtag_gpl_link;  // Замена типа на константу
-	constexpr auto kGitHubLinkTag = lngtag_github_link;  // Замена типа на константу
 	return tr::lng_about_text2(
-		kGPLLinkTag,  
+		lt_gpl_link,
 		rpl::single(Ui::Text::Link(
 			"GNU GPL",
 			"https://github.com/fajox1/fagramdesktop/blob/master/LICENSE")),
-		kGitHubLinkTag,  
+		lt_github_link,
 		rpl::single(Ui::Text::Link(
 			"GitHub",
 			"https://github.com/fajox1/fagramdesktop")),
@@ -55,31 +49,23 @@ rpl::producer<TextWithEntities> Text2() {
 }
 
 rpl::producer<TextWithEntities> Text3() {
-	constexpr auto kFagramNewsTag = lngtag_fagramnews;  // Замена типа на константу
-	constexpr auto kFagramGroupTag = lngtag_fagramgroup;  // Замена типа на константу
-	constexpr auto kDeveloperTag = lngtag_developer;  // Замена типа на константу
 	return tr::lng_about_text3(
-		kFagramNewsTag,
-		tr::lng_about_text3_fagramnews() | Ui::Text::ToLink("https://t.me/FAgramNews"),
-		kFagramGroupTag,
-		tr::lng_about_text3_fagramgroup() | Ui::Text::ToLink("https://t.me/FAgram_Group"),
-		kDeveloperTag,
-		tr::lng_about_text3_developer() | Ui::Text::ToLink("https://t.me/vecax"),
+		lt_faq_link,
+		tr::lng_about_text3_faq() | Ui::Text::ToLink(telegramFaqLink()),
 		Ui::Text::WithEntities);
 }
-}
 
-// namespace
+} // namespace
 
 AboutBox::AboutBox(QWidget *parent)
-: _version(this, tr::lng_about_version(tr::now, lngtag_version, currentVersionText()), st::aboutVersionLink)
+: _version(this, tr::lng_about_version(tr::now, lt_version, currentVersionText()), st::aboutVersionLink)
 , _text1(this, Text1(), st::aboutLabel)
 , _text2(this, Text2(), st::aboutLabel)
 , _text3(this, Text3(), st::aboutLabel) {
 }
 
 void AboutBox::prepare() {
-	setTitle(rpl::single(u"FAgram Desktop"_q));
+	setTitle(rpl::single(u"Telegram Desktop"_q));
 
 	addButton(tr::lng_close(), [this] { closeBox(); });
 
@@ -130,7 +116,7 @@ void AboutBox::showVersionHistory() {
 		getDelegate()->show(
 			Ui::MakeInformBox(
 				"The link to the current private alpha "
-				"version of FAgram Desktop was copied to the clipboard."),
+				"version of Telegram Desktop was copied to the clipboard."),
 			Ui::LayerOption::CloseOther);
 	} else {
 		File::OpenUrl(Core::App().changelogLink());
