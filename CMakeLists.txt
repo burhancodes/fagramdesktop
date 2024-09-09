@@ -1,10 +1,10 @@
-/*
+'''
 This file is part of FAgram Desktop,
 the unofficial Telegram client based on Telegram Desktop.
 
 For license and copyright information please follow this link:
 https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
-*/
+'''
 
 if (APPLE)
     # target_precompile_headers with COMPILE_LANGUAGE restriction.
