@@ -27,24 +27,27 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 namespace {
 
+constexpr auto kTDesktopLinkTag = lngtag_tdesktoplink; // Если lngtag_tdesktoplink — это тип, нужно использовать его экземпляр
+constexpr auto kFAgramTag = lngtag_fagram; // Аналогично для других тегов
+
 rpl::producer<TextWithEntities> Text1() {
 	return tr::lng_about_text1(
-		lngtag_tdesktoplink,
-		tr::lng_about_text1_tdesktoplink(
-		) | Ui::Text::ToLink("https://github.com/telegramdesktop/tdesktop"),
-		lngtag_fagram,
-		tr::lng_about_text1_fagram(
-		) | Ui::Text::ToLink("https://github.com/fajox1/fagramdesktop"),
+		kTDesktopLinkTag,  // Исправлено использование типа на константу
+		tr::lng_about_text1_tdesktoplink() | Ui::Text::ToLink("https://github.com/telegramdesktop/tdesktop"),
+		kFAgramTag,  // Исправлено использование типа на константу
+		tr::lng_about_text1_fagram() | Ui::Text::ToLink("https://github.com/fajox1/fagramdesktop"),
 		Ui::Text::WithEntities);
 }
 
 rpl::producer<TextWithEntities> Text2() {
+	constexpr auto kGPLLinkTag = lngtag_gpl_link;  // Замена типа на константу
+	constexpr auto kGitHubLinkTag = lngtag_github_link;  // Замена типа на константу
 	return tr::lng_about_text2(
-		lngtag_gpl_link, 
+		kGPLLinkTag,  
 		rpl::single(Ui::Text::Link(
 			"GNU GPL",
 			"https://github.com/fajox1/fagramdesktop/blob/master/LICENSE")),
-		lngtag_github_link, 
+		kGitHubLinkTag,  
 		rpl::single(Ui::Text::Link(
 			"GitHub",
 			"https://github.com/fajox1/fagramdesktop")),
@@ -52,19 +55,21 @@ rpl::producer<TextWithEntities> Text2() {
 }
 
 rpl::producer<TextWithEntities> Text3() {
+	constexpr auto kFagramNewsTag = lngtag_fagramnews;  // Замена типа на константу
+	constexpr auto kFagramGroupTag = lngtag_fagramgroup;  // Замена типа на константу
+	constexpr auto kDeveloperTag = lngtag_developer;  // Замена типа на константу
 	return tr::lng_about_text3(
-		lngtag_fagramnews, 
+		kFagramNewsTag,
 		tr::lng_about_text3_fagramnews() | Ui::Text::ToLink("https://t.me/FAgramNews"),
-		lngtag_fagramgroup,  
+		kFagramGroupTag,
 		tr::lng_about_text3_fagramgroup() | Ui::Text::ToLink("https://t.me/FAgram_Group"),
-		lngtag_developer, 
+		kDeveloperTag,
 		tr::lng_about_text3_developer() | Ui::Text::ToLink("https://t.me/vecax"),
 		Ui::Text::WithEntities);
 }
-
 }
 
- // namespace
+// namespace
 
 AboutBox::AboutBox(QWidget *parent)
 : _version(this, tr::lng_about_version(tr::now, lngtag_version, currentVersionText()), st::aboutVersionLink)
