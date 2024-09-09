@@ -1,9 +1,9 @@
 /*
-This file is part of Telegram Desktop,
+This file is part of FAgram Desktop,
 the official desktop application for the Telegram messaging service.
 
 For license and copyright information please follow this link:
-https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "export/output/export_output_html.h"
 
@@ -1050,7 +1050,7 @@ auto HtmlWriter::Wrap::pushMessage(
 			dialog,
 			basePath,
 			"This message is not supported by this version "
-			"of Telegram Desktop. Please update the application.") };
+			"of FAgram Desktop. Please update the application.") };
 	}
 
 	const auto wrapReplyToLink = [&](const QByteArray &text) {

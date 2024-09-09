@@ -1,6 +1,6 @@
 ## Obtaining your API credentials
 
-To build your version of Telegram Desktop you're required to provide your own **api_id** and **api_hash** for the Telegram API access.
+To build your version of FAgram Desktop you're required to provide your own **api_id** and **api_hash** for the Telegram API access.
 
 How to obtain your **api_id** and **api_hash** is described here: [https://core.telegram.org/api/obtaining_api_id](https://core.telegram.org/api/obtaining_api_id)
 

@@ -63,7 +63,7 @@ jobs:
       - name: Free up some disk space.
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
 
-      - name: Telegram Desktop snap build.
+      - name: FAgram Desktop snap build.
         run: sg lxd -c 'snap run snapcraft --verbosity=debug'
 
       - name: Move artifact.

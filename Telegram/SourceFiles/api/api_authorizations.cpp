@@ -1,9 +1,9 @@
 /*
-This file is part of Telegram Desktop,
+This file is part of FAgram Desktop,
 the official desktop application for the Telegram messaging service.
 
 For license and copyright information please follow this link:
-https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "api/api_authorizations.h"
 
@@ -35,7 +35,7 @@ Authorizations::Entry ParseEntry(const MTPDauthorization &data) {
 		|| isTest;
 
 	const auto appName = isDesktop
-		? u"Telegram Desktop%1"_q.arg(isTest ? " (GitHub)" : QString())
+		? u"FAgram Desktop%1"_q.arg(isTest ? " (GitHub)" : QString())
 		: qs(data.vapp_name());// + u" for "_q + qs(d.vplatform());
 	const auto appVer = [&] {
 		const auto version = qs(data.vapp_version());

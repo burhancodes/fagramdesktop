@@ -1,9 +1,9 @@
 /*
-This file is part of Telegram Desktop,
+This file is part of FAgram Desktop,
 the official desktop application for the Telegram messaging service.
 
 For license and copyright information please follow this link:
-https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "platform/win/windows_app_user_model_id.h"
 
@@ -345,7 +345,7 @@ bool checkInstalled(QString path = {}) {
 		}
 	}
 
-	const auto installed = u"Telegram Desktop/Telegram.lnk"_q;
+	const auto installed = u"FAgram Desktop/Telegram.lnk"_q;
 	const auto old = u"Telegram Win (Unofficial)/Telegram.lnk"_q;
 	return validateShortcutAt(path + installed)
 		|| validateShortcutAt(path + old);

@@ -1,6 +1,6 @@
 # Contributing
 
-This document describes how you can contribute to Telegram Desktop. Please read it carefully.
+This document describes how you can contribute to FAgram Desktop. Please read it carefully.
 
 **Table of Contents**
 
@@ -17,7 +17,7 @@ This document describes how you can contribute to Telegram Desktop. Please read 
 
 ## What contributions are accepted
 
-We highly appreciate your contributions in the matter of fixing bugs and optimizing the Telegram Desktop source code and its documentation. In case of fixing the existing user experience please push to your fork and [submit a pull request][pr].
+We highly appreciate your contributions in the matter of fixing bugs and optimizing the FAgram Desktop source code and its documentation. In case of fixing the existing user experience please push to your fork and [submit a pull request][pr].
 
 Wait for us. We try to review your pull requests as fast as possible.
 If we find issues with your pull request, we may suggest some changes and improvements.
@@ -26,7 +26,7 @@ Unfortunately we **do not merge** any pull requests that have new feature implem
 
 If you have a translations-related contribution, check out [Translations platform][translate].
 
-Telegram Desktop is not a standalone application but a part of [Telegram project][telegram], so all the decisions about the features, languages, user experience, user interface and the design are made inside Telegram team, often according to some roadmap which is not public.
+FAgram Desktop is not a standalone application but a part of [Telegram project][telegram], so all the decisions about the features, languages, user experience, user interface and the design are made inside Telegram team, often according to some roadmap which is not public.
 
 ## Build instructions
 
@@ -35,7 +35,7 @@ environments.
 
 ## Pull upstream changes into your fork regularly
 
-Telegram Desktop is advancing quickly. It is therefore critical that you pull upstream changes into your fork on a regular basis. Nothing is worse than putting in a days of hard work into a pull request only to have it rejected because it has diverged too far from upstream.
+FAgram Desktop is advancing quickly. It is therefore critical that you pull upstream changes into your fork on a regular basis. Nothing is worse than putting in a days of hard work into a pull request only to have it rejected because it has diverged too far from upstream.
 
 To pull in upstream changes:
 
@@ -58,7 +58,7 @@ For more info, see [GitHub Help][help_fork_repo].
 
 ## How to get your pull request accepted
 
-We want to improve Telegram Desktop with your contributions. But we also want to provide a stable experience for our users and the community. Follow these rules and you should succeed without a problem!
+We want to improve FAgram Desktop with your contributions. But we also want to provide a stable experience for our users and the community. Follow these rules and you should succeed without a problem!
 
 ### Keep your pull requests limited to a single issue
 
@@ -97,7 +97,7 @@ Furthermore, the pixel shortage is over. We want to see:
 
 ### Test your changes!
 
-Before you submit a pull request, please test your changes. Verify that Telegram Desktop still works and your changes don't cause other issue or crashes.
+Before you submit a pull request, please test your changes. Verify that FAgram Desktop still works and your changes don't cause other issue or crashes.
 
 ### Write a good commit message
 

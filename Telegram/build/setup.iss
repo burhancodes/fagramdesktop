@@ -1,5 +1,5 @@
 #define MyAppShortName "Telegram"
-#define MyAppName "Telegram Desktop"
+#define MyAppName "FAgram Desktop"
 #define MyAppPublisher "Telegram FZ-LLC"
 #define MyAppURL "https://desktop.telegram.org"
 #define MyAppExeName "Telegram.exe"
@@ -22,7 +22,7 @@ DefaultDirName={userappdata}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputDir={#ReleasePath}
-SetupIconFile={#SourcePath}..\Resources\art\icon256.ico
+SetupIconFile={#SourcePath}..\Resources\art\icon.ico
 UninstallDisplayName={#MyAppName}
 UninstallDisplayIcon={app}\Telegram.exe
 Compression=lzma

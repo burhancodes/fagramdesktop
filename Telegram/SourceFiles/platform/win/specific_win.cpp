@@ -1,9 +1,9 @@
 /*
-This file is part of Telegram Desktop,
+This file is part of FAgram Desktop,
 the official desktop application for the Telegram messaging service.
 
 For license and copyright information please follow this link:
-https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "platform/win/specific_win.h"
 
@@ -239,7 +239,7 @@ QString psAppDataPath() {
 	if (GetEnvironmentVariable(L"APPDATA", wstrPath, maxFileLen)) {
 		QDir appData(QString::fromStdWString(std::wstring(wstrPath)));
 #ifdef OS_WIN_STORE
-		return appData.absolutePath() + u"/Telegram Desktop UWP/"_q;
+		return appData.absolutePath() + u"/FAgram Desktop UWP/"_q;
 #else // OS_WIN_STORE
 		return appData.absolutePath() + '/' + AppName.utf16() + '/';
 #endif // OS_WIN_STORE

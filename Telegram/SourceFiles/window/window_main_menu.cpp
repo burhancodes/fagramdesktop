@@ -1,9 +1,9 @@
 /*
-This file is part of Telegram Desktop,
+This file is part of FAgram Desktop,
 the official desktop application for the Telegram messaging service.
 
 For license and copyright information please follow this link:
-https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "window/window_main_menu.h"
 
@@ -450,7 +450,7 @@ MainMenu::MainMenu(
 	parentResized();
 
 	_telegram->setMarkedText(Ui::Text::Link(
-		u"Telegram Desktop"_q,
+		u"FAgram Desktop"_q,
 		u"https://desktop.telegram.org"_q));
 	_telegram->setLinksTrusted();
 	_version->setMarkedText(

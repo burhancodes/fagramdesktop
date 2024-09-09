@@ -1,9 +1,9 @@
 /*
-This file is part of Telegram Desktop,
+This file is part of FAgram Desktop,
 the official desktop application for the Telegram messaging service.
 
 For license and copyright information please follow this link:
-https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "boxes/about_box.h"
 
@@ -29,9 +29,14 @@ namespace {
 
 rpl::producer<TextWithEntities> Text1() {
 	return tr::lng_about_text1(
-		lt_api_link,
-		tr::lng_about_text1_api(
-		) | Ui::Text::ToLink("https://core.telegram.org/api"),
+		lt_tdesktoplink,
+		rpl::single(Ui::Text::Link(
+			"Telegram Desktop",
+			"https://github.com/telegramdesktop/tdesktop")),
+		lt_fagram,
+		rpl::single(Ui::Text::Link(
+			"FAgram",
+			"https://github.com/fajox1/fagramdesktop")),
 		Ui::Text::WithEntities);
 }
 
@@ -40,18 +45,28 @@ rpl::producer<TextWithEntities> Text2() {
 		lt_gpl_link,
 		rpl::single(Ui::Text::Link(
 			"GNU GPL",
-			"https://github.com/telegramdesktop/tdesktop/blob/master/LICENSE")),
+			"https://github.com/fajox1/fagramdesktop/blob/master/LICENSE")),
 		lt_github_link,
 		rpl::single(Ui::Text::Link(
 			"GitHub",
-			"https://github.com/telegramdesktop/tdesktop")),
+			"https://github.com/fajox1/fagramdesktop")),
 		Ui::Text::WithEntities);
 }
 
 rpl::producer<TextWithEntities> Text3() {
 	return tr::lng_about_text3(
-		lt_faq_link,
-		tr::lng_about_text3_faq() | Ui::Text::ToLink(telegramFaqLink()),
+		lt_fagramnews,
+		rpl::single(Ui::Text::Link(
+			"@FagramNews",
+			"https://t.me/FAgramNews")),
+		lt_fagramgroup,
+		rpl::single(Ui::Text::Link(
+			"@Fagram_Group",
+			"https://t.me/FAgram_Group")),
+		lt_developer,
+		rpl::single(Ui::Text::Link(
+			"@vecax",
+			"https://t.me/vecax")),
 		Ui::Text::WithEntities);
 }
 
@@ -65,7 +80,7 @@ AboutBox::AboutBox(QWidget *parent)
 }
 
 void AboutBox::prepare() {
-	setTitle(rpl::single(u"Telegram Desktop"_q));
+	setTitle(rpl::single(u"FAgram Desktop"_q));
 
 	addButton(tr::lng_close(), [this] { closeBox(); });
 
@@ -116,7 +131,7 @@ void AboutBox::showVersionHistory() {
 		getDelegate()->show(
 			Ui::MakeInformBox(
 				"The link to the current private alpha "
-				"version of Telegram Desktop was copied to the clipboard."),
+				"version of FAgram Desktop was copied to the clipboard."),
 			Ui::LayerOption::CloseOther);
 	} else {
 		File::OpenUrl(Core::App().changelogLink());

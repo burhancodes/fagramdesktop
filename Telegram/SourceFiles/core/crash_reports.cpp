@@ -1,9 +1,9 @@
 /*
-This file is part of Telegram Desktop,
+This file is part of FAgram Desktop,
 the official desktop application for the Telegram messaging service.
 
 For license and copyright information please follow this link:
-https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "core/crash_reports.h"
 
@@ -418,7 +418,7 @@ StartResult Start() {
 		fclose(f);
 
 		LOG(("Opened '%1' for reading, the previous "
-			"Telegram Desktop launch was not finished properly :( "
+			"FAgram Desktop launch was not finished properly :( "
 			"Crash log size: %2").arg(ReportPath).arg(lastdump.size()));
 
 		return lastdump;

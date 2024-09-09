@@ -99,7 +99,7 @@ jobs:
           cd Libraries
           find . -iname "*.dir" -exec rm -rf {} || true \;
 
-      - name: Telegram Desktop build.
+      - name: FAgram Desktop build.
         if: env.ONLY_CACHE == 'false'
         run: |
           cd $REPO_NAME/Telegram

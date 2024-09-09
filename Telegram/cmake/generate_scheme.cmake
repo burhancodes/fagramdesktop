@@ -1,8 +1,10 @@
-# This file is part of Telegram Desktop,
-# the official desktop application for the Telegram messaging service.
-#
-# For license and copyright information please follow this link:
-# https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+/*
+This file is part of FAgram Desktop,
+the unofficial Telegram client based on Telegram Desktop.
+
+For license and copyright information please follow this link:
+https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
+*/
 
 function(generate_scheme target_name script scheme_files)
     find_package(Python3 REQUIRED)

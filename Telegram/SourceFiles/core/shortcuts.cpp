@@ -1,9 +1,9 @@
 /*
-This file is part of Telegram Desktop,
+This file is part of FAgram Desktop,
 the official desktop application for the Telegram messaging service.
 
 For license and copyright information please follow this link:
-https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "core/shortcuts.h"
 
@@ -443,7 +443,7 @@ void Manager::writeDefaultFile() {
 		return;
 	}
 	const char *defaultHeader = R"HEADER(
-// This is a list of default shortcuts for Telegram Desktop
+// This is a list of default shortcuts for FAgram Desktop
 // Please don't modify it, its content is not used in any way
 // You can place your own shortcuts in the 'shortcuts-custom.json' file
 

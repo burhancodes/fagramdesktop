@@ -1,8 +1,10 @@
-# This file is part of Telegram Desktop,
-# the official desktop application for the Telegram messaging service.
-#
-# For license and copyright information please follow this link:
-# https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+/*
+This file is part of FAgram Desktop,
+the unofficial Telegram client based on Telegram Desktop.
+
+For license and copyright information please follow this link:
+https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
+*/
 
 option(TDESKTOP_API_TEST "Use test API credentials." OFF)
 set(TDESKTOP_API_ID "0" CACHE STRING "Provide 'api_id' for the Telegram API access.")
@@ -18,7 +20,7 @@ if (TDESKTOP_API_ID STREQUAL "0" OR TDESKTOP_API_HASH STREQUAL "")
     " \n"
     " PROVIDE: -D TDESKTOP_API_ID=[API_ID] -D TDESKTOP_API_HASH=[API_HASH]\n"
     " \n"
-    " > To build your version of Telegram Desktop you're required to provide\n"
+    " > To build your version of FAgram Desktop you're required to provide\n"
     " > your own 'api_id' and 'api_hash' for the Telegram API access.\n"
     " >\n"
     " > How to obtain your 'api_id' and 'api_hash' is described here:\n"

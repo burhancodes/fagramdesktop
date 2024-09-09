@@ -114,7 +114,7 @@ jobs:
           cmake -B build . -GNinja -DCMAKE_BUILD_TYPE=Debug
           cmake --build build --parallel
 
-      - name: Telegram Desktop build.
+      - name: FAgram Desktop build.
         if: env.ONLY_CACHE == 'false'
         env:
           tg_owt_DIR: ${{ env.LibrariesPath }}/tg_owt/build

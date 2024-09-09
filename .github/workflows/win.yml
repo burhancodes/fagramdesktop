@@ -161,7 +161,7 @@ jobs:
           del /S Libraries\*.pch
           del /S Libraries\*.obj
 
-      - name: Telegram Desktop build.
+      - name: FAgram Desktop build.
         if: env.ONLY_CACHE == 'false'
         run: |
           cd %TBUILD%\%REPO_NAME%\Telegram

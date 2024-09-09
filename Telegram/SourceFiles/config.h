@@ -1,9 +1,9 @@
 /*
-This file is part of Telegram Desktop,
+This file is part of FAgram Desktop,
 the official desktop application for the Telegram messaging service.
 
 For license and copyright information please follow this link:
-https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #pragma once
 
@@ -70,7 +70,7 @@ constexpr auto ApiHash = QT_STRINGIFY(TDESKTOP_API_HASH);
 
 #else // TDESKTOP_API_ID && TDESKTOP_API_HASH
 
-// To build your version of Telegram Desktop you're required to provide
+// To build your version of FAgram Desktop you're required to provide
 // your own 'api_id' and 'api_hash' for the Telegram API access.
 //
 // How to obtain your 'api_id' and 'api_hash' is described here:

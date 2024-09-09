@@ -1,9 +1,9 @@
 /*
-This file is part of Telegram Desktop,
+This file is part of FAgram Desktop,
 the official desktop application for the Telegram messaging service.
 
 For license and copyright information please follow this link:
-https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "export/output/export_output_abstract.h"
 
@@ -167,7 +167,7 @@ Stats AbstractWriter::produceTestExample(
 
 	auto sessions = Data::SessionsList();
 	auto session = Data::Session();
-	session.applicationName = "Telegram Desktop";
+	session.applicationName = "FAgram Desktop";
 	session.applicationVersion = "1.3.8";
 	session.country = "GB";
 	session.created = date();

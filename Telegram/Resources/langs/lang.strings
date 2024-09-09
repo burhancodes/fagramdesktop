@@ -1,9 +1,9 @@
 /*
-This file is part of Telegram Desktop,
+This file is part of FAgram Desktop,
 the official desktop application for the Telegram messaging service.
 
 For license and copyright information please follow this link:
-https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 "lng_language_name" = "English";
 "lng_switch_to_this" = "Continue in English";
@@ -283,7 +283,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 "lng_flood_error" = "Too many tries. Please try again later.";
 "lng_edit_error" = "You cannot edit this message";
 "lng_error_phone_flood" = "Sorry, you have deleted and re-created your account too many times recently. Please wait for a few days before signing up again.";
-"lng_error_start_minimized_passcoded" = "You have set a local passcode, so Telegram Desktop can't be launched minimised; it will ask you to enter your passcode before it can start working.";
+"lng_error_start_minimized_passcoded" = "You have set a local passcode, so FAgram Desktop can't be launched minimised; it will ask you to enter your passcode before it can start working.";
 "lng_error_public_groups_denied" = "Unfortunately, you were banned from participating in public groups.\n{more_info}";
 "lng_error_cant_add_member" = "Sorry, you can't add the bot to this group. Ask a group admin to do it.";
 "lng_error_cant_add_bot" = "Sorry, this bot can't be added to groups.";
@@ -312,7 +312,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 "lng_proxy_box_username" = "Username";
 "lng_proxy_box_password" = "Password";
 "lng_proxy_invalid" = "The proxy link is invalid.";
-"lng_proxy_unsupported" = "Your Telegram Desktop version doesn't support this proxy type or the proxy link is invalid. Please update Telegram Desktop to the latest version.";
+"lng_proxy_unsupported" = "Your FAgram Desktop version doesn't support this proxy type or the proxy link is invalid. Please update FAgram Desktop to the latest version.";
 
 "lng_edit_deleted" = "This message was deleted";
 "lng_edit_limit_reached#one" = "You've reached the message text limit. Please make the text shorter by {count} character.";
@@ -347,7 +347,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 "lng_edit_caption_attach" = "Sorry, you can't attach a new media while you're editing your message.";
 "lng_edit_caption_voice" = "Sorry, you can't edit your message while you're having an unsent voice message.";
 
-"lng_intro_about" = "Welcome to the official Telegram Desktop app.\nIt's fast and secure.";
+"lng_intro_about" = "Welcome to the official FAgram Desktop app.\nIt's fast and secure.";
 "lng_start_msgs" = "Start messaging";
 
 "lng_intro_next" = "Next";
@@ -602,7 +602,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 "lng_settings_qt_frame" = "Use Qt window frame";
 "lng_settings_auto_start" = "Launch Telegram when system starts";
 "lng_settings_start_min" = "Launch minimized";
-"lng_settings_auto_start_disabled_uwp" = "Starting with the system was disabled in Windows Settings.\n\nPlease enable Telegram Desktop in the Startup Apps Settings.";
+"lng_settings_auto_start_disabled_uwp" = "Starting with the system was disabled in Windows Settings.\n\nPlease enable FAgram Desktop in the Startup Apps Settings.";
 "lng_settings_open_system_settings" = "Open Settings";
 "lng_settings_add_sendto" = "Place Telegram in \"Send to\" menu";
 "lng_settings_mac_warn_before_quit" = "Show warning before quitting with {text}";
@@ -913,7 +913,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 "lng_theme_reverting#other" = "Reverting to the old theme in {count} seconds.";
 "lng_theme_keep_changes" = "Keep changes";
 "lng_theme_revert" = "Revert";
-"lng_theme_no_desktop" = "Sorry, this theme doesn't include a version for Telegram Desktop.";
+"lng_theme_no_desktop" = "Sorry, this theme doesn't include a version for FAgram Desktop.";
 "lng_theme_share" = "Share";
 "lng_theme_edit" = "Edit";
 "lng_theme_delete" = "Delete";
@@ -989,10 +989,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 "lng_passcode_enter_first" = "Enter a passcode";
 "lng_passcode_enter_new" = "Enter new passcode";
 "lng_passcode_confirm_new" = "Re-enter new passcode";
-"lng_passcode_about" = "When a local passcode is set, a lock icon appears at the top of your chats list. Click it to lock the app.\n\nNote: if you forget your local passcode, you'll need to relogin in Telegram Desktop.";
+"lng_passcode_about" = "When a local passcode is set, a lock icon appears at the top of your chats list. Click it to lock the app.\n\nNote: if you forget your local passcode, you'll need to relogin in FAgram Desktop.";
 "lng_passcode_about1" = "When a local passcode is set, a lock icon appears at the top of your chats list.";
-"lng_passcode_about2" = "Click it to lock Telegram Desktop.";
-"lng_passcode_about3" = "Note: if you forget your passcode, you'll need to log out of Telegram Desktop and log in again.";
+"lng_passcode_about2" = "Click it to lock FAgram Desktop.";
+"lng_passcode_about3" = "Note: if you forget your passcode, you'll need to log out of FAgram Desktop and log in again.";
 "lng_passcode_differ" = "Passcodes are different";
 "lng_passcode_wrong" = "Wrong passcode";
 "lng_passcode_is_same" = "Passcode was not changed";
@@ -1749,7 +1749,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 "lng_sure_delete_selected_days#other" = "{count} selected days";
 
 "lng_message_empty" = "Empty Message";
-"lng_message_unsupported" = "This message is not supported by your version of Telegram Desktop. Please update to the latest version in Settings, or install it from {link}";
+"lng_message_unsupported" = "This message is not supported by your version of FAgram Desktop. Please update to the latest version in Settings, or install it from {link}";
 "lng_message_not_found" = "Message doesn't exist.";
 
 "lng_duration_minsec_minutes#one" = "{count} min";
@@ -2105,7 +2105,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 "lng_cancel_edit_post_yes" = "Yes";
 "lng_cancel_edit_post_no" = "No";
 
-"lng_bot_share_location_unavailable" = "Sorry, location sharing is currently unavailable in Telegram Desktop.";
+"lng_bot_share_location_unavailable" = "Sorry, location sharing is currently unavailable in FAgram Desktop.";
 "lng_bot_share_phone" = "Do you want to share your phone number with this bot?";
 "lng_bot_share_phone_confirm" = "Share";
 "lng_bot_allow_write_title" = "Allow messaging";
@@ -3723,10 +3723,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 "lng_upload_show_file" = "Show file";
 
 "lng_about_version" = "version {version}";
-"lng_about_text1" = "Official free messaging app based on {api_link}\nfor speed and security.";
+"lng_about_text1" = "{fagram} is unofficial Telegram client that based on {tdesktoplink}\nfor speed and security.";
 "lng_about_text1_api" = "Telegram API";
 "lng_about_text2" = "This software is licensed under {gpl_link} version 3.\nSource code is available on {github_link}.";
-"lng_about_text3" = "Visit {faq_link} for more info.";
+"lng_about_text3" = "News: {fagramnews}\nGroup: {fagramgroup}\n\nDev: {developer}";
 "lng_about_text3_faq" = "Telegram FAQ";
 "lng_about_done" = "Done";
 
@@ -3793,7 +3793,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 "lng_theme_preview_users#one" = "{count} person is using this theme";
 "lng_theme_preview_users#other" = "{count} people are using this theme";
 
-"lng_new_version_wrap" = "Telegram Desktop was updated to version {version}\n\n{changes}\n\nFull version history is available here:\n{link}";
+"lng_new_version_wrap" = "FAgram Desktop was updated to version {version}\n\n{changes}\n\nFull version history is available here:\n{link}";
 "lng_new_version_minor" = "— Bug fixes and other minor improvements";
 
 "lng_menu_insert_unicode" = "Insert Unicode control character";
@@ -4101,10 +4101,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 "lng_group_call_context_remove" = "Remove";
 "lng_group_call_remove_channel" = "Remove {channel} from the voice chat?";
 "lng_group_call_remove_channel_from_channel" = "Remove {channel} from the live stream?";
-"lng_group_call_mac_access" = "Telegram Desktop does not have access to system wide keyboard input required for Push to Talk.";
+"lng_group_call_mac_access" = "FAgram Desktop does not have access to system wide keyboard input required for Push to Talk.";
 "lng_group_call_mac_input" = "Please allow **Input Monitoring** for Telegram in Privacy Settings.";
 "lng_group_call_mac_accessibility" = "Please allow **Accessibility** for Telegram in Privacy Settings.\n\nApp restart may be required.";
-"lng_group_call_mac_screencast_access" = "Telegram Desktop does not have access to screen recording required for Screen Sharing.";
+"lng_group_call_mac_screencast_access" = "FAgram Desktop does not have access to screen recording required for Screen Sharing.";
 "lng_group_call_mac_recording" = "Please allow **Screen Recording** for Telegram in Privacy Settings.";
 "lng_group_call_mac_settings" = "Open Settings";
 
@@ -4839,7 +4839,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 "lng_language_not_found" = "Sorry, this language pack doesn't exist.";
 "lng_language_already" = "You're already using this language pack. You can change your language back in Settings.";
 "lng_language_not_ready_title" = "Insufficient data";
-"lng_language_not_ready_about" = "Unfortunately, this custom language pack ({lang_name}) doesn't contain data for Telegram Desktop. You can contribute to this language pack using the {link}.";
+"lng_language_not_ready_about" = "Unfortunately, this custom language pack ({lang_name}) doesn't contain data for FAgram Desktop. You can contribute to this language pack using the {link}.";
 "lng_language_not_ready_link" = "translations platform";
 
 "lng_translate_box_error" = "Translate failed.";
@@ -4907,8 +4907,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 
 "lng_outdated_title" = "PLEASE UPDATE YOUR OPERATING SYSTEM.";
 "lng_outdated_title_bits" = "PLEASE SWITCH TO 64 BIT OPERATING SYSTEM.";
-"lng_outdated_soon" = "Otherwise, Telegram Desktop will stop updating on {date}.";
-"lng_outdated_now" = "So that Telegram Desktop can update to newer versions.";
+"lng_outdated_soon" = "Otherwise, FAgram Desktop will stop updating on {date}.";
+"lng_outdated_now" = "So that FAgram Desktop can update to newer versions.";
 
 "lng_filters_all" = "All chats";
 "lng_filters_setup" = "Edit";

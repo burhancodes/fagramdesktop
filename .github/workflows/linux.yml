@@ -69,7 +69,7 @@ jobs:
           docker pull ghcr.io/$GITHUB_REPOSITORY/centos_env
           docker tag ghcr.io/$GITHUB_REPOSITORY/centos_env tdesktop:centos_env
 
-      - name: Telegram Desktop build.
+      - name: FAgram Desktop build.
         run: |
           cd $REPO_NAME
 

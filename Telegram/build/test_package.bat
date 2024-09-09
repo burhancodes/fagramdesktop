@@ -5,7 +5,7 @@ set "FullExecPath=%cd%"
 
 if not exist "%FullScriptPath%..\..\..\DesktopPrivate" (
   echo.
-  echo This script is for building the production version of Telegram Desktop.
+  echo This script is for building the production version of FAgram Desktop.
   echo.
   echo For building custom versions please visit the build instructions page at:
   echo https://github.com/telegramdesktop/tdesktop/#build-instructions
