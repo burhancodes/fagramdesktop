@@ -618,6 +618,11 @@ void Cover::refreshUploadPhotoOverlay() {
 		}, lifetime());
 	}
 
+	const auto badgeLeft = _st.nameLeft + _name->width();
+	const auto badgeTop = _st.nameTop;
+	const auto badgeBottom = _st.nameTop + _name->height();
+	_badge->move(badgeLeft, badgeTop, badgeBottom);
+
 	const auto devBadgeLeft = badgeLeft + (_badge->widget() ? (_badge->widget()->width() + 2) : 0) + 4;
 	const auto devBadgeTop = _st.nameTop;
 	const auto devBadgeBottom = _st.nameTop + _name->height();

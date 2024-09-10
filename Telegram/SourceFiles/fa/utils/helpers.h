@@ -18,6 +18,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include <utility>      // For std::pair
 #include <functional>   // For std::function
 
+using ID = int;
+
 Main::Session *getSession(ID userId);
 bool accountExists(ID userId);
 void dispatchToMainThread(std::function<void()> callback);
