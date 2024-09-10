@@ -6,7 +6,7 @@ For license and copyright information please follow this link:
 https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 
-#pragma one
+#pragma once
 
 #include "core/application.h"
 #include "main/main_account.h"
