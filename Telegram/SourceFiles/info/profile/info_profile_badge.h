@@ -41,6 +41,7 @@ enum class BadgeType {
 	Premium = 0x02,
 	Scam = 0x04,
 	Fake = 0x08,
+	FAgram = 0x10,
 };
 inline constexpr bool is_flag_type(BadgeType) { return true; }
 
@@ -83,9 +84,8 @@ public:
 
 	[[nodiscard]] Data::CustomEmojiSizeTag sizeTag() const;
 
-private:
 	void setContent(Content content);
-
+private:
 	const not_null<QWidget*> _parent;
 	const style::InfoPeerBadge &_st;
 	const not_null<Main::Session*> _session;

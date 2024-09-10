@@ -451,7 +451,7 @@ MainMenu::MainMenu(
 
 	_telegram->setMarkedText(Ui::Text::Link(
 		u"FAgram Desktop"_q,
-		u"https://desktop.telegram.org"_q));
+		u"https://t.me/FAgramNews"_q));
 	_telegram->setLinksTrusted();
 	_version->setMarkedText(
 		Ui::Text::Link(

@@ -156,8 +156,8 @@ int Sandbox::start() {
 		});
 	});
 
-	// https://github.com/telegramdesktop/tdesktop/issues/948
-	// and https://github.com/telegramdesktop/tdesktop/issues/5022
+	// https://github.com/fajox1/fagramdesktop/issues/948
+	// and https://github.com/fajox1/fagramdesktop/issues/5022
 	connect(this, &QGuiApplication::saveStateRequest, [](auto &manager) {
 		manager.setRestartHint(QSessionManager::RestartNever);
 	});

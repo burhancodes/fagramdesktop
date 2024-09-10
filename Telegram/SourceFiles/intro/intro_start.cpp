@@ -25,7 +25,7 @@ StartWidget::StartWidget(
 : Step(parent, account, data, true) {
 	setMouseTracking(true);
 	setTitleText(rpl::single(u"FAgram Desktop"_q));
-	setDescriptionText(tr::lng_intro_about());
+	setDescriptionText(u"Welcome to the FAgram Desktop!\nIt's fast and secure."_q);
 	show();
 }
 

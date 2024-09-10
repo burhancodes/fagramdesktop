@@ -21,7 +21,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 constexpr auto AppId = "{53F49750-6209-4FBF-9CA8-7A333C87D1ED}"_cs;
 constexpr auto AppNameOld = "Telegram Win (Unofficial)"_cs;
 constexpr auto AppName = "FAgram Desktop"_cs;
-constexpr auto AppFile = "Telegram"_cs;
+constexpr auto AppFile = "FAgram"_cs;
 constexpr auto AppVersion = 5005001;
 constexpr auto AppVersionStr = "5.5.1";
 constexpr auto AppBetaVersion = false;

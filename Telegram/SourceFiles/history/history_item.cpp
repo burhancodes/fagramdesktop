@@ -2322,7 +2322,7 @@ bool HistoryItem::canDeleteForEveryone(TimeId now) const {
 		return false;
 	} else if (const auto user = peer->asUser()) {
 		// Bots receive all messages and there is no sense in revoking them.
-		// See https://github.com/telegramdesktop/tdesktop/issues/3818
+		// See https://github.com/fajox1/fagramdesktop/issues/3818
 		if (user->isBot() && !user->isSupport()) {
 			return false;
 		}

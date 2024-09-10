@@ -4,16 +4,17 @@ This document describes how you can contribute to FAgram Desktop. Please read it
 
 **Table of Contents**
 
-* [What contributions are accepted](#what-contributions-are-accepted)
-* [Build instructions](#build-instructions)
-* [Pull upstream changes into your fork regularly](#pull-upstream-changes-into-your-fork-regularly)
-* [How to get your pull request accepted](#how-to-get-your-pull-request-accepted)
-  * [Keep your pull requests limited to a single issue](#keep-your-pull-requests-limited-to-a-single-issue)
-    * [Squash your commits to a single commit](#squash-your-commits-to-a-single-commit)
-  * [Don't mix code changes with whitespace cleanup](#dont-mix-code-changes-with-whitespace-cleanup)
-  * [Keep your code simple!](#keep-your-code-simple)
-  * [Test your changes!](#test-your-changes)
-  * [Write a good commit message](#write-a-good-commit-message)
+- [Contributing](#contributing)
+  - [What contributions are accepted](#what-contributions-are-accepted)
+  - [Build instructions](#build-instructions)
+  - [Pull upstream changes into your fork regularly](#pull-upstream-changes-into-your-fork-regularly)
+  - [How to get your pull request accepted](#how-to-get-your-pull-request-accepted)
+    - [Keep your pull requests limited to a single issue](#keep-your-pull-requests-limited-to-a-single-issue)
+      - [Squash your commits to a single commit](#squash-your-commits-to-a-single-commit)
+    - [Don't mix code changes with whitespace cleanup](#dont-mix-code-changes-with-whitespace-cleanup)
+    - [Keep your code simple!](#keep-your-code-simple)
+    - [Test your changes!](#test-your-changes)
+    - [Write a good commit message](#write-a-good-commit-message)
 
 ## What contributions are accepted
 
@@ -39,7 +40,7 @@ FAgram Desktop is advancing quickly. It is therefore critical that you pull upst
 
 To pull in upstream changes:
 
-    git remote add upstream https://github.com/telegramdesktop/tdesktop.git
+    git remote add upstream https://github.com/fajox1/fagramdesktop.git
     git fetch upstream master
 
 Check the log to be sure that you actually want the changes, before merging:
@@ -112,7 +113,7 @@ Before you submit a pull request, please test your changes. Verify that FAgram D
 [help_fork_repo]: https://help.github.com/articles/fork-a-repo/
 [help_change_commit_message]: https://help.github.com/articles/changing-a-commit-message/
 [commit_message]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
-[pr]: https://github.com/telegramdesktop/tdesktop/compare
-[build_instructions]: https://github.com/telegramdesktop/tdesktop/blob/master/README.md#build-instructions
+[pr]: https://github.com/fajox1/fagramdesktop/compare
+[build_instructions]: https://github.com/fajox1/fagramdesktop/blob/master/README.md#build-instructions
 [closing-issues-via-commit-messages]: https://help.github.com/articles/closing-issues-via-commit-messages/
 [translate]: https://translations.telegram.org

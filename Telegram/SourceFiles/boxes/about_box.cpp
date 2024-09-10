@@ -3,7 +3,7 @@ This file is part of Telegram Desktop,
 the official desktop application for the Telegram messaging service.
 
 For license and copyright information please follow this link:
-https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
+https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "boxes/about_box.h"
 
@@ -65,7 +65,7 @@ AboutBox::AboutBox(QWidget *parent)
 }
 
 void AboutBox::prepare() {
-	setTitle(rpl::single(u"Telegram Desktop"_q));
+	setTitle(rpl::single(u"FAgram Desktop"_q));
 
 	addButton(tr::lng_close(), [this] { closeBox(); });
 
@@ -95,7 +95,7 @@ void AboutBox::resizeEvent(QResizeEvent *e) {
 
 void AboutBox::showVersionHistory() {
 	if (cRealAlphaVersion()) {
-		auto url = u"https://tdesktop.com/"_q;
+		auto url = u"https://t.me/FAgramNews"_q;
 		if (Platform::IsWindows32Bit()) {
 			url += u"win/%1.zip"_q;
 		} else if (Platform::IsWindows64Bit()) {

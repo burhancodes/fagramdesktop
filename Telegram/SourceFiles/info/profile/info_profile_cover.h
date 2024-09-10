@@ -141,7 +141,7 @@ private:
 	void setupChangePersonal();
 
 	const style::InfoProfileCover &_st;
-
+	const std::unique_ptr<Badge> _devBadge;
 	const Role _role = Role::Info;
 	const not_null<Window::SessionController*> _controller;
 	const not_null<PeerData*> _peer;

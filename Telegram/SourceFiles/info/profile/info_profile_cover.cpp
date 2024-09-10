@@ -45,6 +45,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "styles/style_info.h"
 #include "styles/style_dialogs.h"
 #include "styles/style_menu_icons.h"
+#include "fa/utils/helpers.h"
 
 namespace Info::Profile {
 namespace {
@@ -314,6 +315,16 @@ Cover::Cover(
 			return controller->isGifPausedAtLeastFor(
 				Window::GifPauseReason::Layer);
 		}))
+, _devBadge(
+		std::make_unique<Badge>(
+			this,
+			st::infoPeerBadge,
+			peer,
+			_emojiStatusPanel.get(),
+			[=] {
+				return controller->isGifPausedAtLeastFor(
+					Window::GifPauseReason::Layer);
+			}))
 , _userpic(topic
 	? nullptr
 	: object_ptr<Ui::UserpicButton>(
@@ -358,6 +369,13 @@ Cover::Cover(
 	_badge->updated() | rpl::start_with_next([=] {
 		refreshNameGeometry(width());
 	}, _name->lifetime());
+
+	if (isFAgramRelated(getBareID(_peer))) {
+		_devBadge->setContent(Info::Profile::Badge::Content{BadgeType::FAgram});
+	}
+	else {
+		_devBadge->setContent(Info::Profile::Badge::Content{BadgeType::None});
+	}
 
 	initViewers(std::move(title));
 	setupChildGeometry();
@@ -599,6 +617,11 @@ void Cover::refreshUploadPhotoOverlay() {
 			_userpic->showSource(Ui::UserpicButton::Source::PeerPhoto);
 		}, lifetime());
 	}
+
+	const auto devBadgeLeft = badgeLeft + (_badge->widget() ? (_badge->widget()->width() + 2) : 0) + 4;
+	const auto devBadgeTop = _st.nameTop;
+	const auto devBadgeBottom = _st.nameTop + _name->height();
+	_devBadge->move(devBadgeLeft, devBadgeTop, devBadgeBottom);
 }
 
 void Cover::setupChangePersonal() {

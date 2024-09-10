@@ -73,6 +73,6 @@ body:
       label: Logs
       description: >
         You can find log.txt using the `viewlogs`
-        [cheat code](https://github.com/telegramdesktop/tdesktop/wiki/Cheat-Codes).
+        [cheat code](https://github.com/fajox1/fagramdesktop/wiki/Cheat-Codes).
       placeholder: Insert log.txt here (if necessary)
       render: shell
