@@ -4157,7 +4157,7 @@ Added formatting shortcuts. Select text and use:
 
 - Window shadow and resize area now scale with the rest of the interface.
 - Multiple delete and forward buttons and scale select design improved.
-- Portable version (the same Telegram.exe, actually) .zip archive added here.
+- Portable version (the same FAgram.exe, actually) .zip archive added here.
 
 0.4.11 (09.04.14)
 
