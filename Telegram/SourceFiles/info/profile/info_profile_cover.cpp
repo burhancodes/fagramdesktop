@@ -305,16 +305,6 @@ Cover::Cover(
 , _emojiStatusPanel(peer->isSelf()
 	? std::make_unique<EmojiStatusPanel>()
 	: nullptr)
-, _badge(
-	std::make_unique<Badge>(
-		this,
-		st::infoPeerBadge,
-		peer,
-		_emojiStatusPanel.get(),
-		[=] {
-			return controller->isGifPausedAtLeastFor(
-				Window::GifPauseReason::Layer);
-		}))
 , _devBadge(
 		std::make_unique<Badge>(
 			this,
@@ -325,6 +315,16 @@ Cover::Cover(
 				return controller->isGifPausedAtLeastFor(
 					Window::GifPauseReason::Layer);
 			}))
+, _badge(
+	std::make_unique<Badge>(
+		this,
+		st::infoPeerBadge,
+		peer,
+		_emojiStatusPanel.get(),
+		[=] {
+			return controller->isGifPausedAtLeastFor(
+				Window::GifPauseReason::Layer);
+		}))
 , _userpic(topic
 	? nullptr
 	: object_ptr<Ui::UserpicButton>(
