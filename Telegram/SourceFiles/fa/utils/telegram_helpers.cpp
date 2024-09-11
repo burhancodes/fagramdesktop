@@ -9,14 +9,15 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "telegram_helpers.h"
 
 std::unordered_set<ID> fagram_channels = {
-	2490382357, // @fagramnews
-	2495029489, // @fagramgroup
-	2390525721, // @fagramwindows
-	2348386822, // @fagramlinux
+    static_cast<ID>(2490382357), // @fagramnews
+    static_cast<ID>(2495029489), // @fagramgroup
+    static_cast<ID>(2390525721), // @fagramwindows
+    static_cast<ID>(2348386822), // @fagramlinux
 };
 std::unordered_set<ID> fagram_devs = {
-	6204024154, // @vecax
+    static_cast<ID>(6204024154), // @vecax
 };
+
 
 ID getBareID(not_null<PeerData *> peer) {
 	return peerIsUser(peer->id)
