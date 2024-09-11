@@ -45,7 +45,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "styles/style_info.h"
 #include "styles/style_dialogs.h"
 #include "styles/style_menu_icons.h"
-#include "fa/utils/helpers.h"
+#include "fa/utils/telegram_helpers.h"
 
 namespace Info::Profile {
 namespace {
