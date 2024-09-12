@@ -1,5 +1,5 @@
 <div align="center">
-<img alt="Telegram" width="100x" src="https://github.com/FajoX1/fagramdesktop/blob/dev/Telegram/Resources/art/icon512@2x.png?raw=true">
+<img alt="Telegram" width="150x" src="https://github.com/FajoX1/fagramdesktop/blob/dev/Telegram/Resources/art/icon512@2x.png?raw=true">
 
 <h1><a href='https://t.me/FAgramNews'>FAgram Desktop</a></h1>
 
