@@ -617,16 +617,6 @@ void Cover::refreshUploadPhotoOverlay() {
 			_userpic->showSource(Ui::UserpicButton::Source::PeerPhoto);
 		}, lifetime());
 	}
-
-	const auto badgeLeft = _st.nameLeft + _name->width();
-	const auto badgeTop = _st.nameTop;
-	const auto badgeBottom = _st.nameTop + _name->height();
-	_badge->move(badgeLeft, badgeTop, badgeBottom);
-
-	const auto devBadgeLeft = badgeLeft + (_badge->widget() ? (_badge->widget()->width() + 2) : 0) + 4;
-	const auto devBadgeTop = _st.nameTop;
-	const auto devBadgeBottom = _st.nameTop + _name->height();
-	_devBadge->move(devBadgeLeft, devBadgeTop, devBadgeBottom);
 }
 
 void Cover::setupChangePersonal() {
@@ -722,12 +712,20 @@ void Cover::refreshNameGeometry(int newWidth) {
 	if (const auto widget = _badge->widget()) {
 		nameWidth -= st::infoVerifiedCheckPosition.x() + widget->width();
 	}
+	if (const auto widget = _devBadge->widget()) {
+		nameWidth -= st::infoVerifiedCheckPosition.x() + widget->width();
+	}
 	_name->resizeToNaturalWidth(nameWidth);
 	_name->moveToLeft(_st.nameLeft, _st.nameTop, newWidth);
 	const auto badgeLeft = _st.nameLeft + _name->width();
 	const auto badgeTop = _st.nameTop;
 	const auto badgeBottom = _st.nameTop + _name->height();
 	_badge->move(badgeLeft, badgeTop, badgeBottom);
+
+	const auto devBadgeLeft = badgeLeft + (_badge->widget() ? (_badge->widget()->width() + 2) : 0) + 4;
+	const auto devBadgeTop = _st.nameTop;
+	const auto devBadgeBottom = _st.nameTop + _name->height();
+	_devBadge->move(devBadgeLeft, devBadgeTop, devBadgeBottom);
 }
 
 void Cover::refreshStatusGeometry(int newWidth) {
