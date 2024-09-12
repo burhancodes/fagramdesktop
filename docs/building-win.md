@@ -38,7 +38,7 @@ Go to ***BuildPath*\\tdesktop\\Telegram** and run (using [your **api_id** and **
 
 * Open ***BuildPath*\\tdesktop\\out\\Telegram.sln** in Visual Studio 2022
 * Select Telegram project and press Build > Build Telegram (Debug and Release configurations)
-* The result FAgram.exe will be located in **D:\TBuild\tdesktop\out\Debug** (and **Release**)
+* The result Telegram.exe will be located in **D:\TBuild\tdesktop\out\Debug** (and **Release**)
 
 ### Qt Visual Studio Tools
 

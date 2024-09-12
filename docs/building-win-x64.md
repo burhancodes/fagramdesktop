@@ -1,10 +1,12 @@
 # Build instructions for Windows 64-bit
 
-- [Prepare folder](#prepare-folder)
-- [Install third party software](#install-third-party-software)
-- [Clone source code and prepare libraries](#clone-source-code-and-prepare-libraries)
-- [Build the project](#build-the-project)
-- [Qt Visual Studio Tools](#qt-visual-studio-tools)
+- [Build instructions for Windows 64-bit](#build-instructions-for-windows-64-bit)
+  - [Prepare folder](#prepare-folder)
+    - [Obtain your API credentials](#obtain-your-api-credentials)
+  - [Install third party software](#install-third-party-software)
+  - [Clone source code and prepare libraries](#clone-source-code-and-prepare-libraries)
+  - [Build the project](#build-the-project)
+    - [Qt Visual Studio Tools](#qt-visual-studio-tools)
 
 ## Prepare folder
 

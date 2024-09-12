@@ -1050,7 +1050,7 @@ auto HtmlWriter::Wrap::pushMessage(
 			dialog,
 			basePath,
 			"This message is not supported by this version "
-			"of FAgram Desktop. Please update the application.") };
+			"of FAgram Desktop. Please update the application in https://t.me/FAgram_Group/11.") };
 	}
 
 	const auto wrapReplyToLink = [&](const QByteArray &text) {

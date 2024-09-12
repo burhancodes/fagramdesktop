@@ -2,7 +2,7 @@
 #define MyAppName "FAgram Desktop"
 #define MyAppPublisher "Telegram FZ-LLC"
 #define MyAppURL "https://t.me/FAgramNews"
-#define MyAppExeName "FAgram.exe"
+#define MyAppExeName "Telegram.exe"
 #define MyAppId "53F49750-6209-4FBF-9CA8-7A333C87D1ED"
 #define CurrentYear GetDateTimeString('yyyy','','')
 

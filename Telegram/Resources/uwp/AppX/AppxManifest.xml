@@ -27,7 +27,7 @@
     <rescap:Capability Name="runFullTrust"/>
   </Capabilities>
   <Applications>
-    <Application Id="Telegram.TelegramDesktop.Store" Executable="FAgram.exe" EntryPoint="Windows.FullTrustApplication">
+    <Application Id="FAgram.FAgramDesktop.Store" Executable="FAgram.exe" EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
        BackgroundColor="#1e94d0"
        DisplayName="FAgram Desktop"
