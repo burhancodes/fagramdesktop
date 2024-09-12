@@ -12,6 +12,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "data/data_msg_id.h"
 #include "base/qt/qt_compare.h"
 
+#define ID long long
+
 class HistoryItem;
 using HistoryItemsList = std::vector<not_null<HistoryItem*>>;
 
