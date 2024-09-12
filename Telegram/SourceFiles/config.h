@@ -56,8 +56,7 @@ YNakpQDJ2ee1Ix0pbRslWW5OeiZbjoDaSD8btVnXEu/suU71yDdEhnhmBX7QVnPN
 mIcP6yIMaxBGG7/Ku0KvDdHO9s0qVFz8CZQqnxQYTHnFXw8viTjYzMbjiZAM1K9i
 VcyyHHnbSssjP6he1zucP+M+9m/baZ7AK2zxee9G39xkEkx9qMhtRoZ8/sqtBDAs
 WQIDAQAB
------END PUBLIC KEY-----
-
+-----END PUBLIC KEY-----\
 ";
 
 static const char *UpdatesPublicBetaKey = "\
