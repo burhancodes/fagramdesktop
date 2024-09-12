@@ -49,13 +49,13 @@ inline const char *cGUIDStr() {
 
 static const char *UpdatesPublicKey = "\
 -----BEGIN PUBLIC KEY-----\n\
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorYQYyqpwVQ5d+3ekoHf
-eqdsnw+B8xDwe5Di8zKjoo18Y060LbDAO3t1npvmF+WBbYLfm/V3NNeWOexzDow6
-Zx/PVLZzfajIlWQMP4h4k/pp+mz6NwvvbMx4QLzDa0bB4L9D9z0M/TIzCp0p/zry
-YNakpQDJ2ee1Ix0pbRslWW5OeiZbjoDaSD8btVnXEu/suU71yDdEhnhmBX7QVnPN
-mIcP6yIMaxBGG7/Ku0KvDdHO9s0qVFz8CZQqnxQYTHnFXw8viTjYzMbjiZAM1K9i
-VcyyHHnbSssjP6he1zucP+M+9m/baZ7AK2zxee9G39xkEkx9qMhtRoZ8/sqtBDAs
-WQIDAQAB
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorYQYyqpwVQ5d+3ekoHf\n\
+eqdsnw+B8xDwe5Di8zKjoo18Y060LbDAO3t1npvmF+WBbYLfm/V3NNeWOexzDow6\n\
+Zx/PVLZzfajIlWQMP4h4k/pp+mz6NwvvbMx4QLzDa0bB4L9D9z0M/TIzCp0p/zry\n\
+YNakpQDJ2ee1Ix0pbRslWW5OeiZbjoDaSD8btVnXEu/suU71yDdEhnhmBX7QVnPN\n\
+mIcP6yIMaxBGG7/Ku0KvDdHO9s0qVFz8CZQqnxQYTHnFXw8viTjYzMbjiZAM1K9i\n\
+VcyyHHnbSssjP6he1zucP+M+9m/baZ7AK2zxee9G39xkEkx9qMhtRoZ8/sqtBDAs\n\
+WQIDAQAB\n\
 -----END PUBLIC KEY-----\
 ";
 
