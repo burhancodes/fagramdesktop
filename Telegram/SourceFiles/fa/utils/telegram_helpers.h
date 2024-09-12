@@ -10,6 +10,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #include "fa/data/entities.h"
 
+#include "data/data_peer.h"
 #include "core/application.h"
 #include "main/main_account.h"
 #include "main/main_domain.h"
