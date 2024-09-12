@@ -48,11 +48,16 @@ inline const char *cGUIDStr() {
 }
 
 static const char *UpdatesPublicKey = "\
------BEGIN RSA PUBLIC KEY-----\n\
-MIGJAoGBAMA4ViQrjkPZ9xj0lrer3r23JvxOnrtE8nI69XLGSr+sRERz9YnUptnU\n\
-BZpkIfKaRcl6XzNJiN28cVwO1Ui5JSa814UAiDHzWUqCaXUiUEQ6NmNTneiGx2sQ\n\
-+9PKKlb8mmr3BB9A45ZNwLT6G9AK3+qkZLHojeSA+m84/a6GP4svAgMBAAE=\n\
------END RSA PUBLIC KEY-----\
+-----BEGIN PUBLIC KEY-----\n\
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorYQYyqpwVQ5d+3ekoHf
+eqdsnw+B8xDwe5Di8zKjoo18Y060LbDAO3t1npvmF+WBbYLfm/V3NNeWOexzDow6
+Zx/PVLZzfajIlWQMP4h4k/pp+mz6NwvvbMx4QLzDa0bB4L9D9z0M/TIzCp0p/zry
+YNakpQDJ2ee1Ix0pbRslWW5OeiZbjoDaSD8btVnXEu/suU71yDdEhnhmBX7QVnPN
+mIcP6yIMaxBGG7/Ku0KvDdHO9s0qVFz8CZQqnxQYTHnFXw8viTjYzMbjiZAM1K9i
+VcyyHHnbSssjP6he1zucP+M+9m/baZ7AK2zxee9G39xkEkx9qMhtRoZ8/sqtBDAs
+WQIDAQAB
+-----END PUBLIC KEY-----
+
 ";
 
 static const char *UpdatesPublicBetaKey = "\
