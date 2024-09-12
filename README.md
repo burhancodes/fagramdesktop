@@ -1,11 +1,16 @@
-# 💻 [FAgram Desktop][fagram_desktop] – Unofficial Telegram client based on [Telegram Desktop][telegram_desktop]
+<div align="center">
+<img alt="Telegram" width="100x" src="https://github.com/FajoX1/fagramdesktop/blob/dev/Telegram/Resources/art/icon512@2x.png?raw=true">
 
-This is the complete source code of FAgram Desktop.
+<h1><a href='https://t.me/FAgramNews'>FAgram Desktop</a></h1>
+
+#### This is the complete source code of FAgram Desktop.
 
 [![Version](https://badge.fury.io/gh/telegramdesktop%2Ftdesktop.svg)](https://github.com/fajox1/fagramdesktop/releases)
 [![Build Status](https://github.com/fajox1/fagramdesktop/workflows/Windows./badge.svg)](https://github.com/fajox1/fagramdestkop/actions)
+[![Build Status](https://github.com/fajox1/fagramdesktop/workflows/Snap./badge.svg)](https://github.com/fajox1/fagramdestkop/actions)
+</div>
 
-The source code is published under GPLv3 with OpenSSL exception, the license is available [here][license].
+> ***✏️ Note that source code is published under GPLv3 with OpenSSL exception, the license is available [here][license].***
 
 <a href="https://t.me/FAgramNews">
 <img alt="Telegram" src="https://img.shields.io/badge/Telegram_Channel-0a0a0a?style=for-the-badge&logo=telegram">
@@ -14,14 +19,14 @@ The source code is published under GPLv3 with OpenSSL exception, the license is 
 <img alt="Telegram" src="https://img.shields.io/badge/Telegram_Chat-0a0a0a?style=for-the-badge&logo=telegram">
 </a>
 
-## Supported systems
+## <h2><img src="https://github.com/hikariatama/assets/raw/master/680-it-developer-flat.webp" height="50" align="middle"> Supported systems</h2>
 
 The latest version is available for
 
-* [Windows 7 and above (64 bit)](https://telegram.org/dl/desktop/win64) ([portable](https://telegram.org/dl/desktop/win64_portable))
-* [Windows 7 and above (32 bit)](https://telegram.org/dl/desktop/win) ([portable](https://telegram.org/dl/desktop/win_portable))
+* [Windows](win)
+* [Linux](linux)
 
-## Third-party
+## <h2><img src="https://github.com/hikariatama/assets/raw/master/1312-micro-sd-card-flat.webp" height="50" align="middle"> Third-party</h2>
 
 * Qt 6 ([LGPL](http://doc.qt.io/qt-6/lgpl.html)) and Qt 5.15 ([LGPL](http://doc.qt.io/qt-5/lgpl.html)) slightly patched
 * OpenSSL 3.2.1 ([Apache License 2.0](https://www.openssl.org/source/apache-license-2.0.txt))
@@ -46,11 +51,18 @@ The latest version is available for
 * CMake ([New BSD License](https://github.com/Kitware/CMake/blob/master/Copyright.txt))
 * Hunspell ([LGPL](https://github.com/hunspell/hunspell/blob/master/COPYING.LESSER))
 
-## Build instructions
+## <h2><img src="https://github.com/hikariatama/assets/raw/master/1326-command-window-line-flat.webp" height="50" align="middle"> Build instructions</h2>
 
-* Windows [(32-bit)][win32] [(64-bit)][win64]
-* [macOS][mac]
-* [GNU/Linux using Docker][linux]
+* Windows [32-bit](win32_build) [(64-bit)](win64_build)
+* [macOS](mac_build)
+* [GNU/Linux using Docker][linux_build]
+
+## ❤️ Credits
+
+* [Telegram Desktop](https://github.com/telegramdesktop/tdesktop)
+* [Rabbitgram](https://github.com/rabbitGramDesktop)
+* [Ayugram](https://github.com/ayugram/AyugramDesktop)
+* [hikariatama (for emojis in readme)](https://github.com/hikariatama)
 
 [//]: # (LINKS)
 [fagram]: https://t.me/FAgramNews
@@ -59,8 +71,10 @@ The latest version is available for
 [telegram_api]: https://core.telegram.org
 [telegram_proto]: https://core.telegram.org/mtproto
 [license]: LICENSE
-[win32]: docs/building-win.md
-[win64]: docs/building-win-x64.md
-[mac]: docs/building-mac.md
-[linux]: docs/building-linux.md
+[win]: https://t.me/FAgramWindows
+[linux]: https://t.me/FAgramLinux
+[win32_build]: docs/building-win.md
+[win64_build]: docs/building-win64.md
+[mac_build]: docs/building-mac.md
+[linux_build]: docs/building-linux.md
 [preview_image]: https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/docs/assets/preview.png "Preview of FAgram Deskop"
