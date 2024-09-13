@@ -10,7 +10,6 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #include <ui/boxes/single_choice_box.h>
 
-#include "fa/settings/fa_settings.h"
 #include "fa/settings_menu/fa_settings_menu.h"
 
 #include "core/application.h"
