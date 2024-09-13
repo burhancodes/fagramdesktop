@@ -62,6 +62,8 @@ The latest version is available for
 * [Telegram Desktop](https://github.com/telegramdesktop/tdesktop)
 * [Rabbitgram](https://github.com/rabbitGramDesktop)
 * [Ayugram](https://github.com/ayugram/AyugramDesktop)
+* [64gram](https://github.com/TDesktop-x64/tdesktop)
+* [Kotatogram](https://github.com/kotatogram/kotatogram-desktop)
 * [hikariatama (for emojis in readme)](https://github.com/hikariatama)
 
 [//]: # (LINKS)
