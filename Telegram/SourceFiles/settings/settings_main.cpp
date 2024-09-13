@@ -392,9 +392,10 @@ void SetupSections(
 	};
 
 	addSection(
-		rpl::single(QString("FAgram Settings"));,
-		FA::Id(),
-		{ &st::menuIconFA });
+    	rpl::single(QString("FAgram Settings")),
+    	FA::Id(),
+    	{ &st::menuIconFA }
+	);
 
 	if (controller->session().supportMode()) {
 		SetupSupport(controller, container);
