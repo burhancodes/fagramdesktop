@@ -248,6 +248,26 @@ void ForwardToSelf(
 	}
 }
 
+Fn<void()> GoToFirstMessageHandler(
+	not_null<Window::SessionController*> controller,
+	not_null<PeerData*> peer)
+{
+	const auto weak = base::make_weak(controller.get());
+	const auto jump = [=](const QDate &date)
+	{
+		const auto chat = peer->owner().history(peer->id);
+		const auto open = [=](not_null<PeerData*> peer, MsgId id)
+		{
+			if (const auto strong = weak.get())
+			{
+				strong->showPeerHistory(peer, SectionShow::Way::Forward, id);
+			}
+		};
+		peer->session().api().resolveJumpToDate(chat, date, open);
+	};
+	return [=] { jump(QDate(2013, 8, 1)); };
+}
+
 class Filler {
 public:
 	Filler(
@@ -849,6 +869,14 @@ void Filler::addBlockUser() {
 	}
 }
 
+void Filler::addGoToFirstMessage()
+{
+	_addAction(
+		rpl::single(QString("Go to beginning")),
+		GoToFirstMessageHandler(_controller, _peer),
+		&st::menuIconGoToBeginning);
+}
+
 void Filler::addViewDiscussion() {
 	const auto channel = _peer->asBroadcast();
 	if (!channel) {
@@ -1422,6 +1450,7 @@ void Filler::fillHistoryActions() {
 	addCreatePoll();
 	addThemeEdit();
 	addViewDiscussion();
+	addGoToFirstMessage();
 	addExportChat();
 	addTranslate();
 	addReport();
@@ -1446,6 +1475,7 @@ void Filler::fillProfileActions() {
 	addManageTopic();
 	addToggleTopicClosed();
 	addViewDiscussion();
+	addGoToFirstMessage();
 	addExportChat();
 	addBlockUser();
 	addReport();

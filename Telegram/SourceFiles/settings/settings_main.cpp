@@ -6,6 +6,7 @@ For license and copyright information please follow this link:
 https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "settings/settings_main.h"
+#include "fa/settings_menu/fa_settings_menu.h"
 
 #include "api/api_credits.h"
 #include "core/application.h"
@@ -389,6 +390,12 @@ void SetupSections(
 			showOther(type);
 		});
 	};
+
+	addSection(
+		rpl::single(QString("FAgram Settings"));,
+		FA::Id(),
+		{ &st::menuIconFA });
+
 	if (controller->session().supportMode()) {
 		SetupSupport(controller, container);
 
