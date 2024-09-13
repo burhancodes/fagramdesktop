@@ -1752,13 +1752,6 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 "lng_message_unsupported" = "This message is not supported by your version of FAgram Desktop. Please update to the latest version in Settings, or install it from {link}";
 "lng_message_not_found" = "Message doesn't exist.";
 
-"lng_profile_copy_id" = "Copy ID";
-"lng_profile_bot_id" = "Bot ID";
-"lng_profile_user_id" = "User ID";
-"lng_profile_group_id" = "Group ID";
-"lng_profile_supergroup_id" = "Supergroup ID";
-"lng_profile_channel_id" = "Channel ID";
-
 "lng_duration_minsec_minutes#one" = "{count} min";
 "lng_duration_minsec_minutes#other" = "{count} min";
 "lng_duration_minsec_seconds#one" = "{count} sec";
