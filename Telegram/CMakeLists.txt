@@ -707,6 +707,8 @@ PRIVATE
     fa/data/entities.h
     fa/utils/telegram_helpers.cpp
     fa/utils/telegram_helpers.h
+    fa/settings_menu/fa_settings_menu.cpp
+    fa/settings_menu/fa_settings_menu.h
     history/admin_log/history_admin_log_filter.cpp
     history/admin_log/history_admin_log_filter.h
     history/admin_log/history_admin_log_inner.cpp

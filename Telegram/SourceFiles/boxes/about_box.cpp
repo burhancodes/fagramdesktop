@@ -1,9 +1,6 @@
 /*
-This file is part of Telegram Desktop,
-the official desktop application for the Telegram messaging service.
-
-For license and copyright information please follow this link:
-https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
+This file is part of FAgram Desktop,
+the unofficial desktop application for the Telegram messaging service.
 */
 #include "boxes/about_box.h"
 

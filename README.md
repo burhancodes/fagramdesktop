@@ -60,7 +60,7 @@ The latest version is available for
 ## ❤️ Credits
 
 * [Telegram Desktop](https://github.com/telegramdesktop/tdesktop)
-* [Rabbitgram](https://github.com/rabbitGramDesktop)
+* [rabbitGram](https://github.com/rabbitGramDesktop)
 * [Ayugram](https://github.com/ayugram/AyugramDesktop)
 * [64gram](https://github.com/TDesktop-x64/tdesktop)
 * [Kotatogram](https://github.com/kotatogram/kotatogram-desktop)
