@@ -1035,6 +1035,17 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 		return result;
 	};
 	if (const auto user = _peer->asUser()) {
+		if (user->isBot()) {
+			addInfoOneLine(
+				tr::lng_profile_bot_id(),
+				IDValue(user, 2),
+				tr::lng_profile_copy_id(tr::now));
+		} else {
+			addInfoOneLine(
+				tr::lng_profile_user_id(),
+				IDValue(user, 2),
+				tr::lng_profile_copy_id(tr::now));
+		}
 		const auto controller = _controller->parentController();
 		if (user->session().supportMode()) {
 			addInfoLineGeneric(
@@ -1155,6 +1166,24 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 			[=] { controller->window().show(Box(EditContactBox, controller, user)); },
 			tracker);
 	} else {
+		// Source from kotatogram/
+		if (_peer->isChat()) {
+			addInfoOneLine(
+				tr::lng_profile_group_id(),
+				IDValue(_peer, 0),
+				tr::lng_profile_copy_id(tr::now));
+		} else if (_peer->isMegagroup()) {
+			addInfoOneLine(
+				tr::lng_profile_supergroup_id(),
+				IDValue(_peer, 1),
+				tr::lng_profile_copy_id(tr::now));
+		} else {
+			addInfoOneLine(
+				tr::lng_profile_channel_id(),
+				IDValue(_peer, 1),
+				tr::lng_profile_copy_id(tr::now));
+		}
+
 		const auto topicRootId = _topic ? _topic->rootId() : 0;
 		const auto addToLink = topicRootId
 			? ('/' + QString::number(topicRootId.bare))

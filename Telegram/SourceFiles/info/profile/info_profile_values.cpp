@@ -92,6 +92,17 @@ void StripExternalLinks(TextWithEntities &text) {
 
 } // namespace
 
+rpl::producer<TextWithEntities> IDValue(not_null<PeerData*> peer, int type) {
+	if (type == 0) {
+		return rpl::single(QString("-%1").arg(peer->bareId())) | Ui::Text::ToWithEntities();
+	} else if (type == 1) {
+		return rpl::single(QString("-100%1").arg(peer->bareId())) | Ui::Text::ToWithEntities();
+	}
+	else {
+		return rpl::single(QString("%1").arg(peer->bareId())) | Ui::Text::ToWithEntities();
+	}
+}
+
 rpl::producer<QString> NameValue(not_null<PeerData*> peer) {
 	return peer->session().changes().peerFlagsValue(
 		peer,
