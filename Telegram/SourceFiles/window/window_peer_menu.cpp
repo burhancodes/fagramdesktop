@@ -308,6 +308,7 @@ private:
 	void addCreatePoll();
 	void addThemeEdit();
 	void addBlockUser();
+	void addGoToFirstMessage();
 	void addViewDiscussion();
 	void addToggleTopicClosed();
 	void addExportChat();
