@@ -873,7 +873,7 @@ void Filler::addBlockUser() {
 void Filler::addGoToFirstMessage()
 {
 	_addAction(
-		rpl::single(QString("Go to beginning")),
+		QString("Go to beginning"),
 		GoToFirstMessageHandler(_controller, _peer),
 		&st::menuIconGoToBeginning);
 }
