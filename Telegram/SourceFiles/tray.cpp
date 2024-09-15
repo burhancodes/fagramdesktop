@@ -95,7 +95,7 @@ void Tray::rebuildMenu() {
 			[=] { toggleSoundNotifications(); });
 	}
 
-	_tray.addAction(QString("Quit FAgram")), [] { Core::Quit(); });
+	_tray.addAction(rpl::single(QString("Quit FAgram")), [] { Core::Quit(); });
 
 	updateMenuText();
 }
