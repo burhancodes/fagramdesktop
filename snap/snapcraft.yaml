@@ -12,8 +12,8 @@ apps:
     command: usr/bin/telegram-desktop
     command-chain:
       - bin/desktop-launch
-    common-id: org.telegram.desktop
-    desktop: usr/share/applications/org.telegram.desktop.desktop
+    common-id: org.fagram.desktop
+    desktop: usr/share/applications/org.fagram.desktop.desktop
     autostart: telegram-desktop_telegram-desktop.desktop
     plugs:
       - alsa
@@ -84,7 +84,7 @@ parts:
     plugin: cmake
     source: .
     source-type: git
-    parse-info: [usr/share/metainfo/org.telegram.desktop.metainfo.xml]
+    parse-info: [usr/share/metainfo/org.fagram.desktop.metainfo.xml]
     build-environment:
       - LD_LIBRARY_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
       - LDFLAGS: ${LDFLAGS:+$LDFLAGS} -s
@@ -151,7 +151,7 @@ parts:
 
       craftctl set version="$version"
 
-      sed -i 's|^Icon=telegram$|Icon=${SNAP}/meta/gui/icon.png|g' lib/xdg/org.telegram.desktop.desktop
+      sed -i 's|^Icon=telegram$|Icon=${SNAP}/meta/gui/icon.png|g' lib/xdg/org.fagram.desktop.desktop
     override-build: |
       craftctl default
       rm -rf "$CRAFT_PART_INSTALL/usr/share/icons"

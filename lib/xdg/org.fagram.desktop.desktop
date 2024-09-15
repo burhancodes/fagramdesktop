@@ -1,11 +1,11 @@
 [Desktop Entry]
 Name=FAgram Desktop
-Comment=Official desktop version of Telegram messaging app
-TryExec=telegram-desktop
-Exec=telegram-desktop -- %u
-Icon=telegram
+Comment=Telegram client based on Telegram Desktop
+TryExec=fagram-desktop
+Exec=fagram-desktop -- %u
+Icon=fagram
 Terminal=false
-StartupWMClass=TelegramDesktop
+StartupWMClass=FAgram
 Type=Application
 Categories=Chat;Network;InstantMessaging;Qt;
 MimeType=x-scheme-handler/tg;
@@ -17,6 +17,6 @@ X-GNOME-UsesNotifications=true
 X-GNOME-SingleWindow=true
 
 [Desktop Action quit]
-Exec=telegram-desktop -quit
-Name=Quit Telegram
+Exec=fagram-desktop -quit
+Name=Quit FAgram
 Icon=application-exit
