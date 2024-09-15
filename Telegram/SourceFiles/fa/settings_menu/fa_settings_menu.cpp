@@ -140,6 +140,6 @@ namespace Settings {
     //	Ui::AddSkip(content);
     	SetupLinks(content, controller);
 
-     //   Ui::ResizeFitChild(this, content);
+        Ui::ResizeFitChild(this, content);
     }
 } // namespace Settings
