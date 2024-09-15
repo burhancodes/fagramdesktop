@@ -23,8 +23,8 @@
 
 The latest version is available for
 
-* [Windows](win)
-* [Linux](linux)
+* [Windows](https://t.me/FAgramWindows)
+* [Linux](https://t.me/FAgramLinux)
 
 ## <h2><img src="https://github.com/hikariatama/assets/raw/master/1312-micro-sd-card-flat.webp" height="50" align="middle"> Third-party</h2>
 
