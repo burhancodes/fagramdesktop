@@ -115,7 +115,7 @@ namespace Settings {
 			st::settingsButton,
 			{ &st::menuIconGroups }
 		)->setClickedCallback([=] {
-			Core::App().openLocalUrl("t.me/FAgram_Group/11", {});
+			Core::App().openLocalUrl("tg://resolve?domain=FAgram_Group&thread=11", {});
 		});
 
     	AddButtonWithLabel(
