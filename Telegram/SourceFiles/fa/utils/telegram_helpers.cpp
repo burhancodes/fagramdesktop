@@ -19,6 +19,7 @@ std::unordered_set<ID> fagram_channels = {
 };
 std::unordered_set<ID> fagram_devs = {
     6204024154, // @vecax
+    2085438865, // @dev_kitten
 };
 
 
