@@ -74,7 +74,7 @@ void Tray::rebuildMenu() {
 			_activeForTrayIconAction = Core::App().isActiveForTrayMenu();
 			return _activeForTrayIconAction
 				? tr::lng_minimize_to_tray(tr::now)
-				: rpl::single(QString("Open FAgram"));
+				: QString("Open FAgram");
 		});
 
 		_tray.addAction(

@@ -107,7 +107,7 @@ void WindowsIntegration::refreshCustomJumpList() {
 		}
 		auto titlePropVar = PROPVARIANT();
 		hr = InitPropVariantFromString(
-			rpl::single(QString("Quit FAgram")).toStdWString().c_str(),
+			QString("Quit FAgram").toStdWString().c_str(),
 			&titlePropVar);
 		if (SUCCEEDED(hr)) {
 			hr = propertyStore->SetValue(PKEY_Title, titlePropVar);
