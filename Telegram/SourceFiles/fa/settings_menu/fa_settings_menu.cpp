@@ -113,7 +113,7 @@ namespace Settings {
 			rpl::single(QString("Update FAgram")),
 			rpl::single(QString("Update")),
 			st::settingsButton,
-			{ &st::menuIconGroups }
+			{ &st::menuIconSettings }
 		)->setClickedCallback([=] {
 			Core::App().openLocalUrl("tg://resolve?domain=FAgram_Group&thread=11", {});
 		});

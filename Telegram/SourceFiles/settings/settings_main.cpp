@@ -397,8 +397,8 @@ void SetupSections(
     	{ &st::menuIconFA }
 	);
 
-	Ui::AddDivider(container);
 	Ui::AddSkip(container);
+	Ui::AddDivider(container);
 
 	if (controller->session().supportMode()) {
 		SetupSupport(controller, container);
