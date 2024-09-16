@@ -9,7 +9,7 @@ on:
       - 'LEGAL'
       - 'LICENSE'
       - '.github/**'
-      - '!.github/workflows/win.yml'
+      - '!.github/workflows/win_release.yml'
       - 'lib/xdg/**'
       - 'snap/**'
       - 'Telegram/build/docker/**'
@@ -27,7 +27,7 @@ on:
       - 'LEGAL'
       - 'LICENSE'
       - '.github/**'
-      - '!.github/workflows/win.yml'
+      - '!.github/workflows/win_release.yml'
       - 'lib/xdg/**'
       - 'snap/**'
       - 'Telegram/build/docker/**'
@@ -177,12 +177,12 @@ jobs:
           -D DESKTOP_APP_NO_PDB=ON ^
           %TDESKTOP_BUILD_DEFINE%
 
-          cmake --build ..\out --config Release --parallel
+          cmake --build ..\out --config Debug --parallel
 
       - name: Move artifact.
         if: (env.UPLOAD_ARTIFACT == 'true') || (github.ref == 'refs/heads/nightly')
         run: |
-          set OUT=%TBUILD%\%REPO_NAME%\out\Release
+          set OUT=%TBUILD%\%REPO_NAME%\out\Debug
           mkdir artifact
           move %OUT%\Telegram.exe artifact/
           move %OUT%\Updater.exe artifact/
