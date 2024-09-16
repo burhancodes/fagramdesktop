@@ -128,7 +128,7 @@ exit /b %errorlevel%
   (
     echo /*
     echo This file is part of FAgram Desktop,
-    echo the official desktop application for the Telegram messaging service.
+    echo the unofficial desktop client based on Telegram Desktop.
     echo.
     echo For license and copyright information please follow this link:
     echo https://github.com/fajox1/fagramdesktop/blob/master/LEGAL

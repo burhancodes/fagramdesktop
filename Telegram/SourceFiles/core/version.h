@@ -1,6 +1,6 @@
 /*
 This file is part of FAgram Desktop,
-the official desktop application for the Telegram messaging service.
+the unofficial desktop client based on Telegram Desktop.
 
 For license and copyright information please follow this link:
 https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
@@ -22,7 +22,7 @@ constexpr auto AppId = "{bce922fb-9080-4f17-b79a-6d7ecfc98e00}"_cs;
 constexpr auto AppNameOld = "Telegram Win (Unofficial)"_cs;
 constexpr auto AppName = "FAgram Desktop"_cs;
 constexpr auto AppFile = "FAgram"_cs;
-constexpr auto AppVersion = 5005001;
-constexpr auto AppVersionStr = "5.5.1";
+constexpr auto AppVersion = 1000000;
+constexpr auto AppVersionStr = "1.0.0";
 constexpr auto AppBetaVersion = false;
 constexpr auto AppAlphaVersion = TDESKTOP_ALPHA_VERSION;
