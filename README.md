@@ -26,6 +26,10 @@ The latest version is available for
 * [Windows](https://t.me/FAgramWindows)
 * [Linux](https://t.me/FAgramLinux)
 
+<a href="https://snapcraft.io/fagram">
+  <img width=150,alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
+</a>
+
 ## <h2><img src="https://github.com/hikariatama/assets/raw/master/1312-micro-sd-card-flat.webp" height="50" align="middle"> Third-party</h2>
 
 * Qt 6 ([LGPL](http://doc.qt.io/qt-6/lgpl.html)) and Qt 5.15 ([LGPL](http://doc.qt.io/qt-5/lgpl.html)) slightly patched
