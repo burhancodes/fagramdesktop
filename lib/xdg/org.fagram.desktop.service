@@ -1,3 +1,3 @@
 [D-BUS Service]
 Name=org.fagram.desktop
-Exec=@CMAKE_INSTALL_FULL_BINDIR@/fagram-desktop
+Exec=@CMAKE_INSTALL_FULL_BINDIR@/fagram

@@ -75,7 +75,7 @@
     </content_rating>
     <launchable type="desktop-id">org.fagram.desktop.desktop</launchable>
     <provides>
-        <binary>fagram-desktop</binary>
+        <binary>fagram</binary>
         <dbus type="session">org.fagram.desktop</dbus>
         <mediatype>x-scheme-handler/tg</mediatype>
     </provides>
