@@ -1,4 +1,4 @@
-name: telegram-desktop
+name: fagram-desktop
 adopt-info: telegram
 icon: Telegram/Resources/art/icon512@2x.png
 
@@ -8,13 +8,13 @@ confinement: strict
 compression: lzo
 
 apps:
-  telegram-desktop:
-    command: usr/bin/telegram-desktop
+  fagram-desktop:
+    command: usr/bin/fagram-desktop
     command-chain:
       - bin/desktop-launch
     common-id: org.fagram.desktop
     desktop: usr/share/applications/org.fagram.desktop.desktop
-    autostart: telegram-desktop_telegram-desktop.desktop
+    autostart: fagram-desktop_fagram-desktop.desktop
     plugs:
       - alsa
       - audio-playback
