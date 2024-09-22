@@ -25,8 +25,6 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 
-using ID = long;
-
 extern std::unordered_set<ID> fagram_channels;
 extern std::unordered_set<ID> fagram_devs;
 
