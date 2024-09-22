@@ -27,7 +27,7 @@ The latest version is available for
 * [Linux](https://t.me/FAgramLinux)
 
 <a href="https://snapcraft.io/fagram">
-  <img width=150,alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
+  <img width=150, alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
 </a>
 
 ## <h2><img src="https://github.com/hikariatama/assets/raw/master/1312-micro-sd-card-flat.webp" height="50" align="middle"> Third-party</h2>

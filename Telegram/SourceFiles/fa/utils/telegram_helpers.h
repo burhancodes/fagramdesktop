@@ -9,7 +9,6 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #pragma once
 
 #include "fa/data/entities.h"
-
 #include "data/data_peer.h"
 #include "core/application.h"
 #include "main/main_account.h"
@@ -17,27 +16,21 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "main/main_session.h"
 #include "dialogs/dialogs_main_list.h"
 
-#include <string>       // For std::string
-#include <utility>      // For std::pair
-#include <functional>   // For std::function
+#include <string>     
+#include <utility>    
+#include <functional>  
+#include <unordered_set> 
+#include <QJsonArray> 
+#include <QUrl>       
 
-Main::Session *getSession(ID userId);
-bool accountExists(ID userId);
-void dispatchToMainThread(std::function<void()> callback, int delay = 0);
-not_null<History*> getHistoryFromDialogId(ID dialogId, Main::Session *session);
-ID getDialogIdFromPeer(not_null<PeerData*> peer);
+using ID = int; 
+
+extern std::unordered_set<ID> fagram_channels;
+extern std::unordered_set<ID> fagram_devs;
+
+void initialize_fagram_data();
 
 ID getBareID(not_null<PeerData*> peer);
-
-Main::Session *getSession(ID userId);
-bool accountExists(ID userId);
-void dispatchToMainThread(std::function<void()> callback);
-not_null<History *> getHistoryFromDialogId(ID dialogId, Main::Session *session);
-ID getDialogIdFromPeer(not_null<PeerData *> peer);
-std::pair<std::string, std::string> serializeTextWithEntities(not_null<HistoryItem *> item);
-
-ID getBareID(not_null<PeerData *> peer);
-
 bool isFAgramRelated(ID peerId);
 
 // thanks ayugram
