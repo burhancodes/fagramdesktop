@@ -19,11 +19,13 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include <string>     
 #include <utility>    
 #include <functional>  
-#include <unordered_set> 
-#include <QJsonArray> 
-#include <QUrl>       
+#include <unordered_set>
+#include <QtCore/QJsonArray>
+#include <QtCore/QUrl>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkReply>
 
-using ID = int; 
+using ID = int;
 
 extern std::unordered_set<ID> fagram_channels;
 extern std::unordered_set<ID> fagram_devs;
@@ -32,5 +34,3 @@ void initialize_fagram_data();
 
 ID getBareID(not_null<PeerData*> peer);
 bool isFAgramRelated(ID peerId);
-
-// thanks ayugram
