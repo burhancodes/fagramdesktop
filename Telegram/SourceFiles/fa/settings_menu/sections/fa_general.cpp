@@ -37,7 +37,6 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #define SettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
 	container, \
-	rktr(#LangKey), \
 	st::settingsButtonNoIcon \
 ))->toggleOn( \
 	rpl::single(::FASettings::JsonSettings::GetBool(#Option)) \
@@ -65,12 +64,11 @@ namespace Settings {
     void FAGeneral::SetupGeneral(not_null<Ui::VerticalLayout *> container) {
         Ui::AddSubsectionTitle(container, rpl::single(QString("General")));
 
-    	SettingsMenuJsonSwitch(rtg_settings_show_phone_number, streamer_mode);
-		SettingsMenuJsonSwitch(rtg_settings_auto_hide_notifications, auto_hide_notifications);
+		SettingsMenuJsonSwitch(QString("Show Seconds of Message"), QString("seconds_message"));
 
         container->add(object_ptr<Button>(
 	        container, 
-	        rpl::single(QString("Seconds in message")),
+	        rpl::single(QString("Show Seconds of Message")),
 	        st::settingsButtonNoIcon 
         ))->toggleOn(
 	        rpl::single(::FASettings::JsonSettings::GetBool("seconds_message"))
