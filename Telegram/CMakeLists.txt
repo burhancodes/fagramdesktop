@@ -713,6 +713,7 @@ PRIVATE
     fa/settings/fa_settings.h 
     fa/settings_menu/sections/fa_general.cpp 
     fa/settings_menu/sections/fa_general.h
+    fa/fa_version.h
     history/admin_log/history_admin_log_filter.cpp
     history/admin_log/history_admin_log_filter.h
     history/admin_log/history_admin_log_inner.cpp
