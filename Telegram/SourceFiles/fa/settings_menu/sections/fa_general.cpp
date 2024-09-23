@@ -65,7 +65,7 @@ namespace Settings {
     void FAGeneral::SetupGeneral(not_null<Ui::VerticalLayout *> container) {
         Ui::AddSubsectionTitle(container, rpl::single(QString("General")));
 
-		SettingsMenuJsonSwitch(QString("Show Seconds of Message"), seconds_message);
+		SettingsMenuJsonSwitch(rpl::single(QString("Show Seconds of Message")), seconds_message);
 
         container->add(object_ptr<Button>(
 	        container, 
