@@ -81,7 +81,6 @@ namespace Settings {
 				showOther(type);
 			});
 		};
-		Ui::AddSkip(container);
     	addSection(
 			rpl::single(QString("General")),
 			FAGeneral::Id(),
