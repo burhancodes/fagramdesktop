@@ -5,6 +5,7 @@ the unofficial desktop client based on Telegram Desktop.
 For license and copyright information please follow this link:
 https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
+
 #include "history/view/history_view_bottom_info.h"
 
 #include "ui/chat/message_bubble.h"
@@ -412,7 +413,7 @@ void BottomInfo::layoutDateText() {
 	const auto prefix = !author.isEmpty() ? u", "_q : QString();
 	const auto date = edited + QLocale().toString(
 		_data.date.time(),
-		QLocale::LongFormat);
+		FASettings::JsonSettings::GetBool("seconds_message") ? QLocale::LongFormat : QLocale::ShortFormat);
 	const auto afterAuthor = prefix + date;
 	const auto afterAuthorWidth = st::msgDateFont->width(afterAuthor);
 	const auto authorWidth = st::msgDateFont->width(author);

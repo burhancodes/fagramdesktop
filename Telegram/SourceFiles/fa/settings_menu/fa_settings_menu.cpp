@@ -82,6 +82,10 @@ namespace Settings {
 			});
 		};
 		Ui::AddSkip(container);
+    	addSection(
+			rpl::single(QString("General")),
+			FAGeneral::Id(),
+			{ &st::menuIconShowAll });
     }
 
 	void FA::SetupLinks(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller)
@@ -132,12 +136,12 @@ namespace Settings {
     void FA::setupContent(not_null<Window::SessionController *> controller) {
         const auto content = Ui::CreateChild<Ui::VerticalLayout>(this);
 
-    //	Ui::AddSkip(content);
-    //    SetupFASettings(content, controller);
+    	Ui::AddSkip(content);
+        SetupFASettings(content, controller);
 
-    //	Ui::AddSkip(content);
-    //	Ui::AddDivider(content);
-    //	Ui::AddSkip(content);
+    	Ui::AddSkip(content);
+    	Ui::AddDivider(content);
+    	Ui::AddSkip(content);
     	SetupLinks(content, controller);
 
         Ui::ResizeFitChild(this, content);

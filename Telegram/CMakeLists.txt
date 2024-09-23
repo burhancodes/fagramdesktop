@@ -709,6 +709,10 @@ PRIVATE
     fa/utils/telegram_helpers.h
     fa/settings_menu/fa_settings_menu.cpp
     fa/settings_menu/fa_settings_menu.h
+    fa/settings/fa_settings.cpp
+    fa/settings/fa_settings.h 
+    fa/settings_menu/sections/fa_general.cpp 
+    fa/settings_menu/sections/fa_general.h
     history/admin_log/history_admin_log_filter.cpp
     history/admin_log/history_admin_log_filter.h
     history/admin_log/history_admin_log_inner.cpp

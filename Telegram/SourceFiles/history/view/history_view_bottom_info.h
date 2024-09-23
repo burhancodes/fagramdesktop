@@ -7,6 +7,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #pragma once
 
+#include "fa/settings/fa_settings.h"
 #include "history/view/history_view_object.h"
 #include "ui/text/text.h"
 #include "base/flags.h"
