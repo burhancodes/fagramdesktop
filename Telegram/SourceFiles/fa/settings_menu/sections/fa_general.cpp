@@ -45,6 +45,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 ) | rpl::filter([](bool enabled) { \
 	return (enabled != ::FASettings::JsonSettings::GetBool(#Option)); \
 }) | rpl::start_with_next([](bool enabled) { \
+	::FASettings::JsonSettings::Write(); \
 	::FASettings::JsonSettings::Set(#Option, enabled); \
 	::FASettings::JsonSettings::Write(); \
 }, container->lifetime());
@@ -65,21 +66,7 @@ namespace Settings {
     void FAGeneral::SetupGeneral(not_null<Ui::VerticalLayout *> container) {
         Ui::AddSubsectionTitle(container, rpl::single(QString("General")));
 
-		SettingsMenuJsonSwitch("Show Seconds of Message", seconds_message);
-
-        container->add(object_ptr<Button>(
-	        container, 
-	        rpl::single(QString("Show Seconds of Message")),
-	        st::settingsButtonNoIcon 
-        ))->toggleOn(
-	        rpl::single(::FASettings::JsonSettings::GetBool("seconds_message"))
-        )->toggledValue(
-        ) | rpl::filter([](bool enabled) {
-	        return (enabled != ::FASettings::JsonSettings::GetBool("seconds_message"));
-        }) | rpl::start_with_next([](bool enabled) {
-	        ::FASettings::JsonSettings::Set("seconds_message", enabled);
-	        ::FASettings::JsonSettings::Write();
-        }, container->lifetime());
+		SettingsMenuJsonSwitch(Show Seconds of Message, seconds_message);
     }
 
     void FAGeneral::SetupFAGeneral(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
