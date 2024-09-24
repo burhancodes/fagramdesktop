@@ -7,6 +7,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "core/launcher.h"
 
+#include "fa/settings/fa_settings.h"
 #include "platform/platform_launcher.h"
 #include "platform/platform_specific.h"
 #include "base/options.h"
@@ -317,7 +318,7 @@ void Launcher::init() {
 	prepareSettings();
 	initQtMessageLogging();
 
-	QApplication::setApplicationName(u"TelegramDesktop"_q);
+	QApplication::setApplicationName(u"FAgramDesktop"_q);
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	// fallback session management is useless for tdesktop since it doesn't have
@@ -351,6 +352,7 @@ void Launcher::initHighDpi() {
 }
 
 int Launcher::exec() {
+	FASettings::JsonSettings::Start();
 	init();
 
 	if (cLaunchMode() == LaunchModeFixPrevious) {
@@ -362,6 +364,7 @@ int Launcher::exec() {
 	// Must be started before Platform is started.
 	Logs::start();
 	base::options::init(cWorkingDir() + "tdata/experimental_options.json");
+	FASettings::JsonSettings::Load();
 
 	// Must be called after options are inited.
 	initHighDpi();
@@ -403,6 +406,7 @@ int Launcher::exec() {
 	CrashReports::Finish();
 	ThirdParty::finish();
 	Platform::finish();
+	FASettings::JsonSettings::Finish();
 	Logs::finish();
 
 	return result;
