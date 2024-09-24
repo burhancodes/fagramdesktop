@@ -68,35 +68,6 @@ namespace Settings {
 
 		SettingsMenuJsonSwitch(Show Seconds of Message, seconds_message);
         SettingsMenuJsonSwitch(Disable ads, disable_ads);
-
-		const auto recentStickersLimitLabel = container->add(
-			object_ptr<Ui::LabelSimple>(
-				container,
-				st::settingsAudioVolumeLabel),
-			st::settingsAudioVolumeLabelPadding);
-		const auto recentStickersLimitSlider = container->add(
-			object_ptr<Ui::MediaSlider>(
-				container,
-				st::settingsAudioVolumeSlider),
-			st::settingsAudioVolumeSliderPadding);
-		const auto updateRecentStickersLimitLabel = [=](int value) {
-			recentStickersLimitLabel->setText(
-				(value == 0)
-					? rpl::single(QString("Recent stickers: Hidden"))
-					: rpl::single(QString("Recent stickers: %1").arg(value)) );
-		};
-        const auto updateRecentStickersLimitHeight = [=](int value) {
-			updateRecentStickersLimitLabel(value);
-			::FASettings::JsonSettings::Set("recent_stickers_limit", value);
-			::FASettings::JsonSettings::Write();
-		};
-		recentStickersLimitSlider->resize(st::settingsAudioVolumeSlider.seekSize);
-		recentStickersLimitSlider->setPseudoDiscrete(
-			100+1,
-			[](int val) { return val; },
-			::FASettings::JsonSettings::GetInt("recent_stickers_limit"),
-			updateRecentStickersLimitHeight);
-		updateRecentStickersLimitLabel(::FASettings::JsonSettings::GetInt("recent_stickers_limit"));
     }
 
     void FAGeneral::SetupFAGeneral(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
