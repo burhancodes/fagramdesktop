@@ -276,6 +276,9 @@ chatThemeButtonMargin: margins(10px, 0px, 10px, 8px);
 autoDownloadLimitButton: SettingsButton(settingsButtonNoIcon) {
 	padding: margins(22px, 10px, 22px, 0px);
 }
+settingsAudioVolumeSlider: MediaSlider(defaultContinuousSlider) {
+	seekSize: size(15px, 15px);
+}
 settingsLevelMeterPadding: margins(22px, 10px, 20px, 10px);
 
 settingsForwardPrivacyPadding: 10px;
