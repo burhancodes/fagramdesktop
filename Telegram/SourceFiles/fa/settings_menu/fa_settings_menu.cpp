@@ -12,6 +12,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #include "fa/settings_menu/fa_settings_menu.h"
 #include "fa/settings_menu/sections/fa_general.h"
+#include "fa/settings_menu/sections/fa_chats.h"
 
 #include "core/application.h"
 #include "lang_auto.h"
@@ -86,6 +87,10 @@ namespace Settings {
 			rpl::single(QString("General")),
 			FAGeneral::Id(),
 			{ &st::menuIconShowAll });
+    	addSection(
+			rpl::single(QString("Chats")),
+			FAChats::Id(),
+			{ &st::menuIconChatBubble });
     }
 
 	void FA::SetupLinks(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller)
