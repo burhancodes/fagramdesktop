@@ -186,6 +186,13 @@ const std::map<QString, Definition, std::greater<QString>> DefinitionMap {
 	{ "seconds_message", {
 		.type = SettingType::BoolSetting,
 		.defaultValue = true, }},
+	{ "disable_ads", {
+		.type = SettingType::BoolSetting,
+		.defaultValue = false, }}
+	{ "recent_stickers_limit", {
+		.type = SettingType::IntSetting,
+		.defaultValue = 30,
+		.limitHandler = IntLimit(0, 100, 30), }},
 };
 
 using OldOptionKey = QString;

@@ -105,7 +105,7 @@ namespace Settings {
     	AddButtonWithLabel(
 			container,
 			rpl::single(QString("Group")),
-			rpl::single(QString("@FAgramGroup")),
+			rpl::single(QString("@FAgram_Group")),
 			st::settingsButton,
 			{ &st::menuIconGroups }
 		)->setClickedCallback([=] {
@@ -120,6 +120,16 @@ namespace Settings {
 			{ &st::menuIconSettings }
 		)->setClickedCallback([=] {
 			Core::App().openLocalUrl("tg://resolve?domain=FAgram_Group&thread=11", {});
+		});
+
+    	AddButtonWithLabel(
+			container,
+			rpl::single(QString("Beta")),
+			rpl::single(QString("@FAgramBeta")),
+			st::settingsButton,
+			{ &st::menuIconShowAll }
+		)->setClickedCallback([=] {
+			Core::App().openLocalUrl("tg://resolve?domain=FAgramBeta", {});
 		});
 
     	AddButtonWithLabel(

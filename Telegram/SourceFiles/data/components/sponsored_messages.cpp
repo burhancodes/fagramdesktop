@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "data/components/sponsored_messages.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "api/api_text_entities.h"
 #include "apiwrap.h"
 #include "core/click_handler_types.h"
@@ -194,7 +196,7 @@ void SponsoredMessages::inject(
 }
 
 bool SponsoredMessages::canHaveFor(not_null<History*> history) const {
-	return history->peer->isChannel();
+    return !FASettings::JsonSettings::GetBool("disable_ads") && history->peer->isChannel();
 }
 
 void SponsoredMessages::request(not_null<History*> history, Fn<void()> done) {
