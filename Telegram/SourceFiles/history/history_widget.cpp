@@ -2998,6 +2998,14 @@ void HistoryWidget::updateControlsVisibility() {
 			toggle(_muteUnmute);
 		} else if (isBotStart()) {
 			toggle(_botStart);
+
+			const auto startToken = _peer->asUser()->botInfo->startToken;
+			if (!startToken.isEmpty()) {
+    			const auto s = QString("START (%1)").arg(startToken);
+    			_botStart->setText(s);
+			} else {
+    			_botStart->setText(QString("START"));
+			}
 		}
 		_kbShown = false;
 		_fieldAutocomplete->hide();

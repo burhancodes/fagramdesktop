@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "core/local_url_handlers.h"
 
+#include "fa/url_handlers/fa_url_handlers.h"
+
 #include "api/api_authorizations.h"
 #include "api/api_confirm_phone.h"
 #include "api/api_chat_filters.h"
@@ -1335,12 +1337,24 @@ const std::vector<LocalUrlHandler> &LocalUrlHandlers() {
 			ResolveBoost,
 		},
 		{
+			u"^user\\?(.+)(#|$)"_q,
+			FAUrlHandlers::ResolveUser
+		},
+		{
 			u"^message/?\\?slug=([a-zA-Z0-9\\.\\_\\-]+)(&|$)"_q,
 			ResolveChatLink
 		},
 		{
 			u"^stars_topup/?\\?(.+)(#|$)"_q,
 			ResolveTopUp
+		},
+		{
+			u"^fa/?(.+)?(#|$)"_q,
+			FAUrlHandlers::HandleFA
+		},
+		{
+			u"^nya/?(.+)?(#|$)"_q,
+			FAUrlHandlers::HandleNya
 		},
 		{
 			u"^([^\\?]+)(\\?|#|$)"_q,

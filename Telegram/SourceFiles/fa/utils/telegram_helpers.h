@@ -32,3 +32,5 @@ void initialize_fagram_data();
 
 ID getBareID(not_null<PeerData*> peer);
 bool isFAgramRelated(ID peerId);
+
+void searchById(ID userId, Main::Session *session, bool retry, const Callback &callback);
