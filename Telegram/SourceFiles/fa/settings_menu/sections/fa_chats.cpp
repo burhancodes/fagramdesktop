@@ -79,8 +79,8 @@ namespace Settings {
 		const auto updateRecentStickersLimitLabel = [=](int value) {
 			recentStickersLimitLabel->setText(
 				(value == 0)
-					? rpl::single(QString("Recent stickers: Hidden"))
-					: rpl::single(QString("Recent stickers: %1").arg(value)) );
+					? QString("Recent stickers: Hidden")
+					: QString("Recent stickers: %1").arg(value) );
 		};
         const auto updateRecentStickersLimitHeight = [=](int value) {
 			updateRecentStickersLimitLabel(value);
