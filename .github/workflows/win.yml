@@ -150,7 +150,7 @@ jobs:
           API="-D TDESKTOP_API_TEST=ON"
           if [ $GITHUB_REF == 'refs/heads/nightly' ]; then
             echo "Use the open credentials."
-            API="-D TDESKTOP_API_ID=2040 -D TDESKTOP_API_HASH=b18441a1ff607e10a989891a5462e627"
+            API="-D TDESKTOP_API_ID=${{ secrets.API_ID_CONFIG }} -D TDESKTOP_API_HASH=${{ secrets.API_HASH_CONFIG }}"
           fi
           echo "TDESKTOP_BUILD_API=$API" >> $GITHUB_ENV
 

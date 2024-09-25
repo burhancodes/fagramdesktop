@@ -133,8 +133,8 @@ parts:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_PREFIX_PATH=$CRAFT_STAGE/usr
-      - -DTDESKTOP_API_ID=2040
-      - -DTDESKTOP_API_HASH=b18441a1ff607e10a989891a5462e627
+      - -DTDESKTOP_API_ID=${{ secrets.API_ID_CONFIG }}
+      - -DTDESKTOP_API_HASH=${{ secrets.API_HASH_CONFIG }}
       - -DDESKTOP_APP_USE_PACKAGED_LAZY=ON
     override-pull: |
       craftctl default
