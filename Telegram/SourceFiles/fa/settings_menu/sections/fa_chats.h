@@ -20,7 +20,7 @@ namespace Window {
 } // namespace Window
 
 namespace Settings {
-    class FAGeneral : public Section<FAChats> {
+    class FAChats : public Section<FAChats> {
     public:
         FAChats(QWidget *parent, not_null<Window::SessionController *> controller);
 
