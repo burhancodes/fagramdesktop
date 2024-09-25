@@ -24,11 +24,15 @@ WQIDAQAB\n\
 ";
 
 const char *PublicBetaKey = "\
------BEGIN RSA PUBLIC KEY-----\n\
-MIGJAoGBALWu9GGs0HED7KG7BM73CFZ6o0xufKBRQsdnq3lwA8nFQEvmdu+g/I1j\n\
-0LQ+0IQO7GW4jAgzF/4+soPDb6uHQeNFrlVx1JS9DZGhhjZ5rf65yg11nTCIHZCG\n\
-w/CVnbwQOw0g5GBwwFV3r0uTTvy44xx8XXxk+Qknu4eBCsmrAFNnAgMBAAE=\n\
------END RSA PUBLIC KEY-----\
+-----BEGIN PUBLIC KEY-----\n\
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorYQYyqpwVQ5d+3ekoHf\n\
+eqdsnw+B8xDwe5Di8zKjoo18Y060LbDAO3t1npvmF+WBbYLfm/V3NNeWOexzDow6\n\
+Zx/PVLZzfajIlWQMP4h4k/pp+mz6NwvvbMx4QLzDa0bB4L9D9z0M/TIzCp0p/zry\n\
+YNakpQDJ2ee1Ix0pbRslWW5OeiZbjoDaSD8btVnXEu/suU71yDdEhnhmBX7QVnPN\n\
+mIcP6yIMaxBGG7/Ku0KvDdHO9s0qVFz8CZQqnxQYTHnFXw8viTjYzMbjiZAM1K9i\n\
+VcyyHHnbSssjP6he1zucP+M+9m/baZ7AK2zxee9G39xkEkx9qMhtRoZ8/sqtBDAs\n\
+WQIDAQAB\n\
+-----END PUBLIC KEY-----\
 ";
 
 extern const char *PrivateKey;
