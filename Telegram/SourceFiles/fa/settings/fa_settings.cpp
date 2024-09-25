@@ -188,7 +188,7 @@ const std::map<QString, Definition, std::greater<QString>> DefinitionMap {
 		.defaultValue = true, }},
 	{ "disable_ads", {
 		.type = SettingType::BoolSetting,
-		.defaultValue = false, }}
+		.defaultValue = false, }},
 	{ "recent_stickers_limit", {
 		.type = SettingType::IntSetting,
 		.defaultValue = 30,
