@@ -15,7 +15,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "lang_auto.h"
 #include "mainwindow.h"
 #include "ui/boxes/confirm_box.h"
-#include "ayu/utils/telegram_helpers.h"
+#include "fa/utils/telegram_helpers.h"
 #include "boxes/abstract_box.h"
 #include "core/application.h"
 #include "data/data_session.h"
