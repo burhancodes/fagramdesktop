@@ -35,6 +35,7 @@ on:
       - 'Telegram/SourceFiles/platform/win/**'
       - 'Telegram/SourceFiles/platform/linux/**'
       - 'Telegram/configure.bat'
+  workflow_dispatch:
 
 jobs:
 
