@@ -1336,10 +1336,10 @@ const std::vector<LocalUrlHandler> &LocalUrlHandlers() {
 			u"^boost/?\\?(.+)(#|$)"_q,
 			ResolveBoost,
 		},
-		{
-			u"^user\\?(.+)(#|$)"_q,
-			FAUrlHandlers::ResolveUser
-		},
+	//	{
+	//		u"^user\\?(.+)(#|$)"_q,
+	//		FAUrlHandlers::ResolveUser
+	//	},
 		{
 			u"^message/?\\?slug=([a-zA-Z0-9\\.\\_\\-]+)(&|$)"_q,
 			ResolveChatLink

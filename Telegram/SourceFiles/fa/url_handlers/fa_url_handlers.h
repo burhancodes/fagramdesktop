@@ -18,11 +18,6 @@ namespace FAUrlHandlers
 
 using Match = qthelp::RegularExpressionMatch;
 
-bool ResolveUser(
-	Window::SessionController *controller,
-	const Match &match,
-	const QVariant &context);
-
 bool HandleFA(
 	Window::SessionController *controller,
 	const Match &match,
