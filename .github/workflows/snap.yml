@@ -37,7 +37,6 @@ on:
       - 'Telegram/Telegram.plist'
 
 jobs:
-
   snap:
     name: Ubuntu
     runs-on: ubuntu-20.04
@@ -64,6 +63,11 @@ jobs:
 
       - name: Free up some disk space.
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
+
+      - name: Debug Environment Variables
+        run: |
+          echo "TDESKTOP_API_ID: $TDESKTOP_API_ID"
+          echo "TDESKTOP_API_HASH: $TDESKTOP_API_HASH"
 
       - name: FAgram Desktop snap build.
         run: sg lxd -c 'snap run snapcraft --verbosity=debug'
