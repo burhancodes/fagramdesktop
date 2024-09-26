@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "history/history_widget.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "api/api_editing.h"
 #include "api/api_bot.h"
 #include "api/api_chat_participants.h"
@@ -3000,7 +3002,8 @@ void HistoryWidget::updateControlsVisibility() {
 			toggle(_botStart);
 
 			const auto startToken = _peer->asUser()->botInfo->startToken;
-			if (!startToken.isEmpty()) {
+			bool showStartToken = FASettings::JsonSettings:GetBool("show_start_token");
+			if (!startToken.isEmpty() || showStartToken) {
     			const auto s = QString("START (%1)").arg(startToken);
     			_botStart->setText(s);
 			} else {

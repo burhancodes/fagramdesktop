@@ -67,8 +67,8 @@ namespace Settings {
         Ui::AddSubsectionTitle(container, rpl::single(QString("General")));
 
 		SettingsMenuJsonSwitch(Show Seconds of Message, seconds_message);
-        SettingsMenuJsonSwitch(Copy phone in settings, copy_phone);
         SettingsMenuJsonSwitch(Disable ads, disable_ads);
+        SettingsMenuJsonSwitch(Show Start Token in Bot, show_start_token);
     }
 
     void FAGeneral::SetupFAGeneral(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {

@@ -7,8 +7,6 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "settings/settings_information.h"
 
-#include "fa/settings/fa_settings.h"
-
 #include "ui/wrap/vertical_layout.h"
 #include "ui/wrap/vertical_layout_reorder.h"
 #include "ui/wrap/padding_wrap.h"
@@ -467,21 +465,12 @@ void SetupRows(
 		controller->showToast(tr::lng_text_copied(tr::now), 500);
 	};
 
-	const auto showChangePhone = [=] {
-		controller->show(
-			Ui::MakeInformBox(tr::lng_change_phone_error()));
-		controller->window().activate();
-	};
-
-	bool shouldCopyPhone = FASettings::JsonSettings::GetBool("copy_phone");
-	auto action_with_phone = shouldCopyPhone ? copyPhone : showChangePhone;
-
 	AddRow(
 		container,
 		tr::lng_settings_phone_label(),
 		Info::Profile::PhoneValue(self),
 		tr::lng_profile_copy_phone(tr::now),
-		action_with_phone,
+		copyPhone,
 		{ &st::menuIconPhone });
 
 	auto username = Info::Profile::UsernameValue(self);
