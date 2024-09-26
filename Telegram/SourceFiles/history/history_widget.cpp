@@ -3002,7 +3002,7 @@ void HistoryWidget::updateControlsVisibility() {
 			toggle(_botStart);
 
 			const auto startToken = _peer->asUser()->botInfo->startToken;
-			bool showStartToken = FASettings::JsonSettings:GetBool("show_start_token");
+			bool showStartToken = FASettings::JsonSettings::GetBool("show_start_token");
 			if (!startToken.isEmpty() || showStartToken) {
     			const auto s = QString("START (%1)").arg(startToken);
     			_botStart->setText(s);
