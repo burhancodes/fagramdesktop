@@ -465,7 +465,7 @@ void SetupRows(
 	const auto copyPhone = [=] {
 		QGuiApplication::clipboard()->setText(self->phone());
 		controller->showToast(tr::lng_text_copied(tr::now), 500);
-	}
+	};
 
 	const auto showChangePhone = [=] {
 		controller->show(
