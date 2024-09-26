@@ -36,3 +36,4 @@ bool isFAgramRelated(ID peerId);
 using Callback = Fn<void(const QString &, UserData *)>;
 
 void searchById(ID userId, Main::Session *session, bool retry, const Callback &callback);
+void searchById(ID userId, Main::Session *session, const Callback &callback);

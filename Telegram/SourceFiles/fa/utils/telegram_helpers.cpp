@@ -64,3 +64,37 @@ bool isFAgramRelated(ID peerId) {
     }
     return fagram_devs.contains(peerId) || fagram_channels.contains(peerId);
 }
+
+void searchById(ID userId, Main::Session *session, bool retry, const Callback &callback) {
+	if (userId == 0 || !session) {
+		callback(QString(), nullptr);
+		return;
+	}
+
+	const auto dataLoaded = session->data().userLoaded(userId);
+	if (dataLoaded) {
+		callback(dataLoaded->username(), dataLoaded);
+		return;
+	}
+
+	searchUser(userId,
+			   session,
+			   true,
+			   true,
+			   [=](const QString &title, UserData *data)
+			   {
+				   if (data && data->accessHash()) {
+					   callback(title, data);
+				   } else {
+					   if (retry) {
+						   searchById(0x100000000 + userId, session, false, callback);
+					   } else {
+						   callback(QString(), nullptr);
+					   }
+				   }
+			   });
+}
+
+void searchById(ID userId, Main::Session *session, const Callback &callback) {
+	searchById(userId, session, true, callback);
+}
