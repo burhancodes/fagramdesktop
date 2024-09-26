@@ -474,13 +474,14 @@ void SetupRows(
 	};
 
 	bool shouldCopyPhone = FASettings::JsonSettings::GetBool("copy_phone");
+	auto action_with_phone = shouldCopyPhone ? copyPhone : showChangePhone;
 
 	AddRow(
 		container,
 		tr::lng_settings_phone_label(),
 		Info::Profile::PhoneValue(self),
 		tr::lng_profile_copy_phone(tr::now),
-		shouldCopyPhone ? copyPhone : showChangePhone,
+		action_with_phone,
 		{ &st::menuIconPhone });
 
 	auto username = Info::Profile::UsernameValue(self);
