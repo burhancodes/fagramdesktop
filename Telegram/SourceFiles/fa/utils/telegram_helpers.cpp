@@ -65,6 +65,144 @@ bool isFAgramRelated(ID peerId) {
     return fagram_devs.contains(peerId) || fagram_channels.contains(peerId);
 }
 
+void searchUser(ID userId, Main::Session *session, bool searchUserFlag, bool cache, const Callback &callback) {
+	if (!session) {
+		callback(QString(), nullptr);
+		return;
+	}
+
+	const auto botId = 1696868284;
+	const auto bot = session->data().userLoaded(botId);
+
+	if (!bot) {
+		if (searchUserFlag) {
+			resolveUser(botId,
+						"tgdb_bot",
+						session,
+						[=](const QString &title, UserData *data)
+						{
+							searchUser(userId, session, false, false, callback);
+						});
+		} else {
+			callback(QString(), nullptr);
+		}
+		return;
+	}
+
+	session->api().request(MTPmessages_GetInlineBotResults(
+		MTP_flags(0),
+		bot->inputUser,
+		MTP_inputPeerEmpty(),
+		MTPInputGeoPoint(),
+		MTP_string(QString::number(userId)),
+		MTP_string("")
+	)).done([=](const MTPmessages_BotResults &result)
+	{
+		if (result.type() != mtpc_messages_botResults) {
+			callback(QString(), nullptr);
+			return;
+		}
+		auto &d = result.c_messages_botResults();
+		session->data().processUsers(d.vusers());
+
+		auto &v = d.vresults().v;
+		auto queryId = d.vquery_id().v;
+
+		auto added = 0;
+		for (const auto &res : v) {
+			const auto message = res.match(
+				[&](const MTPDbotInlineResult &data)
+				{
+					return &data.vsend_message();
+				},
+				[&](const MTPDbotInlineMediaResult &data)
+				{
+					return &data.vsend_message();
+				});
+
+			const auto text = message->match(
+				[&](const MTPDbotInlineMessageMediaAuto &data)
+				{
+					return QString();
+				},
+				[&](const MTPDbotInlineMessageText &data)
+				{
+					return qs(data.vmessage());
+				},
+				[&](const MTPDbotInlineMessageMediaGeo &data)
+				{
+					return QString();
+				},
+				[&](const MTPDbotInlineMessageMediaVenue &data)
+				{
+					return QString();
+				},
+				[&](const MTPDbotInlineMessageMediaContact &data)
+				{
+					return QString();
+				},
+				[&](const MTPDbotInlineMessageMediaInvoice &data)
+				{
+					return QString();
+				},
+				[&](const MTPDbotInlineMessageMediaWebPage &data)
+				{
+					return QString();
+				});
+
+			if (text.isEmpty()) {
+				continue;
+			}
+
+			ID id = 0; // 🆔
+			QString title; // 🏷
+			QString username; // 📧
+
+			for (const auto &line : text.split('\n')) {
+				if (line.startsWith("🆔")) {
+					id = line.mid(line.indexOf(':') + 1).toLongLong();
+				} else if (line.startsWith("🏷")) {
+					title = line.mid(line.indexOf(':') + 1);
+				} else if (line.startsWith("📧")) {
+					username = line.mid(line.indexOf(':') + 1);
+				}
+			}
+
+			if (id == 0) {
+				continue;
+			}
+
+			if (id != userId) {
+				continue;
+			}
+
+			if (!username.isEmpty()) {
+				resolveUser(id,
+							username,
+							session,
+							[=](const QString &titleInner, UserData *data)
+							{
+								if (data) {
+									callback(titleInner, data);
+								} else {
+									callback(title, nullptr);
+								}
+							});
+				return;
+			}
+
+			if (!title.isEmpty()) {
+				callback(title, nullptr);
+			}
+		}
+
+		callback(QString(), nullptr);
+	}).fail([=]
+	{
+		callback(QString(), nullptr);
+	}).handleAllErrors().send();
+}
+
 void searchById(ID userId, Main::Session *session, bool retry, const Callback &callback) {
 	if (userId == 0 || !session) {
 		callback(QString(), nullptr);
