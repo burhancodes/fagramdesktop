@@ -54,5 +54,6 @@ private:
 
 bool checkReadyUpdate();
 void UpdateApplication();
+QString countAlphaVersionSignature(uint64 version);
 
 } // namespace Core
