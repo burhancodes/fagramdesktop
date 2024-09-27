@@ -1672,4 +1672,53 @@ void UpdateApplication() {
 	}
 }
 
+QString countAlphaVersionSignature(uint64 version) { // duplicated in packer.cpp
+	if (cAlphaPrivateKey().isEmpty()) {
+		LOG(("Error: Trying to count alpha version signature without alpha private key!"));
+		return QString();
+	}
+
+	QByteArray signedData = (qstr("FAgramBeta_") + QString::number(version, 16).toLower()).toUtf8();
+
+	static const int32 shaSize = 20, keySize = 128;
+
+	uchar sha1Buffer[shaSize];
+	hashSha1(signedData.constData(), signedData.size(), sha1Buffer); // count sha1
+
+	uint32 siglen = 0;
+
+	RSA *prKey = [] {
+		const auto bio = MakeBIO(
+			const_cast<char*>(cAlphaPrivateKey().constData()),
+			-1);
+		return PEM_read_bio_RSAPrivateKey(bio.get(), 0, 0, 0);
+	}();
+	if (!prKey) {
+		LOG(("Error: Could not read alpha private key!"));
+		return QString();
+	}
+	if (RSA_size(prKey) != keySize) {
+		LOG(("Error: Bad alpha private key size: %1").arg(RSA_size(prKey)));
+		RSA_free(prKey);
+		return QString();
+	}
+	QByteArray signature;
+	signature.resize(keySize);
+	if (RSA_sign(NID_sha1, (const uchar*)(sha1Buffer), shaSize, (uchar*)(signature.data()), &siglen, prKey) != 1) { // count signature
+		LOG(("Error: Counting alpha version signature failed!"));
+		RSA_free(prKey);
+		return QString();
+	}
+	RSA_free(prKey);
+
+	if (siglen != keySize) {
+		LOG(("Error: Bad alpha version signature length: %1").arg(siglen));
+		return QString();
+	}
+
+	signature = signature.toBase64(QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
+	signature = signature.replace('-', '8').replace('_', 'B');
+	return QString::fromUtf8(signature.mid(19, 32));
+}
+
 } // namespace Core
