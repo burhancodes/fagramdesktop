@@ -6,9 +6,9 @@ For license and copyright information please follow this link:
 https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 
-#include "FA/settings/FA_settings.h"
+#include "fa/settings/fa_settings.h"
 
-#include "FA/FA_version.h"
+#include "fa/fa_version.h"
 #include "mainwindow.h"
 #include "mainwidget.h"
 #include "window/window_controller.h"
