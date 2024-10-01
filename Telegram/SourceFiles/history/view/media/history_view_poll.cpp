@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "history/view/media/history_view_poll.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "core/ui_integration.h" // Core::MarkedTextContext.
 #include "lang/lang_keys.h"
 #include "history/history.h"
@@ -918,7 +920,8 @@ void Poll::paintRecentVoters(
 			p.setPen(pen);
 			p.setBrush(Qt::NoBrush);
 			PainterHighQualityEnabler hq(p);
-			p.drawEllipse(x, y, size, size);
+			auto radius = FASettings::JsonSettings::GetInt("roundness") / 100. * size;
+			p.drawRoundedRect(x, y, size, size, radius, radius);
 		};
 		if (usesBubblePattern(context)) {
 			const auto add = st::lineWidth * 2;

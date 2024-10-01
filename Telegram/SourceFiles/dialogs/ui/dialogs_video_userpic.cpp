@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "dialogs/ui/dialogs_video_userpic.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "core/file_location.h"
 #include "data/data_peer.h"
 #include "data/data_photo.h"
@@ -85,11 +87,23 @@ void VideoUserpic::paintLeft(
 	if (rtl()) {
 		x = w - x - size;
 	}
-	if (_video && _video->ready()) {
+if (_video && _video->ready()) {
 		startReady();
 
 		const auto now = paused ? crl::time(0) : crl::now();
-		p.drawImage(x, y, _video->current(request(size), now));
+
+		p.save();
+
+		QPainterPath roundedRect;
+		QImage image = _video->current(request(size), now);
+		roundedRect.addRoundedRect(
+			QRect(x, y, image.height(), image.width()),
+			image.width() * FASettings::JsonSettings::GetInt("roundness") / 100,
+			image.height() * FASettings::JsonSettings::GetInt("roundness") / 100);
+    	p.setClipPath(roundedRect);
+		p.drawImage(x, y, image);
+
+		p.restore();
 	} else {
 		_peer->paintUserpicLeft(p, view, x, y, w, size);
 	}

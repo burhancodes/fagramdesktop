@@ -5,6 +5,9 @@ the unofficial desktop client based on Telegram Desktop.
 For license and copyright information please follow this link:
 https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
+
+#include "fa/settings/fa_settings.h"
+
 #include "ui/userpic_view.h"
 
 #include "ui/empty_userpic.h"
@@ -43,6 +46,9 @@ void ValidateUserpicCache(
 	view.forum = forumValue;
 	view.paletteVersion = version;
 
+	auto radius = size * (FASettings::JsonSettings::GetInt("roundness") / 100) / style::DevicePixelRatio();
+	if (forum) radius *= Ui::ForumUserpicRadiusMultiplier();
+
 	if (cloud) {
 		view.cached = cloud->scaled(
 			full,
@@ -51,9 +57,7 @@ void ValidateUserpicCache(
 		if (forum) {
 			view.cached = Images::Round(
 				std::move(view.cached),
-				Images::CornersMask(size
-					* Ui::ForumUserpicRadiusMultiplier()
-					/ style::DevicePixelRatio()));
+				Images::CornersMask(radius));
 		} else {
 			view.cached = Images::Circle(std::move(view.cached));
 		}
@@ -71,7 +75,7 @@ void ValidateUserpicCache(
 				0,
 				size,
 				size,
-				size * Ui::ForumUserpicRadiusMultiplier());
+				radius);
 		} else {
 			empty->paintCircle(p, 0, 0, size, size);
 		}

@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "data/data_peer.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "api/api_sensitive_content.h"
 #include "data/data_user.h"
 #include "data/data_chat.h"
@@ -403,7 +405,18 @@ void PeerData::paintUserpic(
 		cloud ? nullptr : ensureEmptyUserpic().get(),
 		size * ratio,
 		isForum());
-	p.drawImage(QRect(x, y, size, size), view.cached);
+
+	p.save();
+	auto hq = PainterHighQualityEnabler(p);
+	QPainterPath roundedRect;
+	QImage image = view.cached;
+	roundedRect.addRoundedRect(
+		QRect(x, y, size, size),
+		size * FASettings::JsonSettings::GetInt("roundness") / 100.,
+		size * FASettings::JsonSettings::GetInt("roundness") / 100.);
+    p.setClipPath(roundedRect);
+	p.drawImage(x, y, image);
+	p.restore();
 }
 
 void PeerData::loadUserpic() {

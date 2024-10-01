@@ -13,6 +13,7 @@ include(cmake/generate_numbers.cmake)
 
 set(style_files
     fa/ui/fagram_icons.style
+    fa/ui/fa_styles.style
 
     ui/td_common.style
     ui/filter_icons.style

@@ -715,8 +715,12 @@ PRIVATE
     fa/settings_menu/sections/fa_general.h
     fa/settings_menu/sections/fa_chats.cpp 
     fa/settings_menu/sections/fa_chats.h
+    fa/settings_menu/sections/fa_appearance.cpp
+    fa/settings_menu/sections/fa_appearance.h
     fa/url_handlers/fa_url_handlers.cpp
     fa/url_handlers/fa_url_handlers.h
+    fa/ui/previews.cpp
+    fa/ui/previews.h
     fa/fa_version.h
     history/admin_log/history_admin_log_filter.cpp
     history/admin_log/history_admin_log_filter.h

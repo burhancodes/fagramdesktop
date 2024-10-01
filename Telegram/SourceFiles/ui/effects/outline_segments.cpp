@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "ui/effects/outline_segments.h"
 
+#include "fa/settings/fa_settings.h"
+
 namespace Ui {
 
 void PaintOutlineSegments(
@@ -18,11 +20,12 @@ void PaintOutlineSegments(
 
 	p.setBrush(Qt::NoBrush);
 	const auto count = std::min(int(segments.size()), kOutlineSegmentsMax);
-	if (count == 1) {
-		p.setPen(QPen(segments.front().brush, segments.front().width));
-		p.drawEllipse(ellipse);
-		return;
-	}
+	p.setPen(QPen(segments.front().brush, segments.front().width));
+	p.drawRoundedRect(
+		ellipse, 
+		ellipse.height() * FASettings::JsonSettings::GetInt("roundness") * 0.0102, 
+		ellipse.width() * FASettings::JsonSettings::GetInt("roundness") * 0.0102);
+	return;
 	const auto small = 160;
 	const auto full = arc::kFullLength;
 	const auto separator = (full > 1.1 * small * count)

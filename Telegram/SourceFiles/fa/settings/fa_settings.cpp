@@ -196,6 +196,10 @@ const std::map<QString, Definition, std::greater<QString>> DefinitionMap {
 		.type = SettingType::IntSetting,
 		.defaultValue = 30,
 		.limitHandler = IntLimit(0, 100, 30), }},
+	{ "roundness", {
+		.type = SettingType::IntSetting,
+		.defaultValue = 50,
+		.limitHandler = IntLimit(0, 50, 50), }},
 };
 
 using OldOptionKey = QString;
