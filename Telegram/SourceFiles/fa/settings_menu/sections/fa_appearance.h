@@ -10,13 +10,12 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #include "settings/settings_common.h"
 #include "settings/settings_common_session.h"
-#include <QLabel>
-#include <QSlider>
 
 class BoxContent;
 
 namespace Window {
     class Controller;
+
     class SessionController;
 } // namespace Window
 
@@ -29,12 +28,9 @@ namespace Settings {
 
     private:
         void SetupAppearance(not_null<Ui::VerticalLayout *> container);
-        void SetupFAAppearance(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller);
+        
+        void SetupFAAppearance(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> null);
         void setupContent(not_null<Window::SessionController *> controller);
-
-        QLabel *userpicRoundnessLabel;
-        QLabel *roundnessPreview;
-        QSlider *userpicRoundnessSlider;
     };
 
 } // namespace Settings

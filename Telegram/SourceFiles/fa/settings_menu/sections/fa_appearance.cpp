@@ -66,6 +66,21 @@ namespace Settings {
     void FAAppearance::SetupAppearance(not_null<Ui::VerticalLayout *> container) {
         Ui::AddSubsectionTitle(container, rpl::single(QString("Appearance")));
 
+		const auto roundnessPreview = container->add(
+			object_ptr<RoundnessPreview>(container),
+			st::defaultSubsectionTitlePadding);
+        
+    	const auto userpicRoundnessLabel = container->add(
+			object_ptr<Ui::LabelSimple>(
+				container,
+				st::settingsAudioVolumeLabel),
+			st::settingsAudioVolumeLabelPadding);
+    	const auto userpicRoundnessSlider = container->add(
+			object_ptr<Ui::MediaSlider>(
+				container,
+				st::settingsAudioVolumeSlider),
+			st::settingsAudioVolumeSliderPadding);
+
 		const auto updateUserpicRoundnessLabel = [=](int value) {
     		const auto radius = QString::number(value);
     		userpicRoundnessLabel->setText(QString("Rounding: %1").arg(radius));
