@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "ui/effects/round_checkbox.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "ui/rp_widget.h"
 #include "ui/ui_utility.h"
 #include "ui/painter.h"
@@ -415,7 +417,10 @@ void RoundImageCheckbox::paint(Painter &p, int x, int y, int outerWidth) const {
 				segments ? _segments.front().width : _st.selectWidth);
 			p.setPen(pen);
 			if (!radius) {
-				p.drawEllipse(outline);
+				p.drawRoundedRect(
+					outline,
+				 	outline.height() * FASettings::JsonSettings::GetInt("roundness") / 100, 
+					outline.width() * FASettings::JsonSettings::GetInt("roundness") / 100);
 			} else {
 				p.drawRoundedRect(outline, *radius, *radius);
 			}

@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "settings/settings_information.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "ui/wrap/vertical_layout.h"
 #include "ui/wrap/vertical_layout_reorder.h"
 #include "ui/wrap/padding_wrap.h"
@@ -730,7 +732,13 @@ void SetupAccountsWrap(
 			pen.setWidthF(line);
 			p.setPen(pen);
 			p.setBrush(Qt::NoBrush);
-			p.drawEllipse(rect);
+			// p.drawEllipse(rect);
+			auto height = rect.height();
+			auto width = rect.width();
+			p.drawRoundedRect(
+				rect, 
+				height * FASettings::JsonSettings::GetInt("roundness") / 100, 
+				width * FASettings::JsonSettings::GetInt("roundness") / 100);
 		}
 	}, state->userpic.lifetime());
 

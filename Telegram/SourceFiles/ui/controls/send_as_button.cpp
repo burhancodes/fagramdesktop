@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "ui/controls/send_as_button.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "ui/effects/cross_animation.h"
 #include "ui/painter.h"
 #include "styles/style_chat.h"
@@ -53,7 +55,8 @@ void SendAsButton::paintEvent(QPaintEvent *e) {
 		p.setBrush(_st.activeBg);
 		{
 			PainterHighQualityEnabler hq(p);
-			p.drawEllipse(left, top, _st.size, _st.size);
+			auto radius = _st.size * FASettings::JsonSettings::GetInt("roundness") / 100;
+			p.drawRoundedRect(left, top, _st.size, _st.size, radius, radius);
 		}
 
 		CrossAnimation::paint(

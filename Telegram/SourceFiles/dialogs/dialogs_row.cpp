@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "dialogs/dialogs_row.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "ui/chat/chat_theme.h" // CountAverageColor.
 #include "ui/color_contrast.h"
 #include "ui/effects/credits_graphics.h"
@@ -512,12 +514,19 @@ void Row::PaintCornerBadgeFrame(
 	q.setBrush(data->active
 		? st::dialogsOnlineBadgeFgActive
 		: st::dialogsOnlineBadgeFg);
-	q.drawEllipse(QRectF(
-		photoSize - skip.x() - size,
-		photoSize - skip.y() - size,
-		size,
-		size
-	).marginsRemoved({ shrink, shrink, shrink, shrink }));
+
+	QRectF badgeRect = QRectF(
+				photoSize - skip.x() - size,
+				photoSize - skip.y() - size,
+				size,
+				size
+			).marginsRemoved({ shrink, shrink, shrink, shrink });
+	auto radius = size * FASettings::JsonSettings::GetInt("roundness") / 100;
+	auto isVideoCallOrOnline = (peer->isChannel() && Data::ChannelHasActiveCall(peer->asChannel())) || online;
+
+	if (!isVideoCallOrOnline || (isVideoCallOrOnline)) {
+		q.drawRoundedRect(badgeRect, radius, radius);
+	} else { q.drawEllipse(badgeRect); }
 }
 
 void Row::paintUserpic(

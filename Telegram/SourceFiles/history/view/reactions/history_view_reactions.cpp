@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "history/view/reactions/history_view_reactions.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "history/history_item.h"
 #include "history/history.h"
 #include "history/view/history_view_message.h"
@@ -630,7 +632,8 @@ void InlineList::paintSingleBg(
 		float64 opacity) const {
 	p.setOpacity(opacity);
 	if (!areTags()) {
-		const auto radius = fill.height() / 2.;
+		// const auto radius = fill.height() / 2.;
+		const auto radius = FASettings::JsonSettings::GetInt("roundness") / 100. * fill.height();
 		p.setBrush(color);
 		p.drawRoundedRect(fill, radius, radius);
 		return;
