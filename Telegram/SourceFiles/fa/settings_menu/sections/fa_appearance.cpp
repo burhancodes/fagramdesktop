@@ -10,6 +10,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #include "fa/settings/fa_settings.h"
 #include "fa/settings_menu/sections/fa_appearance.h"
+#include "fa/ui/previews.h"
 
 #include "lang_auto.h"
 #include "mainwindow.h"
