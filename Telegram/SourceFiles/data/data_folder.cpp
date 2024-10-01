@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "data/data_folder.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "data/data_session.h"
 #include "data/data_channel.h"
 #include "data/data_histories.h"
