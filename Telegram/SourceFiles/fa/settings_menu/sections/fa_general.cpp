@@ -69,6 +69,8 @@ namespace Settings {
 		SettingsMenuJsonSwitch(Show Seconds of Message, seconds_message);
         SettingsMenuJsonSwitch(Disable ads, disable_ads);
         SettingsMenuJsonSwitch(Show Start Token in Bot, show_start_token);
+        SettingsMenuJsonSwitch(Show Peer IDs, show_peer_id);
+        SettingsMenuJsonSwitch(Show DC IDs, show_dc_id);
     }
 
     void FAGeneral::SetupFAGeneral(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {

@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "info/profile/info_profile_actions.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "api/api_blocked_peers.h"
 #include "api/api_chat_participants.h"
 #include "apiwrap.h"
@@ -165,18 +167,51 @@ base::options::toggle ShowPeerIdBelowAbout({
 	return AboutValue(
 		peer
 	) | rpl::map([=](TextWithEntities &&value) {
-		if (!ShowPeerIdBelowAbout.value()) {
+		if (!FASettings::JsonSettings::GetInt("show_peer_id") && !FASettings::JsonSettings::GetInt("show_dc_id")) {
 			return std::move(value);
 		}
 		using namespace Ui::Text;
 		if (!value.empty()) {
 			value.append("\n\n");
 		}
-		value.append(Italic(u"id: "_q));
-		const auto raw = peer->id.value & PeerId::kChatTypeMask;
-		value.append(Link(
-			Italic(Lang::FormatCountDecimal(raw)),
-			"internal:copy:" + QString::number(raw)));
+		if (FASettings::JsonSettings::GetInt("show_peer_id")) {
+			value.append(Italic(u"id: "_q));
+			const auto peer_id = peer->id.value & PeerId::kChatTypeMask;
+			value.append(Link(
+				Italic(Lang::FormatCountDecimal(peer_id)),
+				"internal:copy:" + QString::number(peer_id)));
+		}
+		if (FASettings::JsonSettings::GetInt("show_dc_id")) {
+			const auto dc_id = peer->owner().statsDcId(peer);
+			switch (dc_id) {
+        		case 1:
+            		dc_location = "Miami FL, USA";
+            		break;
+        		case 2:
+            		dc_location = "Amsterdam, NL";
+            		break;
+        		case 3:
+            		dc_location = "Miami FL, USA";
+            		break;
+        		case 4:
+            		dc_location = "Amsterdam, NL";
+            		break;
+        		case 5:
+            		dc_location = "Singapore, SG";
+            		break;
+        		default:
+            		dc_location = "UNKNOWN";
+            		break;
+    		}
+			value.append(Italic(u"DC: "_q));
+			value.append(Link(
+				Italic(Lang::FormatCountDecimal(dc_id)),
+				"internal:copy:" + QString::number(dc_id)));
+			value.append(Italic(u"\nDC Location: "_q));
+			value.append(Link(
+				Italic(Lang::FormatCountDecimal(dc_location)),
+				"internal:copy:" + QString::number(dc_location)));
+		}
 		return std::move(value);
 	});
 }

@@ -144,7 +144,7 @@ void SetupExperimental(
 	addToggle(Dialogs::kOptionForumHideChatsList);
 	addToggle(Core::kOptionFractionalScalingEnabled);
 	addToggle(Window::kOptionViewProfileInChatsListContextMenu);
-	addToggle(Info::Profile::kOptionShowPeerIdBelowAbout);
+	//addToggle(Info::Profile::kOptionShowPeerIdBelowAbout);
 	addToggle(Ui::kOptionUseSmallMsgBubbleRadius);
 	addToggle(Media::Player::kOptionDisableAutoplayNext);
 	addToggle(kOptionSendLargePhotos);
