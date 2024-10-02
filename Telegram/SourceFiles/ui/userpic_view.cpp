@@ -53,13 +53,12 @@ void ValidateUserpicCache(
 			full,
 			Qt::IgnoreAspectRatio,
 			Qt::SmoothTransformation);
-		if (forum) {
-			view.cached = Images::Round(
-				std::move(view.cached),
-				Images::CornersMask(radius));
-		} else {
-			view.cached = Images::Circle(std::move(view.cached));
-		}
+
+		radius /= style::DevicePixelRatio();
+
+		view.cached = Images::Round(
+			std::move(view.cached),
+			Images::CornersMask(radius));
 	} else {
 		if (view.cached.size() != full) {
 			view.cached = QImage(full, QImage::Format_ARGB32_Premultiplied);
