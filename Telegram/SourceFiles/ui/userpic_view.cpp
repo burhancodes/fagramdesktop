@@ -66,17 +66,14 @@ void ValidateUserpicCache(
 		view.cached.fill(Qt::transparent);
 
 		auto p = QPainter(&view.cached);
-		if (forum) {
-			empty->paintRounded(
-				p,
-				0,
-				0,
-				size,
-				size,
-				radius);
-		} else {
-			empty->paintCircle(p, 0, 0, size, size);
-		}
+
+		empty->paintRounded(
+			p,
+			0,
+			0,
+			size,
+			size,
+			radius);
 	}
 }
 
