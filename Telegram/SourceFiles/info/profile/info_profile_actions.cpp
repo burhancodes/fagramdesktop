@@ -162,10 +162,10 @@ base::options::toggle ShowPeerIdBelowAbout({
 }
 
 [[nodiscard]] rpl::producer<TextWithEntities> AboutWithIdValue(
-		not_null<PeerData*> peer) {
+		not_null<PeerData*> _peer) {
 
 	return AboutValue(
-		peer
+		_peer
 	) | rpl::map([=](TextWithEntities &&value) {
 		if (!FASettings::JsonSettings::GetInt("show_peer_id") && !FASettings::JsonSettings::GetInt("show_dc_id")) {
 			return std::move(value);
@@ -176,13 +176,13 @@ base::options::toggle ShowPeerIdBelowAbout({
 		}
 		if (FASettings::JsonSettings::GetInt("show_peer_id")) {
 			value.append(Italic(u"id: "_q));
-			const auto peer_id = peer->id.value & PeerId::kChatTypeMask;
+			const auto peer_id = _peer->id.value & PeerId::kChatTypeMask;
 			value.append(Link(
 				Italic(Lang::FormatCountDecimal(peer_id)),
 				"internal:copy:" + QString::number(peer_id)));
 		}
 		if (FASettings::JsonSettings::GetInt("show_dc_id")) {
-			const auto dc_id = peer->owner().statsDcId(peer);
+			const auto dc_id = _peer->owner().statsDcId(_peer);
 			QString dc_location;
 			switch (dc_id) {
         		case 1:
