@@ -204,7 +204,7 @@ base::options::toggle ShowPeerIdBelowAbout({
             		dc_location = "UNKNOWN";
             		break;
     		}
-			value.append(Italic(u"DC: "_q));
+			value.append(Italic(u" DC: "_q));
 			value.append(Link(
 				Italic(Lang::FormatCountDecimal(dc_id)),
 				"internal:copy:" + QString::number(dc_id)));
