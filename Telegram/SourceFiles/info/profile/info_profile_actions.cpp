@@ -183,6 +183,7 @@ base::options::toggle ShowPeerIdBelowAbout({
 		}
 		if (FASettings::JsonSettings::GetInt("show_dc_id")) {
 			const auto dc_id = peer->owner().statsDcId(peer);
+			QString dc_location;
 			switch (dc_id) {
         		case 1:
             		dc_location = "Miami FL, USA";
@@ -209,8 +210,8 @@ base::options::toggle ShowPeerIdBelowAbout({
 				"internal:copy:" + QString::number(dc_id)));
 			value.append(Italic(u"\nDC Location: "_q));
 			value.append(Link(
-				Italic(Lang::FormatCountDecimal(dc_location)),
-				"internal:copy:" + QString::number(dc_location)));
+				Italic(dc_location),
+				"internal:copy:" + dc_location));
 		}
 		return std::move(value);
 	});
