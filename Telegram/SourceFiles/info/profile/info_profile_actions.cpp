@@ -1093,7 +1093,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 			? tr::lng_info_about_label()
 			: tr::lng_info_bio_label();
 		addTranslateToMenu(
-			addInfoLine(std::move(label), AboutWithIdValue(user, _peer)).text,
+			addInfoLine(std::move(label), AboutWithIdValue(user, peer)).text,
 			AboutWithIdValue(user, _peer));
 
 		const auto usernameLine = addInfoOneLine(
@@ -1241,9 +1241,9 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 
 		const auto about = addInfoLine(tr::lng_info_about_label(), _topic
 			? rpl::single(TextWithEntities())
-			: AboutWithIdValue(_peer, _peer));
+			: AboutWithIdValue(_peer, peer));
 		if (!_topic) {
-			addTranslateToMenu(about.text, AboutWithIdValue(_peer, _peer));
+			addTranslateToMenu(about.text, AboutWithIdValue(_peer, peer));
 		}
 	}
 	if (!_peer->isSelf()) {
