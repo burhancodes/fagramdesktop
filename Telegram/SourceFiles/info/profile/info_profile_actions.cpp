@@ -182,7 +182,6 @@ base::options::toggle ShowPeerIdBelowAbout({
 				"internal:copy:" + QString::number(peer_id)));
 		}
 		if (FASettings::JsonSettings::GetInt("show_dc_id")) {
-			const auto id = _api.allocateRequestId();
 			const auto dc_id = _peer->owner().statsDcId(_peer);
 			QString dc_location;
 			switch (dc_id) {
