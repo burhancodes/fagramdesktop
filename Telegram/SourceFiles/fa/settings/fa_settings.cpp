@@ -198,6 +198,9 @@ const std::map<QString, Definition, std::greater<QString>> DefinitionMap {
 	{ "show_dc_id", {
 		.type = SettingType::BoolSetting,
 		.defaultValue = true, }},
+	{ "show_id_botapi", {
+		.type = SettingType::BoolSetting,
+		.defaultValue = true, }},
 	{ "recent_stickers_limit", {
 		.type = SettingType::IntSetting,
 		.defaultValue = 30,

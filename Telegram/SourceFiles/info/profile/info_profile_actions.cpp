@@ -8,6 +8,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "info/profile/info_profile_actions.h"
 
 #include "fa/settings/fa_settings.h"
+#include "fa/utils/fa_profile_values.h"
+#include "fa/utils/telegram_helpers.h"
 
 #include "api/api_blocked_peers.h"
 #include "api/api_chat_participants.h"
@@ -33,6 +35,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "data/data_session.h"
 #include "data/data_user.h"
 #include "data/notify/data_notify_settings.h"
+#include "ui/text/text_entity.h"
 #include "dialogs/ui/dialogs_layout.h"
 #include "dialogs/ui/dialogs_message_view.h"
 #include "history/history.h"
@@ -162,57 +165,23 @@ base::options::toggle ShowPeerIdBelowAbout({
 }
 
 [[nodiscard]] rpl::producer<TextWithEntities> AboutWithIdValue(
-		not_null<PeerData*> _user, not_null<PeerData*> _peer) {
+		not_null<PeerData*> peer) {
 
 	return AboutValue(
-		_user
+		peer
 	) | rpl::map([=](TextWithEntities &&value) {
-		if (!FASettings::JsonSettings::GetInt("show_peer_id") && !FASettings::JsonSettings::GetInt("show_dc_id")) {
+		if (!ShowPeerIdBelowAbout.value()) {
 			return std::move(value);
 		}
 		using namespace Ui::Text;
 		if (!value.empty()) {
 			value.append("\n\n");
 		}
-		if (FASettings::JsonSettings::GetInt("show_peer_id")) {
-			value.append(Italic(u"id: "_q));
-			const auto peer_id = _user->id.value & PeerId::kChatTypeMask;
-			value.append(Link(
-				Italic(Lang::FormatCountDecimal(peer_id)),
-				"internal:copy:" + QString::number(peer_id)));
-		}
-		if (FASettings::JsonSettings::GetInt("show_dc_id")) {
-			const auto dc_id = _peer->owner().statsDcId(_peer);
-			QString dc_location;
-			switch (dc_id) {
-        		case 1:
-            		dc_location = "Miami FL, USA";
-            		break;
-        		case 2:
-            		dc_location = "Amsterdam, NL";
-            		break;
-        		case 3:
-            		dc_location = "Miami FL, USA";
-            		break;
-        		case 4:
-            		dc_location = "Amsterdam, NL";
-            		break;
-        		case 5:
-            		dc_location = "Singapore, SG";
-            		break;
-        		default:
-            		dc_location = "UNKNOWN";
-            		break;
-    		}
-			value.append(Italic(u" DC: "_q));
-			value.append(Link(
-				Italic(Lang::FormatCountDecimal(dc_id)),
-				"internal:copy:" + QString::number(dc_id)));
-			value.append(Italic(u"\nDC Location: "_q));
-			value.append(Link(
-				Italic(dc_location),
-				"internal:copy:" + dc_location));
-		}
+		value.append(Italic(u"id: "_q));
+		const auto raw = peer->id.value & PeerId::kChatTypeMask;
+		value.append(Link(
+			Italic(Lang::FormatCountDecimal(raw)),
+			"internal:copy:" + QString::number(raw)));
 		return std::move(value);
 	});
 }
@@ -1092,9 +1061,9 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 		auto label = user->isBot()
 			? tr::lng_info_about_label()
 			: tr::lng_info_bio_label();
-		addTranslateToMenu(
-			addInfoLine(std::move(label), AboutWithIdValue(user, peer)).text,
-			AboutWithIdValue(user, _peer));
+	//	addTranslateToMenu(
+	//		addInfoLine(std::move(label), AboutWithIdValue(user, peer)).text,
+	//		AboutWithIdValue(user, _peer));
 
 		const auto usernameLine = addInfoOneLine(
 			UsernamesSubtext(_peer, tr::lng_info_username_label()),
@@ -1184,6 +1153,32 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 			).text->setLinksTrusted();
 		}
 
+		bool show_peer_id = FASettings::JsonSettings::GetBool("show_peer_id");
+		bool show_dc_id = FASettings::JsonSettings::GetBool("show_dc_id");
+        if (show_peer_id) {
+			const auto dataCenter = getPeerDC(_peer);
+			const auto idLabel = !show_dc_id ? QString("ID") : dataCenter;
+            auto idDrawableText = IDValue(
+                    user
+            ) | rpl::map([](TextWithEntities &&text) {
+                return Ui::Text::Code(text.text);
+            });
+            auto idInfo = addInfoOneLine(
+                    rpl::single(idLabel),
+                    std::move(idDrawableText),
+                    rpl::single(QString("ID copied")),
+            );
+            idInfo.text->setClickHandlerFilter([=](auto &&...) {
+                const auto idText = IDString(user);
+                if (!idText.isEmpty()) {
+                    QGuiApplication::clipboard()->setText(idText);
+                    const auto msg = rpl::single(QString("ID copied"));
+                    controller->showToast(msg);
+                }
+                return false;
+            });
+        }
+
 		AddMainButton(
 			result,
 			tr::lng_info_add_as_contact(),
@@ -1239,12 +1234,38 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 			).text->setLinksTrusted();
 		}
 
-		const auto about = addInfoLine(tr::lng_info_about_label(), _topic
-			? rpl::single(TextWithEntities())
-			: AboutWithIdValue(_peer, peer));
-		if (!_topic) {
-			addTranslateToMenu(about.text, AboutWithIdValue(_peer, peer));
-		}
+	//	const auto about = addInfoLine(tr::lng_info_about_label(), _topic
+	//		? rpl::single(TextWithEntities())
+	//		: AboutWithIdValue(_peer, peer));
+	//	if (!_topic) {
+	//		addTranslateToMenu(about.text, AboutWithIdValue(_peer, peer));
+	//	}
+
+		bool show_peer_id = FASettings::JsonSettings::GetBool("show_peer_id");
+		bool show_dc_id = FASettings::JsonSettings::GetBool("show_dc_id");
+        if (show_peer_id) {
+			const auto dataCenter = getPeerDC(_peer);
+			const auto idLabel = !show_dc_id ? QString("ID") : dataCenter;
+            auto idDrawableText = IDValue(
+                    _peer
+            ) | rpl::map([](TextWithEntities &&text) {
+                return Ui::Text::Code(text.text);
+            });
+            auto idInfo = addInfoOneLine(
+                    idLabel,
+                    std::move(idDrawableText),
+                    rpl::single(QString("ID copied")),
+            );
+            idInfo.text->setClickHandlerFilter([=](auto &&...) {
+                const auto idText = IDString(user);
+                if (!idText.isEmpty()) {
+                    QGuiApplication::clipboard()->setText(idText);
+                    const auto msg = rpl::single(QString("ID copied"));
+                    controller->showToast(msg);
+                }
+                return false;
+            });
+        }
 	}
 	if (!_peer->isSelf()) {
 		// No notifications toggle for Self => no separator.

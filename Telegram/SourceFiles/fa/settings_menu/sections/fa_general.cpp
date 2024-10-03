@@ -71,6 +71,7 @@ namespace Settings {
         SettingsMenuJsonSwitch(Show Start Token in Bot, show_start_token);
         SettingsMenuJsonSwitch(Show Peer IDs, show_peer_id);
         SettingsMenuJsonSwitch(Show DC IDs, show_dc_id);
+        SettingsMenuJsonSwitch(BotAPI IDs type, show_id_botapi)
     }
 
     void FAGeneral::SetupFAGeneral(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {

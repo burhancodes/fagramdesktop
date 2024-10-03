@@ -64,3 +64,65 @@ bool isFAgramRelated(ID peerId) {
     }
     return fagram_devs.contains(peerId) || fagram_channels.contains(peerId);
 }
+
+QString getPeerDC(not_null<UserData*> peer) {
+    int dc = 0;
+
+    if (const auto statsDcId = peer->owner().statsDcId(peer)) {
+        dc = statsDcId;
+    }
+    else if (peer->hasUserpic()) {
+        dc = v::match(
+            peer->userpicLocation().file().data,
+            [&](const StorageFileLocation &data) {
+                return data.dcId();
+            },
+            [&](const WebFileLocation &) {
+                return 4;
+            },
+            [&](const GeoPointLocation &) {
+                return 0;
+            },
+            [&](const AudioAlbumThumbLocation &) {
+                return 0;
+            },
+            [&](const PlainUrlLocation &) {
+                return 4;
+            },
+            [&](const InMemoryLocation &) {
+                return 0;
+            }
+        );
+    }
+    else {
+        return QString("DC_UNKNOWN");
+    }
+
+    QString dc_location;
+    switch (dc) {
+        case 1:
+            dc_location = "Miami FL, USA";
+            break;
+        case 2:
+            dc_location = "Amsterdam, NL";
+            break;
+        case 3:
+            dc_location = "Miami FL, USA";
+            break;
+        case 4:
+            dc_location = "Amsterdam, NL";
+            break;
+        case 5:
+            dc_location = "Singapore, SG";
+            break;
+        default:
+            dc_location = "UNKNOWN";
+            break;
+    }
+
+    if (dc < 1) {
+        return QString("DC_UNKNOWN");
+    }
+
+    return QString("DC%1, %2").arg(dc).arg(dc_location);
+}

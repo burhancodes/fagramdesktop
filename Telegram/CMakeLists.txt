@@ -707,6 +707,8 @@ PRIVATE
     fa/data/entities.h
     fa/utils/telegram_helpers.cpp
     fa/utils/telegram_helpers.h
+    fa/utils/fa_profile_values.cpp
+    fa/utils/fa_profile_values.h
     fa/settings_menu/fa_settings_menu.cpp
     fa/settings_menu/fa_settings_menu.h
     fa/settings/fa_settings.cpp
