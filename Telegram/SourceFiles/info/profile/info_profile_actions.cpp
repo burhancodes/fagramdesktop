@@ -1161,7 +1161,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
             auto idDrawableText = IDValue(
                     user
             ) | rpl::map([](TextWithEntities &&text) {
-                return Ui::Text::String(text.text);
+                return rpl::single(text.text);
             });
             auto idInfo = addInfoOneLine(
                     rpl::single(idLabel),
@@ -1249,7 +1249,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
             auto idDrawableText = IDValue(
                     _peer
             ) | rpl::map([](TextWithEntities &&text) {
-                return Ui::Text::String(text.text);
+                return rpl::single(text.text);
             });
             auto idInfo = addInfoOneLine(
                     idLabel,
