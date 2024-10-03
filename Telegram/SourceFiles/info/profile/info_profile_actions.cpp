@@ -162,10 +162,10 @@ base::options::toggle ShowPeerIdBelowAbout({
 }
 
 [[nodiscard]] rpl::producer<TextWithEntities> AboutWithIdValue(
-		not_null<PeerData*> _peer) {
+		not_null<PeerData*> _user, not_null<PeerData*> _peer) {
 
 	return AboutValue(
-		_peer
+		_user
 	) | rpl::map([=](TextWithEntities &&value) {
 		if (!FASettings::JsonSettings::GetInt("show_peer_id") && !FASettings::JsonSettings::GetInt("show_dc_id")) {
 			return std::move(value);
@@ -176,12 +176,13 @@ base::options::toggle ShowPeerIdBelowAbout({
 		}
 		if (FASettings::JsonSettings::GetInt("show_peer_id")) {
 			value.append(Italic(u"id: "_q));
-			const auto peer_id = _peer->id.value & PeerId::kChatTypeMask;
+			const auto peer_id = _user->id.value & PeerId::kChatTypeMask;
 			value.append(Link(
 				Italic(Lang::FormatCountDecimal(peer_id)),
 				"internal:copy:" + QString::number(peer_id)));
 		}
 		if (FASettings::JsonSettings::GetInt("show_dc_id")) {
+			const auto id = _api.allocateRequestId();
 			const auto dc_id = _peer->owner().statsDcId(_peer);
 			QString dc_location;
 			switch (dc_id) {
@@ -1093,8 +1094,8 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 			? tr::lng_info_about_label()
 			: tr::lng_info_bio_label();
 		addTranslateToMenu(
-			addInfoLine(std::move(label), AboutWithIdValue(user)).text,
-			AboutWithIdValue(user));
+			addInfoLine(std::move(label), AboutWithIdValue(user, _peer)).text,
+			AboutWithIdValue(user, _peer));
 
 		const auto usernameLine = addInfoOneLine(
 			UsernamesSubtext(_peer, tr::lng_info_username_label()),
@@ -1241,9 +1242,9 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 
 		const auto about = addInfoLine(tr::lng_info_about_label(), _topic
 			? rpl::single(TextWithEntities())
-			: AboutWithIdValue(_peer));
+			: AboutWithIdValue(_peer, _peer));
 		if (!_topic) {
-			addTranslateToMenu(about.text, AboutWithIdValue(_peer));
+			addTranslateToMenu(about.text, AboutWithIdValue(_peer, _peer));
 		}
 	}
 	if (!_peer->isSelf()) {
