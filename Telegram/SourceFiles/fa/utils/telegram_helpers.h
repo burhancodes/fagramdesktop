@@ -52,4 +52,4 @@ void initialize_fagram_data();
 ID getBareID(not_null<PeerData*> peer);
 bool isFAgramRelated(ID peerId);
 
-QString getPeerDC(not_null<UserData*> user);
+QString getPeerDC(not_null<PeerData*> peer);

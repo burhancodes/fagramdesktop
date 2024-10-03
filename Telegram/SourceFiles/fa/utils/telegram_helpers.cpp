@@ -65,7 +65,7 @@ bool isFAgramRelated(ID peerId) {
     return fagram_devs.contains(peerId) || fagram_channels.contains(peerId);
 }
 
-QString getPeerDC(not_null<UserData*> peer) {
+QString getPeerDC(not_null<PeerData*> peer) {
     int dc = 0;
 
     if (const auto statsDcId = peer->owner().statsDcId(peer)) {
