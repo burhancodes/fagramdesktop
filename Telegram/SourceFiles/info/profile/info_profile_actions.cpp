@@ -1172,7 +1172,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
                 const auto idText = IDString(user);
                 if (!idText.isEmpty()) {
                     QGuiApplication::clipboard()->setText(idText);
-                    const auto msg = rpl::single(QString("ID copied"));
+                    const auto msg QString("ID copied");
                     controller->showToast(msg);
                 }
                 return false;
