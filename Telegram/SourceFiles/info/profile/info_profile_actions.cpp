@@ -1166,13 +1166,13 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
             auto idInfo = addInfoOneLine(
                     rpl::single(idLabel),
                     std::move(idDrawableText),
-                    rpl::single(QString("ID copied"))
+                    QString("ID copied")
             );
             idInfo.text->setClickHandlerFilter([=](auto &&...) {
                 const auto idText = IDString(user);
                 if (!idText.isEmpty()) {
                     QGuiApplication::clipboard()->setText(idText);
-                    const auto msg QString("ID copied");
+                    const auto msg rpl::single(QString("ID copied"));
                     controller->showToast(msg);
                 }
                 return false;
@@ -1254,7 +1254,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
             auto idInfo = addInfoOneLine(
                     idLabel,
                     std::move(idDrawableText),
-                    rpl::single(QString("ID copied"))
+                    QString("ID copied")
             );
             idInfo.text->setClickHandlerFilter([=](auto &&...) {
                 const auto idText = IDString(user);
