@@ -1166,7 +1166,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
             auto idInfo = addInfoOneLine(
                     rpl::single(idLabel),
                     std::move(idDrawableText),
-                    rpl::single(QString("ID copied")),
+                    rpl::single(QString("ID copied"))
             );
             idInfo.text->setClickHandlerFilter([=](auto &&...) {
                 const auto idText = IDString(user);
@@ -1254,7 +1254,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
             auto idInfo = addInfoOneLine(
                     idLabel,
                     std::move(idDrawableText),
-                    rpl::single(QString("ID copied")),
+                    rpl::single(QString("ID copied"))
             );
             idInfo.text->setClickHandlerFilter([=](auto &&...) {
                 const auto idText = IDString(user);
