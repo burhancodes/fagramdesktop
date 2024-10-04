@@ -126,3 +126,43 @@ QString getPeerDC(not_null<PeerData*> peer) {
 
     return QString("DC%1, %2").arg(dc).arg(dc_location);
 }
+
+QString getOnlyDC(not_null<PeerData*> peer) {
+    int dc = 0;
+
+    if (const auto statsDcId = peer->owner().statsDcId(peer)) {
+        dc = statsDcId;
+    }
+    else if (peer->hasUserpic()) {
+        dc = v::match(
+            peer->userpicLocation().file().data,
+            [&](const StorageFileLocation &data) {
+                return data.dcId();
+            },
+            [&](const WebFileLocation &) {
+                return 4;
+            },
+            [&](const GeoPointLocation &) {
+                return 0;
+            },
+            [&](const AudioAlbumThumbLocation &) {
+                return 0;
+            },
+            [&](const PlainUrlLocation &) {
+                return 4;
+            },
+            [&](const InMemoryLocation &) {
+                return 0;
+            }
+        );
+    }
+    else {
+        return QString("DC_UNKNOWN");
+    }
+
+    if (dc < 1) {
+        return QString("DC_UNKNOWN");
+    }
+
+    return QString("Datacenter %1").arg(dc);
+}

@@ -1155,18 +1155,28 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 
 		bool show_peer_id = FASettings::JsonSettings::GetBool("show_peer_id");
 		bool show_dc_id = FASettings::JsonSettings::GetBool("show_dc_id");
-        if (show_peer_id) {
+        if (show_peer_id || show_dc_id) {
 			const auto dataCenter = getPeerDC(_peer);
+			const auto dataCenter_id = getOnlyDC(_peer);
 			const auto idLabel = !show_dc_id ? QString("ID") : dataCenter;
-            auto idDrawableText = IDValue(
+
+			if (!show_peer_id && show_dc_id) {
+				auto idDrawableText = (rpl::single(dataCenter_id) | Ui::Text::ToWithEntities()
+				) | rpl::map([](TextWithEntities &&text) {
+                	return Ui::Text::Bold(text.text);
+            	});
+			}
+            else {
+				auto idDrawableText = IDValue(
                     user
-            ) | rpl::map([](TextWithEntities &&text) {
-                return Ui::Text::Bold(text.text);
-            });
+            	) | rpl::map([](TextWithEntities &&text) {
+                	return Ui::Text::Bold(text.text);
+            	});
+			}	
             auto idInfo = addInfoOneLine(
                     rpl::single(idLabel),
                     std::move(idDrawableText),
-                    QString("ID copied")
+                    QString("Copy ID")
             );
             idInfo.text->setClickHandlerFilter([=](auto &&...) {
                 const auto idText = IDString(user);
@@ -1242,18 +1252,28 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 
 		bool show_peer_id = FASettings::JsonSettings::GetBool("show_peer_id");
 		bool show_dc_id = FASettings::JsonSettings::GetBool("show_dc_id");
-        if (show_peer_id) {
+        if (show_peer_id || show_dc_id) {
 			const auto dataCenter = getPeerDC(_peer);
+			const auto dataCenter_id = getOnlyDC(_peer);
 			const auto idLabel = !show_dc_id ? QString("ID") : dataCenter;
-            auto idDrawableText = IDValue(
-                    _peer
-            ) | rpl::map([](TextWithEntities &&text) {
-                return Ui::Text::Bold(text.text);
-            });
+
+			if (!show_peer_id && show_dc_id) {
+				auto idDrawableText = (rpl::single(dataCenter_id) | Ui::Text::ToWithEntities()
+				) | rpl::map([](TextWithEntities &&text) {
+                	return Ui::Text::Bold(text.text);
+            	});
+			}
+            else {
+				auto idDrawableText = IDValue(
+                    user
+            	) | rpl::map([](TextWithEntities &&text) {
+                	return Ui::Text::Bold(text.text);
+            	});
+			}	
             auto idInfo = addInfoOneLine(
                     idLabel,
                     std::move(idDrawableText),
-                    QString("ID copied")
+                    QString("Copy ID")
             );
             idInfo.text->setClickHandlerFilter([=](auto &&...) {
                 const auto idText = IDString(user);
