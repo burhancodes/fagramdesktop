@@ -1161,9 +1161,10 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 			const auto dataCenter_id = getOnlyDC(_peer);
 			const auto idLabel = !show_dc_id ? QString("ID") : dataCenter;
 
-			rpl::producer<QString> idDrawableText;
+			void* idDrawableText;
 
 			if (!show_peer_id && show_dc_id) {
+				
 				idDrawableText = rpl::single(dataCenter_id)
 					| Ui::Text::ToWithEntities()
 					| rpl::map([](TextWithEntities &&text) {
@@ -1263,7 +1264,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 			const auto dataCenter_id = getOnlyDC(_peer);
 			const auto idLabel = !show_dc_id ? QString("ID") : dataCenter;
 
-			rpl::producer<QString> idDrawableText;
+			void* idDrawableText;
 
 			if (!show_peer_id && show_dc_id) {
 				idDrawableText = rpl::single(dataCenter_id)
