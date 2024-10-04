@@ -94,15 +94,14 @@ if (_video && _video->ready()) {
 
 		p.save();
 
-		QPainterPath roundedRect;
-		QImage image = _video->current(request(size), now);
-		roundedRect.addRoundedRect(
-			QRect(x, y, image.height(), image.width()),
-			image.width() * FASettings::JsonSettings::GetInt("roundness") / 100,
-			image.height() * FASettings::JsonSettings::GetInt("roundness") / 100);
-    	p.setClipPath(roundedRect);
-		p.drawImage(x, y, image);
-
+		QPainterPath clipPath;
+		QImage frame = _video->current(request(size), now);
+		auto radius = frame.height() * FASettings::JsonSettings::GetInt("roundness") / 100.;
+		clipPath.addRoundedRect(
+			QRect(x, y, frame.width(), frame.height()),
+			radius, radius);
+		p.setClipPath(clipPath);
+		p.drawImage(x, y, frame);
 		p.restore();
 	} else {
 		_peer->paintUserpicLeft(p, view, x, y, w, size);

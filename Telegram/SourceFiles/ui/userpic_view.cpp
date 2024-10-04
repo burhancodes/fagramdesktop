@@ -46,7 +46,7 @@ void ValidateUserpicCache(
 	view.forum = forumValue;
 	view.paletteVersion = version;
 
-	auto radius = size * (FASettings::JsonSettings::GetInt("roundness") / 100) / style::DevicePixelRatio();
+	auto radius = size * (FASettings::JsonSettings::GetInt("roundness") / 100);
 
 	if (cloud) {
 		view.cached = cloud->scaled(
