@@ -1155,44 +1155,29 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 
 		bool show_peer_id = FASettings::JsonSettings::GetBool("show_peer_id");
 		bool show_dc_id = FASettings::JsonSettings::GetBool("show_dc_id");
-
-		if (show_peer_id || show_dc_id) {
+        if (show_peer_id) {
 			const auto dataCenter = getPeerDC(_peer);
-			const auto dataCenter_id = getOnlyDC(_peer);
 			const auto idLabel = !show_dc_id ? QString("ID") : dataCenter;
-
-			void* idDrawableText;
-
-			if (!show_peer_id && show_dc_id) {
-				
-				idDrawableText = rpl::single(dataCenter_id)
-					| Ui::Text::ToWithEntities()
-					| rpl::map([](TextWithEntities &&text) {
-						return Ui::Text::Bold(text.text);
-					});
-			} else {
-				idDrawableText = IDValue(user)
-					| rpl::map([](TextWithEntities &&text) {
-						return Ui::Text::Bold(text.text);
-					});
-			}
-
-			auto idInfo = addInfoOneLine(
-				rpl::single(idLabel),
-				std::move(idDrawableText),
-				QString("Copy ID")
-			);
-
-			idInfo.text->setClickHandlerFilter([=](auto &&...) {
-				const auto idText = IDString(user);
-				if (!idText.isEmpty()) {
-					QGuiApplication::clipboard()->setText(idText);
-					// controller->showToast(rpl::single(QString("ID copied")));
-				}
-				return false;
-			});
-		}
-
+			
+            auto idDrawableText = IDValue(
+                    user
+            ) | rpl::map([](TextWithEntities &&text) {
+                return Ui::Text::Bold(text.text);
+            });
+            auto idInfo = addInfoOneLine(
+                    rpl::single(idLabel),
+                    std::move(idDrawableText),
+                    QString("Copy ID")
+            );
+            idInfo.text->setClickHandlerFilter([=](auto &&...) {
+                const auto idText = IDString(user);
+                if (!idText.isEmpty()) {
+                    QGuiApplication::clipboard()->setText(idText);
+                //    controller->showToast(rpl::single(QString("ID copied")));
+                }
+                return false;
+            });
+        }
 
 		AddMainButton(
 			result,
@@ -1258,42 +1243,28 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 
 		bool show_peer_id = FASettings::JsonSettings::GetBool("show_peer_id");
 		bool show_dc_id = FASettings::JsonSettings::GetBool("show_dc_id");
-
-		if (show_peer_id || show_dc_id) {
+        if (show_peer_id) {
 			const auto dataCenter = getPeerDC(_peer);
-			const auto dataCenter_id = getOnlyDC(_peer);
 			const auto idLabel = !show_dc_id ? QString("ID") : dataCenter;
-
-			void* idDrawableText;
-
-			if (!show_peer_id && show_dc_id) {
-				idDrawableText = rpl::single(dataCenter_id)
-					| Ui::Text::ToWithEntities()
-					| rpl::map([](TextWithEntities &&text) {
-						return Ui::Text::Bold(text.text);
-					});
-			} else {
-				idDrawableText = IDValue(user)
-					| rpl::map([](TextWithEntities &&text) {
-						return Ui::Text::Bold(text.text);
-					});
-			}
-
-			auto idInfo = addInfoOneLine(
-				rpl::single(idLabel),
-				std::move(idDrawableText),
-				QString("Copy ID")
-			);
-
-			idInfo.text->setClickHandlerFilter([=](auto &&...) {
-				const auto idText = IDString(user);
-				if (!idText.isEmpty()) {
-					QGuiApplication::clipboard()->setText(idText);
-					// controller->showToast(rpl::single(QString("ID copied")));
-				}
-				return false;
-			});
-		}
+            auto idDrawableText = IDValue(
+                    _peer
+            ) | rpl::map([](TextWithEntities &&text) {
+                return Ui::Text::Bold(text.text);
+            });
+            auto idInfo = addInfoOneLine(
+                    idLabel,
+                    std::move(idDrawableText),
+                    QString("Copy ID")
+            );
+            idInfo.text->setClickHandlerFilter([=](auto &&...) {
+                const auto idText = IDString(user);
+                if (!idText.isEmpty()) {
+                    QGuiApplication::clipboard()->setText(idText);
+                //    controller->showToast(rpl::single(QString("ID copied")));
+                }
+                return false;
+            });
+        }
 	}
 	if (!_peer->isSelf()) {
 		// No notifications toggle for Self => no separator.

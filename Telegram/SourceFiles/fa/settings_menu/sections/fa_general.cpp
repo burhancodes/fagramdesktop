@@ -70,7 +70,7 @@ namespace Settings {
         SettingsMenuJsonSwitch(Disable ads, disable_ads);
         SettingsMenuJsonSwitch(Show Start Token in Bot, show_start_token);
         SettingsMenuJsonSwitch(Show Peer IDs, show_peer_id);
-        SettingsMenuJsonSwitch(Show DC IDs, show_dc_id);
+        SettingsMenuJsonSwitch(Show DC IDs in label of peer ids, show_dc_id);
         SettingsMenuJsonSwitch(BotAPI IDs type, show_id_botapi)
     }
 
