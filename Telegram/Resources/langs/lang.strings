@@ -283,13 +283,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 "lng_flood_error" = "Too many tries. Please try again later.";
 "lng_edit_error" = "You can't edit this message.";
 "lng_error_phone_flood" = "Sorry, you have deleted and re-created your account too many times recently. Please wait for a few days before signing up again.";
-<<<<<<< HEAD
-"lng_error_start_minimized_passcoded" = "You have set a local passcode, so FAgram Desktop can't be launched minimised; it will ask you to enter your passcode before it can start working.";
+"lng_error_start_minimized_passcoded" = "You have set a local passcode, so FAgram Desktop can't be launched minimized; it will ask you to enter your passcode before it can start working.";
 "lng_error_public_groups_denied" = "Unfortunately, you were banned from participating in public groups.\n{more_info}";
-=======
-"lng_error_start_minimized_passcoded" = "You have set a local passcode, so Telegram Desktop can't be launched minimized; it will ask you to enter your passcode before it can start working.";
-"lng_error_public_groups_denied" = "Unfortunately, you are banned from participating in public groups.\n{more_info}";
->>>>>>> upstream/dev
 "lng_error_cant_add_member" = "Sorry, you can't add the bot to this group. Ask a group admin to do it.";
 "lng_error_cant_add_bot" = "Sorry, this bot can't be added to groups.";
 "lng_error_cant_add_admin_invite" = "You can't add this user as an admin because they are not a member of this group and you are not allowed to add them.";
@@ -352,13 +347,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 "lng_edit_caption_attach" = "Sorry, you can't attach new media while editing a message.";
 "lng_edit_caption_voice" = "Sorry, you can't edit messages when you have an unsent voice message.";
 
-<<<<<<< HEAD
 "lng_intro_about" = "Welcome to the FAgram Desktop app.\nIt's fast and secure.";
 "lng_start_msgs" = "Start messaging";
-=======
-"lng_intro_about" = "Welcome to the official Telegram Desktop app.\nIt's fast and secure.";
-"lng_start_msgs" = "Start Messaging";
->>>>>>> upstream/dev
 
 "lng_intro_next" = "Next";
 "lng_intro_finish" = "Sign Up";
@@ -1000,17 +990,10 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 "lng_passcode_enter_first" = "Enter a passcode";
 "lng_passcode_enter_new" = "Enter new passcode";
 "lng_passcode_confirm_new" = "Re-enter new passcode";
-<<<<<<< HEAD
 "lng_passcode_about" = "When a local passcode is set, a lock icon appears at the top of your chats list. Click it to lock the app.\n\nNote: if you forget your local passcode, you'll need to relogin in FAgram Desktop.";
 "lng_passcode_about1" = "When a local passcode is set, a lock icon appears at the top of your chats list.";
 "lng_passcode_about2" = "Click it to lock FAgram Desktop.";
 "lng_passcode_about3" = "Note: if you forget your passcode, you'll need to log out of FAgram Desktop and log in again.";
-=======
-"lng_passcode_about" = "When a local passcode is set, a lock icon appears at the top of your chat list. Click it to lock Telegram Desktop.\n\nNote: if you forget your local passcode, you'll need to log out of Telegram Desktop and log in again.";
-"lng_passcode_about1" = "When a local passcode is set, a lock icon appears at the top of your chat list.";
-"lng_passcode_about2" = "Click it to lock Telegram Desktop.";
-"lng_passcode_about3" = "Note: if you forget your passcode, you'll need to log out of Telegram Desktop and log in again.";
->>>>>>> upstream/dev
 "lng_passcode_differ" = "Passcodes are different";
 "lng_passcode_wrong" = "Wrong passcode";
 "lng_passcode_is_same" = "Passcode was not changed";
@@ -1767,11 +1750,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 "lng_sure_delete_selected_days#other" = "{count} selected days";
 
 "lng_message_empty" = "Empty Message";
-<<<<<<< HEAD
 "lng_message_unsupported" = "This message is not supported by your version of FAgram Desktop. Please update to the latest version in Settings, or install it from {link}";
-=======
-"lng_message_unsupported" = "This message is not supported by your version of Telegram. Please update to the latest version in Settings > Advanced, or install it from {link}. If you are already using the latest version, this message might depend on a feature that is not yet implemented.";
->>>>>>> upstream/dev
 "lng_message_not_found" = "Message doesn't exist.";
 
 "lng_duration_minsec_minutes#one" = "{count} min";
@@ -4129,13 +4108,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 "lng_group_call_remove_channel_from_channel" = "Remove {channel} from the live stream?";
 "lng_group_call_mac_access" = "FAgram Desktop does not have access to system wide keyboard input required for Push to Talk.";
 "lng_group_call_mac_input" = "Please allow **Input Monitoring** for Telegram in Privacy Settings.";
-<<<<<<< HEAD
 "lng_group_call_mac_accessibility" = "Please allow **Accessibility** for Telegram in Privacy Settings.\n\nApp restart may be required.";
 "lng_group_call_mac_screencast_access" = "FAgram Desktop does not have access to screen recording required for Screen Sharing.";
-=======
-"lng_group_call_mac_accessibility" = "Please allow **Accessibility** for Telegram in Privacy Settings.\n\nYou may need to restart the app.";
-"lng_group_call_mac_screencast_access" = "Telegram Desktop does not have access to screen recording required for Screen Sharing.";
->>>>>>> upstream/dev
 "lng_group_call_mac_recording" = "Please allow **Screen Recording** for Telegram in Privacy Settings.";
 "lng_group_call_mac_settings" = "Open Settings";
 
@@ -4874,13 +4848,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 "lng_language_not_found" = "Sorry, this language pack doesn't exist.";
 "lng_language_already" = "You're already using this language pack. You can change your language back at any time in Settings.";
 "lng_language_not_ready_title" = "Insufficient data";
-<<<<<<< HEAD
 "lng_language_not_ready_about" = "Unfortunately, this custom language pack ({lang_name}) doesn't contain data for FAgram Desktop. You can contribute to this language pack using the {link}.";
 "lng_language_not_ready_link" = "translations platform";
-=======
-"lng_language_not_ready_about" = "Unfortunately, this custom language pack ({lang_name}) doesn't contain data for Telegram Desktop. You can contribute to this language pack using the {link}.";
-"lng_language_not_ready_link" = "translation platform";
->>>>>>> upstream/dev
 
 "lng_translate_box_error" = "Translate failed.";
 
@@ -4946,15 +4915,9 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 "lng_polls_votes_collapse" = "Collapse";
 
 "lng_outdated_title" = "PLEASE UPDATE YOUR OPERATING SYSTEM.";
-<<<<<<< HEAD
 "lng_outdated_title_bits" = "PLEASE SWITCH TO 64 BIT OPERATING SYSTEM.";
 "lng_outdated_soon" = "Otherwise, FAgram Desktop will stop updating on {date}.";
 "lng_outdated_now" = "So that FAgram Desktop can update to newer versions.";
-=======
-"lng_outdated_title_bits" = "PLEASE SWITCH TO A 64-BIT OPERATING SYSTEM.";
-"lng_outdated_soon" = "Otherwise, Telegram Desktop will stop updating on {date}.";
-"lng_outdated_now" = "So Telegram Desktop can update to newer versions.";
->>>>>>> upstream/dev
 
 "lng_filters_all" = "All chats";
 "lng_filters_setup" = "Edit";
