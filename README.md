@@ -54,6 +54,7 @@ The latest version is available for
 * QR Code generator ([MIT License](https://github.com/nayuki/QR-Code-generator#license))
 * CMake ([New BSD License](https://github.com/Kitware/CMake/blob/master/Copyright.txt))
 * Hunspell ([LGPL](https://github.com/hunspell/hunspell/blob/master/COPYING.LESSER))
+* Ada ([Apache License 2.0](https://github.com/ada-url/ada/blob/main/LICENSE-APACHE))
 
 ## <h2><img src="https://github.com/hikariatama/assets/raw/master/1326-command-window-line-flat.webp" height="50" align="middle"> Build instructions</h2>
 

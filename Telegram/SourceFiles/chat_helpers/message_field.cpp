@@ -63,6 +63,12 @@ constexpr auto kParseLinksTimeout = crl::time(1000);
 constexpr auto kTypesDuration = 4 * crl::time(1000);
 constexpr auto kCodeLanguageLimit = 32;
 
+constexpr auto kLinkProtocols = {
+    "http://",
+    "https://",
+    "tonsite://"
+};
+
 // For mention / custom emoji tags save and validate selfId,
 // ignore tags for different users.
 [[nodiscard]] Fn<QString(QStringView)> FieldTagMimeProcessor(
@@ -147,13 +153,23 @@ void EditLinkBox(
 		object_ptr<Ui::RpWidget>(content),
 		st::markdownLinkFieldPadding);
 	placeholder->setAttribute(Qt::WA_TransparentForMouseEvents);
+	const auto link = [&] {
+		if (!startLink.trimmed().isEmpty()) {
+			return startLink.trimmed();
+		}
+		const auto clipboard = QGuiApplication::clipboard()->text().trimmed();
+		const auto starts = [&](const auto &protocol) {
+  			return clipboard.startsWith(protocol);
+		};
+		return std::ranges::any_of(kLinkProtocols, starts) ? clipboard : QString();
+	}();
 	const auto url = Ui::AttachParentChild(
 		content,
 		object_ptr<Ui::InputField>(
 			content,
 			fieldSt,
 			tr::lng_formatting_link_url(),
-			startLink.trimmed()));
+			link));
 	url->heightValue(
 	) | rpl::start_with_next([placeholder](int height) {
 		placeholder->resize(placeholder->width(), height);
@@ -209,6 +225,9 @@ void EditLinkBox(
 		if (startText.isEmpty()) {
 			text->setFocusFast();
 		} else {
+			if (!url->empty()) {
+				url->selectAll();
+			}
 			url->setFocusFast();
 		}
 	});
@@ -216,12 +235,31 @@ void EditLinkBox(
 	url->customTab(true);
 	text->customTab(true);
 
+	const auto clearFullSelection = [=](not_null<Ui::InputField*> input) {
+		if (input->empty()) {
+			return;
+		}
+		auto cursor = input->rawTextEdit()->textCursor();
+		const auto hasFull = (!cursor.selectionStart()
+			&& (cursor.selectionEnd()
+				== (input->rawTextEdit()->document()->characterCount() - 1)));
+		if (hasFull) {
+			cursor.clearSelection();
+			input->setTextCursor(cursor);
+		}
+	};
+
 	url->tabbed(
 	) | rpl::start_with_next([=] {
+		clearFullSelection(url);
 		text->setFocus();
 	}, url->lifetime());
 	text->tabbed(
 	) | rpl::start_with_next([=] {
+		if (!url->empty()) {
+			url->selectAll();
+		}
+		clearFullSelection(text);
 		url->setFocus();
 	}, text->lifetime());
 }
@@ -543,7 +581,6 @@ void InitMessageField(
 		[=] { return show->paused(ChatHelpers::PauseReason::Any); },
 		std::move(allowPremiumEmoji));
 	InitMessageFieldGeometry(field);
-	field->customTab(true);
 }
 
 void InitMessageField(

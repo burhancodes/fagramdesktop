@@ -238,6 +238,7 @@ void KeyboardStyle::paintButtonIcon(
 		case Type::SwitchInline: return &st->msgBotKbSwitchPmIcon();
 		case Type::WebView:
 		case Type::SimpleWebView: return &st->msgBotKbWebviewIcon();
+		case Type::CopyText: return &st->msgBotKbCopyIcon();
 		}
 		return nullptr;
 	}();
@@ -334,6 +335,7 @@ int KeyboardStyle::minButtonWidth(
 	case Type::Game: iconWidth = st::historySendingInvertedIcon.width(); break;
 	case Type::WebView:
 	case Type::SimpleWebView: iconWidth = st::msgBotKbWebviewIcon.width(); break;
+	case Type::CopyText: return st::msgBotKbCopyIcon.width(); break;
 	}
 	if (iconWidth > 0) {
 		result = std::max(result, 2 * iconWidth + 4 * int(st::msgBotKbIconPadding));
@@ -2365,7 +2367,9 @@ bool Message::hasFromPhoto() const {
 	case Context::SavedSublist:
 	case Context::ScheduledTopic: {
 		const auto item = data();
-		if (item->isPostHidingAuthor()) {
+		if (item->isSponsored()) {
+			return false;
+		} else if (item->isPostHidingAuthor()) {
 			return false;
 		} else if (item->isPost()) {
 			return true;
@@ -2396,8 +2400,10 @@ TextState Message::textState(
 	const auto media = this->media();
 
 	auto result = TextState(item);
+	const auto visibleMediaTextLen = visibleMediaTextLength();
+	const auto visibleTextLen = visibleTextLength();
 	const auto minSymbol = (_invertMedia && request.onlyMessageText)
-		? visibleMediaTextLength()
+		? visibleMediaTextLen
 		: 0;
 	result.symbol = minSymbol;
 
@@ -2424,6 +2430,7 @@ TextState Message::textState(
 		g.setHeight(g.height() - reactionsHeight);
 		const auto reactionsPosition = QPoint(reactionsLeft + g.left(), g.top() + g.height() + st::mediaInBubbleSkip);
 		if (_reactions->getState(point - reactionsPosition, &result)) {
+			result.symbol += visibleMediaTextLen + visibleTextLen;
 			return result;
 		}
 	}
@@ -2439,6 +2446,7 @@ TextState Message::textState(
 
 		auto inner = g;
 		if (getStateCommentsButton(point, inner, &result)) {
+			result.symbol += visibleMediaTextLen + visibleTextLen;
 			return result;
 		}
 		auto trect = inner.marginsRemoved(st::msgPadding);
@@ -2456,6 +2464,7 @@ TextState Message::textState(
 			trect.setHeight(trect.height() - reactionsHeight);
 			const auto reactionsPosition = QPoint(trect.left(), trect.top() + trect.height() + reactionsTop);
 			if (_reactions->getState(point - reactionsPosition, &result)) {
+				result.symbol += visibleMediaTextLen + visibleTextLen;
 				return result;
 			}
 		}
@@ -2471,6 +2480,7 @@ TextState Message::textState(
 						? inner
 						: inner - heightMargins),
 					&result)) {
+				result.symbol += visibleMediaTextLen + visibleTextLen;
 				return result;
 			}
 			if (belowInfo) {
@@ -2548,7 +2558,11 @@ TextState Message::textState(
 				result = bottomInfoResult;
 			}
 		};
-		if (result.symbol <= minSymbol && inBubble) {
+		if (!inBubble) {
+			if (point.y() >= g.y() + g.height()) {
+				result.symbol += visibleTextLen + visibleMediaTextLen;
+			}
+		} else if (result.symbol <= minSymbol) {
 			const auto mediaHeight = mediaDisplayed ? media->height() : 0;
 			const auto mediaLeft = trect.x() - st::msgPadding.left();
 			const auto mediaTop = (!mediaDisplayed || _invertMedia)
@@ -2571,22 +2585,21 @@ TextState Message::textState(
 						result.cursor = CursorState::None;
 					}
 				} else if (request.onlyMessageText) {
-					result.symbol = visibleTextLength();
+					result.symbol = visibleTextLen;
 					result.afterSymbol = false;
 					result.cursor = CursorState::None;
 				} else {
-					result.symbol += visibleTextLength();
+					result.symbol += visibleTextLen;
 				}
 			} else if (getStateText(point, trect, &result, request)) {
 				if (_invertMedia) {
-					result.symbol += visibleMediaTextLength();
+					result.symbol += visibleMediaTextLen;
 				}
 				result.overMessageText = true;
 				checkBottomInfoState();
 				return result;
 			} else if (point.y() >= trect.y() + trect.height()) {
-				result.symbol = visibleTextLength()
-					+ visibleMediaTextLength();
+				result.symbol = visibleTextLen + visibleMediaTextLen;
 			}
 		}
 		checkBottomInfoState();
@@ -3054,7 +3067,8 @@ TextForMimeData Message::selectedText(TextSelection selection) const {
 }
 
 SelectedQuote Message::selectedQuote(TextSelection selection) const {
-	const auto item = data();
+	const auto textItem = this->textItem();
+	const auto item = textItem ? textItem : data().get();
 	const auto &translated = item->translatedText();
 	const auto &original = item->originalText();
 	if (&translated != &original
@@ -3068,7 +3082,7 @@ SelectedQuote Message::selectedQuote(TextSelection selection) const {
 		const auto textSelection = mediaBefore
 			? media->skipSelection(selection)
 			: selection;
-		return FindSelectedQuote(text(), textSelection, data());
+		return FindSelectedQuote(text(), textSelection, item);
 	} else if (const auto media = this->media()) {
 		if (media->isDisplayed() || isHiddenByGroup()) {
 			return media->selectedQuote(selection);

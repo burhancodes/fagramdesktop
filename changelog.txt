@@ -1,3 +1,51 @@
+5.5.8 beta (03.10.24)
+
+- Allow drag-to-scroll in reply quote edit box.
+- Add bot verified badge to web app title.
+- Fix crash when opening some channels.
+- Fix some visual glitches.
+
+5.5.7 beta (01.10.24)
+
+- Add ability to share QR code of bots.
+- Add mention/hashtag autocomplete to Saved GIF caption.
+- Fixed display of working hours in profiles.
+- Respect the maximum reply quote length.
+
+5.5.6 beta (19.09.24)
+
+- Allow resizing the window used for web apps and games.
+- Add mention / hashtag autocomplete in media caption field.
+- Add "Include muted chats in folder counters" notifications setting.
+- Auto-select URL suggested from clipboard when creating a custom link.
+- Update emoji to Unicode 15.1.
+- Fix replying with a quote from media album caption.
+- Fix viewing custom emoji packs from media album caption.
+
+5.5.5 (13.09.24)
+
+- Suggest URL from clipboard when creating a custom link.
+- Fix animated topic icons in topic info page.
+- Fix excessive getChannelDifference requests.
+
+5.5.4 (12.09.24)
+
+- Fix channel updates stopping after difference request failing.
+- Add QR code generation for your username in Settings.
+- Fix swipe-to-reply gestures stopping. (macOS)
+
+5.5.3 (10.09.24)
+
+- Fix custom emoji sending.
+- Add mention link QR code sharing.
+- Fix sending files from network drives. (Windows)
+
+5.5.2 (09.09.24)
+
+- Support two bottom buttons in web apps.
+- Fix text layout outside of the message bubble glitch.
+- Don't stop video when dragging media viewer in window mode.
+
 5.5.1 (06.09.24)
 
 - Fix crash in peer short info box.

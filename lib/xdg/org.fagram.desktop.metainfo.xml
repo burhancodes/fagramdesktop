@@ -78,5 +78,6 @@
         <binary>fagram</binary>
         <dbus type="session">org.fagram.desktop</dbus>
         <mediatype>x-scheme-handler/tg</mediatype>
+        <mediatype>x-scheme-handler/tonsite</mediatype>
     </provides>
 </component>

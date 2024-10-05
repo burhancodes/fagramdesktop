@@ -49,7 +49,9 @@ bool Launcher::launchUpdater(UpdaterLaunch action) {
 	const auto launching = justRelaunch
 		? (cExeDir() + cExeName())
 		: cWriteProtected()
-		? u"pkexec"_q
+		? GLib::find_program_in_path("run0")
+		? u"run0"_q
+		: u"pkexec"_q
 		: (cExeDir() + u"Updater"_q);
 	argumentsList.push_back(launching.toStdString());
 
@@ -61,7 +63,7 @@ bool Launcher::launchUpdater(UpdaterLaunch action) {
 			: launching;
 		argumentsList.push_back(argv0.toStdString());
 	} else if (cWriteProtected()) {
-		// Elevated process that pkexec should launch.
+		// Elevated process that run0/pkexec should launch.
 		const auto elevated = cWorkingDir() + u"tupdates/temp/Updater"_q;
 		argumentsList.push_back(elevated.toStdString());
 	}
@@ -107,6 +109,7 @@ bool Launcher::launchUpdater(UpdaterLaunch action) {
 	Logs::closeMain();
 	CrashReports::Finish();
 
+	int waitStatus = 0;
 	if (justRelaunch) {
 		return GLib::spawn_async(
 			initialWorkingDir().toStdString(),
@@ -127,8 +130,8 @@ bool Launcher::launchUpdater(UpdaterLaunch action) {
 			nullptr,
 			nullptr,
 			nullptr,
-			nullptr,
-			nullptr)) {
+			&waitStatus,
+			nullptr) || !g_spawn_check_exit_status(waitStatus, nullptr)) {
 		return false;
 	}
 	return launchUpdater(UpdaterLaunch::JustRelaunch);

@@ -13,7 +13,6 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "history/history_view_highlight_manager.h"
 #include "history/history_view_top_toast.h"
 #include "history/history.h"
-#include "chat_helpers/field_autocomplete.h"
 #include "chat_helpers/field_characters_count_manager.h"
 #include "window/section_widget.h"
 #include "ui/widgets/fields/input_field.h"
@@ -22,7 +21,6 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 enum class SendMediaType;
 class MessageLinksParser;
 struct InlineBotQuery;
-struct AutocompleteQuery;
 
 namespace MTP {
 class Error;
@@ -77,6 +75,10 @@ class ContinuousScroll;
 struct ChatPaintHighlight;
 } // namespace Ui
 
+namespace Ui::Emoji {
+class SuggestionsController;
+} // namespace Ui::Emoji
+
 namespace Window {
 class SessionController;
 } // namespace Window
@@ -84,6 +86,8 @@ class SessionController;
 namespace ChatHelpers {
 class TabbedPanel;
 class TabbedSelector;
+class FieldAutocomplete;
+struct FileChosen;
 } // namespace ChatHelpers
 
 namespace HistoryView {
@@ -125,8 +129,6 @@ public:
 		QWidget *parent,
 		not_null<Window::SessionController*> controller);
 
-	void start();
-
 	void historyLoaded();
 
 	[[nodiscard]] bool preventsClose(Fn<void()> &&continueCallback) const;
@@ -158,7 +160,6 @@ public:
 
 	bool updateReplaceMediaButton();
 	void updateFieldPlaceholder();
-	bool updateStickersByEmoji();
 
 	bool confirmSendingFiles(const QStringList &files);
 	bool confirmSendingFiles(not_null<const QMimeData*> data);
@@ -366,17 +367,15 @@ private:
 	void fieldFocused();
 	void fieldResized();
 
-	void insertHashtagOrBotCommand(
-		QString str,
-		FieldAutocomplete::ChooseMethod method);
+	void initFieldAutocomplete();
 	void cancelInlineBot();
 	void saveDraft(bool delayed = false);
 	void saveCloudDraft();
 	void saveDraftDelayed();
-	void checkFieldAutocomplete();
 	void showMembersDropdown();
 	void windowIsVisibleChanged();
 	void saveFieldToHistoryLocalDraft();
+	void fileChosen(ChatHelpers::FileChosen &&data);
 
 	void updateFieldSubmitSettings();
 
@@ -484,8 +483,6 @@ private:
 	void orderWidgets();
 
 	[[nodiscard]] InlineBotQuery parseInlineBotQuery() const;
-	[[nodiscard]] auto parseMentionHashtagBotCommandQuery() const
-		-> AutocompleteQuery;
 
 	void clearInlineBot();
 	void inlineBotChanged();
@@ -739,7 +736,8 @@ private:
 
 	HistoryView::CornerButtons _cornerButtons;
 
-	const object_ptr<FieldAutocomplete> _fieldAutocomplete;
+	std::unique_ptr<ChatHelpers::FieldAutocomplete> _autocomplete;
+	std::unique_ptr<Ui::Emoji::SuggestionsController> _emojiSuggestions;
 	object_ptr<Support::Autocomplete> _supportAutocomplete;
 
 	UserData *_inlineBot = nullptr;
@@ -805,8 +803,6 @@ private:
 	std::unique_ptr<Ui::DropdownMenu> _attachBotsMenu;
 
 	DragArea::Areas _attachDragAreas;
-
-	Fn<void()> _raiseEmojiSuggestions;
 
 	bool _nonEmptySelection = false;
 

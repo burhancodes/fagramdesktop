@@ -569,6 +569,8 @@ PRIVATE
     data/data_lastseen_status.h
     data/data_location.cpp
     data/data_location.h
+    data/data_media_preload.cpp
+    data/data_media_preload.h
     data/data_media_rotation.cpp
     data/data_media_rotation.h
     data/data_media_types.cpp
@@ -1502,6 +1504,8 @@ PRIVATE
     support/support_templates.h
     ui/boxes/edit_invite_link_session.cpp
     ui/boxes/edit_invite_link_session.h
+    ui/boxes/peer_qr_box.cpp
+    ui/boxes/peer_qr_box.h
     ui/chat/attach/attach_item_single_file_preview.cpp
     ui/chat/attach/attach_item_single_file_preview.h
     ui/chat/attach/attach_item_single_media_preview.cpp

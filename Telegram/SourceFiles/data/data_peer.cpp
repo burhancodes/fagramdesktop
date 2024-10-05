@@ -396,7 +396,8 @@ void PeerData::paintUserpic(
 		Ui::PeerUserpicView &view,
 		int x,
 		int y,
-		int size) const {
+		int size,
+		bool forceCircle) const {
 	const auto cloud = userpicCloudImage(view);
 	const auto ratio = style::DevicePixelRatio();
 	Ui::ValidateUserpicCache(
