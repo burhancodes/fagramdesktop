@@ -647,6 +647,14 @@ QByteArray SerializeMessage(
 		push("is_unclaimed", data.isUnclaimed);
 		push("giveaway_msg_id", data.giveawayMsgId);
 		push("transaction_id", data.transactionId);
+	}, [&](const ActionStarGift &data) {
+		pushActor();
+		pushAction("send_star_gift");
+		push("gift_id", data.giftId);
+		push("stars", data.stars);
+		push("is_limited", data.limited);
+		push("is_anonymous", data.anonymous);
+		pushBare("text", SerializeText(context, data.text));
 	}, [](v::null_t) {});
 
 	if (v::is_null(message.action.content)) {
@@ -1457,6 +1465,7 @@ Result JsonWriter::writeDialogStart(const Data::DialogInfo &data) {
 		case Type::Unknown: return "";
 		case Type::Self: return "saved_messages";
 		case Type::Replies: return "replies";
+		case Type::VerifyCodes: return "verification_codes";
 		case Type::Personal: return "personal_chat";
 		case Type::Bot: return "bot_chat";
 		case Type::PrivateGroup: return "private_group";
@@ -1472,7 +1481,9 @@ Result JsonWriter::writeDialogStart(const Data::DialogInfo &data) {
 		? QByteArray()
 		: prepareArrayItemStart();
 	block.append(pushNesting(Context::kObject));
-	if (data.type != Type::Self && data.type != Type::Replies) {
+	if (data.type != Type::Self
+		&& data.type != Type::Replies
+		&& data.type != Type::VerifyCodes) {
 		block.append(prepareObjectItemStart("name")
 			+ StringAllowNull(data.name));
 	}

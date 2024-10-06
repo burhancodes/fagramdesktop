@@ -94,7 +94,7 @@ template <typename T>
 }
 
 [[nodiscard]] TextWithEntities SpoilerLoginCode(TextWithEntities text) {
-	const auto r = QRegularExpression(u"([\\d\\-]{5,7})"_q);
+	const auto r = QRegularExpression(u"([\\d\\-]{4,8})"_q);
 	const auto m = r.match(text.text);
 	if (!m.hasMatch()) {
 		return text;
@@ -2793,7 +2793,10 @@ bool HistoryItem::showForwardsFromSender(
 		not_null<const HistoryMessageForwarded*> forwarded) const {
 	const auto peer = history()->peer;
 	return !forwarded->story
-		&& (peer->isSelf() || peer->isRepliesChat() || forwarded->imported);
+		&& (peer->isSelf()
+			|| peer->isRepliesChat()
+			|| peer->isVerifyCodes()
+			|| forwarded->imported);
 }
 
 not_null<PeerData*> HistoryItem::fromOriginal() const {
@@ -3433,7 +3436,8 @@ TextWithEntities HistoryItem::notificationText(
 	}();
 	if (options.spoilerLoginCode
 		&& !out()
-		&& history()->peer->isNotificationsUser()) {
+		&& (history()->peer->isNotificationsUser()
+			|| history()->peer->isVerifyCodes())) {
 		result = SpoilerLoginCode(std::move(result));
 	}
 	if (result.text.size() <= kNotificationTextLimit) {
@@ -3472,7 +3476,8 @@ ItemPreview HistoryItem::toPreview(ToPreviewOptions options) const {
 	}();
 	if (options.spoilerLoginCode
 		&& !out()
-		&& history()->peer->isNotificationsUser()) {
+		&& (history()->peer->isNotificationsUser()
+			|| history()->peer->isVerifyCodes())) {
 		result.text = SpoilerLoginCode(std::move(result.text));
 	}
 	const auto fromSender = [](not_null<PeerData*> sender) {
@@ -3510,7 +3515,8 @@ ItemPreview HistoryItem::toPreview(ToPreviewOptions options) const {
 				return fromSender(from);
 			}
 			return fromForwarded();
-		} else if (_history->peer->isSelf()) {
+		} else if (_history->peer->isSelf()
+			|| _history->peer->isVerifyCodes()) {
 			return fromForwarded();
 		}
 		return {};
@@ -3573,8 +3579,10 @@ void HistoryItem::createComponents(CreateConfig &&config) {
 		if (savedFrom && savedFrom->isChannel()) {
 			mask |= HistoryMessageSigned::Bit();
 		}
-	} else if ((_history->peer->isSelf() || _history->peer->isRepliesChat())
-		&& !config.originalPostAuthor.isEmpty()) {
+	} else if (!config.originalPostAuthor.isEmpty()
+		&& (_history->peer->isSelf()
+			|| _history->peer->isRepliesChat()
+			|| _history->peer->isVerifyCodes())) {
 		mask |= HistoryMessageSigned::Bit();
 	}
 	if (config.editDate != TimeId(0)) {
@@ -4917,12 +4925,15 @@ void HistoryItem::setServiceMessageByAction(const MTPmessageAction &action) {
 				Ui::Text::WithEntities);
 		} else {
 			result.links.push_back(peer->createOpenLink());
-			result.text = (isSelf
-				? tr::lng_action_gift_received_me
-				: tr::lng_action_gift_received)(
+			result.text = isSelf
+				? tr::lng_action_gift_sent(tr::now,
+					lt_cost,
+					cost,
+					Ui::Text::WithEntities)
+				: tr::lng_action_gift_received(
 					tr::now,
 					lt_user,
-					Ui::Text::Link(peer->name(), 1), // Link 1.
+					Ui::Text::Link(peer->shortName(), 1), // Link 1.
 					lt_cost,
 					cost,
 					Ui::Text::WithEntities);
@@ -5130,18 +5141,22 @@ void HistoryItem::setServiceMessageByAction(const MTPmessageAction &action) {
 		} else {
 			const auto isSelf = (_from->id == _from->session().userPeerId());
 			const auto peer = isSelf ? _history->peer : _from;
+			const auto cost = AmountAndStarCurrency(
+				&_history->session(),
+				action.vamount().value_or_empty(),
+				qs(action.vcurrency().value_or_empty()));
 			result.links.push_back(peer->createOpenLink());
-			result.text = (isSelf
-				? tr::lng_action_gift_received_me
-				: tr::lng_action_gift_received)(
+			result.text = isSelf
+				? tr::lng_action_gift_sent(tr::now,
+					lt_cost,
+					cost,
+					Ui::Text::WithEntities)
+				: tr::lng_action_gift_received(
 					tr::now,
 					lt_user,
-					Ui::Text::Link(peer->name(), 1), // Link 1.
+					Ui::Text::Link(peer->shortName(), 1), // Link 1.
 					lt_cost,
-					AmountAndStarCurrency(
-						&_history->session(),
-						action.vamount().value_or_empty(),
-						qs(action.vcurrency().value_or_empty())),
+					cost,
 					Ui::Text::WithEntities);
 
 		}
@@ -5238,18 +5253,22 @@ void HistoryItem::setServiceMessageByAction(const MTPmessageAction &action) {
 		_history->session().giftBoxStickersPacks().load();
 		const auto amount = action.vamount().v;
 		const auto currency = qs(action.vcurrency());
+		const auto cost = AmountAndStarCurrency(
+			&_history->session(),
+			amount,
+			currency);
 		result.links.push_back(peer->createOpenLink());
-		result.text = (isSelf
-			? tr::lng_action_gift_received_me
-			: tr::lng_action_gift_received)(
+		result.text = isSelf
+			? tr::lng_action_gift_sent(tr::now,
+				lt_cost,
+				cost,
+				Ui::Text::WithEntities)
+			: tr::lng_action_gift_received(
 				tr::now,
 				lt_user,
-				Ui::Text::Link(peer->name(), 1), // Link 1.
+				Ui::Text::Link(peer->shortName(), 1), // Link 1.
 				lt_cost,
-				AmountAndStarCurrency(
-					&_history->session(),
-					amount,
-					currency),
+				cost,
 				Ui::Text::WithEntities);
 		return result;
 	};
@@ -5267,6 +5286,40 @@ void HistoryItem::setServiceMessageByAction(const MTPmessageAction &action) {
 					_from->owner().peer(
 						peerFromMTP(action.vboost_peer()))->name()),
 		};
+		return result;
+	};
+
+	auto prepareStarGift = [&](
+			const MTPDmessageActionStarGift &action) {
+		auto result = PreparedServiceText();
+		const auto isSelf = _from->isSelf();
+		const auto peer = isSelf ? _history->peer : _from;
+		const auto stars = action.vgift().data().vstars().v;
+		const auto cost = TextWithEntities{
+			tr::lng_action_gift_for_stars(tr::now, lt_count, stars),
+		};
+		const auto anonymous = _from->isServiceUser();
+		if (anonymous) {
+			result.text = tr::lng_action_gift_received_anonymous(
+				tr::now,
+				lt_cost,
+				cost,
+				Ui::Text::WithEntities);
+		} else {
+			result.links.push_back(peer->createOpenLink());
+			result.text = isSelf
+				? tr::lng_action_gift_sent(tr::now,
+					lt_cost,
+					cost,
+					Ui::Text::WithEntities)
+				: tr::lng_action_gift_received(
+					tr::now,
+					lt_user,
+					Ui::Text::Link(peer->shortName(), 1), // Link 1.
+					lt_cost,
+					cost,
+					Ui::Text::WithEntities);
+		}
 		return result;
 	};
 
@@ -5315,6 +5368,7 @@ void HistoryItem::setServiceMessageByAction(const MTPmessageAction &action) {
 		preparePaymentRefunded,
 		prepareGiftStars,
 		prepareGiftPrize,
+		prepareStarGift,
 		PrepareEmptyText<MTPDmessageActionRequestedPeerSentMe>,
 		PrepareErrorText<MTPDmessageActionEmpty>));
 
@@ -5421,12 +5475,36 @@ void HistoryItem::applyAction(const MTPMessageAction &action) {
 				.slug = qs(data.vtransaction_id()),
 				.channel = history()->owner().channel(
 					peerToChannel(peerFromMTP(data.vboost_peer()))),
-				.count = int(data.vstars().v),
 				.giveawayMsgId = data.vgiveaway_msg_id().v,
+				.count = int(data.vstars().v),
 				.type = Data::GiftType::Credits,
 				.viaGiveaway = true,
 				.unclaimed = data.is_unclaimed(),
 			});
+	}, [&](const MTPDmessageActionStarGift &data) {
+		const auto &gift = data.vgift().data();
+		const auto document = history()->owner().processDocument(
+			gift.vsticker());
+		using Fields = Data::GiftCode;
+		_media = std::make_unique<Data::MediaGiftBox>(this, _from, Fields{
+			.document = document->sticker() ? document.get() : nullptr,
+			.message = (data.vmessage()
+				? TextWithEntities{
+					.text = qs(data.vmessage()->data().vtext()),
+					.entities = Api::EntitiesFromMTP(
+						&history()->session(),
+						data.vmessage()->data().ventities().v),
+				}
+				: TextWithEntities()),
+			.convertStars = int(data.vconvert_stars().v),
+			.limitedCount = gift.vavailability_total().value_or_empty(),
+			.limitedLeft = gift.vavailability_remains().value_or_empty(),
+			.count = int(gift.vstars().v),
+			.type = Data::GiftType::StarGift,
+			.anonymous = data.is_name_hidden(),
+			.converted = data.is_converted(),
+			.saved = data.is_saved(),
+		});
 	}, [](const auto &) {
 	});
 }

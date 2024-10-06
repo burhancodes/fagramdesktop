@@ -1362,6 +1362,11 @@ auto HtmlWriter::Wrap::pushMessage(
 			+ ".\n Your prize is "
 			+ QString::number(data.amount).toUtf8()
 			+ " Telegram Stars.";
+	}, [&](const ActionStarGift &data) {
+		return serviceFrom
+			+ " sent you a gift of "
+			+ QByteArray::number(data.stars)
+			+ " Telegram Stars.";
 	}, [](v::null_t) { return QByteArray(); });
 
 	if (!serviceText.isEmpty()) {
@@ -3221,6 +3226,7 @@ Result HtmlWriter::writeDialogEnd() {
 		case Type::Unknown: return "unknown";
 		case Type::Self:
 		case Type::Replies:
+		case Type::VerifyCodes:
 		case Type::Personal: return "private";
 		case Type::Bot: return "bot";
 		case Type::PrivateGroup:
@@ -3236,6 +3242,7 @@ Result HtmlWriter::writeDialogEnd() {
 		case Type::Unknown:
 		case Type::Self:
 		case Type::Replies:
+		case Type::VerifyCodes:
 		case Type::Personal:
 		case Type::Bot: return "Deleted Account";
 		case Type::PrivateGroup:
@@ -3252,6 +3259,8 @@ Result HtmlWriter::writeDialogEnd() {
 			return "Saved messages";
 		} else if (dialog.type == Type::Replies) {
 			return "Replies";
+		} else if (dialog.type == Type::VerifyCodes) {
+			return "Verification Codes";
 		}
 		return dialog.name;
 	};
@@ -3272,7 +3281,9 @@ Result HtmlWriter::writeDialogEnd() {
 			+ (outgoing ? " outgoing messages" : " messages");
 	};
 	auto userpic = UserpicData{
-		((_dialog.type == Type::Self || _dialog.type == Type::Replies)
+		((_dialog.type == Type::Self
+			|| _dialog.type == Type::Replies
+			|| _dialog.type == Type::VerifyCodes)
 			? kSavedMessagesColorIndex
 			: Data::PeerColorIndex(_dialog.peerId)),
 		kEntryUserpicSize

@@ -7,6 +7,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "history/view/history_view_view_button.h"
 
+#include "boxes/gift_premium_box.h"
 #include "core/click_handler_types.h"
 #include "history/history.h"
 #include "history/history_item_components.h"
