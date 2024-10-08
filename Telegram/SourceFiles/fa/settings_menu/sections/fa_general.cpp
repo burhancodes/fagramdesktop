@@ -74,6 +74,7 @@ namespace Settings {
         SettingsMenuJsonSwitch(BotAPI IDs type, show_id_botapi)
         SettingsMenuJsonSwitch(Show Registration date, show_registration_date)
         SettingsMenuJsonSwitch(Hide Stories, hide_stories)
+		Ui::AddDividerText(container, rpl::single(QString("^^^ This setting will be changed after restart of the client")));
     }
 
     void FAGeneral::SetupFAGeneral(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
