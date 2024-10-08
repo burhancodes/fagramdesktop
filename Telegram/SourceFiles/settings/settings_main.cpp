@@ -8,6 +8,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "settings/settings_main.h"
 #include "fa/settings_menu/fa_settings_menu.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "api/api_credits.h"
 #include "core/application.h"
 #include "core/click_handler_types.h"
@@ -197,10 +199,12 @@ void Cover::initViewers() {
 		refreshNameGeometry(width());
 	}, lifetime());
 
+	bool hide_phone = FASettings::JsonSettings::GetBool("hide_phone_number");
+
 	Info::Profile::PhoneValue(
 		_user
 	) | rpl::start_with_next([=](const TextWithEntities &value) {
-		_phone->setText(value.text);
+		_phone->setText(hide_phone ? QString("Phone hidden") : QString::fromStdString(value.text.toStdString()));
 		refreshPhoneGeometry(width());
 	}, lifetime());
 

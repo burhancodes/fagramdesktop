@@ -204,6 +204,9 @@ const std::map<QString, Definition, std::greater<QString>> DefinitionMap {
 	{ "show_registration_date", {
 		.type = SettingType::BoolSetting,
 		.defaultValue = true, }},
+	{ "hide_phone_number", {
+		.type = SettingType::BoolSetting,
+		.defaultValue = false, }},
 	{ "hide_stories", {
 		.type = SettingType::BoolSetting,
 		.defaultValue = false, }},

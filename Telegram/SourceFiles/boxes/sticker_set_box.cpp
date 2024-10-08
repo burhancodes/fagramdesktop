@@ -732,6 +732,16 @@ void StickerSetBox::updateButtons() {
 					? tr::lng_stickers_copied_emoji(tr::now)
 					: tr::lng_stickers_copied(tr::now));
 		};
+		const auto pack_owner = [=] {
+			auto ownerId = _inner->setId() >> 32;
+			if (_inner->setId() >> 24 & 0xff) { 
+				ownerId += 0x100000000;
+			}
+
+			QGuiApplication::clipboard()->setText(
+			QString::number(ownerId);
+			showToast(rpl::single(QString("ID copied.")));
+			};
 		const auto fillSetCreatorMenu = [&] {
 			using Filler = Fn<void(not_null<Ui::PopupMenu*>)>;
 			if (!_inner->amSetCreator()) {
@@ -809,6 +819,10 @@ void StickerSetBox::updateButtons() {
 							: tr::lng_stickers_share_pack)(tr::now),
 						[=] { share(); closeBox(); },
 						&st::menuIconShare);
+					(*menu)->addAction(
+						rpl::single(QString("Pack owner")),
+						[=] { pack_owner(); closeBox(); },
+						&st::menuIconProfile);
 					(*menu)->popup(QCursor::pos());
 					return true;
 				});
@@ -860,6 +874,10 @@ void StickerSetBox::updateButtons() {
 								: tr::lng_stickers_archive_pack(tr::now)),
 							archive,
 							&st::menuIconArchive);
+						(*menu)->addAction(
+							rpl::single(QString("Pack owner")),
+							[=] { pack_owner(); closeBox(); },
+							&st::menuIconProfile);
 					}
 					(*menu)->popup(QCursor::pos());
 					return true;
