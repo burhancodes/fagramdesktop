@@ -201,6 +201,12 @@ const std::map<QString, Definition, std::greater<QString>> DefinitionMap {
 	{ "show_id_botapi", {
 		.type = SettingType::BoolSetting,
 		.defaultValue = true, }},
+	{ "show_registration_date", {
+		.type = SettingType::BoolSetting,
+		.defaultValue = true, }},
+	{ "hide_stories", {
+		.type = SettingType::BoolSetting,
+		.defaultValue = false, }},
 	{ "recent_stickers_limit", {
 		.type = SettingType::IntSetting,
 		.defaultValue = 30,

@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "info/info_top_bar.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "dialogs/ui/dialogs_stories_list.h"
 #include "lang/lang_keys.h"
 #include "info/info_wrap_widget.h"
@@ -492,6 +494,11 @@ void TopBar::updateControlsVisibility(anim::type animated) {
 }
 
 void TopBar::setStories(rpl::producer<Dialogs::Stories::Content> content) {
+	hide_stories = FASettings::JsonSettings::GetBool("hide_stories");
+	if (hide_stories) {
+		return;
+	}
+
 	_storiesLifetime.destroy();
 	delete _storiesWrap.data();
 	if (content) {

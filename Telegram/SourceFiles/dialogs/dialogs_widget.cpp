@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "dialogs/dialogs_widget.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "base/qt/qt_key_modifiers.h"
 #include "base/options.h"
 #include "dialogs/ui/chat_search_in.h"
@@ -903,6 +905,11 @@ void Widget::setupMainMenuToggle() {
 }
 
 void Widget::setupStories() {
+	hide_stories = FASettings::JsonSettings::GetBool("hide_stories");
+	if (hide_stories) {
+		return;
+	}
+
 	_stories->verticalScrollEvents(
 	) | rpl::start_with_next([=](not_null<QWheelEvent*> e) {
 		_scroll->viewportEvent(e);

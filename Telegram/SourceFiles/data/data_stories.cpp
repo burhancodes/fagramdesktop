@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "data/data_stories.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "base/unixtime.h"
 #include "apiwrap.h"
 #include "core/application.h"
@@ -163,6 +165,11 @@ Main::Session &Stories::session() const {
 }
 
 void Stories::apply(const MTPDupdateStory &data) {
+	hide_stories = FASettings::JsonSettings::GetBool("hide_stories");
+	if (hide_stories) {
+		return;
+	}
+
 	const auto peerId = peerFromMTP(data.vpeer());
 	const auto peer = _owner->peer(peerId);
 	const auto now = base::unixtime::now();
@@ -212,6 +219,10 @@ void Stories::apply(const MTPDupdateStory &data) {
 }
 
 void Stories::apply(const MTPDupdateReadStories &data) {
+	hide_stories = FASettings::JsonSettings::GetBool("hide_stories");
+	if (hide_stories) {
+		return;
+	}
 	bumpReadTill(peerFromMTP(data.vpeer()), data.vmax_id().v);
 }
 
@@ -224,6 +235,11 @@ void Stories::apply(const MTPStoriesStealthMode &stealthMode) {
 }
 
 void Stories::apply(not_null<PeerData*> peer, const MTPPeerStories *data) {
+	hide_stories = FASettings::JsonSettings::GetBool("hide_stories");
+	if (hide_stories) {
+		return;
+	}
+
 	if (!data) {
 		applyDeletedFromSources(peer->id, StorySourcesList::NotHidden);
 		applyDeletedFromSources(peer->id, StorySourcesList::Hidden);
@@ -236,6 +252,11 @@ void Stories::apply(not_null<PeerData*> peer, const MTPPeerStories *data) {
 }
 
 Story *Stories::applySingle(PeerId peerId, const MTPstoryItem &story) {
+	hide_stories = FASettings::JsonSettings::GetBool("hide_stories");
+	if (hide_stories) {
+		return nullptr;
+	}
+
 	const auto idDates = parseAndApply(
 		_owner->peer(peerId),
 		story,
