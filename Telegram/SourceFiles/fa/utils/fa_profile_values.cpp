@@ -9,6 +9,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "fa/utils/fa_profile_values.h"
 
 #include <QLocale>
+#include <QDateTime>
 #include <vector>
 #include <algorithm>
 #include <cmath>
@@ -40,8 +41,8 @@ rpl::producer<TextWithEntities> IDValue(not_null<PeerData*> peer) {
 // suddenly stole into materialgram
 
 QString parseRegistrationTime(QString prefix, long long regTime) {
-	return prefix + base::unixtime::parse(regTime)
-		.toString(QLocale::system().dateFormat(QLocale::ShortFormat));
+    return prefix + QDateTime::fromSecsSinceEpoch(regTime)
+        .toString(QLocale::system().dateFormat(QLocale::ShortFormat));
 }
 
 QString findRegistrationTime(long long userId) {
