@@ -311,7 +311,7 @@ Session::Session(not_null<Main::Session*> session)
 			}
 		}, _lifetime);
 
-		hide_stories = FASettings::JsonSettings::GetBool("hide_stories");
+		bool hide_stories = FASettings::JsonSettings::GetBool("hide_stories");
 		if (!hide_stories) {
 			_stories->loadMore(Data::StorySourcesList::NotHidden);
 		}

@@ -905,7 +905,7 @@ void Widget::setupMainMenuToggle() {
 }
 
 void Widget::setupStories() {
-	hide_stories = FASettings::JsonSettings::GetBool("hide_stories");
+	bool hide_stories = FASettings::JsonSettings::GetBool("hide_stories");
 	if (hide_stories) {
 		return;
 	}
