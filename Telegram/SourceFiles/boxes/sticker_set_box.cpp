@@ -733,15 +733,18 @@ void StickerSetBox::updateButtons() {
 					: tr::lng_stickers_copied(tr::now));
 		};
 		const auto pack_owner = [=] {
-			auto ownerId = _inner->setId() >> 32;
-			if (_inner->setId() >> 24 & 0xff) { 
-				ownerId += 0x100000000;
-			}
+                     auto ownerId = _inner->setId() >> 32;
+                     if (_inner->setId() >> 24 & 0xff) { 
+                        ownerId += 0x100000000;
+                     }
 
-			QGuiApplication::clipboard()->setText(
-			QString::number(ownerId);
-			showToast(rpl::single(QString("ID copied."))));
-			};
+                     QGuiApplication::clipboard()->setText(
+                     QString::number(ownerId) 
+                     );
+
+                     showToast(rpl::single(QString("ID copied.")));
+                };
+
 		const auto fillSetCreatorMenu = [&] {
 			using Filler = Fn<void(not_null<Ui::PopupMenu*>)>;
 			if (!_inner->amSetCreator()) {
