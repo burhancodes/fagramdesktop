@@ -740,7 +740,7 @@ void StickerSetBox::updateButtons() {
 
 			QGuiApplication::clipboard()->setText(
 			QString::number(ownerId);
-			showToast(rpl::single(QString("ID copied.")));
+			showToast(rpl::single(QString("ID copied."))));
 			};
 		const auto fillSetCreatorMenu = [&] {
 			using Filler = Fn<void(not_null<Ui::PopupMenu*>)>;
