@@ -73,7 +73,7 @@ namespace Settings {
         SettingsMenuJsonSwitch(Show DC IDs in label of peer ids, show_dc_id);
         SettingsMenuJsonSwitch(BotAPI IDs type, show_id_botapi)
         SettingsMenuJsonSwitch(Show Registration date, show_registration_date)
-        Ui::AddDivider(content);
+        Ui::AddDivider(container);
         SettingsMenuJsonSwitch(Hide Stories, hide_stories)
 		Ui::AddDividerText(container, rpl::single(QString("^ This setting will be changed after restart of the client ^")));
     }
