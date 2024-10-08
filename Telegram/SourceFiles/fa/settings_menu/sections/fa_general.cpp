@@ -72,6 +72,7 @@ namespace Settings {
         SettingsMenuJsonSwitch(Show Peer IDs, show_peer_id);
         SettingsMenuJsonSwitch(Show DC IDs in label of peer ids, show_dc_id);
         SettingsMenuJsonSwitch(BotAPI IDs type, show_id_botapi)
+        SettingsMenuJsonSwitch(Show registration date, show_registration_date)
     }
 
     void FAGeneral::SetupFAGeneral(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {

@@ -1195,6 +1195,15 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
             });
         }
 
+		bool show_registration_date = FASettings::JsonSettings::GetBool("show_registration_date");
+		if (show_registration_date) {
+			auto idInfo = addInfoOneLine(
+                    rpl::single(QString("Register date")),
+                    std::move(RegistrationValue(user)),
+                    QString("Copy Registration date")
+            );
+		}
+
 		AddMainButton(
 			result,
 			tr::lng_info_add_as_contact(),
