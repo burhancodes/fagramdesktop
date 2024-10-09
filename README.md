@@ -70,6 +70,7 @@ The latest version is available for
 * [materialgram](https://github.com/kukuruzka165/materialgram)
 * [64gram](https://github.com/TDesktop-x64/tdesktop)
 * [Kotatogram](https://github.com/kotatogram/kotatogram-desktop)
+* [Design480 (for solar icons)](https://www.figma.com/@480design)
 * [hikariatama (for emojis in readme)](https://github.com/hikariatama)
 
 [//]: # (LINKS)
