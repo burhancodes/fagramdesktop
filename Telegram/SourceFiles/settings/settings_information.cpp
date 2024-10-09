@@ -467,19 +467,13 @@ void SetupRows(
 		controller->showToast(tr::lng_text_copied(tr::now), 500);
 	};
 
-	bool hide_phone = FASettings::JsonSettings::GetBool("hide_phone_number");
-
 	AddRow(
-    	container,
-    	tr::lng_settings_phone_label(),
-    	(self) | rpl::start_with_next([=](const TextWithEntities &value) {
-        	_phone->setText(hide_phone ? QString("Phone hidden") : QString::fromStdString(value.text.toStdString()));
-        	refreshPhoneGeometry(width());
-    	}, lifetime()),
-    	tr::lng_profile_copy_phone(tr::now),
-    	copyPhone,
-    	{ &st::menuIconPhone }
-	);
+		container,
+		tr::lng_settings_phone_label(),
+		Info::Profile::PhoneValue(self),
+		tr::lng_profile_copy_phone(tr::now),
+		copyPhone,
+		{ &st::menuIconPhone });
 
 	auto username = Info::Profile::UsernameValue(self);
 	auto empty = base::duplicate(
