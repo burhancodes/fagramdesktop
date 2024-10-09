@@ -823,7 +823,7 @@ void StickerSetBox::updateButtons() {
 						[=] { share(); closeBox(); },
 						&st::menuIconShare);
 					(*menu)->addAction(
-						rpl::single(QString("Pack owner")),
+						QString("Pack owner"),
 						[=] { pack_owner(); closeBox(); },
 						&st::menuIconProfile);
 					(*menu)->popup(QCursor::pos());
@@ -878,7 +878,7 @@ void StickerSetBox::updateButtons() {
 							archive,
 							&st::menuIconArchive);
 						(*menu)->addAction(
-							rpl::single(QString("Pack owner")),
+							QString("Pack owner"),
 							[=] { pack_owner(); closeBox(); },
 							&st::menuIconProfile);
 					}
