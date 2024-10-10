@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "history/view/history_view_top_bar_widget.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "history/history.h"
 #include "history/view/history_view_send_action.h"
 #include "boxes/add_contact_box.h"
@@ -741,7 +743,16 @@ void TopBarWidget::infoClicked() {
 
 void TopBarWidget::backClicked() {
 	if (_activeChat.key.folder()) {
-		_controller->closeFolder();
+		bool hide_all_chats_folder = FASettings::JsonSettings::GetBool("hide_all_chats_folder");
+
+		if (hide_all_chats_folder) {
+			const auto filters = &_controller->session().data().chatsFilters();
+			const auto lookup_id = filters->lookupId(_controller->session().premium() ? 0 : 1);
+			_controller->setActiveChatsFilter(lookup_id);
+		} else {
+			_controller->closeFolder();
+		}
+
 	} else if (_activeChat.section == Section::ChatsList
 		&& _activeChat.key.history()
 		&& _activeChat.key.history()->isForum()) {

@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "window/window_filters_menu.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "mainwindow.h"
 #include "window/window_session_controller.h"
 #include "window/window_controller.h"
@@ -209,6 +211,8 @@ void FiltersMenu::scrollToButton(not_null<Ui::RpWidget*> widget) {
 }
 
 void FiltersMenu::refresh() {
+	bool hide_all_chats_folder = FASettings::JsonSettings::GetBool("hide_all_chats_folder");
+
 	const auto filters = &_session->session().data().chatsFilters();
 	if (!filters->has() || _ignoreRefresh) {
 		return;
@@ -224,7 +228,7 @@ void FiltersMenu::refresh() {
 	const auto maxLimit = (reorderAll ? 1 : 0)
 		+ Data::PremiumLimits(&_session->session()).dialogFiltersCurrent();
 	const auto premiumFrom = (reorderAll ? 0 : 1) + maxLimit;
-	if (!reorderAll) {
+	if (!reorderAll && !hide_all_chats_folder) {
 		_reorder->addPinnedInterval(0, 1);
 	}
 	_reorder->addPinnedInterval(
@@ -254,6 +258,11 @@ void FiltersMenu::refresh() {
 	// After the filters are refreshed, the scroll is reset,
 	// so we have to restore it.
 	_scroll.scrollToY(oldTop);
+
+    if (hide_all_chats_folder) {
+        const auto lookup_id = filters->lookupId(premium() ? 0 : 1);
+        _session->setActiveChatsFilter(lookup_id);
+    }
 }
 
 void FiltersMenu::setupList() {
@@ -560,9 +569,11 @@ void FiltersMenu::applyReorder(
 		return;
 	}
 
+	hide_all_chats_folder = FASettings::JsonSettings::GetBool("hide_all_chats_folder");
+
 	const auto filters = &_session->session().data().chatsFilters();
 	const auto &list = filters->list();
-	if (!premium()) {
+	if (!hide_all_chats_folder && !premium()) {
 		if (list[0].id() != FilterId()) {
 			filters->moveAllToFront();
 		}

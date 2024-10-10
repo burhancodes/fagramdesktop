@@ -94,6 +94,10 @@ namespace Settings {
 			::FASettings::JsonSettings::GetInt("recent_stickers_limit"),
 			updateRecentStickersLimitHeight);
 		updateRecentStickersLimitLabel(::FASettings::JsonSettings::GetInt("recent_stickers_limit"));
+		Ui::AddSkip(container);
+        Ui::AddDivider(container);
+		Ui::AddSkip(container);
+        SettingsMenuJsonSwitch(Hide All Chats folder, hide_all_chats_folder)
     }
 
     void FAChats::SetupFAChats(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {

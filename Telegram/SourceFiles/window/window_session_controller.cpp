@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "window/window_session_controller.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "api/api_text_entities.h"
 #include "boxes/add_contact_box.h"
 #include "boxes/peers/add_bot_to_chat_box.h"
@@ -1563,7 +1565,12 @@ void SessionController::activateFirstChatsFilter() {
 		return;
 	}
 	_filtersActivated = true;
-	setActiveChatsFilter(session().data().chatsFilters().defaultId());
+
+	bool hide_all_chats_folder = FASettings::JsonSettings::GetBool("hide_all_chats_folder");
+	if (!hide_all_chats_folder)
+	{
+		setActiveChatsFilter(session().data().chatsFilters().defaultId());
+	}
 }
 
 bool SessionController::uniqueChatsInSearchResults() const {

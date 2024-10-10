@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "data/data_chat_filters.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "history/history.h"
 #include "data/data_peer.h"
 #include "data/data_user.h"
@@ -391,8 +393,14 @@ void ChatFilters::load(bool force) {
 void ChatFilters::received(const QVector<MTPDialogFilter> &list) {
 	auto position = 0;
 	auto changed = false;
+
+	bool hide_all_chats_folder = FASettings::JsonSettings::GetBool("hide_all_chats_folder");
+
 	for (const auto &filter : list) {
 		auto parsed = ChatFilter::FromTL(filter, _owner);
+		if (hide_all_chats_folder && parsed.id() == 0 && list.size() > 1) {
+			continue;
+		}
 		const auto b = begin(_list) + position, e = end(_list);
 		const auto i = ranges::find(b, e, parsed.id(), &ChatFilter::id);
 		if (i == e) {
@@ -413,7 +421,7 @@ void ChatFilters::received(const QVector<MTPDialogFilter> &list) {
 		applyRemove(position);
 		changed = true;
 	}
-	if (!ranges::contains(begin(_list), end(_list), 0, &ChatFilter::id)) {
+	if (!hide_all_chats_folder && !ranges::contains(begin(_list), end(_list), 0, &ChatFilter::id)) {
 		_list.insert(begin(_list), ChatFilter());
 	}
 	if (changed || !_loaded || _reloading) {
@@ -424,8 +432,16 @@ void ChatFilters::received(const QVector<MTPDialogFilter> &list) {
 }
 
 void ChatFilters::apply(const MTPUpdate &update) {
+
+	bool hide_all_chats_folder = FASettings::JsonSettings::GetBool("hide_all_chats_folder");
+
 	update.match([&](const MTPDupdateDialogFilter &data) {
 		if (const auto filter = data.vfilter()) {
+			auto parsed = ChatFilter::FromTL(*filter, _owner);
+			if (hide_all_chats_folder && parsed.id() == 0) {
+				return;
+			}
+
 			set(ChatFilter::FromTL(*filter, _owner));
 		} else {
 			remove(data.vid().v);
