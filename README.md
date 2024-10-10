@@ -5,11 +5,6 @@
 
 #### This is the complete source code of FAgram Desktop.
 
-[![Version](https://badge.fury.io/gh/telegramdesktop%2Ftdesktop.svg)](https://github.com/fajox1/fagramdesktop/releases)
-[![Build Status](https://github.com/fajox1/fagramdesktop/workflows/Windows./badge.svg)](https://github.com/fajox1/fagramdestkop/actions)
-[![Build Status](https://github.com/fajox1/fagramdesktop/workflows/Snap./badge.svg)](https://github.com/fajox1/fagramdestkop/actions)
-</div>
-
 > ***✏️ Note that source code is published under GPLv3 with OpenSSL exception, the license is available [here][license].***
 
 <a href="https://t.me/FAgramNews">
