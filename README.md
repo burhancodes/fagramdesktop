@@ -5,9 +5,6 @@
 
 #### This is the complete source code of FAgram Desktop.
 
-[![Version](https://badge.fury.io/gh/telegramdesktop%2Ftdesktop.svg)](https://github.com/fajox1/fagramdesktop/releases)
-[![Build Status](https://github.com/fajox1/fagramdesktop/workflows/Windows./badge.svg)](https://github.com/fajox1/fagramdestkop/actions)
-[![Build Status](https://github.com/fajox1/fagramdesktop/workflows/Snap./badge.svg)](https://github.com/fajox1/fagramdestkop/actions)
 </div>
 
 > ***✏️ Note that source code is published under GPLv3 with OpenSSL exception, the license is available [here][license].***
@@ -58,8 +55,8 @@ The latest version is available for
 
 ## <h2><img src="https://github.com/hikariatama/assets/raw/master/1326-command-window-line-flat.webp" height="50" align="middle"> Build instructions</h2>
 
-* Windows [32-bit](win32_build) [(64-bit)](win64_build)
-* [macOS](mac_build)
+* Windows [32-bit](docs/building-win.md) [(64-bit)](docs/building-win-x64.md)
+* [macOS](docs/building-mac.md)
 * [GNU/Linux using Docker][linux_build]
 
 ## ❤️ Credits
