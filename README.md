@@ -5,6 +5,8 @@
 
 #### This is the complete source code of FAgram Desktop.
 
+</div>
+
 > ***✏️ Note that source code is published under GPLv3 with OpenSSL exception, the license is available [here][license].***
 
 <a href="https://t.me/FAgramNews">
