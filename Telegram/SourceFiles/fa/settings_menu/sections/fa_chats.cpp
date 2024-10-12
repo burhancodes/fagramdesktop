@@ -97,7 +97,8 @@ namespace Settings {
 		Ui::AddSkip(container);
         Ui::AddDivider(container);
 		Ui::AddSkip(container);
-        SettingsMenuJsonSwitch(Hide All Chats folder, hide_all_chats_folder)
+		SettingsMenuJsonSwitch(Hide All Chats folder, hide_all_chats_folder)
+		Ui::AddDividerText(container, rpl::single(QString("^ This setting will be changed after restart of the client ^")));
     }
 
     void FAChats::SetupFAChats(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {

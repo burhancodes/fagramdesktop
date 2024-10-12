@@ -179,7 +179,7 @@ base::options::toggle ShowPeerIdBelowAbout({
 	return AboutValue(
 		peer
 	) | rpl::map([=](TextWithEntities &&value) {
-		if (!ShowPeerIdBelowAbout.value()) {
+	/*	if (!ShowPeerIdBelowAbout.value()) {
 			return std::move(value);
 		}
 		using namespace Ui::Text;
@@ -190,7 +190,7 @@ base::options::toggle ShowPeerIdBelowAbout({
 		const auto raw = peer->id.value & PeerId::kChatTypeMask;
 		value.append(Link(
 			Italic(Lang::FormatCountDecimal(raw)),
-			"internal:copy:" + QString::number(raw)));
+			"internal:copy:" + QString::number(raw))); */
 		return std::move(value);
 	});
 }
@@ -1087,9 +1087,9 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 		auto label = user->isBot()
 			? tr::lng_info_about_label()
 			: tr::lng_info_bio_label();
-	//	addTranslateToMenu(
-	//		addInfoLine(std::move(label), AboutWithIdValue(user, peer)).text,
-	//		AboutWithIdValue(user, _peer));
+		addTranslateToMenu(
+			addInfoLine(std::move(label), AboutWithIdValue(user, peer)).text,
+			AboutWithIdValue(user, _peer));
 
 		const auto usernameLine = addInfoOneLine(
 			UsernamesSubtext(_peer, tr::lng_info_username_label()),
