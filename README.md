@@ -12,7 +12,7 @@
 <a href="https://t.me/FAgramNews">
 <img alt="Telegram" src="https://img.shields.io/badge/Telegram_Channel-0a0a0a?style=for-the-badge&logo=telegram">
 </a>
-<a href="https://t.me/FAgramChat">
+<a href="https://t.me/FAgram_Group">
 <img alt="Telegram" src="https://img.shields.io/badge/Telegram_Chat-0a0a0a?style=for-the-badge&logo=telegram">
 </a>
 
