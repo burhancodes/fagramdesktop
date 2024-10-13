@@ -1088,8 +1088,8 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 			? tr::lng_info_about_label()
 			: tr::lng_info_bio_label();
 		addTranslateToMenu(
-			addInfoLine(std::move(label), AboutWithIdValue(user, peer)).text,
-			AboutWithIdValue(user, _peer));
+			addInfoLine(std::move(label), AboutWithIdValue(user)).text,
+			AboutWithIdValue(user));
 
 		const auto usernameLine = addInfoOneLine(
 			UsernamesSubtext(_peer, tr::lng_info_username_label()),
