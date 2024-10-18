@@ -1782,9 +1782,13 @@ base::unique_qptr<Ui::PopupMenu> StickersListWidget::fillContextMenu(
 		});
 	});
 	const auto icons = &st().icons;
+
+	// In case we're adding items after FillSendMenu we have
+	// to pass nullptr for showForEffect and attach selector later.
+	// Otherwise added items widths won't be respected in menu geometry.
 	SendMenu::FillSendMenu(
 		menu,
-		_show,
+		nullptr, // showForEffect
 		details,
 		SendMenu::DefaultCallback(_show, send),
 		icons);
@@ -1818,6 +1822,13 @@ base::unique_qptr<Ui::PopupMenu> StickersListWidget::fillContextMenu(
 				false);
 		}, &icons->menuRecentRemove);
 	}
+
+	SendMenu::AttachSendMenuEffect(
+		menu,
+		_show,
+		details,
+		SendMenu::DefaultCallback(_show, send));
+
 	return menu;
 }
 
