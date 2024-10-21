@@ -1326,12 +1326,12 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 			).text->setLinksTrusted();
 		}
 
-	//	const auto about = addInfoLine(tr::lng_info_about_label(), _topic
-	//		? rpl::single(TextWithEntities())
-	//		: AboutWithIdValue(_peer, peer));
-	//	if (!_topic) {
-	//		addTranslateToMenu(about.text, AboutWithIdValue(_peer, peer));
-	//	}
+		const auto about = addInfoLine(tr::lng_info_about_label(), _topic
+			? rpl::single(TextWithEntities())
+			: AboutWithIdValue(_peer));
+		if (!_topic) {
+			addTranslateToMenu(about.text, AboutWithIdValue(_peer));
+		}
 
 		bool show_peer_id = FASettings::JsonSettings::GetBool("show_peer_id");
 		bool show_dc_id = FASettings::JsonSettings::GetBool("show_dc_id");
