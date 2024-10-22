@@ -718,7 +718,7 @@ bool Element::isHiddenByGroup() const {
 }
 
 bool Element::isHidden() const {
-	hide_from_blocked_users = FASettings::JsonSettings::GetBool("hide_from_blocked_users");
+	bool hide_from_blocked_users = FASettings::JsonSettings::GetBool("hide_from_blocked_users");
 	if (hide_from_blocked_users) {
 		if (data()->from()->isUser() &&
 			data()->from()->asUser()->isBlocked()) {

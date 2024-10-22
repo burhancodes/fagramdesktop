@@ -466,7 +466,7 @@ void HistoryMessageReply::updateData(
 		&& (asExternal || _fields.manualQuote);
 	_multiline = !_fields.storyId && (asExternal || nonEmptyQuote);
 
-	hide_from_blocked_users = FASettings::JsonSettings::GetBool("hide_from_blocked_users");
+	bool hide_from_blocked_users = FASettings::JsonSettings::GetBool("hide_from_blocked_users");
 
 	const auto author = resolvedMessage
 							? resolvedMessage->from().get()
