@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "history/view/history_view_element.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "history/view/history_view_service_message.h"
 #include "history/view/history_view_message.h"
 #include "history/view/media/history_view_media_grouped.h"
@@ -716,6 +718,14 @@ bool Element::isHiddenByGroup() const {
 }
 
 bool Element::isHidden() const {
+	hide_from_blocked_users = FASettings::JsonSettings::GetBool("hide_from_blocked_users");
+	if (hide_from_blocked_users) {
+		if (data()->from()->isUser() &&
+			data()->from()->asUser()->isBlocked()) {
+			return true;
+		}
+	}
+
 	return isHiddenByGroup();
 }
 

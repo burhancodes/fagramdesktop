@@ -95,6 +95,8 @@ namespace Settings {
 			updateRecentStickersLimitHeight);
 		updateRecentStickersLimitLabel(::FASettings::JsonSettings::GetInt("recent_stickers_limit"));
 		Ui::AddSkip(container);
+		SettingsMenuJsonSwitch(Hide messages from blocked users, hide_messages_from_blocked_users)
+		Ui::AddSkip(container);
         Ui::AddDivider(container);
 		Ui::AddSkip(container);
 		SettingsMenuJsonSwitch(Hide All Chats folder, hide_all_chats_folder)

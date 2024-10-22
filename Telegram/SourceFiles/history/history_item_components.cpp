@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "history/history_item_components.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "api/api_text_entities.h"
 #include "base/qt/qt_key_modifiers.h"
 #include "lang/lang_keys.h"
@@ -464,16 +466,28 @@ void HistoryMessageReply::updateData(
 		&& (asExternal || _fields.manualQuote);
 	_multiline = !_fields.storyId && (asExternal || nonEmptyQuote);
 
+	hide_from_blocked_users = FASettings::JsonSettings::GetBool("hide_from_blocked_users");
+
+	const auto author = resolvedMessage
+							? resolvedMessage->from().get()
+							: resolvedStory
+								  ? resolvedStory->peer().get()
+								  : nullptr;
+	const auto blocked = hide_from_blocked_users
+		&& author
+		&& author->isUser()
+		&& author->asUser()->isBlocked();
+
 	const auto displaying = resolvedMessage
 		|| resolvedStory
 		|| ((nonEmptyQuote || _fields.externalMedia)
 			&& (!_fields.messageId || force));
-	_displaying = displaying ? 1 : 0;
+	_displaying = displaying && !blocked ? 1 : 0;
 
 	const auto unavailable = !resolvedMessage
 		&& !resolvedStory
 		&& ((!_fields.storyId && !_fields.messageId) || force);
-	_unavailable = unavailable ? 1 : 0;
+	_unavailable = unavailable && !blocked ? 1 : 0;
 
 	if (force) {
 		if (!_displaying && (_fields.messageId || _fields.storyId)) {
@@ -611,7 +625,15 @@ QString ReplyMarkupClickHandler::copyToClipboardText() const {
 
 QString ReplyMarkupClickHandler::copyToClipboardContextItemText() const {
 	const auto button = getUrlButton();
-	return button ? tr::lng_context_copy_link(tr::now) : QString();
+	
+	if (button) {
+		using Type = HistoryMessageMarkupButton::Type;
+		if (button->type == Type::Callback) {
+			return QString("Copy Callback data");
+		}
+		return tr::lng_context_copy_link(tr::now);
+	}
+	return QString();
 }
 
 // Finds the corresponding button in the items markup struct.
@@ -626,7 +648,7 @@ auto ReplyMarkupClickHandler::getUrlButton() const
 -> const HistoryMessageMarkupButton* {
 	if (const auto button = getButton()) {
 		using Type = HistoryMessageMarkupButton::Type;
-		if (button->type == Type::Url || button->type == Type::Auth) {
+		if (button->type == Type::Url || button->type == Type::Auth || button->type == Type::Callback) {
 			return button;
 		}
 	}
