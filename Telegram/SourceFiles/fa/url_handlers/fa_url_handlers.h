@@ -12,23 +12,25 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #include "window/window_session_controller.h"
 #include "base/qthelp_regex.h"
+#include <random>
+#include <vector>
 
 namespace FAUrlHandlers
 {
 
 using Match = qthelp::RegularExpressionMatch;
 
-bool HandleFA(
-	Window::SessionController *controller,
-	const Match &match,
-	const QVariant &context);
-
-bool HandleNya(
+bool HandleSomeText(
 	Window::SessionController *controller,
 	const Match &match,
 	const QVariant &context);
 
 bool HandleCleanDebugLogs(
+	Window::SessionController *controller,
+	const Match &match,
+	const QVariant &context);
+
+bool HandleNothing(
 	Window::SessionController *controller,
 	const Match &match,
 	const QVariant &context);

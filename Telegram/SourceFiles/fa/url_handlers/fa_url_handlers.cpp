@@ -25,19 +25,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 namespace FAUrlHandlers
 {
-bool HandleFA(
-	Window::SessionController *controller,
-	const Match &match,
-	const QVariant &context)
-{
-	if (!controller) {
-		return false;
-	}
-	controller->showToast(QString("thx :>"), 500);
-	return true;
-}
 
-bool HandleNya(
+bool HandleSomeText(
 	Window::SessionController *controller,
 	const Match &match,
 	const QVariant &context)
@@ -45,7 +34,25 @@ bool HandleNya(
 	if (!controller) {
 		return false;
 	}
-	controller->showToast(QString("Meow ^_^"), 500);
+
+    std::vector<QString> responds = {
+        "Meow ^_^",
+        "Use FAgram ;)",
+        "Nothing...",
+        "just something...",
+        "FAgram4ik ><",
+        "FAgram4ik :>"
+    };
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, texts.size() - 1);
+
+    int randomIndex = dis(gen);
+    
+    QString respond = responds[randomIndex];
+
+	controller->showToast(respond, 500);
 	return true;
 }
 
@@ -60,6 +67,18 @@ bool HandleCleanDebugLogs(
 	controller->showToast(QString("Cleaning..."), 500);
 	cleanDebugLogs();
 	controller->showToast(QString("Debug logs cleaned!"), 1000);
+	return true;
+}
+
+bool HandleNothing(
+	Window::SessionController *controller,
+	const Match &match,
+	const QVariant &context)
+{
+	if (!controller) {
+		return false;
+	}
+	controller->showToast(QString("Nothing found."), 500);
 	return true;
 }
 }

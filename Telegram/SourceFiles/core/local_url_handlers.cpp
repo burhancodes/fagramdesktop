@@ -1381,15 +1381,19 @@ const std::vector<LocalUrlHandler> &LocalUrlHandlers() {
 		},
 		{
 			u"^fa/?(.+)?(#|$)"_q,
-			FAUrlHandlers::HandleFA
+			FAUrlHandlers::HandleSometext
 		},
 		{
 			u"^nya/?(.+)?(#|$)"_q,
-			FAUrlHandlers::HandleNya
+			FAUrlHandlers::HandleSometext
+		},
+		{
+			u"^ayu/?(.+)?(#|$)"_q,
+			FAUrlHandlers::HandleSometext
 		},
 		{
 			u"^([^\\?]+)(\\?|#|$)"_q,
-			HandleUnknown
+			FAUrlHandlers::HandleNothing
 		},
 	};
 	return Result;

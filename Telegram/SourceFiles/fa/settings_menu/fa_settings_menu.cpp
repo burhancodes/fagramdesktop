@@ -104,9 +104,9 @@ namespace Settings {
     	AddButtonWithLabel(
 			container,
 			rpl::single(QString("Clean Debug Logs")),
-			rpl::single(QString("Click")),
+			rpl::single(QString("Clear")),
 			st::settingsButton,
-			{ &st::menuIconSettings }
+			{ &st::menuIconClear }
 		)->setClickedCallback([=] {
 			Core::App().openLocalUrl("tg://fa/clean_debug_logs", {});
 		});
@@ -116,9 +116,9 @@ namespace Settings {
 			rpl::single(QString("DC status")),
 			rpl::single(QString("Click")),
 			st::settingsButton,
-			{ &st::menuIconSettings }
+			{ &st::menuIconStats }
 		)->setClickedCallback([=] {
-			Core::App().openLocalUrl("tg://resolve?domain=tgDC_status?post=3", {});
+			Core::App().openLocalUrl("tg://resolve?domain=tgDC_status", {});
 		});
 
     	AddButtonWithLabel(
