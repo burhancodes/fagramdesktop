@@ -104,7 +104,7 @@ namespace Settings {
     	AddButtonWithLabel(
 			container,
 			rpl::single(QString("Clean Debug Logs")),
-			rpl::single(QString("Clear")),
+			rpl::single(QString("Clean Logs")),
 			st::settingsButton,
 			{ &st::menuIconClear }
 		)->setClickedCallback([=] {

@@ -78,7 +78,7 @@ bool HandleNothing(
 	if (!controller) {
 		return false;
 	}
-	controller->showToast(QString("Nothing found."), 500);
+	controller->showToast(QString("Not found."), 500);
 	return true;
 }
 }

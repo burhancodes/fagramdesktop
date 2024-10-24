@@ -869,13 +869,16 @@ void Instance::pause(AudioMsgId::Type type) {
 	}
 }
 
-void Instance::stop(AudioMsgId::Type type) {
+void Instance::stop(AudioMsgId::Type type, bool asFinished) {
 	if (const auto data = getData(type)) {
 		if (data->streamed) {
 			clearStreamed(data);
 		}
 		data->resumeOnCallEnd = false;
 		_playerStopped.fire_copy({type});
+	}
+	if (asFinished) {
+		_tracksFinished.fire_copy(type);
 	}
 }
 
@@ -1190,6 +1193,21 @@ Streaming::Instance *Instance::roundVideoStreamed(HistoryItem *item) const {
 	} else if (const auto data = getData(AudioMsgId::Type::Voice)) {
 		if (const auto streamed = data->streamed.get()) {
 			if (streamed->id.contextId() == item->fullId()) {
+				const auto player = &streamed->instance.player();
+				if (player->ready() && !player->videoSize().isEmpty()) {
+					return &streamed->instance;
+				}
+			}
+		}
+	}
+	return nullptr;
+}
+
+Streaming::Instance *Instance::roundVideoPreview(
+		not_null<DocumentData*> document) const {
+	if (const auto data = getData(AudioMsgId::Type::Voice)) {
+		if (const auto streamed = data->streamed.get()) {
+			if (streamed->id.audio() == document) {
 				const auto player = &streamed->instance.player();
 				if (player->ready() && !player->videoSize().isEmpty()) {
 					return &streamed->instance;

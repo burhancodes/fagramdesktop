@@ -1155,7 +1155,19 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 				PhoneOrHiddenValue(user),
 				tr::lng_profile_copy_phone(tr::now)).text;
 			const auto hook = [=](Ui::FlatLabel::ContextMenuRequest request) {
-				phoneLabel->fillContextMenu(request);
+				if (request.selection.empty()) {
+					const auto callback = [=] {
+						auto phone = rpl::variable<TextWithEntities>(
+							PhoneOrHiddenValue(user)).current().text;
+						phone.replace(' ', QString()).replace('-', QString());
+						TextUtilities::SetClipboardText({ phone });
+					};
+					request.menu->addAction(
+						tr::lng_profile_copy_phone(tr::now),
+						callback);
+				} else {
+					phoneLabel->fillContextMenu(request);
+				}
 				AddPhoneMenu(request.menu, user);
 			};
 			phoneLabel->setContextMenuHook(hook);
@@ -2148,7 +2160,6 @@ void ActionsFiller::addBotCommandActions(not_null<UserData*> user) {
 		rpl::single(true),
 		openPrivacyPolicy,
 		nullptr);
-
 }
 
 void ActionsFiller::addReportAction() {

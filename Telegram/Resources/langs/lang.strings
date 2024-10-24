@@ -499,8 +499,9 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 "lng_settings_notify_global" = "Global settings";
 "lng_settings_notify_title" = "Notifications for chats";
 "lng_settings_desktop_notify" = "Desktop notifications";
-"lng_settings_native_title" = "Native notifications";
+"lng_settings_native_title" = "System integration";
 "lng_settings_use_windows" = "Use Windows notifications";
+"lng_settings_skip_in_focus" = "Respect system Focus mode";
 "lng_settings_use_native_notifications" = "Use native notifications";
 "lng_settings_notifications_position" = "Location on the screen";
 "lng_settings_notifications_count" = "Notifications count";
@@ -2151,6 +2152,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 "lng_media_cancel" = "Cancel";
 "lng_media_video" = "Video";
 "lng_media_audio" = "Voice message";
+"lng_media_round" = "Video message";
 
 "lng_media_auto_settings" = "Automatic media download";
 "lng_media_auto_in_private" = "In private chats";
@@ -3243,9 +3245,14 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 "lng_record_cancel" = "Release outside this field to cancel";
 "lng_record_cancel_stories" = "Release outside to cancel";
 "lng_record_lock_cancel_sure" = "Do you want to stop recording and discard your voice message?";
+"lng_record_lock_cancel_sure_round" = "Do you want to stop recording and discard your video message?";
 "lng_record_listen_cancel_sure" = "Do you want to discard your recorded voice message?";
+"lng_record_listen_cancel_sure_round" = "Do you want to discard your recorded video message?";
 "lng_record_lock_discard" = "Discard";
-"lng_record_hold_tip" = "Please hold the mouse button pressed to record a voice message.";
+"lng_record_voice_tip" = "Hold to record audio. Click to switch to video.";
+"lng_record_video_tip" = "Hold to record video. Click to switch to audio.";
+"lng_record_audio_problem" = "Could not start audio recording. Please check your microphone.";
+"lng_record_video_problem" = "Could not start video recording. Please check your camera.";
 "lng_record_once_first_tooltip" = "Click to set this message to **Play Once**.";
 "lng_record_once_active_tooltip" = "The recipient will be able to listen only once.";
 "lng_will_be_notified" = "Subscribers will be notified when you post.";
@@ -3359,6 +3366,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 "lng_bot_settings" = "Settings";
 "lng_bot_open" = "Open Bot";
 "lng_bot_terms" = "Terms of Use";
+"lng_bot_privacy" = "Privacy Policy";
 "lng_bot_reload_page" = "Reload Page";
 "lng_bot_add_to_menu" = "{bot} asks your permission to be added as an option to your attachment menu so you can access it from any chat.";
 "lng_bot_add_to_menu_done" = "Bot added to the menu.";
@@ -3682,6 +3690,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 "lng_reply_in_another_title" = "Reply in...";
 "lng_reply_in_another_chat" = "Reply in Another Chat";
+"lng_reply_in_author" = "Message author";
+"lng_reply_in_chats_list" = "Your chats";
 "lng_reply_show_in_chat" = "Show in Chat";
 "lng_reply_remove" = "Do Not Reply";
 "lng_reply_about_quote" = "You can select a specific part to quote.";
@@ -5562,6 +5572,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 "lng_iv_window_title" = "Instant View";
 "lng_iv_wrong_layout" = "Wrong layout?";
 "lng_iv_not_supported" = "This link appears to be invalid.";
+"lng_iv_zoom_tooltip_ctrl" = "Hold Ctrl to zoom by 5%.\nHold Alt to zoom by 1%.";
+"lng_iv_zoom_tooltip_cmd" = "Hold Cmd to zoom by 5%.\nHold Alt to zoom by 1%.";
 
 "lng_limit_download_title" = "Download speed limited";
 "lng_limit_download_subscribe" = "Subscribe to {link} to increase download speed {increase}.";

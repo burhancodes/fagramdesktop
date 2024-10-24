@@ -81,6 +81,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "ui/controls/silent_toggle.h"
 #include "ui/chat/choose_send_as.h"
 #include "ui/effects/spoiler_mess.h"
+#include "webrtc/webrtc_environment.h"
 #include "window/window_adaptive.h"
 #include "window/window_session_controller.h"
 #include "mainwindow.h"
@@ -963,6 +964,7 @@ void ComposeControls::setHistory(SetHistoryArgs &&args) {
 	initWebpageProcess();
 	initWriteRestriction();
 	initForwardProcess();
+	updateRecordMediaState();
 	updateBotCommandShown();
 	updateLikeShown();
 	updateMessagesTTLShown();
@@ -1517,7 +1519,7 @@ void ComposeControls::orderControls() {
 }
 
 bool ComposeControls::showRecordButton() const {
-	return ::Media::Capture::instance()->available()
+	return _canRecordAudioMessage
 		&& !_voiceRecordBar->isListenState()
 		&& !_voiceRecordBar->isRecordingByAnotherBar()
 		&& !HasSendText(_field)
@@ -2413,10 +2415,52 @@ void ComposeControls::initVoiceRecordBar() {
 		return false;
 	});
 
+	_voiceRecordBar->recordingTipRequests(
+	) | rpl::start_with_next([=] {
+		Core::App().settings().setRecordVideoMessages(
+			!Core::App().settings().recordVideoMessages());
+		updateSendButtonType();
+		switch (_send->type()) {
+		case Ui::SendButton::Type::Record:
+			_show->showToast(tr::lng_record_voice_tip(tr::now));
+			break;
+		case Ui::SendButton::Type::Round:
+			_show->showToast(tr::lng_record_video_tip(tr::now));
+			break;
+		}
+	}, _wrap->lifetime());
+
+	_voiceRecordBar->errors(
+	) | rpl::start_with_next([=](::Media::Capture::Error error) {
+		using Error = ::Media::Capture::Error;
+		switch (error) {
+		case Error::AudioInit:
+		case Error::AudioTimeout:
+			_show->showToast(tr::lng_record_audio_problem(tr::now));
+			break;
+		case Error::VideoInit:
+		case Error::VideoTimeout:
+			_show->showToast(tr::lng_record_video_problem(tr::now));
+			break;
+		default:
+			_show->showToast(u"Unknown error."_q);
+			break;
+		}
+	}, _wrap->lifetime());
+
 	_voiceRecordBar->updateSendButtonTypeRequests(
 	) | rpl::start_with_next([=] {
 		updateSendButtonType();
 	}, _wrap->lifetime());
+}
+
+void ComposeControls::updateRecordMediaState() {
+	::Media::Capture::instance()->check();
+	_canRecordAudioMessage = ::Media::Capture::instance()->available();
+
+	const auto environment = &Core::App().mediaDevices();
+	const auto type = Webrtc::DeviceType::Camera;
+	_canRecordVideoMessage = !environment->devices(type).empty();
 }
 
 void ComposeControls::updateWrappingVisibility() {
@@ -2454,7 +2498,10 @@ auto ComposeControls::computeSendButtonType() const {
 	} else if (_isInlineBot) {
 		return Type::Cancel;
 	} else if (showRecordButton()) {
-		return Type::Record;
+		return (Core::App().settings().recordVideoMessages()
+			&& _canRecordVideoMessage)
+			? Type::Round
+			: Type::Record;
 	}
 	return (_mode == Mode::Normal) ? Type::Send : Type::Schedule;
 }
@@ -2487,7 +2534,9 @@ void ComposeControls::updateSendButtonType() {
 	}();
 	_send->setSlowmodeDelay(delay);
 	_send->setDisabled(_sendDisabledBySlowmode.current()
-		&& (type == Type::Send || type == Type::Record));
+		&& (type == Type::Send
+			|| type == Type::Record
+			|| type == Type::Round));
 }
 
 void ComposeControls::finishAnimating() {
@@ -3149,8 +3198,9 @@ bool ComposeControls::isRecording() const {
 bool ComposeControls::isRecordingPressed() const {
 	return !_voiceRecordBar->isRecordingLocked()
 		&& (!_voiceRecordBar->isHidden()
-			|| (_send->type() == Ui::SendButton::Type::Record
-				&& _send->isDown()));
+			|| (_send->isDown()
+				&& (_send->type() == Ui::SendButton::Type::Record
+					|| _send->type() == Ui::SendButton::Type::Round)));
 }
 
 rpl::producer<bool> ComposeControls::recordingActiveValue() const {
