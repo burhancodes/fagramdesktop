@@ -100,11 +100,25 @@ namespace Settings {
 
     void FA::SetupOther(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
     	AddSubsectionTitle(container, rpl::single(QString("Other")));
+
+		const auto addSection = [&](
+				rpl::producer<QString> label,
+				Type type,
+				IconDescriptor &&descriptor) {
+			AddButtonWithIcon(
+				container,
+				std::move(label),
+				st::settingsButton,
+				std::move(descriptor)
+			)->addClickHandler([=] {
+				showOther(type);
+			});
+		};
     	
     	AddButtonWithLabel(
 			container,
 			rpl::single(QString("Clean Debug Logs")),
-			rpl::single(QString("Clean Logs")),
+			rpl::single(QString("")),
 			st::settingsButton,
 			{ &st::menuIconClear }
 		)->setClickedCallback([=] {
@@ -114,7 +128,7 @@ namespace Settings {
     	AddButtonWithLabel(
 			container,
 			rpl::single(QString("DC Status")),
-			rpl::single(QString("Click")),
+			rpl::single(QString("")),
 			st::settingsButton,
 			{ &st::menuIconStats }
 		)->setClickedCallback([=] {
@@ -124,12 +138,17 @@ namespace Settings {
     	AddButtonWithLabel(
 			container,
 			rpl::single(QString("Update FAgram")),
-			rpl::single(QString("Update")),
+			rpl::single(QString("")),
 			st::settingsButton,
 			{ &st::menuIconSettings }
 		)->setClickedCallback([=] {
 			Core::App().openLocalUrl("tg://resolve?domain=FAgram_Group&thread=11", {});
 		});
+
+    	addSection(
+			rpl::single(QString("Donate")),
+			FADonate::Id(),
+			{ &st::paymentsIconPaymentMethod });
     }
 
 	void FA::SetupLinks(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller)
