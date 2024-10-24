@@ -58,7 +58,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 namespace Settings {
 
     rpl::producer<QString> FA::title() {
-        return rpl::single(QString("FAgram Settings"));
+        return rpl::single(QString("FAgram Preferences"));
     }
 
     FA::FA(
@@ -98,6 +98,30 @@ namespace Settings {
 			{ &st::menuIconPalette });
     }
 
+    void FA::SetupOther(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
+    	AddSubsectionTitle(container, rpl::single(QString("Other")));
+    	
+    	AddButtonWithLabel(
+			container,
+			rpl::single(QString("Clean Debug Logs")),
+			rpl::single(QString("Click")),
+			st::settingsButton,
+			{ &st::menuIconSettings }
+		)->setClickedCallback([=] {
+			Core::App().openLocalUrl("tg://fa/clean_debug_logs", {});
+		});
+
+    	AddButtonWithLabel(
+			container,
+			rpl::single(QString("Update FAgram")),
+			rpl::single(QString("Update")),
+			st::settingsButton,
+			{ &st::menuIconSettings }
+		)->setClickedCallback([=] {
+			Core::App().openLocalUrl("tg://resolve?domain=FAgram_Group&thread=11", {});
+		});
+    }
+
 	void FA::SetupLinks(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller)
     {
     	AddSubsectionTitle(container, rpl::single(QString("Links")));
@@ -120,16 +144,6 @@ namespace Settings {
 			{ &st::menuIconGroups }
 		)->setClickedCallback([=] {
 			Core::App().openLocalUrl("tg://resolve?domain=FAgram_Group", {});
-		});
-
-    	AddButtonWithLabel(
-			container,
-			rpl::single(QString("Update FAgram")),
-			rpl::single(QString("Update")),
-			st::settingsButton,
-			{ &st::menuIconSettings }
-		)->setClickedCallback([=] {
-			Core::App().openLocalUrl("tg://resolve?domain=FAgram_Group&thread=11", {});
 		});
 
     	AddButtonWithLabel(
@@ -160,6 +174,11 @@ namespace Settings {
         SetupFASettings(content, controller);
 
     	Ui::AddSkip(content);
+    	Ui::AddDivider(content);
+    	Ui::AddSkip(content);
+    	SetupOther(content, controller);
+
+		Ui::AddSkip(content);
     	Ui::AddDivider(content);
     	Ui::AddSkip(content);
     	SetupLinks(content, controller);

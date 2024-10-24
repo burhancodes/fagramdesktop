@@ -30,6 +30,7 @@ namespace Settings {
 
     private:
         void SetupFASettings(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> null);
+        void SetupOther(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> null);
         void SetupLinks(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> null);
         void setupContent(not_null<Window::SessionController *> controller);
     };

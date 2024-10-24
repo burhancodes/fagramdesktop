@@ -219,3 +219,20 @@ QString getIpDC(int dc_id, bool test) {
 
     return ip;
 }
+
+void cleanDebugLogs() {
+    QString workingDir = cWorkingDir();
+    QDir debugLogsDir(cWorkingDir() + "/DebugLogs");
+
+    if (!debugLogsDir.exists()) {
+        return;
+    }
+
+    QStringList files = debugLogsDir.entryList(QDir::Files);
+    
+    for (const QString &file : files) {
+        debugLogsDir.remove(file);
+    }
+
+    return;
+}

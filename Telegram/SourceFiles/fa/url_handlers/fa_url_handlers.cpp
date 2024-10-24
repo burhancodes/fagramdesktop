@@ -10,6 +10,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #include "fa/url_handlers/fa_url_handlers.h"
 
+#include "fa/utils/telegram_helpers.h"
+
 #include "base/qthelp_url.h"
 
 #include "lang_auto.h"
@@ -47,4 +49,17 @@ bool HandleNya(
 	return true;
 }
 
+bool HandleCleanDebugLogs(
+	Window::SessionController *controller,
+	const Match &match,
+	const QVariant &context)
+{
+	if (!controller) {
+		return false;
+	}
+	controller->showToast(QString("Cleaning..."), 500);
+	CleanDebugLogs();
+	controller->showToast(QString("Debug logs cleaned!" 1000));
+	return true;
+}
 }

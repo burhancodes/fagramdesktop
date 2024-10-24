@@ -1376,6 +1376,10 @@ const std::vector<LocalUrlHandler> &LocalUrlHandlers() {
 			ResolveTopUp
 		},
 		{
+			u"^fa/clean_debug_logs/?(.+)?(#|$)"_q,
+			FAUrlHandlers::HandleCleanDebugLogs
+		},
+		{
 			u"^fa/?(.+)?(#|$)"_q,
 			FAUrlHandlers::HandleFA
 		},

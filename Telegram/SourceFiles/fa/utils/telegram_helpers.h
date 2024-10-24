@@ -41,6 +41,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include <unordered_set>
 #include <QtCore/QJsonArray>
 #include <QtCore/QUrl>
+#include <QtCore/QDir>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 
@@ -56,3 +57,5 @@ QString getLocationDC(int dc_id);
 QString getPeerDC(not_null<PeerData*> peer);
 QString getOnlyDC(not_null<PeerData*> peer);
 QString getIpDC(int dc_id, bool test);
+
+void clearDebugLogsFolder();

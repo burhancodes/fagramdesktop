@@ -397,7 +397,7 @@ void SetupSections(
 	};
 
 	addSection(
-    	rpl::single(QString("FAgram Settings")),
+    	rpl::single(QString("FAgram Preferences")),
     	FA::Id(),
     	{ &st::menuIconFA }
 	);
