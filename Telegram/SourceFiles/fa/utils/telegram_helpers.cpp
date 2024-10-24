@@ -11,6 +11,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include <QtCore/QJsonArray>
 #include <QtNetwork/QNetworkRequest>
 #include <QtCore/QEventLoop>
+#include <QtCore/QElapsedTimer>
+#include <QtCore/QDebug>
 
 std::unordered_set<ID> fagram_channels;
 std::unordered_set<ID> fagram_devs;
@@ -65,6 +67,33 @@ bool isFAgramRelated(ID peerId) {
     return fagram_devs.contains(peerId) || fagram_channels.contains(peerId);
 }
 
+QString getLocationDC(int dc_id) {
+    QString dc_location;
+
+    switch (dc_id) {
+        case 1:
+            dc_location = "Miami FL, USA";
+            break;
+        case 2:
+            dc_location = "Amsterdam, NL";
+            break;
+        case 3:
+            dc_location = "Miami FL, USA";
+            break;
+        case 4:
+            dc_location = "Amsterdam, NL";
+            break;
+        case 5:
+            dc_location = "Singapore, SG";
+            break;
+        default:
+            dc_location = "UNKNOWN";
+            break;
+    }
+
+    return dc_location;
+}
+
 QString getPeerDC(not_null<PeerData*> peer) {
     int dc = 0;
 
@@ -98,27 +127,7 @@ QString getPeerDC(not_null<PeerData*> peer) {
         return QString("DC_UNKNOWN");
     }
 
-    QString dc_location;
-    switch (dc) {
-        case 1:
-            dc_location = "Miami FL, USA";
-            break;
-        case 2:
-            dc_location = "Amsterdam, NL";
-            break;
-        case 3:
-            dc_location = "Miami FL, USA";
-            break;
-        case 4:
-            dc_location = "Amsterdam, NL";
-            break;
-        case 5:
-            dc_location = "Singapore, SG";
-            break;
-        default:
-            dc_location = "UNKNOWN";
-            break;
-    }
+    QString dc_location = getLocationDC(dc);
 
     if (dc < 1) {
         return QString("DC_UNKNOWN");
@@ -165,4 +174,48 @@ QString getOnlyDC(not_null<PeerData*> peer) {
     }
 
     return QString("Datacenter %1").arg(dc);
+}
+
+QString getIpDC(int dc_id, bool test) {
+    QString ip;
+
+    if (!test) {
+        switch (dc_id) {
+            case 1:
+                ip = "149.154.175.53";
+                break;
+            case 2:
+                ip = "149.154.167.51";
+                break;
+            case 3:
+                ip = "149.154.175.100";
+                break;
+            case 4:
+                ip = "149.154.167.91";
+                break;
+            case 5:
+                ip = "91.108.56.130";
+                break;
+            default:
+                return QString("UNKNOWN");
+        }
+    }
+
+    else {
+        switch (dc_id) {
+            case 1:
+                ip = "149.154.175.10";
+                break;
+            case 2:
+                ip = "149.154.167.40";
+                break;
+            case 3:
+                ip = "149.154.175.117";
+                break;
+            default:
+                return QString("UNKNOWN");
+        }
+    }
+
+    return ip;
 }

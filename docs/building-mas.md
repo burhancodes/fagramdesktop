@@ -1,8 +1,12 @@
-## Build instructions for Mac App Store
+## 🍎 Build instructions for Mac App Store
 
-**NB** These are used for Mac App Store build, after the [Build for macOS][mac] instructions.
+> **NB:** These are used for Mac App Store build, after the [Build for macOS][mac] instructions.
 
-### Prepare breakpad
+### 📁 Prepare
+
+Prepare **breakpad**
+
+### 💻 Build the project
 
 Go to ***BuildPath*** and run
 
@@ -26,3 +30,4 @@ Go to ***BuildPath*** and run
     cd ../../../../..
 
 [xcode]: building-xcode.md
+[mac]: building-mac.md

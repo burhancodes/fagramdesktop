@@ -52,5 +52,7 @@ void initialize_fagram_data();
 ID getBareID(not_null<PeerData*> peer);
 bool isFAgramRelated(ID peerId);
 
+QString getLocationDC(int dc_id);
 QString getPeerDC(not_null<PeerData*> peer);
 QString getOnlyDC(not_null<PeerData*> peer);
+QString getIpDC(int dc_id, bool test);
