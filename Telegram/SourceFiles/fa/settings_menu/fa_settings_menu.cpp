@@ -113,6 +113,16 @@ namespace Settings {
 
     	AddButtonWithLabel(
 			container,
+			rpl::single(QString("DC status")),
+			rpl::single(QString("Click")),
+			st::settingsButton,
+			{ &st::menuIconSettings }
+		)->setClickedCallback([=] {
+			Core::App().openLocalUrl("tg://resolve?domain=tgDC_status?post=3", {});
+		});
+
+    	AddButtonWithLabel(
+			container,
 			rpl::single(QString("Update FAgram")),
 			rpl::single(QString("Update")),
 			st::settingsButton,
