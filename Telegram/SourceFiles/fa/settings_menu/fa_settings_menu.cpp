@@ -113,7 +113,7 @@ namespace Settings {
 
     	AddButtonWithLabel(
 			container,
-			rpl::single(QString("DC status")),
+			rpl::single(QString("DC Status")),
 			rpl::single(QString("Click")),
 			st::settingsButton,
 			{ &st::menuIconStats }
