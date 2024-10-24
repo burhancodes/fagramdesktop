@@ -28,7 +28,7 @@ bool HandleNya(
 	const Match &match,
 	const QVariant &context);
 
-bool HandleCleanLogs(
+bool HandleCleanDebugLogs(
 	Window::SessionController *controller,
 	const Match &match,
 	const QVariant &context);

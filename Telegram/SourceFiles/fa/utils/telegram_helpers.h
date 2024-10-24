@@ -58,4 +58,4 @@ QString getPeerDC(not_null<PeerData*> peer);
 QString getOnlyDC(not_null<PeerData*> peer);
 QString getIpDC(int dc_id, bool test);
 
-void clearDebugLogsFolder();
+void cleanDebugLogs();

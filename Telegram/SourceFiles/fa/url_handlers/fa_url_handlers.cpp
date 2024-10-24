@@ -58,7 +58,7 @@ bool HandleCleanDebugLogs(
 		return false;
 	}
 	controller->showToast(QString("Cleaning..."), 500);
-	CleanDebugLogs();
+	cleanDebugLogs();
 	controller->showToast(QString("Debug logs cleaned!" 1000));
 	return true;
 }
