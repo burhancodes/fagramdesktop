@@ -11,6 +11,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "settings/settings_common.h"
 #include "settings/settings_common_session.h"
 
+#include <QtGui/QGuiApplication>
+
 class BoxContent;
 
 namespace Window {
