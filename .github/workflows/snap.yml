@@ -30,10 +30,6 @@ jobs:
       - name: Free up some disk space.
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
 
-      - name: Configure Build Options
-        run: |
-          echo 'set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-function")' >> CMakeLists.txt
-
       - name: FAgram Desktop snap build.
         run: sg lxd -c 'snap run snapcraft --verbosity=debug'
 
