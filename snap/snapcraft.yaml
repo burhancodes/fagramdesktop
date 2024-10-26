@@ -418,7 +418,7 @@ parts:
       - patches
 
   rnnoise:
-    source: https://gitlab.xiph.org/xiph/rnnoise.git
+    source: https://github.com/xiph/rnnoise.git
     source-depth: 1
     source-commit: 7f449bf8bd3b933891d12c30112268c4090e4d59
     plugin: autotools
