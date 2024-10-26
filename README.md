@@ -9,12 +9,8 @@
 
 > ***✏️ Note that source code is published under GPLv3 with OpenSSL exception, the license is available [here][license].***
 
-<a href="https://t.me/FAgramNews">
-<img alt="Telegram" src="https://img.shields.io/badge/Telegram_Channel-0a0a0a?style=for-the-badge&logo=telegram">
-</a>
-<a href="https://t.me/FAgram_Group">
-<img alt="Telegram" src="https://img.shields.io/badge/Telegram_Chat-0a0a0a?style=for-the-badge&logo=telegram">
-</a>
+<a href="https://t.me/FAgramNews"><img alt="Telegram" src="https://img.shields.io/badge/Telegram_Channel-0a0a0a?style=for-the-badge&logo=telegram"></a>
+<a href="https://t.me/FAgram_Group"><img alt="Telegram" src="https://img.shields.io/badge/Telegram_Chat-0a0a0a?style=for-the-badge&logo=telegram"></a>
 
 ## <h2><img src="https://github.com/hikariatama/assets/raw/master/680-it-developer-flat.webp" height="50" align="middle"> Supported systems</h2>
 
