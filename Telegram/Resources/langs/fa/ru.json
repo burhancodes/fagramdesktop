@@ -1,50 +1,50 @@
-{  
-    "fa_client_preferences": "FAgram Preferences",    
-
-    "fa_copy_id": "Copy ID",
-    "fa_copy_registration_date": "Copy Registration date",
-    "fa_copy_callback_data": "Copy Callback data",
-
-    "fa_registration_date": "Registration date",
-    "fa_not_found": "Not found.",
-    "fa_settings_change_after_restart": "^ This setting will be changed after restart of the client ^",
-
-    "fa_categories": "Categories",
-
-    "fa_general": "General",
-    "fa_show_seconds_message": "Show Seconds of Message",
-    "fa_disable_ads": "Disable ads",
-    "fa_show_start_token": "Show Start Token in Bot",
-    "fa_show_peer_ids": "Show Peer IDs",
-    "fa_show_dc_ids": "Show DC IDs in label of peer ids",
-    "fa_id_in_botapi_type": "BotAPI IDs type",
-    "fa_show_registration_date": "Show Registration Date",
-    "fa_hide_phone_in_settings": "Hide Phone number in Settings",
-    "fa_hide_stories": "Hide Stories",
-
-    "fa_chats": "Chats",
-    "fa_recent_stickers_hidden": "Recent stickers: Hidden",
-    "fa_recent_stickers": "Recent stickers: %1",
-    "fa_hide_all_chats_folder": "Hide All Chats folder",
-
-    "fa_appearance": "Appearance",
-    "fa_rounding": "Rounding: %1",
-
-    "fa_other": "Other",
-    "fa_dc_status": "DC Status",
-    "fa_update_client": "Update FAgram",
-
-    "fa_donate": "Donate",
-    "fa_choose_method": "Choose method",
-    "fa_ton_wallet": "TON Wallet",
-    "fa_thank_you": "Thank you.", 
+{
+    "fa_client_preferences": "Настройки FAgram",
     
-    "fa_clean_debug_logs": "Clean Debug Logs",
-    "fa_cleaning_debug_logs": "Cleaning...",
-    "fa_cleaned_debug_logs": "Debug Logs Cleaned!",
-
-    "fa_channel": "Channel",
-    "fa_group": "Group",
-    "fa_beta": "Beta",
-    "fa_source_code": "Source code"
+    "fa_copy_id": "Копировать ID",
+    "fa_copy_registration_date": "Копировать дату регистрации",
+    "fa_copy_callback_data": "Копировать Callback data",
+    
+    "fa_registration_date": "Дата регистрации",
+    "fa_not_found": "Не найдено.",
+    "fa_settings_change_after_restart": "^ Эта настройка будет изменена после перезапуска клиента ^",
+    
+    "fa_categories": "Категории",
+    
+    "fa_general": "Общие",
+    "fa_show_seconds_message": "Показывать секунды сообщения",
+    "fa_disable_ads": "Отключить рекламу",
+    "fa_show_start_token": "Показывать стартовой токен в старте бота",
+    "fa_show_peer_ids": "Показывать Peer ID",
+    "fa_show_dc_ids": "Показать DC ID под Peer ID",
+    "fa_id_in_botapi_type": "Тип ID BotAPI",
+    "fa_show_registration_date": "Показать дату регистрации",
+    "fa_hide_phone_in_settings": "Скрыть номер телефона в настройках",
+    "fa_hide_stories": "Скрыть истории",
+    
+    "fa_chats": "Чаты",
+    "fa_recent_stickers_hidden": "Последние стикеры: Скрыто",
+    "fa_recent_stickers": "Последние стикеры: %1",
+    "fa_hide_all_chats_folder": "Скрыть папку Все чаты",
+    
+    "fa_appearance": "Внешний вид",
+    "fa_rounding": "Округление: %1",
+    
+    "fa_other": "Другое",
+    "fa_dc_status": "Статус DC",
+    "fa_update_client": "Обновить FAgram",
+    
+    "fa_donate": "Донат",
+    "fa_choose_method": "Выбрать метод",
+    "fa_ton_wallet": "TON Wallet",
+    "fa_thank_you": "Спасибо.",
+    
+    "fa_clean_debug_logs": "Очистить логи",
+    "fa_cleaning_debug_logs": "Очистка...",
+    "fa_cleaned_debug_logs": "Логи очищены!",
+    
+    "fa_channel": "Канал",
+    "fa_group": "Чат",
+    "fa_beta": "Бета",
+    "fa_source_code": "Исходный код"
 }

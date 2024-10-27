@@ -1,50 +1,50 @@
-{  
-    "fa_client_preferences": "FAgram Preferences",    
-
-    "fa_copy_id": "Copy ID",
-    "fa_copy_registration_date": "Copy Registration date",
-    "fa_copy_callback_data": "Copy Callback data",
-
-    "fa_registration_date": "Registration date",
-    "fa_not_found": "Not found.",
-    "fa_settings_change_after_restart": "^ This setting will be changed after restart of the client ^",
-
-    "fa_categories": "Categories",
-
-    "fa_general": "General",
-    "fa_show_seconds_message": "Show Seconds of Message",
-    "fa_disable_ads": "Disable ads",
-    "fa_show_start_token": "Show Start Token in Bot",
-    "fa_show_peer_ids": "Show Peer IDs",
-    "fa_show_dc_ids": "Show DC IDs in label of peer ids",
-    "fa_id_in_botapi_type": "BotAPI IDs type",
-    "fa_show_registration_date": "Show Registration Date",
-    "fa_hide_phone_in_settings": "Hide Phone number in Settings",
-    "fa_hide_stories": "Hide Stories",
-
-    "fa_chats": "Chats",
-    "fa_recent_stickers_hidden": "Recent stickers: Hidden",
-    "fa_recent_stickers": "Recent stickers: %1",
-    "fa_hide_all_chats_folder": "Hide All Chats folder",
-
-    "fa_appearance": "Appearance",
-    "fa_rounding": "Rounding: %1",
-
-    "fa_other": "Other",
-    "fa_dc_status": "DC Status",
-    "fa_update_client": "Update FAgram",
-
-    "fa_donate": "Donate",
-    "fa_choose_method": "Choose method",
-    "fa_ton_wallet": "TON Wallet",
-    "fa_thank_you": "Thank you.", 
+{
+    "fa_client_preferences": "FAgram 設定",
     
-    "fa_clean_debug_logs": "Clean Debug Logs",
-    "fa_cleaning_debug_logs": "Cleaning...",
-    "fa_cleaned_debug_logs": "Debug Logs Cleaned!",
-
-    "fa_channel": "Channel",
-    "fa_group": "Group",
-    "fa_beta": "Beta",
-    "fa_source_code": "Source code"
+    "fa_copy_id": "ID をコピー",
+    "fa_copy_registration_date": "登録日をコピー",
+    "fa_copy_callback_data": "コールバック データをコピー",
+    
+    "fa_registration_date": "登録日",
+    "fa_not_found": "見つかりません。",
+    "fa_settings_change_after_restart": "^ この設定はクライアントの再起動後に変更されます ^",
+    
+    "fa_categories": "カテゴリ",
+    
+    "fa_general": "一般",
+    "fa_show_seconds_message": "メッセージの秒数を表示",
+    "fa_disable_ads": "広告を無効にする",
+    "fa_show_start_token": "ボットで開始トークンを表示",
+    "fa_show_peer_ids": "ピア ID を表示",
+    "fa_show_dc_ids": "DC ID を表示ピア ID のラベル",
+    "fa_id_in_botapi_type": "BotAPI ID の種類",
+    "fa_show_registration_date": "登録日を表示",
+    "fa_hide_phone_in_settings": "設定で電話番号を非表示",
+    "fa_hide_stories": "ストーリーを非表示",
+    
+    "fa_chats": "チャット",
+    "fa_recent_stickers_hidden": "最近のステッカー: 非表示",
+    "fa_recent_stickers": "最近のステッカー: %1",
+    "fa_hide_all_chats_folder": "すべてのチャット フォルダを非表示",
+    
+    "fa_appearance": "外観",
+    "fa_rounding": "切り上げ: %1",
+    
+    "fa_other": "その他",
+    "fa_dc_status": "DC ステータス",
+    "fa_update_client": "FAgram を更新",
+    
+    "fa_donate": "寄付",
+    "fa_choose_method": "方法を選択してください",
+    "fa_ton_wallet": "TON ウォレット",
+    "fa_thank_you": "ありがとうございます。",
+    
+    "fa_clean_debug_logs": "デバッグ ログをクリーンアップします",
+    "fa_cleaning_debug_logs": "クリーンアップしています...",
+    "fa_cleaned_debug_logs": "デバッグ ログをクリーンアップしました!",
+    
+    "fa_channel": "チャネル",
+    "fa_group": "グループ",
+    "fa_beta": "ベータ",
+    "fa_source_code": "ソース コード"
 }

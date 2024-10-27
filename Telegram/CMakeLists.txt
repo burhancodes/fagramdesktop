@@ -728,6 +728,8 @@ PRIVATE
     fa/settings_menu/sections/fa_donate.h
     fa/url_handlers/fa_url_handlers.cpp
     fa/url_handlers/fa_url_handlers.h
+    fa/lang/fa_lang.cpp
+    fa/lang/fa_lang.h
     fa/ui/previews.cpp
     fa/ui/previews.h
     fa/fa_version.h

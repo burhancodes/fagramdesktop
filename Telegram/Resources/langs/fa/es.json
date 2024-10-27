@@ -1,50 +1,50 @@
-{  
-    "fa_client_preferences": "FAgram Preferences",    
-
-    "fa_copy_id": "Copy ID",
-    "fa_copy_registration_date": "Copy Registration date",
-    "fa_copy_callback_data": "Copy Callback data",
-
-    "fa_registration_date": "Registration date",
-    "fa_not_found": "Not found.",
-    "fa_settings_change_after_restart": "^ This setting will be changed after restart of the client ^",
-
-    "fa_categories": "Categories",
-
-    "fa_general": "General",
-    "fa_show_seconds_message": "Show Seconds of Message",
-    "fa_disable_ads": "Disable ads",
-    "fa_show_start_token": "Show Start Token in Bot",
-    "fa_show_peer_ids": "Show Peer IDs",
-    "fa_show_dc_ids": "Show DC IDs in label of peer ids",
-    "fa_id_in_botapi_type": "BotAPI IDs type",
-    "fa_show_registration_date": "Show Registration Date",
-    "fa_hide_phone_in_settings": "Hide Phone number in Settings",
-    "fa_hide_stories": "Hide Stories",
-
-    "fa_chats": "Chats",
-    "fa_recent_stickers_hidden": "Recent stickers: Hidden",
-    "fa_recent_stickers": "Recent stickers: %1",
-    "fa_hide_all_chats_folder": "Hide All Chats folder",
-
-    "fa_appearance": "Appearance",
-    "fa_rounding": "Rounding: %1",
-
-    "fa_other": "Other",
-    "fa_dc_status": "DC Status",
-    "fa_update_client": "Update FAgram",
-
-    "fa_donate": "Donate",
-    "fa_choose_method": "Choose method",
-    "fa_ton_wallet": "TON Wallet",
-    "fa_thank_you": "Thank you.", 
+{
+    "fa_client_preferences": "Preferencias de FAgram",
     
-    "fa_clean_debug_logs": "Clean Debug Logs",
-    "fa_cleaning_debug_logs": "Cleaning...",
-    "fa_cleaned_debug_logs": "Debug Logs Cleaned!",
-
-    "fa_channel": "Channel",
-    "fa_group": "Group",
+    "fa_copy_id": "Copiar ID",
+    "fa_copy_registration_date": "Copiar fecha de registro",
+    "fa_copy_callback_data": "Copiar datos de devolución de llamada",
+    
+    "fa_registration_date": "Fecha de registro",
+    "fa_not_found": "No encontrado.",
+    "fa_settings_change_after_restart": "^ Esta configuración se cambiará después de reiniciar el cliente ^",
+    
+    "fa_categories": "Categorías",
+    
+    "fa_general": "General",
+    "fa_show_seconds_message": "Mostrar segundos del mensaje",
+    "fa_disable_ads": "Deshabilitar anuncios",
+    "fa_show_start_token": "Mostrar token de inicio en bot",
+    "fa_show_peer_ids": "Mostrar ID de pares",
+    "fa_show_dc_ids": "Mostrar ID de DC en la etiqueta de los ID de pares",
+    "fa_id_in_botapi_type": "Tipo de ID de BotAPI",
+    "fa_show_registration_date": "Mostrar fecha de registro",
+    "fa_hide_phone_in_settings": "Ocultar número de teléfono en configuración",
+    "fa_hide_stories": "Ocultar historias",
+    
+    "fa_chats": "Chats",
+    "fa_recent_stickers_hidden": "Stickers recientes: Ocultos",
+    "fa_recent_stickers": "Stickers recientes: %1",
+    "fa_hide_all_chats_folder": "Ocultar carpeta Todos los chats",
+    
+    "fa_appearance": "Apariencia",
+    "fa_rounding": "Redondeo: %1",
+    
+    "fa_other": "Otro",
+    "fa_dc_status": "Estado de DC",
+    "fa_update_client": "Actualizar FAgram",
+    
+    "fa_donate": "Donar",
+    "fa_choose_method": "Elegir método",
+    "fa_ton_wallet": "Monedero TON",
+    "fa_thank_you": "Gracias",
+    
+    "fa_clean_debug_logs": "Limpiar registros de depuración",
+    "fa_cleaning_debug_logs": "Limpiando...",
+    "fa_cleaned_debug_logs": "¡Se limpiaron los registros de depuración!",
+    
+    "fa_channel": "Canal",
+    "fa_group": "Grupo",
     "fa_beta": "Beta",
-    "fa_source_code": "Source code"
+    "fa_source_code": "Código fuente"
 }

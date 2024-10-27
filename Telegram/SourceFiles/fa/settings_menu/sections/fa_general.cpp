@@ -11,6 +11,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "fa/settings/fa_settings.h"
 #include "fa/settings_menu/sections/fa_general.h"
 
+#include "fa/lang/fa_lang.h"
+
 #include "lang_auto.h"
 #include "mainwindow.h"
 #include "settings/settings_common.h"
@@ -37,7 +39,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #define SettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
 	container, \
-    rpl::single(QString(#LangKey)), \
+    #LangKey, \
 	st::settingsButtonNoIcon \
 ))->toggleOn( \
 	rpl::single(::FASettings::JsonSettings::GetBool(#Option)) \
@@ -53,7 +55,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 namespace Settings {
 
     rpl::producer<QString> FAGeneral::title() {
-        return rpl::single(QString("General"));
+        return FAlang::RplTranslate("fa_general");
     }
 
     FAGeneral::FAGeneral(
@@ -64,19 +66,19 @@ namespace Settings {
     }
 
     void FAGeneral::SetupGeneral(not_null<Ui::VerticalLayout *> container) {
-        Ui::AddSubsectionTitle(container, rpl::single(QString("General")));
+        Ui::AddSubsectionTitle(container, FAlang::RplTranslate("fa_general"));
 
-		SettingsMenuJsonSwitch(Show Seconds of Message, seconds_message);
-        SettingsMenuJsonSwitch(Disable ads, disable_ads);
-        SettingsMenuJsonSwitch(Show Start Token in Bot, show_start_token);
-        SettingsMenuJsonSwitch(Show Peer IDs, show_peer_id);
-        SettingsMenuJsonSwitch(Show DC IDs in label of peer ids, show_dc_id);
-        SettingsMenuJsonSwitch(BotAPI IDs type, show_id_botapi)
-        SettingsMenuJsonSwitch(Show Registration date, show_registration_date)
-        SettingsMenuJsonSwitch(Hide Phone number in Setting, hide_phone_number)
+		SettingsMenuJsonSwitch(FAlang::RplTranslate("fa_show_seconds_message"), seconds_message);
+        SettingsMenuJsonSwitch(FAlang::RplTranslate("fa_disable_ads"), disable_ads);
+        SettingsMenuJsonSwitch(FAlang::RplTranslate("fa_show_start_token"), show_start_token);
+        SettingsMenuJsonSwitch(FAlang::RplTranslate("fa_show_peer_ids"), show_peer_id);
+        SettingsMenuJsonSwitch(FAlang::RplTranslate("fa_show_dc_ids"), show_dc_id);
+        SettingsMenuJsonSwitch(FAlang::RplTranslate("fa_id_in_botapi_type"), show_id_botapi)
+        SettingsMenuJsonSwitch(FAlang::RplTranslate("fa_show_registration_date"), show_registration_date)
+        SettingsMenuJsonSwitch(FAlang::RplTranslate("fa_hide_phone_in_settings"), hide_phone_number)
         Ui::AddDivider(container);
-        SettingsMenuJsonSwitch(Hide Stories, hide_stories)
-		Ui::AddDividerText(container, rpl::single(QString("^ This setting will be changed after restart of the client ^")));
+        SettingsMenuJsonSwitch(FAlang::RplTranslate("fa_hide_stories"), hide_stories)
+		Ui::AddDividerText(container, FAlang::RplTranslate("fa_settings_change_after_restart"));
     }
 
     void FAGeneral::SetupFAGeneral(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {

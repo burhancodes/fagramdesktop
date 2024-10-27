@@ -11,6 +11,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "fa/settings/fa_settings.h"
 #include "fa/settings_menu/sections/fa_chats.h"
 
+#include "fa/lang/fa_lang.h"
+
 #include "lang_auto.h"
 #include "mainwindow.h"
 #include "settings/settings_common.h"
@@ -37,7 +39,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #define SettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
 	container, \
-    rpl::single(QString(#LangKey)), \
+    #LangKey, \
 	st::settingsButtonNoIcon \
 ))->toggleOn( \
 	rpl::single(::FASettings::JsonSettings::GetBool(#Option)) \
@@ -53,7 +55,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 namespace Settings {
 
     rpl::producer<QString> FAChats::title() {
-        return rpl::single(QString("Chats"));
+        return FALang::RplTranslate("fa_chats");
     }
 
     FAChats::FAChats(
@@ -64,7 +66,7 @@ namespace Settings {
     }
 
     void FAChats::SetupChats(not_null<Ui::VerticalLayout *> container) {
-        Ui::AddSubsectionTitle(container, rpl::single(QString("Chats")));
+        Ui::AddSubsectionTitle(container, FAlang::RplTranslate("fa_chats"));
 
 		const auto recentStickersLimitLabel = container->add(
 			object_ptr<Ui::LabelSimple>(
@@ -79,8 +81,8 @@ namespace Settings {
 		const auto updateRecentStickersLimitLabel = [=](int value) {
 			recentStickersLimitLabel->setText(
 				(value == 0)
-					? QString("Recent stickers: Hidden")
-					: QString("Recent stickers: %1").arg(value) );
+					? FAlang::Translate("fa_recent_stickers_hidden")
+					: FAlang::Translate("fa_recent_stickers").arg(value) );
 		};
         const auto updateRecentStickersLimitHeight = [=](int value) {
 			updateRecentStickersLimitLabel(value);
@@ -97,8 +99,8 @@ namespace Settings {
 		Ui::AddSkip(container);
         Ui::AddDivider(container);
 		Ui::AddSkip(container);
-		SettingsMenuJsonSwitch(Hide All Chats folder, hide_all_chats_folder)
-		Ui::AddDividerText(container, rpl::single(QString("^ This setting will be changed after restart of the client ^")));
+		SettingsMenuJsonSwitch(FAlang::RplTranslate("fa_hide_all_chats_folder"), hide_all_chats_folder)
+		Ui::AddDividerText(container, FAlang::RplTranslate("fa_settings_change_after_restart"));
     }
 
     void FAChats::SetupFAChats(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {

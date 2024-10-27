@@ -52,4 +52,11 @@
     <file alias="default_shortcuts-custom.json">../../default_shortcuts-custom.json</file>
     <file alias="org.fagram.desktop.desktop">../../../../lib/xdg/org.fagram.desktop.desktop</file>
   </qresource>
+  <qresource prefix="/fa_lang">
+    <file alias="en.json">../../langs/fa/en.json</file>
+    <file alias="es.json">../../langs/fa/es.json</file>
+    <file alias="ja.json">../../langs/fa/ja.json</file>
+    <file alias="uk.json">../../langs/fa/uk.json</file>
+    <file alias="ru.json">../../langs/fa/ru.json</file>
+  </qresource>
 </RCC>

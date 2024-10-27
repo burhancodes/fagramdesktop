@@ -1,50 +1,50 @@
-{  
-    "fa_client_preferences": "FAgram Preferences",    
-
-    "fa_copy_id": "Copy ID",
-    "fa_copy_registration_date": "Copy Registration date",
-    "fa_copy_callback_data": "Copy Callback data",
-
-    "fa_registration_date": "Registration date",
-    "fa_not_found": "Not found.",
-    "fa_settings_change_after_restart": "^ This setting will be changed after restart of the client ^",
-
-    "fa_categories": "Categories",
-
-    "fa_general": "General",
-    "fa_show_seconds_message": "Show Seconds of Message",
-    "fa_disable_ads": "Disable ads",
-    "fa_show_start_token": "Show Start Token in Bot",
-    "fa_show_peer_ids": "Show Peer IDs",
-    "fa_show_dc_ids": "Show DC IDs in label of peer ids",
-    "fa_id_in_botapi_type": "BotAPI IDs type",
-    "fa_show_registration_date": "Show Registration Date",
-    "fa_hide_phone_in_settings": "Hide Phone number in Settings",
-    "fa_hide_stories": "Hide Stories",
-
-    "fa_chats": "Chats",
-    "fa_recent_stickers_hidden": "Recent stickers: Hidden",
-    "fa_recent_stickers": "Recent stickers: %1",
-    "fa_hide_all_chats_folder": "Hide All Chats folder",
-
-    "fa_appearance": "Appearance",
-    "fa_rounding": "Rounding: %1",
-
-    "fa_other": "Other",
-    "fa_dc_status": "DC Status",
-    "fa_update_client": "Update FAgram",
-
-    "fa_donate": "Donate",
-    "fa_choose_method": "Choose method",
+{
+    "fa_client_preferences": "Налаштування FAgram",
+   
+    "fa_copy_id": "Копіювати ID",
+    "fa_copy_registration_date": "Копіювати дату реєстрації",
+    "fa_copy_callback_data": "Копіювати Callback data",
+   
+    "fa_registration_date": "Дата реєстрації",
+    "fa_not_found": "Не знайдено.",
+    "fa_settings_change_after_restart": "^ Ця настройка буде змінена після перезапуску клієнта ^",
+   
+    "fa_categories": "Категорії",
+   
+    "fa_general": "Загальні",
+    "fa_show_seconds_message": "Показувати секунди повідомлення",
+    "fa_disable_ads": "Вимкнути рекламу",
+    "fa_show_start_token": "Показувати стартовий токен у старті бота",
+    "fa_show_peer_ids": "Показувати Peer ID",
+    "fa_show_dc_ids": "Показати DC ID під Peer ID",
+    "fa_id_in_botapi_type": "Тип ID BotAPI",
+    "fa_show_registration_date": "Показати дату реєстрації",
+    "fa_hide_phone_in_settings": "Приховати номер телефону в налаштуваннях",
+    "fa_hide_stories": "Приховати історії",
+   
+    "fa_chats": "Чати",
+    "fa_recent_stickers_hidden": "Останні стікери: Приховано",
+    "fa_recent_stickers": "Останні наклейки: %1",
+    "fa_hide_all_chats_folder": "Приховати папку Усі чати",
+   
+    "fa_appearance": "Зовнішній вигляд",
+    "fa_rounding": "Округлення: %1",
+   
+    "fa_other": "Інше",
+    "fa_dc_status": "Статус DC",
+    "fa_update_client": "Оновити FAgram",
+   
+    "fa_donate": "Донат",
+    "fa_choose_method": "Вибрати метод",
     "fa_ton_wallet": "TON Wallet",
-    "fa_thank_you": "Thank you.", 
-    
-    "fa_clean_debug_logs": "Clean Debug Logs",
-    "fa_cleaning_debug_logs": "Cleaning...",
-    "fa_cleaned_debug_logs": "Debug Logs Cleaned!",
-
-    "fa_channel": "Channel",
-    "fa_group": "Group",
-    "fa_beta": "Beta",
-    "fa_source_code": "Source code"
-}
+    "fa_thank_you": "Спасибі.",
+   
+    "fa_clean_debug_logs": "Очистити логи",
+    "fa_cleaning_debug_logs": "Очищення...",
+    "fa_cleaned_debug_logs": "Логи очищені!",
+   
+    "fa_channel": "Канал",
+    "fa_group": "Чат",
+    "fa_beta": "Бета",
+    "fa_source_code": "Початковий код"
+   }

@@ -11,6 +11,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "fa/settings/fa_settings.h"
 #include "fa/settings_menu/sections/fa_donate.h"
 
+#include "fa/lang/fa_lang.h"
+
 #include "lang_auto.h"
 #include "mainwindow.h"
 #include "settings/settings_common.h"
@@ -38,7 +40,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #define SettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
 	container, \
-    rpl::single(QString(#LangKey)), \
+    #LangKey, \
 	st::settingsButtonNoIcon \
 ))->toggleOn( \
 	rpl::single(::FASettings::JsonSettings::GetBool(#Option)) \
@@ -54,7 +56,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 namespace Settings {
 
     rpl::producer<QString> FADonate::title() {
-        return rpl::single(QString("Donate"));
+        return FAlang::RplTranslate("fa_donate");
     }
 
     FADonate::FADonate(
@@ -109,7 +111,7 @@ namespace Settings {
 
 		AddButtonWithLabel(
 			container,
-			rpl::single(QString("TON Wallet")),
+			FAlang::RplTranslate("fa_ton_wallet"),
 			rpl::single(QString("")),
 			st::settingsButton,
 			{ &st::menuIconSettings }
@@ -118,7 +120,7 @@ namespace Settings {
             controller->showToast(QString("Address copied."), 1000);
 		});
 
-		Ui::AddDividerText(container, rpl::single(QString("Thank you.")));
+		Ui::AddDividerText(container, FAlang::RplTranslate("fa_thank_you"));
     }
 
     void FADonate::SetupFADonate(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {

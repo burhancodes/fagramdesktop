@@ -12,6 +12,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "fa/settings_menu/sections/fa_appearance.h"
 #include "fa/ui/previews.h"
 
+#include "fa/lang/fa_lang.h"
+
 #include "lang_auto.h"
 #include "mainwindow.h"
 #include "settings/settings_common.h"
@@ -38,7 +40,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #define SettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
 	container, \
-    rpl::single(QString(#LangKey)), \
+    #LangKey, \
 	st::settingsButtonNoIcon \
 ))->toggleOn( \
 	rpl::single(::FASettings::JsonSettings::GetBool(#Option)) \
@@ -54,7 +56,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 namespace Settings {
 
     rpl::producer<QString> FAAppearance::title() {
-        return rpl::single(QString("Appearance"));
+        return FALang::RplTranslate("fa_appearance");
     }
 
     FAAppearance::FAAppearance(
@@ -65,7 +67,7 @@ namespace Settings {
     }
 
     void FAAppearance::SetupAppearance(not_null<Ui::VerticalLayout *> container) {
-        Ui::AddSubsectionTitle(container, rpl::single(QString("Appearance")));
+        Ui::AddSubsectionTitle(container, FALang::RplTranslate(("fa_appearance")));
 
 		const auto roundnessPreview = container->add(
 			object_ptr<RoundnessPreview>(container),
@@ -84,7 +86,7 @@ namespace Settings {
 
 		const auto updateUserpicRoundnessLabel = [=](int value) {
     		const auto radius = QString::number(value);
-    		userpicRoundnessLabel->setText(QString("Rounding: %1").arg(radius));
+    		userpicRoundnessLabel->setText(FALang::Translate("fa_rounding").arg(radius));
     	};
     	const auto updateUserpicRoundness = [=](int value) {
     		updateUserpicRoundnessLabel(value);
