@@ -36,7 +36,7 @@ jobs:
           fi
           docker run --rm \
           -v $PWD:/usr/src/tdesktop \
-          -e CONFIG=Release \
+          -e CONFIG=Debug \
           fagram:build \
           /usr/src/tdesktop/Telegram/build/docker/centos_env/build.sh \
           -D CMAKE_EXE_LINKER_FLAGS="-s" \

@@ -10,6 +10,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "fa/settings/fa_settings.h"
 #include "fa/utils/fa_profile_values.h"
 #include "fa/utils/telegram_helpers.h"
+#include "fa/lang/fa_lang.h"
 
 #include "api/api_blocked_peers.h"
 #include "api/api_chat_participants.h"
@@ -1248,7 +1249,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
             auto idInfo = addInfoOneLine(
                     rpl::single(idLabel),
                     std::move(idDrawableText),
-                    QString("Copy ID")
+                    FAlang::Translate("fa_copy_id")
             );
             idInfo.text->setClickHandlerFilter([=](auto &&...) {
                 const auto idText = IDString(user);
@@ -1263,9 +1264,9 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 		bool show_registration_date = FASettings::JsonSettings::GetBool("show_registration_date");
 		if (show_registration_date) {
 			auto idInfo = addInfoOneLine(
-                    rpl::single(QString("Register date")),
+                    FAlang::RplTranslate("registration_date"),
                     std::move(RegistrationValue(user)),
-                    QString("Copy Registration date")
+                    FAlang::Translate("fa_copy_registration_date")
             );
 		}
 
@@ -1358,7 +1359,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
             auto idInfo = addInfoOneLine(
                     idLabel,
                     std::move(idDrawableText),
-                    QString("Copy ID")
+                    FAlang::Translate("fa_copy_id")
             );
             idInfo.text->setClickHandlerFilter([=](auto &&...) {
                 const auto idText = IDString(user);

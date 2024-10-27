@@ -11,6 +11,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "fa/url_handlers/fa_url_handlers.h"
 
 #include "fa/utils/telegram_helpers.h"
+#include "fa/lang/fa_lang.h"
 
 #include "base/qthelp_url.h"
 
@@ -64,9 +65,9 @@ bool HandleCleanDebugLogs(
 	if (!controller) {
 		return false;
 	}
-	controller->showToast(QString("Cleaning..."), 500);
+	controller->showToast(FAlang::Translate("fa_cleaning_debug_logs"), 500);
 	cleanDebugLogs();
-	controller->showToast(QString("Debug logs cleaned!"), 1000);
+	controller->showToast(FAlang::Translate("fa_cleaned_debug_logs"), 1000);
 	return true;
 }
 
@@ -78,7 +79,7 @@ bool HandleNothing(
 	if (!controller) {
 		return false;
 	}
-	controller->showToast(QString("Not found."), 500);
+	controller->showToast(FAlang::Translate("fa_not_found"), 500);
 	return true;
 }
 }

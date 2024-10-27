@@ -1,0 +1,50 @@
+{  
+    "fa_client_preferences": "FAgram Preferences",    
+
+    "fa_copy_id": "Copy ID",
+    "fa_copy_registration_date": "Copy Registration date",
+    "fa_copy_callback_data": "Copy Callback data",
+
+    "fa_registration_date": "Registration date",
+    "fa_not_found": "Not found.",
+    "fa_settings_change_after_restart": "^ This setting will be changed after restart of the client ^",
+
+    "fa_categories": "Categories",
+
+    "fa_general": "General",
+    "fa_show_seconds_message": "Show Seconds of Message",
+    "fa_disable_ads": "Disable ads",
+    "fa_show_start_token": "Show Start Token in Bot",
+    "fa_show_peer_ids": "Show Peer IDs",
+    "fa_show_dc_ids": "Show DC IDs in label of peer ids",
+    "fa_id_in_botapi_type": "BotAPI IDs type",
+    "fa_show_registration_date": "Show Registration Date",
+    "fa_hide_phone_in_settings": "Hide Phone number in Settings",
+    "fa_hide_stories": "Hide Stories",
+
+    "fa_chats": "Chats",
+    "fa_recent_stickers_hidden": "Recent stickers: Hidden",
+    "fa_recent_stickers": "Recent stickers: %1",
+    "fa_hide_all_chats_folder": "Hide All Chats folder",
+
+    "fa_appearance": "Appearance",
+    "fa_rounding": "Rounding: %1",
+
+    "fa_other": "Other",
+    "fa_dc_status": "DC Status",
+    "fa_update_client": "Update FAgram",
+
+    "fa_donate": "Donate",
+    "fa_choose_method": "Choose method",
+    "fa_ton_wallet": "TON Wallet",
+    "fa_thank_you": "Thank you.", 
+    
+    "fa_clean_debug_logs": "Clean Debug Logs",
+    "fa_cleaning_debug_logs": "Cleaning...",
+    "fa_cleaned_debug_logs": "Debug Logs Cleaned!",
+
+    "fa_channel": "Channel",
+    "fa_group": "Group",
+    "fa_beta": "Beta",
+    "fa_source_code": "Source code"
+}

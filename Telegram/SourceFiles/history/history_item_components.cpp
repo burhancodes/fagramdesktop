@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "history/history_item_components.h"
 
+#include "fa/lang/fa_lang.h"
+
 #include "api/api_text_entities.h"
 #include "base/qt/qt_key_modifiers.h"
 #include "lang/lang_keys.h"
@@ -615,7 +617,7 @@ QString ReplyMarkupClickHandler::copyToClipboardContextItemText() const {
 	if (button) {
 		using Type = HistoryMessageMarkupButton::Type;
 		if (button->type == Type::Callback) {
-			return QString("Copy Callback data");
+			return FAlang::Translate("fa_copy_callback_data");
 		}
 		return tr::lng_context_copy_link(tr::now);
 	}

@@ -16,6 +16,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "fa/settings_menu/sections/fa_appearance.h"
 #include "fa/settings_menu/sections/fa_donate.h"
 
+#include "fa/lang/fa_lang.h"
+
 #include "core/application.h"
 #include "lang_auto.h"
 #include "mainwindow.h"
@@ -45,7 +47,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #define SettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
 	container, \
-    QString(#LangKey), \
+    #LangKey, \
 	st::settingsButtonNoIcon \
 ))->toggleOn( \
 	rpl::single(::FASettings::JsonSettings::GetBool(#Option)) \
@@ -60,7 +62,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 namespace Settings {
 
     rpl::producer<QString> FA::title() {
-        return rpl::single(QString("FAgram Preferences"));
+        return FAlang::RplTranslate("fa_client_preferences");
     }
 
     FA::FA(
@@ -71,7 +73,7 @@ namespace Settings {
     }
 
     void FA::SetupFASettings(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
-    	AddSubsectionTitle(container, rpl::single(QString("Categories")));
+    	AddSubsectionTitle(container, FAlang::RplTranslate("fa_categories"));
     	
 		const auto addSection = [&](
 				rpl::producer<QString> label,
@@ -87,15 +89,15 @@ namespace Settings {
 			});
 		};
     	addSection(
-			rpl::single(QString("General")),
+			FAlang::RplTranslate("fa_general"),
 			FAGeneral::Id(),
 			{ &st::menuIconShowAll });
     	addSection(
-			rpl::single(QString("Chats")),
+			FAlang::RplTranslate("fa_chats"),
 			FAChats::Id(),
 			{ &st::menuIconChatBubble });
     	addSection(
-			rpl::single(QString("Appearance")),
+			FAlang::RplTranslate("fa_appearance"),
 			FAAppearance::Id(),
 			{ &st::menuIconPalette });
     }
@@ -119,7 +121,7 @@ namespace Settings {
     	
     	AddButtonWithLabel(
 			container,
-			rpl::single(QString("Clean Debug Logs")),
+			FAlang::RplTranslate("fa_clean_debug_logs"),
 			rpl::single(QString("")),
 			st::settingsButton,
 			{ &st::menuIconClear }
@@ -129,7 +131,7 @@ namespace Settings {
 
     	AddButtonWithLabel(
 			container,
-			rpl::single(QString("DC Status")),
+			FAlang::RplTranslate("fa_dc_status"),
 			rpl::single(QString("")),
 			st::settingsButton,
 			{ &st::menuIconStats }
@@ -139,7 +141,7 @@ namespace Settings {
 
     	AddButtonWithLabel(
 			container,
-			rpl::single(QString("Update FAgram")),
+			FAlang::RplTranslate("fa_update_client"),
 			rpl::single(QString("")),
 			st::settingsButton,
 			{ &st::menuIconSettings }
@@ -159,7 +161,7 @@ namespace Settings {
     	
 	    AddButtonWithLabel(
 			container,
-			rpl::single(QString("Channel")),
+			FAlang::RplTranslate("fa_channel"),
 			rpl::single(QString("@FAgramNews")),
 			st::settingsButton,
 			{ &st::menuIconChannel }
@@ -169,7 +171,7 @@ namespace Settings {
 
     	AddButtonWithLabel(
 			container,
-			rpl::single(QString("Group")),
+			FAlang::RplTranslate("fa_group"),
 			rpl::single(QString("@FAgram_Group")),
 			st::settingsButton,
 			{ &st::menuIconGroups }
@@ -179,7 +181,7 @@ namespace Settings {
 
     	AddButtonWithLabel(
 			container,
-			rpl::single(QString("Beta")),
+			FAlang::RplTranslate("fa_beta"),
 			rpl::single(QString("@FAgramBeta")),
 			st::settingsButton,
 			{ &st::menuIconShowAll }
@@ -189,7 +191,7 @@ namespace Settings {
 
     	AddButtonWithLabel(
 			container,
-			rpl::single(QString("Source code")),
+			FAlang::RplTranslate("fa_source_code"),
 			rpl::single(QString("Github")),
 			st::settingsButton,
 			{ &st::menuIconDelete }
