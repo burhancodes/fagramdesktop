@@ -40,8 +40,8 @@ jobs:
           fagram:build \
           /usr/src/tdesktop/Telegram/build/docker/centos_env/build.sh \
           -D CMAKE_EXE_LINKER_FLAGS="-s" \
-          -D TDESKTOP_API_ID=${{ secrets.CONFIG_API_ID }} \
-          -D TDESKTOP_API_HASH=${{ secrets.CONFIG_API_HASH }} \
+          -D TDESKTOP_API_ID=${{ secrets.API_ID_CONFIG }} \
+          -D TDESKTOP_API_HASH=${{ secrets.API_HASH_CONFIG }} \
           -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
           $DEFINE
       - name: Create Tar
