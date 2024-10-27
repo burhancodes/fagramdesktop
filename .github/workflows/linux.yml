@@ -1,0 +1,56 @@
+name: Linux.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Pull docker image
+        run: |
+          docker pull ghcr.io/telegramdesktop/tdesktop/centos_env
+          docker tag ghcr.io/telegramdesktop/tdesktop/centos_env fagram:build
+      - name: Set Repository name & Tag name
+        run: |
+          echo "REPO_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
+          echo "TAGNAME=$(curl -s "${{ github.api_url }}/repos/${{ github.repository }}/tags" | jq -r '.[0].name')" >> $GITHUB_ENV
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          path: ${{ env.REPO_NAME }}
+
+      - name: Build FAgram
+        run: |
+          cd $REPO_NAME
+          DEFINE=""
+          if [ -n "${{ matrix.defines }}" ]; then
+            DEFINE="-D ${{ matrix.defines }}=ON"
+            echo Define from matrix: $DEFINE
+            echo "ARTIFACT_NAME=fagram_${{ matrix.defines }}" >> $GITHUB_ENV
+          else
+            echo "ARTIFACT_NAME=fagram" >> $GITHUB_ENV
+          fi
+          docker run --rm \
+          -v $PWD:/usr/src/tdesktop \
+          -e CONFIG=Release \
+          fagram:build \
+          /usr/src/tdesktop/Telegram/build/docker/centos_env/build.sh \
+          -D CMAKE_EXE_LINKER_FLAGS="-s" \
+          -D TDESKTOP_API_ID=${{ secrets.API_ID }} \
+          -D TDESKTOP_API_HASH=${{ secrets.API_HASH }} \
+          -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
+          $DEFINE
+      - name: Create Tar
+        run: |
+          cd $REPO_NAME/arch
+          bash setup.sh
+          tar -czvf fagram-${{ env.TAGNAME }}.tar.gz usr
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fagram-${{ env.TAGNAME }}
+          path: ${{ env.REPO_NAME }}/arch/fagram-${{ env.TAGNAME }}.tar.gz
