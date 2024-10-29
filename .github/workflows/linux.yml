@@ -1,4 +1,4 @@
-name: Linux.
+name: Linux
 
 on:
   workflow_dispatch:
@@ -8,15 +8,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Free up disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          df -h
 
       - name: Pull docker image
         run: |
           docker pull ghcr.io/telegramdesktop/tdesktop/centos_env
           docker tag ghcr.io/telegramdesktop/tdesktop/centos_env fagram:build
+
       - name: Set Repository name & Tag name
         run: |
           echo "REPO_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
           echo "TAGNAME=$(curl -s "${{ github.api_url }}/repos/${{ github.repository }}/tags" | jq -r '.[0].name')" >> $GITHUB_ENV
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -44,11 +50,13 @@ jobs:
           -D TDESKTOP_API_HASH=${{ secrets.API_HASH_CONFIG }} \
           -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
           $DEFINE
+
       - name: Create Tar
         run: |
           cd $REPO_NAME/arch
           bash setup.sh
           tar -czvf fagram-${{ env.TAGNAME }}.tar.gz usr
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
