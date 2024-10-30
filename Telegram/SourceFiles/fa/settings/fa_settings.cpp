@@ -139,37 +139,6 @@ inline CheckHandler IntLimit(int min, int max) {
 	return IntLimit(min, max, min);
 }
 
-CheckHandler IntLimitMin(int min) {
-	return [=] (QVariant value) -> QVariant {
-		if (value.canConvert<int>()) {
-			auto intValue = value.toInt();
-			if (intValue < min) {
-				return min;
-			} else {
-				return value;
-			}
-		} else {
-			return min;
-		}
-	};
-}
-
-CheckHandler ScalesLimit() {
-	return [=] (QVariant value) -> QVariant {
-		auto newArrayValue = QJsonArray();
-		if (value.canConvert<QJsonArray>()) {
-			auto arrayValue = value.toJsonArray();
-			for (auto i = arrayValue.begin(); i != arrayValue.end() && arrayValue.size() <= 6; ++i) {
-				const auto scaleNumber = (*i).toDouble(); 
-				if (scaleNumber >= style::kScaleMin && scaleNumber <= style::kScaleMax) {
-					newArrayValue.append(scaleNumber);
-				}
-			}
-		}
-		return newArrayValue;
-	};
-}
-
 struct Definition {
 	SettingScope scope = SettingScope::Global;
 	SettingStorage storage = SettingStorage::MainJson;
