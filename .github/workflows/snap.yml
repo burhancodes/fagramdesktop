@@ -32,7 +32,9 @@ jobs:
 
       - name: FAgram Desktop snap build.
         run: |
-          sg lxd -c 'snap run snapcraft --verbosity=debug --build-args="-Wno-deprecated-declarations"'
+          export CFLAGS="-Wno-deprecated-declarations"
+          export CXXFLAGS="-Wno-deprecated-declarations"
+          sg lxd -c 'snap run snapcraft --verbosity=debug'
 
       - name: Move artifact.
         if: env.UPLOAD_ARTIFACT == 'true'
