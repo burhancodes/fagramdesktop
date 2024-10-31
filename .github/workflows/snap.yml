@@ -31,14 +31,14 @@ jobs:
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
 
       - name: FAgram Desktop snap build.
-        run: sg lxd -c 'snap run snapcraft --verbosity=debug'
+        run: |
+          sg lxd -c 'snap run snapcraft --verbosity=debug --build-args="-Wno-deprecated-declarations"'
 
       - name: Move artifact.
         if: env.UPLOAD_ARTIFACT == 'true'
         run: |
           artifact_name=$(echo fagram_*.snap)
           echo "ARTIFACT_NAME=$artifact_name" >> $GITHUB_ENV
-
           mkdir artifact
           mv $artifact_name artifact
 
