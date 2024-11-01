@@ -55,7 +55,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 namespace Settings {
 
     rpl::producer<QString> FAChats::title() {
-        return FALang::RplTranslate("fa_chats");
+        return FAlang::RplTranslate(QString("fa_chats"));
     }
 
     FAChats::FAChats(
@@ -66,7 +66,7 @@ namespace Settings {
     }
 
     void FAChats::SetupChats(not_null<Ui::VerticalLayout *> container) {
-        Ui::AddSubsectionTitle(container, FAlang::RplTranslate("fa_chats"));
+        Ui::AddSubsectionTitle(container, FAlang::RplTranslate(QString("fa_chats")));
 
 		const auto recentStickersLimitLabel = container->add(
 			object_ptr<Ui::LabelSimple>(
@@ -81,8 +81,8 @@ namespace Settings {
 		const auto updateRecentStickersLimitLabel = [=](int value) {
 			recentStickersLimitLabel->setText(
 				(value == 0)
-					? FAlang::Translate("fa_recent_stickers_hidden")
-					: FAlang::Translate("fa_recent_stickers").arg(value) );
+					? FAlang::Translate(QString("fa_recent_stickers_hidden"))
+					: FAlang::Translate(QString("fa_recent_stickers")).arg(value) );
 		};
         const auto updateRecentStickersLimitHeight = [=](int value) {
 			updateRecentStickersLimitLabel(value);
@@ -99,8 +99,8 @@ namespace Settings {
 		Ui::AddSkip(container);
         Ui::AddDivider(container);
 		Ui::AddSkip(container);
-		SettingsMenuJsonSwitch(FAlang::RplTranslate("fa_hide_all_chats_folder"), hide_all_chats_folder)
-		Ui::AddDividerText(container, FAlang::RplTranslate("fa_settings_change_after_restart"));
+		SettingsMenuJsonSwitch(FAlang::RplTranslate(QString("fa_hide_all_chats_folder")), hide_all_chats_folder)
+		Ui::AddDividerText(container, FAlang::RplTranslate(QString("fa_settings_change_after_restart")));
     }
 
     void FAChats::SetupFAChats(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {

@@ -65,9 +65,9 @@ bool HandleCleanDebugLogs(
 	if (!controller) {
 		return false;
 	}
-	controller->showToast(FAlang::Translate("fa_cleaning_debug_logs"), 500);
+	controller->showToast(FAlang::Translate(QString("fa_cleaning_debug_logs")), 500);
 	cleanDebugLogs();
-	controller->showToast(FAlang::Translate("fa_cleaned_debug_logs"), 1000);
+	controller->showToast(FAlang::Translate(QString("fa_cleaned_debug_logs")), 1000);
 	return true;
 }
 
@@ -79,7 +79,7 @@ bool HandleNothing(
 	if (!controller) {
 		return false;
 	}
-	controller->showToast(FAlang::Translate("fa_not_found"), 500);
+	controller->showToast(FAlang::Translate(QString("fa_not_found")), 500);
 	return true;
 }
 }

@@ -56,7 +56,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 namespace Settings {
 
     rpl::producer<QString> FAAppearance::title() {
-        return FALang::RplTranslate("fa_appearance");
+        return FAlang::RplTranslate(QString("fa_appearance"));
     }
 
     FAAppearance::FAAppearance(
@@ -86,7 +86,7 @@ namespace Settings {
 
 		const auto updateUserpicRoundnessLabel = [=](int value) {
     		const auto radius = QString::number(value);
-    		userpicRoundnessLabel->setText(FALang::Translate("fa_rounding").arg(radius));
+    		userpicRoundnessLabel->setText(FAlang::Translate(QString("fa_rounding")).arg(radius));
     	};
     	const auto updateUserpicRoundness = [=](int value) {
     		updateUserpicRoundnessLabel(value);

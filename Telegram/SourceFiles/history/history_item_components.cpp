@@ -617,7 +617,7 @@ QString ReplyMarkupClickHandler::copyToClipboardContextItemText() const {
 	if (button) {
 		using Type = HistoryMessageMarkupButton::Type;
 		if (button->type == Type::Callback) {
-			return FAlang::Translate("fa_copy_callback_data");
+			return FAlang::Translate(QString("fa_copy_callback_data"));
 		}
 		return tr::lng_context_copy_link(tr::now);
 	}

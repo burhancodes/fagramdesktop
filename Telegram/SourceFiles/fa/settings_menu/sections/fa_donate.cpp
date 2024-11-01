@@ -56,7 +56,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 namespace Settings {
 
     rpl::producer<QString> FADonate::title() {
-        return FAlang::RplTranslate("fa_donate");
+        return FAlang::RplTranslate(QString("fa_donate"));
     }
 
     FADonate::FADonate(
@@ -111,7 +111,7 @@ namespace Settings {
 
 		AddButtonWithLabel(
 			container,
-			FAlang::RplTranslate("fa_ton_wallet"),
+			FAlang::RplTranslate(QString("fa_ton_wallet")),
 			rpl::single(QString("")),
 			st::settingsButton,
 			{ &st::menuIconSettings }
@@ -120,7 +120,7 @@ namespace Settings {
             controller->showToast(QString("Address copied."), 1000);
 		});
 
-		Ui::AddDividerText(container, FAlang::RplTranslate("fa_thank_you"));
+		Ui::AddDividerText(container, FAlang::RplTranslate(QString("fa_thank_you")));
     }
 
     void FADonate::SetupFADonate(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {

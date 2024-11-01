@@ -1249,7 +1249,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
             auto idInfo = addInfoOneLine(
                     rpl::single(idLabel),
                     std::move(idDrawableText),
-                    FAlang::Translate("fa_copy_id")
+                    FAlang::Translate(QString("fa_copy_id"))
             );
             idInfo.text->setClickHandlerFilter([=](auto &&...) {
                 const auto idText = IDString(user);
@@ -1264,9 +1264,9 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 		bool show_registration_date = FASettings::JsonSettings::GetBool("show_registration_date");
 		if (show_registration_date) {
 			auto idInfo = addInfoOneLine(
-                    FAlang::RplTranslate("registration_date"),
+                    FAlang::RplTranslate(QString("registration_date")),
                     std::move(RegistrationValue(user)),
-                    FAlang::Translate("fa_copy_registration_date")
+                    FAlang::Translate(QString("fa_copy_registration_date"))
             );
 		}
 
@@ -1359,7 +1359,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
             auto idInfo = addInfoOneLine(
                     idLabel,
                     std::move(idDrawableText),
-                    FAlang::Translate("fa_copy_id")
+                    FAlang::Translate(QString("fa_copy_id"))
             );
             idInfo.text->setClickHandlerFilter([=](auto &&...) {
                 const auto idText = IDString(user);
