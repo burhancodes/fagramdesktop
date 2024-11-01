@@ -1,4 +1,4 @@
-name: Linux.
+name: Linux
 
 on:
   workflow_dispatch:
@@ -8,7 +8,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
+      - name: Free up disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          df -h
+      - name: Check available space and memory
+        run: |
+          df -h
+          free -m
       - name: Pull docker image
         run: |
           docker pull ghcr.io/telegramdesktop/tdesktop/centos_env
@@ -23,7 +30,7 @@ jobs:
           submodules: recursive
           path: ${{ env.REPO_NAME }}
 
-      - name: Build FAgram
+      - name: Configure FAgram with CMake
         run: |
           cd $REPO_NAME
           DEFINE=""
@@ -35,15 +42,27 @@ jobs:
             echo "ARTIFACT_NAME=fagram" >> $GITHUB_ENV
           fi
           docker run --rm \
+          -m 3g \
           -v $PWD:/usr/src/tdesktop \
           -e CONFIG=Debug \
           fagram:build \
-          /usr/src/tdesktop/Telegram/build/docker/centos_env/build.sh \
+          cmake \
           -D CMAKE_EXE_LINKER_FLAGS="-s" \
           -D TDESKTOP_API_ID=${{ secrets.API_ID_CONFIG }} \
           -D TDESKTOP_API_HASH=${{ secrets.API_HASH_CONFIG }} \
-          -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
-          $DEFINE
+          -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=OFF \
+          $DEFINE \
+          -S . -B build
+
+      - name: Build FAgram with limited parallelism
+        run: |
+          cd $REPO_NAME
+          docker run --rm \
+          -m 3g \
+          -v $PWD:/usr/src/tdesktop \
+          fagram:build \
+          cmake --build build -j1
+
       - name: Create Tar
         run: |
           cd $REPO_NAME/arch
