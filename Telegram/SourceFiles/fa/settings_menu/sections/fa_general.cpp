@@ -39,7 +39,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #define SettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
 	container, \
-    #LangKey, \
+    FAlang::RplTranslate(QString(#LangKey)), \
 	st::settingsButtonNoIcon \
 ))->toggleOn( \
 	rpl::single(::FASettings::JsonSettings::GetBool(#Option)) \
@@ -68,16 +68,16 @@ namespace Settings {
     void FAGeneral::SetupGeneral(not_null<Ui::VerticalLayout *> container) {
         Ui::AddSubsectionTitle(container, FAlang::RplTranslate(QString("fa_general")));
 
-		SettingsMenuJsonSwitch(FAlang::RplTranslate(QString("fa_show_seconds_message")), seconds_message);
-        SettingsMenuJsonSwitch(FAlang::RplTranslate(QString("fa_disable_ads")), disable_ads);
-        SettingsMenuJsonSwitch(FAlang::RplTranslate(QString("fa_show_start_token")), show_start_token);
-        SettingsMenuJsonSwitch(FAlang::RplTranslate(QString("fa_show_peer_ids")), show_peer_id);
-        SettingsMenuJsonSwitch(FAlang::RplTranslate(QString("fa_show_dc_ids")), show_dc_id);
-        SettingsMenuJsonSwitch(FAlang::RplTranslate(QString("fa_id_in_botapi_type")), show_id_botapi)
-        SettingsMenuJsonSwitch(FAlang::RplTranslate(QString("fa_show_registration_date")), show_registration_date)
-        SettingsMenuJsonSwitch(FAlang::RplTranslate(QString("fa_hide_phone_in_settings")), hide_phone_number)
+		SettingsMenuJsonSwitch(fa_show_seconds_message, seconds_message);
+        SettingsMenuJsonSwitch(fa_disable_ads, disable_ads);
+        SettingsMenuJsonSwitch(fa_show_start_token, show_start_token);
+        SettingsMenuJsonSwitch(fa_show_peer_ids, show_peer_id);
+        SettingsMenuJsonSwitch(fa_show_dc_ids, show_dc_id);
+        SettingsMenuJsonSwitch(fa_id_in_botapi_type, show_id_botapi)
+        SettingsMenuJsonSwitch(fa_show_registration_date, show_registration_date)
+        SettingsMenuJsonSwitch(fa_hide_phone_in_settings, hide_phone_number)
         Ui::AddDivider(container);
-        SettingsMenuJsonSwitch(FAlang::RplTranslate(QString("fa_hide_stories")), hide_stories)
+        SettingsMenuJsonSwitch(fa_hide_stories, hide_stories)
 		Ui::AddDividerText(container, FAlang::RplTranslate(QString("fa_settings_change_after_restart")));
     }
 

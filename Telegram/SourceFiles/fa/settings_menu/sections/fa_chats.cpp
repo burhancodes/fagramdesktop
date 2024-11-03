@@ -39,7 +39,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #define SettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
 	container, \
-    #LangKey, \
+    FAlang::RplTranslate(QString(#LangKey)), \
 	st::settingsButtonNoIcon \
 ))->toggleOn( \
 	rpl::single(::FASettings::JsonSettings::GetBool(#Option)) \
@@ -99,7 +99,7 @@ namespace Settings {
 		Ui::AddSkip(container);
         Ui::AddDivider(container);
 		Ui::AddSkip(container);
-		SettingsMenuJsonSwitch(FAlang::RplTranslate(QString("fa_hide_all_chats_folder")), hide_all_chats_folder)
+		SettingsMenuJsonSwitch(fa_hide_all_chats_folder, hide_all_chats_folder)
 		Ui::AddDividerText(container, FAlang::RplTranslate(QString("fa_settings_change_after_restart")));
     }
 
