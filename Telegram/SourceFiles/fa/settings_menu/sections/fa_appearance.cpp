@@ -67,7 +67,7 @@ namespace Settings {
     }
 
     void FAAppearance::SetupAppearance(not_null<Ui::VerticalLayout *> container) {
-        Ui::AddSubsectionTitle(container, FALang::RplTranslate(("fa_appearance")));
+        Ui::AddSubsectionTitle(container, FAlang::RplTranslate(("fa_appearance")));
 
 		const auto roundnessPreview = container->add(
 			object_ptr<RoundnessPreview>(container),
