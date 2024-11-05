@@ -14,12 +14,12 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 namespace FAlang {
     const auto kDefaultLanguage = qsl("en");
 
-    QFile GetLangFile() {
-        QFile file(qsl(":/fa_lang/%1.json").arg(kDefaultLanguage));
-        if (!file.exists()) {
-            file.setFileName(qsl(":/fa_lang/en.json"));
-        }
-        return file;
+    std::unique_ptr<QFile> GetLangFile() {
+	    auto file = std::make_unique<QFile>(qsl(":/fa_lang/%1.json").arg(kDefaultLanguage));
+	    if (!file->exists()) {
+    		file->setFileName(qsl(":/fa_lang/en.json"));
+	    }
+	    return file;
     }
 
     rpl::producer<QString> RplTranslate(const QString &key) {
@@ -28,24 +28,24 @@ namespace FAlang {
     }
 
     QString Translate(const QString &key) {
-        QFile lang_file = GetLangFile();
-        if (!lang_file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            return key;
-        }
+	    auto lang_file = GetLangFile();
+	    if (!lang_file->open(QIODevice::ReadOnly | QIODevice::Text)) {
+	    	return key;
+	    }
 
-        QByteArray jsonData = lang_file.readAll();
-        lang_file.close();
+    	QByteArray jsonData = lang_file->readAll();
+    	lang_file->close();
 
-        QJsonParseError parseError;
-        QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData, &parseError);
+	    QJsonParseError parseError;
+	    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData, &parseError);
 
-        if (parseError.error != QJsonParseError::NoError) {
-            return key;
-        }
+    	if (parseError.error != QJsonParseError::NoError) {
+	    	return key;
+    	}
 
-        QJsonObject jsonObj = jsonDoc.object();
-        QString translation = jsonObj.value(key).toString();
+	    QJsonObject jsonObj = jsonDoc.object();
+	    QString translation = jsonObj.value(key).toString();
 
-        return translation.isEmpty() ? key : translation;
+	    return translation.isEmpty() ? key : translation;
     }
 }
