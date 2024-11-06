@@ -23,5 +23,5 @@ namespace FAlang {
     rpl::producer<QString> RplTranslate(const QString &key);
     QString Translate(const QString &key);
 
-    void Load(const QString &baseLangCode, const QString &lang_code)
+    void Load(const QString &baseLangCode, const QString &lang_code);
 }
