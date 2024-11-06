@@ -14,12 +14,14 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 namespace FAlang {
     const auto kDefaultLanguage = qsl("en");
 
+    QString langCode = kDefaultLanguage;
+
     std::unique_ptr<QFile> GetLangFile() {
-	    auto file = std::make_unique<QFile>(qsl(":/fa_lang/%1.json").arg(kDefaultLanguage));
-	    if (!file->exists()) {
-    		file->setFileName(qsl(":/fa_lang/en.json"));
-	    }
-	    return file;
+        auto file = std::make_unique<QFile>(qsl(":/fa_lang/%1.json").arg(langCode));
+        if (!file->exists()) {
+            file->setFileName(qsl(":/fa_lang/en.json"));
+        }
+        return file;
     }
 
     rpl::producer<QString> RplTranslate(const QString &key) {
@@ -28,24 +30,41 @@ namespace FAlang {
     }
 
     QString Translate(const QString &key) {
-	    auto lang_file = GetLangFile();
-	    if (!lang_file->open(QIODevice::ReadOnly | QIODevice::Text)) {
-	    	return key;
-	    }
+        auto langFile = GetLangFile();
+        if (!langFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
+            return key;
+        }
 
-    	QByteArray jsonData = lang_file->readAll();
-    	lang_file->close();
+        QByteArray jsonData = langFile->readAll();
+        langFile->close();
 
-	    QJsonParseError parseError;
-	    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData, &parseError);
+        QJsonParseError parseError;
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData, &parseError);
 
-    	if (parseError.error != QJsonParseError::NoError) {
-	    	return key;
-    	}
+        if (parseError.error != QJsonParseError::NoError) {
+            return key;
+        }
 
-	    QJsonObject jsonObj = jsonDoc.object();
-	    QString translation = jsonObj.value(key).toString();
+        QJsonObject jsonObj = jsonDoc.object();
+        QString translation = jsonObj.value(key).toString();
 
-	    return translation.isEmpty() ? key : translation;
+        return translation.isEmpty() ? key : translation;
+    }
+
+    void Load(const QString &baseLangCode, const QString &lang_code) {
+		if (BaseLangCode.endsWith("-raw")) {
+			BaseLangCode.chop(4);
+		}
+		lang_code = lang_code.isEmpty() ? baseLangCode : lang_code;
+		if (lang_code.endsWith("-raw")) {
+			lang_code.chop(4);
+		}
+
+		if (baseLangCode != kDefaultLanguage) {
+			langCode = kDefaultLanguage;
+		}
+        else {
+            langCode = lang_code;
+        }
     }
 }

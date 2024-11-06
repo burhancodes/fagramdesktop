@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "core/application.h"
 
+#include "fa/lang/fa_lang.h"
+
 #include "data/data_abstract_structure.h"
 #include "data/data_forum.h"
 #include "data/data_photo.h"
@@ -275,6 +277,8 @@ void Application::run() {
 	_notifications = std::make_unique<Window::Notifications::System>();
 
 	startLocalStorage();
+
+	FAlang::Load(Lang::GetInstance().baseId(), Lang::GetInstance().id());
 
 	style::SetCustomFont(settings().customFontFamily());
 	style::internal::StartFonts();

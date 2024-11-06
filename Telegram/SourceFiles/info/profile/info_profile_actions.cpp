@@ -1264,7 +1264,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
 		bool show_registration_date = FASettings::JsonSettings::GetBool("show_registration_date");
 		if (show_registration_date) {
 			auto idInfo = addInfoOneLine(
-                    FAlang::RplTranslate(QString("registration_date")),
+                    FAlang::RplTranslate(QString("fa_registration_date")),
                     std::move(RegistrationValue(user)),
                     FAlang::Translate(QString("fa_copy_registration_date"))
             );
