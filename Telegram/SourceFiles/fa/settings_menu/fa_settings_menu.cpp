@@ -150,7 +150,7 @@ namespace Settings {
 		});
 
     	addSection(
-			rpl::single(QString("Donate")),
+			FAlang::RplTranslate(QString("fa_donate")),
 			FADonate::Id(),
 			{ &st::paymentsIconPaymentMethod });
     }

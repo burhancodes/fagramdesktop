@@ -8,6 +8,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "settings/settings_main.h"
 #include "fa/settings_menu/fa_settings_menu.h"
 
+#include "fa/lang/fa_lang.h"
 #include "fa/settings/fa_settings.h"
 
 #include "api/api_credits.h"
@@ -412,7 +413,7 @@ void SetupSections(
 	};
 
 	addSection(
-    	rpl::single(QString("FAgram Preferences")),
+    	FAlang::RplTranslate(QString("fa_client_preferences")),
     	FA::Id(),
     	{ &st::menuIconFA }
 	);
