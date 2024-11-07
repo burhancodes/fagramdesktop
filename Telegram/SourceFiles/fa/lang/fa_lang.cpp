@@ -52,14 +52,14 @@ namespace FAlang {
     }
 
     void Load(const QString &baseLangCode, const QString &lang_code) {
-	//	if (BaseLangCode.endsWith("-raw")) {
-	//		BaseLangCode.chop(4);
-	//	}
-	//	lang_code = lang_code.isEmpty() ? baseLangCode : lang_code;
-	//	if (lang_code.endsWith("-raw")) {
-	//		lang_code.chop(4);
-	//	}
+        baseLangCode = baseLangCode.replace("-raw", "");
+        lang_code = lang_code.replace("-raw", "");
 
-		langCode = lang_code;
+        if (lang_code.isEmpty()) {
+            langCode = baseLangCode;
+        }
+        else {
+            langCode = lang_code;
+        }
     }
 }
