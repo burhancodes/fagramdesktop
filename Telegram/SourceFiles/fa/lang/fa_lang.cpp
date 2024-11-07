@@ -60,11 +60,6 @@ namespace FAlang {
 	//		lang_code.chop(4);
 	//	}
 
-		if (baseLangCode != kDefaultLanguage) {
-			langCode = kDefaultLanguage;
-		}
-        else {
-            langCode = lang_code;
-        }
+		langCode = lang_code;
     }
 }
