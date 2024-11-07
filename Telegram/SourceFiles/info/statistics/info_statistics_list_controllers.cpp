@@ -854,7 +854,12 @@ void CreditsRow::init() {
 	setSkipPeerBadge(true);
 	PeerListRow::setCustomStatus(
 		langDateTime(_entry.date)
-		+ (_entry.refunded
+		+ (_entry.floodSkip
+			? (joiner + tr::lng_credits_box_history_entry_floodskip_about(
+				tr::now,
+				lt_count_decimal,
+				_entry.floodSkip))
+			: _entry.refunded
 			? (joiner + tr::lng_channel_earn_history_return(tr::now))
 			: _entry.pending
 			? (joiner + tr::lng_channel_earn_history_pending(tr::now))
@@ -931,7 +936,7 @@ QSize CreditsRow::rightActionSize() const {
 			_rowHeight);
 	} else if (_subscription || _entry) {
 		return QSize(
-			_rightText.maxWidth() + st::boxRowPadding.right(),
+			_rightText.maxWidth() + st::boxRowPadding.right() / 2,
 			_rowHeight);
 	} else if (!_entry && !_subscription) {
 		return QSize();
@@ -1075,7 +1080,10 @@ void CreditsController::applySlice(const Data::CreditsStatusSlice &slice) {
 				delegate()->peerListUpdateRow(row);
 			},
 		};
-		if (const auto peerId = PeerId(i.barePeerId + s.barePeerId)) {
+		if (i.bareActorId) {
+			const auto peer = session().data().peer(PeerId(i.bareActorId));
+			return std::make_unique<CreditsRow>(peer, descriptor);
+		} else if (const auto peerId = PeerId(i.barePeerId + s.barePeerId)) {
 			const auto peer = session().data().peer(peerId);
 			return std::make_unique<CreditsRow>(peer, descriptor);
 		} else {

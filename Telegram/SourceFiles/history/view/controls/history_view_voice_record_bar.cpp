@@ -364,7 +364,8 @@ class TTLButton final : public Ui::RippleButton {
 public:
 	TTLButton(
 		not_null<Ui::RpWidget*> parent,
-		const style::RecordBar &st);
+		const style::RecordBar &st,
+		bool recordingVideo);
 
 	void clearState() override;
 
@@ -383,7 +384,8 @@ private:
 
 TTLButton::TTLButton(
 	not_null<Ui::RpWidget*> parent,
-	const style::RecordBar &st)
+	const style::RecordBar &st,
+	bool recordingVideo)
 : RippleButton(parent, st.lock.ripple)
 , _st(st)
 , _rippleRect(Rect(Size(st::historyRecordLockTopShadow.width()))
@@ -410,8 +412,10 @@ TTLButton::TTLButton(
 		}
 		auto text = rpl::conditional(
 			Core::App().settings().ttlVoiceClickTooltipHiddenValue(),
-			tr::lng_record_once_active_tooltip(
-				Ui::Text::RichLangValue),
+			(recordingVideo
+				? tr::lng_record_once_active_video
+				: tr::lng_record_once_active_tooltip)(
+					Ui::Text::RichLangValue),
 			tr::lng_record_once_first_tooltip(
 				Ui::Text::RichLangValue));
 		_tooltip.reset(Ui::CreateChild<Ui::ImportantTooltip>(
@@ -1427,7 +1431,12 @@ void VoiceRecordBar::updateTTLGeometry(
 	const auto parent = parentWidget();
 	const auto me = Ui::MapFrom(_outerContainer, parent, geometry());
 	const auto anyTop = me.y() - st::historyRecordLockPosition.y();
-	const auto ttlFrom = anyTop - _ttlButton->height() * 2;
+	const auto lockHiddenProgress = (_lockShowing.current() || !_fullRecord)
+		? 0.
+		: (1. - _showLockAnimation.value(0.));
+	const auto ttlFrom = anyTop
+		- _ttlButton->height()
+		- (_ttlButton->height() * (1. - lockHiddenProgress));
 	if (type == TTLAnimationType::RightLeft) {
 		const auto finalRight = _outerContainer->width()
 			- rect::right(me)
@@ -1547,6 +1556,9 @@ void VoiceRecordBar::init() {
 			} else if (value == 1. && show) {
 				computeAndSetLockProgress(QCursor::pos());
 			}
+			if (_fullRecord && !show) {
+				updateTTLGeometry(TTLAnimationType::RightLeft, 1.);
+			}
 		};
 		_showLockAnimation.start(std::move(callback), from, to, duration);
 	}, lifetime());
@@ -1624,7 +1636,8 @@ void VoiceRecordBar::init() {
 			if (!_ttlButton) {
 				_ttlButton = std::make_unique<TTLButton>(
 					_outerContainer,
-					_st);
+					_st,
+					_recordingVideo);
 			}
 			_ttlButton->show();
 		}
@@ -1659,6 +1672,8 @@ void VoiceRecordBar::init() {
 			}
 			_recordingTipRequire = crl::now();
 			_recordingVideo = (_send->type() == Ui::SendButton::Type::Round);
+			_fullRecord = false;
+			_ttlButton = nullptr;
 			_lock->setRecordingVideo(_recordingVideo);
 			_startTimer.callOnce(st::universalDuration);
 		} else if (e->type() == QEvent::MouseButtonRelease) {
@@ -1822,6 +1837,7 @@ void VoiceRecordBar::startRecording() {
 			) | rpl::start_with_next_error([=](const Update &update) {
 				recordUpdated(update.level, update.samples);
 				if (update.finished) {
+					_fullRecord = true;
 					stopRecording(StopType::Listen);
 					_lockShowing = false;
 				}
@@ -1885,7 +1901,10 @@ void VoiceRecordBar::recordUpdated(quint16 level, int samples) {
 	}
 	Core::App().updateNonIdle();
 	update(_durationRect);
-	_sendActionUpdates.fire({ Api::SendProgressType::RecordVoice });
+	const auto type = _recordingVideo
+		? Api::SendProgressType::RecordRound
+		: Api::SendProgressType::RecordVoice;
+	_sendActionUpdates.fire({ type });
 }
 
 void VoiceRecordBar::stop(bool send) {
@@ -1917,7 +1936,10 @@ void VoiceRecordBar::finish() {
 
 	[[maybe_unused]] const auto s = takeTTLState();
 
-	_sendActionUpdates.fire({ Api::SendProgressType::RecordVoice, -1 });
+	const auto type = _recordingVideo
+		? Api::SendProgressType::RecordRound
+		: Api::SendProgressType::RecordVoice;
+	_sendActionUpdates.fire({ type, -1 });
 
 	_data = {};
 }

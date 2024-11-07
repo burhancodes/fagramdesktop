@@ -59,6 +59,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "core/click_handler_types.h"
 #include "core/ui_integration.h"
 #include "base/unixtime.h"
+#include "info/channel_statistics/earn/earn_icons.h"
 #include "ui/controls/userpic_button.h"
 #include "ui/text/text_utilities.h"
 #include "ui/text/format_values.h" // Ui::FormatPhone.
@@ -180,8 +181,8 @@ private:
 	return {
 		.tonEmoji = Ui::Text::SingleCustomEmoji(
 			session->data().customEmojiManager().registerInternalEmoji(
-				Info::ChannelEarn::IconCurrency(
-					st::collectibleInfo,
+				Ui::Earn::IconCurrencyColored(
+					st::collectibleInfo.style.font,
 					st::collectibleInfo.textFg->c),
 				st::collectibleInfoTonMargins,
 				true)),
@@ -569,8 +570,16 @@ void SessionNavigation::showPeerByLinkResolved(
 
 	const auto &replies = info.repliesInfo;
 	if (const auto threadId = std::get_if<ThreadId>(&replies)) {
+		const auto history = peer->owner().history(peer);
+		const auto controller = parentController();
+		if (const auto forum = peer->forum()) {
+			if (controller->windowId().hasChatsList()
+				&& !controller->adaptive().isOneColumn()) {
+				controller->showForum(forum);
+			}
+		}
 		showRepliesForMessage(
-			session().data().history(peer),
+			history,
 			threadId->id,
 			info.messageId,
 			params);
@@ -582,6 +591,8 @@ void SessionNavigation::showPeerByLinkResolved(
 			params);
 	} else if (resolveType == ResolveType::Profile) {
 		showPeerInfo(peer, params);
+	} else if (resolveType == ResolveType::HashtagSearch) {
+		searchMessages(info.text, peer->owner().history(peer));
 	} else if (peer->isForum() && resolveType != ResolveType::Boost) {
 		const auto itemId = info.messageId;
 		if (!itemId) {
@@ -1174,14 +1185,17 @@ void SessionNavigation::showPollResults(
 	showSection(std::make_shared<Info::Memento>(poll, contextId), params);
 }
 
-void SessionNavigation::searchInChat(Dialogs::Key inChat) {
-	searchMessages(QString(), inChat);
+void SessionNavigation::searchInChat(
+		Dialogs::Key inChat,
+		PeerData *searchFrom) {
+	searchMessages(QString(), inChat, searchFrom);
 }
 
 void SessionNavigation::searchMessages(
 		const QString &query,
-		Dialogs::Key inChat) {
-	parentController()->content()->searchMessages(query, inChat);
+		Dialogs::Key inChat,
+		PeerData *searchFrom) {
+	parentController()->content()->searchMessages(query, inChat, searchFrom);
 }
 
 auto SessionNavigation::showToast(Ui::Toast::Config &&config)

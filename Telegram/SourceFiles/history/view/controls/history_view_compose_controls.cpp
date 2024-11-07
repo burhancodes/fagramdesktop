@@ -964,7 +964,6 @@ void ComposeControls::setHistory(SetHistoryArgs &&args) {
 	initWebpageProcess();
 	initWriteRestriction();
 	initForwardProcess();
-	updateRecordMediaState();
 	updateBotCommandShown();
 	updateLikeShown();
 	updateMessagesTTLShown();
@@ -1153,7 +1152,7 @@ void ComposeControls::setMimeDataHook(MimeDataHook hook) {
 bool ComposeControls::confirmMediaEdit(Ui::PreparedList &list) {
 	if (!isEditingMessage() || !_regularWindow) {
 		return false;
-	} else if (_canReplaceMedia) {
+	} else if (_canReplaceMedia || _canAddMedia) {
 		const auto queryToEdit = _header->queryToEdit();
 		EditCaptionBox::StartMediaReplace(
 			_regularWindow,
@@ -1519,7 +1518,7 @@ void ComposeControls::orderControls() {
 }
 
 bool ComposeControls::showRecordButton() const {
-	return _canRecordAudioMessage
+	return (_recordAvailability != Webrtc::RecordAvailability::None)
 		&& !_voiceRecordBar->isListenState()
 		&& !_voiceRecordBar->isRecordingByAnotherBar()
 		&& !HasSendText(_field)
@@ -1944,7 +1943,7 @@ void ComposeControls::applyDraft(FieldHistoryAction fieldHistoryAction) {
 			_preview->apply({ .removed = true });
 			_preview->setDisabled(false);
 		}
-		_canReplaceMedia = false;
+		_canReplaceMedia = _canAddMedia = false;
 		_photoEditMedia = nullptr;
 		return;
 	}
@@ -1964,7 +1963,16 @@ void ComposeControls::applyDraft(FieldHistoryAction fieldHistoryAction) {
 		const auto resolve = [=] {
 			if (const auto item = _history->owner().message(editingId)) {
 				const auto media = item->media();
-				_canReplaceMedia = media && media->allowsEditMedia();
+				_canReplaceMedia = item->allowsEditMedia();
+				if (media) {
+					_canAddMedia = false;
+				} else {
+					_canAddMedia = base::take(_canReplaceMedia);
+				}
+				if (_canReplaceMedia || _canAddMedia) {
+					// Invalidate the button, maybe icon has changed.
+					_replaceMedia = nullptr;
+				}
 				_photoEditMedia = (_canReplaceMedia
 					&& _regularWindow
 					&& media->photo()
@@ -1985,7 +1993,7 @@ void ComposeControls::applyDraft(FieldHistoryAction fieldHistoryAction) {
 				}
 				return true;
 			}
-			_canReplaceMedia = false;
+			_canReplaceMedia = _canAddMedia = false;
 			_photoEditMedia = nullptr;
 			_header->editMessage(editingId, false);
 			return false;
@@ -2006,7 +2014,7 @@ void ComposeControls::applyDraft(FieldHistoryAction fieldHistoryAction) {
 		}
 		_header->replyToMessage({});
 	} else {
-		_canReplaceMedia = false;
+		_canReplaceMedia = _canAddMedia = false;
 		_photoEditMedia = nullptr;
 		_header->replyToMessage(draft->reply);
 		if (_header->replyingToMessage()) {
@@ -2139,12 +2147,17 @@ void ComposeControls::initSendButton() {
 		}
 	};
 
-
 	SendMenu::SetupMenuAndShortcuts(
 		_send.get(),
 		_show,
 		[=] { return sendButtonMenuDetails(); },
 		sendAction);
+
+	Core::App().mediaDevices().recordAvailabilityValue(
+	) | rpl::start_with_next([=](Webrtc::RecordAvailability value) {
+		_recordAvailability = value;
+		updateSendButtonType();
+	}, _send->lifetime());
 }
 
 void ComposeControls::initSendAsButton(not_null<PeerData*> peer) {
@@ -2421,9 +2434,12 @@ void ComposeControls::initVoiceRecordBar() {
 			!Core::App().settings().recordVideoMessages());
 		updateSendButtonType();
 		switch (_send->type()) {
-		case Ui::SendButton::Type::Record:
-			_show->showToast(tr::lng_record_voice_tip(tr::now));
-			break;
+		case Ui::SendButton::Type::Record: {
+			const auto both = Webrtc::RecordAvailability::VideoAndAudio;
+			_show->showToast((_recordAvailability == both)
+				? tr::lng_record_voice_tip(tr::now)
+				: tr::lng_record_hold_tip(tr::now));
+		} break;
 		case Ui::SendButton::Type::Round:
 			_show->showToast(tr::lng_record_video_tip(tr::now));
 			break;
@@ -2452,15 +2468,6 @@ void ComposeControls::initVoiceRecordBar() {
 	) | rpl::start_with_next([=] {
 		updateSendButtonType();
 	}, _wrap->lifetime());
-}
-
-void ComposeControls::updateRecordMediaState() {
-	::Media::Capture::instance()->check();
-	_canRecordAudioMessage = ::Media::Capture::instance()->available();
-
-	const auto environment = &Core::App().mediaDevices();
-	const auto type = Webrtc::DeviceType::Camera;
-	_canRecordVideoMessage = !environment->devices(type).empty();
 }
 
 void ComposeControls::updateWrappingVisibility() {
@@ -2498,8 +2505,9 @@ auto ComposeControls::computeSendButtonType() const {
 	} else if (_isInlineBot) {
 		return Type::Cancel;
 	} else if (showRecordButton()) {
-		return (Core::App().settings().recordVideoMessages()
-			&& _canRecordVideoMessage)
+		const auto both = Webrtc::RecordAvailability::VideoAndAudio;
+		const auto video = Core::App().settings().recordVideoMessages();
+		return (video && _recordAvailability == both)
 			? Type::Round
 			: Type::Record;
 	}
@@ -2931,7 +2939,7 @@ void ComposeControls::editMessage(not_null<HistoryItem*> item) {
 }
 
 bool ComposeControls::updateReplaceMediaButton() {
-	if (!_canReplaceMedia || !_regularWindow) {
+	if ((!_canReplaceMedia && !_canAddMedia) || !_regularWindow) {
 		const auto result = (_replaceMedia != nullptr);
 		_replaceMedia = nullptr;
 		return result;
@@ -2940,7 +2948,7 @@ bool ComposeControls::updateReplaceMediaButton() {
 	}
 	_replaceMedia = std::make_unique<Ui::IconButton>(
 		_wrap.get(),
-		st::historyReplaceMedia);
+		_canReplaceMedia ? st::historyReplaceMedia : st::historyAddMedia);
 	const auto hideDuration = st::historyReplaceMedia.ripple.hideDuration;
 	_replaceMedia->setClickedCallback([=] {
 		base::call_delayed(hideDuration, _wrap.get(), [=] {

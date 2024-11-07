@@ -441,19 +441,16 @@ infoProfileSeparatorPadding: margins(
 	infoProfileSkip,
 	0px,
 	infoProfileSkip);
-infoProfileLabeledButtonCopy: IconButton(defaultIconButton) {
+infoProfileLabeledButtonQr: IconButton(defaultIconButton) {
 	width: 34px;
 	height: 34px;
-	icon: icon {{ "menu/copy", windowBgActive }};
-	iconOver: icon {{ "menu/copy", windowBgActive }};
+	icon: icon {{ "menu/qr_code", windowActiveTextFg }};
+	iconOver: icon {{ "menu/qr_code", windowActiveTextFg }};
 	rippleAreaPosition: point(0px, 0px);
 	rippleAreaSize: 34px;
 	ripple: defaultRippleAnimation;
 }
-infoProfileLabeledButtonQr: IconButton(infoProfileLabeledButtonCopy) {
-	icon: icon {{ "menu/qr_code", windowBgActive }};
-	iconOver: icon {{ "menu/qr_code", windowBgActive }};
-}
+infoProfileLabeledButtonQrRightSkip: 10px;
 
 infoIconInformation: icon {{ "info/info_information", infoIconFg }};
 infoIconAddMember: icon {{ "info/info_add_member", infoIconFg }};
@@ -488,6 +485,8 @@ infoSharedMediaButtonIconPosition: point(20px, 3px);
 infoGroupMembersIconPosition: point(20px, 10px);
 infoChannelMembersIconPosition: point(20px, 4px);
 infoChannelAdminsIconPosition: point(24px, 7px);
+infoEarnCreditsIconPosition: point(24px, 7px);
+infoEarnCurrencyIconPosition: point(20px, 3px);
 
 infoOpenApp: RoundButton(defaultActiveButton) {
 	textTop: 11px;

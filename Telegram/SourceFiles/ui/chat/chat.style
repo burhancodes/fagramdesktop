@@ -808,6 +808,8 @@ whoReadPlayedDisabled: icon {{ "menu/read_audio", menuFgDisabled }};
 whoReadReactions: icon{{ "menu/read_reactions", windowBoldFg }};
 whoReadReactionsOver: icon{{ "menu/read_reactions", windowBoldFg }};
 whoReadReactionsDisabled: icon{{ "menu/read_reactions", menuFgDisabled }};
+whenEdited: icon {{ "menu/edited_status", windowBoldFg }};
+whenEditedOver: icon {{ "menu/edited_status", windowBoldFg }};
 
 reactionsTabAll: icon {{ "menu/read_reactions", windowFg }};
 reactionsTabAllSelected: icon {{ "menu/read_reactions", activeButtonFg }};
@@ -1151,3 +1153,5 @@ purchasedTagPadding: margins(3px, 2px, 6px, 2px);
 msgSelectionCheck: RoundCheckbox(defaultPeerListCheck) {
 	bgActive: boxTextFgGood;
 }
+
+sponsoredMessageBarMaxHeight: 156px;
