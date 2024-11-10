@@ -67,7 +67,7 @@ namespace Settings {
     }
 
     void FADonate::SetupDonate(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
-        Ui::AddSubsectionTitle(container, rpl::single(QString("Choose method")));
+        Ui::AddSubsectionTitle(container, FAlang::RplTranslate(QString("fa_choose_method")));
 
 		AddButtonWithLabel(
 			container,
