@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "window/section_widget.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "mainwidget.h"
 #include "mainwindow.h"
 #include "ui/ui_utility.h"
@@ -478,6 +480,10 @@ auto ChatThemeValueFromPeer(
 		peer
 	) | rpl::map([=](ResolvedTheme resolved)
 	-> rpl::producer<std::shared_ptr<Ui::ChatTheme>> {
+		disable_custom_chat_background = FASettings::JsonSettings::GetBool("disable_custom_chat_background");
+		if (disable_custom_chat_background && resolved.paper && resolved.paper->media) {
+			resolved.paper = std::nullopt;
+		}
 		if (!resolved.theme && !resolved.paper) {
 			return rpl::single(controller->defaultChatTheme());
 		}

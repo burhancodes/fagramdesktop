@@ -176,6 +176,9 @@ const std::map<QString, Definition, std::greater<QString>> DefinitionMap {
 	{ "hide_phone_number", {
 		.type = SettingType::BoolSetting,
 		.defaultValue = false, }},
+	{ "disable_custom_chat_background", {
+		.type = SettingType::BoolSetting,
+		.defaultValue = false, }},
 	{ "hide_all_chats_folder", {
 		.type = SettingType::BoolSetting,
 		.defaultValue = false, }},
