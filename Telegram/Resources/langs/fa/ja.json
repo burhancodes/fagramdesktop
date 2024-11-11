@@ -43,10 +43,12 @@
     "fa_address_copied": "アドレスをコピーしました",
     "fa_thank_you": "ありがとうございます。",
     
+    "fa_debug_logs": "ログ",
     "fa_clean_debug_logs": "デバッグ ログをクリーンアップします",
     "fa_cleaning_debug_logs": "クリーンアップしています...",
     "fa_cleaned_debug_logs": "デバッグ ログをクリーンアップしました!",
     
+    "fa_links": "リンク",
     "fa_channel": "チャネル",
     "fa_group": "グループ",
     "fa_beta": "ベータ",

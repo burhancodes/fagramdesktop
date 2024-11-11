@@ -103,7 +103,7 @@ namespace Settings {
     }
 
     void FA::SetupOther(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
-    	AddSubsectionTitle(container, rpl::single(QString("Other")));
+    	AddSubsectionTitle(container, FAlang::RplTranslate(QString("fa_other")));
 
 		const auto addSection = [&](
 				rpl::producer<QString> label,
@@ -118,6 +118,8 @@ namespace Settings {
 				showOther(type);
 			});
 		};
+
+        SettingsMenuJsonSwitch(fa_debug_logs, debug_logs)
     	
     	AddButtonWithLabel(
 			container,
@@ -157,7 +159,7 @@ namespace Settings {
 
 	void FA::SetupLinks(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller)
     {
-    	AddSubsectionTitle(container, rpl::single(QString("Links")));
+    	AddSubsectionTitle(container, FAlang::RplTranslate(QString("fa_links")));
     	
 	    AddButtonWithLabel(
 			container,

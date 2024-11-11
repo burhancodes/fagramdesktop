@@ -42,10 +42,12 @@
     "fa_ton_wallet": "TON Wallet",
     "fa_thank_you": "Дякую.",
    
+    "fa_debug_logs": "Логи",
     "fa_clean_debug_logs": "Очистити логи",
     "fa_cleaning_debug_logs": "Очищення...",
     "fa_cleaned_debug_logs": "Логи очищені!",
    
+    "fa_links": "Посилання",
     "fa_channel": "Канал",
     "fa_group": "Чат",
     "fa_beta": "Бета",

@@ -43,10 +43,12 @@
     "fa_address_copied": "Adresse kopiert",
     "fa_thank_you": "Danke.",
    
+    "fa_debug_logs": "Protokolle",
     "fa_clean_debug_logs": "Protokolle löschen",
     "fa_cleaning_debug_logs": "Reinigung…",
     "fa_cleaned_debug_logs": "Protokolle gelöscht!",
    
+    "fa_links": "Links",
     "fa_channel": "Kanal",
     "fa_group": "Chat",
     "fa_beta": "Beta",

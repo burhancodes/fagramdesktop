@@ -43,10 +43,12 @@
     "fa_address_copied": "Indirizzo copiato",
     "fa_thank_you": "Grazie.",
    
+    "fa_debug_logs": "Registri",
     "fa_clean_debug_logs": "Cancella registri",
     "fa_cleaning_debug_logs": "Pulizia...",
     "fa_cleaned_debug_logs": "Log cancellati!",
    
+    "fa_links": "Collegamenti",
     "fa_channel": "Canale",
     "fa_group": "Chat",
     "fa_beta": "Beta",

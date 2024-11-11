@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "logs.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "platform/platform_specific.h"
 #include "core/crash_reports.h"
 #include "core/launcher.h"
@@ -336,7 +338,7 @@ void SetDebugEnabled(bool enabled) {
 
 bool DebugEnabled() {
 #if defined _DEBUG
-	return true;
+	return FASettings::JsonSettings::GetBool("debug_logs");
 #else
 	return DebugModeEnabled;
 #endif

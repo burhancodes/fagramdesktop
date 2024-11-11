@@ -43,10 +43,12 @@
     "fa_address_copied": "Address copied",
     "fa_thank_you": "Thank you.", 
     
+    "fa_debug_logs": "Logs",
     "fa_clean_debug_logs": "Clean Debug Logs",
     "fa_cleaning_debug_logs": "Cleaning...",
     "fa_cleaned_debug_logs": "Debug Logs Cleaned!",
 
+    "fa_links": "Links",
     "fa_channel": "Channel",
     "fa_group": "Group",
     "fa_beta": "Beta",

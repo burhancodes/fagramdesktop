@@ -43,10 +43,12 @@
     "fa_address_copied": "Manzil ko'chirildi",
     "fa_thank_you": "Rahmat.",
    
+    "fa_debug_logs": "Jurnallar",
     "fa_clean_debug_logs": "Jurnallarni tozalash",
     "fa_cleaning_debug_logs": "Tozalanmoqda...",
     "fa_cleaned_debug_logs": "Jurnallar tozalandi!",
    
+    "fa_links": "Aloqalar",
     "fa_channel": "Kanal",
     "fa_group": "Chat",
     "fa_beta": "Beta",

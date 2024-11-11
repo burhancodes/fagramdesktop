@@ -152,6 +152,9 @@ const std::map<QString, Definition, std::greater<QString>> DefinitionMap {
 
 	// Stored settings
 	//   General
+	{ "debug_logs", {
+		.type = SettingType::BoolSetting,
+		.defaultValue = false, }},
 	{ "seconds_message", {
 		.type = SettingType::BoolSetting,
 		.defaultValue = true, }},
