@@ -1,0 +1,54 @@
+{
+    "fa_client_preferences": "Impostazioni FAgram",
+   
+    "fa_copy_id": "Copia ID",
+    "fa_id_copied": "ID copiato",
+   
+    "fa_copy_registration_date": "Copia data di registrazione",
+    "fa_copy_callback_data": "Copia dati di richiamata",
+   
+    "fa_registration_date": "Data di registrazione",
+    "fa_not_found": "Non trovato.",
+    "fa_settings_change_after_restart": "^Questa impostazione verrà modificata dopo il riavvio del client^",
+   
+    "fa_categories": "Categorie",
+   
+    "fa_general": "Generale",
+    "fa_show_seconds_message": "Mostra i secondi del messaggio",
+    "fa_disable_ads": "Disabilita annunci",
+    "fa_show_start_token": "Mostra il token di avvio all'avvio del bot",
+    "fa_show_peer_ids": "Mostra ID peer",
+    "fa_show_dc_ids": "Mostra ID DC sotto ID peer",
+    "fa_id_in_botapi_type": "Tipo ID BotAPI",
+    "fa_show_registration_date": "Mostra data di registrazione",
+    "fa_hide_phone_in_settings": "Nascondi il numero di telefono nelle impostazioni",
+    "fa_hide_stories": "Nascondi storie",
+   
+    "fa_chats": "Chat",
+    "fa_recent_stickers_hidden": "Adesivi recenti: nascosti",
+    "fa_recent_stickers": "Sticker recenti: %1",
+    "fa_disable_custom_chat_ background": "Nascondi lo sfondo della chat personalizzato",
+    "fa_hide_all_chats_folder": "Nascondi la cartella Tutte le chat",
+   
+    "fa_appearance": "Aspetto",
+    "fa_rounding": "Arrotondamento: %1",
+   
+    "fa_other": "Altro",
+    "fa_dc_status": "Stato DC",
+    "fa_update_client": "Aggiorna FAgram",
+   
+    "fa_donate": "Fai una donazione",
+    "fa_choose_method": "Scegli un metodo",
+    "fa_ton_wallet": "Portafoglio TON",
+    "fa_address_copied": "Indirizzo copiato",
+    "fa_thank_you": "Grazie.",
+   
+    "fa_clean_debug_logs": "Cancella registri",
+    "fa_cleaning_debug_logs": "Pulizia...",
+    "fa_cleaned_debug_logs": "Log cancellati!",
+   
+    "fa_channel": "Canale",
+    "fa_group": "Chat",
+    "fa_beta": "Beta",
+    "fa_source_code": "Codice sorgente"
+}

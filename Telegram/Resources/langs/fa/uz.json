@@ -1,0 +1,54 @@
+{
+    "fa_client_preferences": "FAgram sozlamalari",
+   
+    "fa_copy_id": "IDni nusxalash",
+    "fa_id_copied": "ID ko'chirildi",
+   
+    "fa_copy_registration_date": "Ro'yxatdan o'tish sanasini nusxalash",
+    "fa_copy_callback_data": "Qayta qo'ng'iroq ma'lumotlarini nusxalash",
+   
+    "fa_registration_date": "Ro'yxatdan o'tgan sana",
+    "fa_not_found": "topilmadi.",
+    "fa_settings_change_after_restart": "^Bu sozlama mijoz qayta ishga tushirilgandan so'ng o'zgartiriladi^",
+   
+    "fa_categories": "Kategoriyalar",
+   
+    "fa_general": "Umumiy",
+    "fa_show_seconds_message": "Xabar soniyalarini ko'rsatish",
+    "fa_disable_ads": "Reklamalarni o'chirish",
+    "fa_show_start_token": "Bot boshlanishida start tokenini ko'rsatish",
+    "fa_show_peer_ids": "Tengdosh identifikatorini ko'rsatish",
+    "fa_show_dc_ids": "Peer ID ostida DC identifikatorini ko'rsatish",
+    "fa_id_in_botapi_type": "BotAPI ID turi",
+    "fa_show_registration_date": "Ro'yxatdan o'tish sanasini ko'rsatish",
+    "fa_hide_phone_in_settings": "Sozlamalarda telefon raqamini yashirish",
+    "fa_hide_stories": "Hikoyalarni yashirish",
+   
+    "fa_chats": "Chatlar",
+    "fa_recent_stickers_hidden": "Oxirgi stikerlar: Yashirin",
+    "fa_recent_stickers": "Oxirgi stikerlar: %1",
+    "fa_disable_custom_chat_background": "Maxsus suhbat fonini yashirish",
+    "fa_hide_all_chats_folder": "Barcha suhbatlar jildini yashirish",
+   
+    "fa_appearance": "Tashqi ko'rinish",
+    "fa_rounding": "Yaxlitlash: %1",
+   
+    "fa_other": "Boshqa",
+    "fa_dc_status": "DC holati",
+    "fa_update_client": "FAgramni yangilash",
+   
+    "fa_donate": "Xayriya",
+    "fa_choose_method": "Usulni tanlang",
+    "fa_ton_wallet": "TON hamyon",
+    "fa_address_copied": "Manzil ko'chirildi",
+    "fa_thank_you": "Rahmat.",
+   
+    "fa_clean_debug_logs": "Jurnallarni tozalash",
+    "fa_cleaning_debug_logs": "Tozalanmoqda...",
+    "fa_cleaned_debug_logs": "Jurnallar tozalandi!",
+   
+    "fa_channel": "Kanal",
+    "fa_group": "Chat",
+    "fa_beta": "Beta",
+    "fa_source_code": "Manba kodi"
+}

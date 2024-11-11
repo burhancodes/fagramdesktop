@@ -1,0 +1,54 @@
+{
+    "fa_client_preferences": "FAgram параметрлері",
+   
+    "fa_copy_id": "Идентификаторды көшіру",
+    "fa_id_copied": "ID көшірілді",
+   
+    "fa_copy_registration_date": "Тіркеу күнін көшіру",
+    "fa_copy_callback_data": "Кері шақыру деректерін көшіру",
+   
+    "fa_registration_date": "Тіркеу күні",
+    "fa_not_found": "Табылмады.",
+    "fa_settings_change_after_restart": "^Бұл параметр клиент қайта іске қосылғаннан кейін өзгертіледі^",
+   
+    "fa_categories": "санаттар",
+   
+    "fa_general": "Жалпы",
+    "fa_show_seconds_message": "Хабар секундтарын көрсету",
+    "fa_disable_ads": "Жарнамаларды өшіру",
+    "fa_show_start_token": "Бастау белгісін боттың басында көрсету",
+    "fa_show_peer_ids": "Тең идентификаторды көрсету",
+    "fa_show_dc_ids": "Per ID астында DC идентификаторын көрсету",
+    "fa_id_in_botapi_type": "BotAPI ID түрі",
+    "fa_show_registration_date": "Тіркеу күнін көрсету",
+    "fa_hide_phone_in_settings": "Параметрлерде телефон нөмірін жасыру",
+    "fa_hide_stories": "Оқиғаларды жасыру",
+   
+    "fa_chats": "Чаттар",
+    "fa_recent_stickers_hidden": "Соңғы стикерлер: жасырын",
+    "fa_recent_stickers": "Соңғы стикерлер: % 1",
+    "fa_disable_custom_chat_background": "Арнаулы чат фонын жасыру",
+    "fa_hide_all_chats_folder": "Барлық чаттар қалтасын жасыру",
+   
+    "fa_appearance": "Көрініс",
+    "fa_rounding": "Дөңгелектеу: % 1",
+   
+    "fa_other": "Басқа",
+    "fa_dc_status": "DC күйі",
+    "fa_update_client": "FAgram жаңарту",
+   
+    "fa_donate": "Қайырымдылық",
+    "fa_choose_method": "Әдіс таңдау",
+    "fa_ton_wallet": "TON әмиян",
+    "fa_address_copied": "Мекенжай көшірілді",
+    "fa_thankyou": "Рахмет.",
+   
+    "fa_clean_debug_logs": "Журналдарды тазалау",
+    "fa_cleaning_debug_logs": "Тазалау...",
+    "fa_cleaned_debug_logs": "Журналдар тазартылды!",
+   
+    "fa_channel": "Арна",
+    "fa_group": "Чат",
+    "fa_beta": "Бета",
+    "fa_source_code": "бастапқы код"
+}

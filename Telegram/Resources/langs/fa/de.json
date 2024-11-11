@@ -1,0 +1,54 @@
+{
+    "fa_client_preferences": "FAgram Einstellungen",
+   
+    "fa_copy_id": "ID kopieren",
+    "fa_id_copied": "ID kopiert",
+   
+    "fa_copy_registration_date": "Registrierungsdatum kopieren",
+    "fa_copy_callback_data": "Callback-Daten kopieren",
+   
+    "fa_registration_date": "Registrierungsdatum",
+    "fa_not_found": "Nicht gefunden.",
+    "fa_settings_change_after_restart": "^ Diese Einstellung wird nach dem Neustart des Clients geändert ^",
+   
+    "fa_categories": "Kategorien",
+   
+    "fa_general": "Allgemein",
+    "fa_show_seconds_message": "Nachrichtensekunden anzeigen",
+    "fa_disable_ads": "Werbung deaktivieren",
+    "fa_show_start_token": "Starttoken beim Bot-Start anzeigen",
+    "fa_show_peer_ids": "Peer-ID anzeigen",
+    "fa_show_dc_ids": "DC-ID unter Peer-ID anzeigen",
+    "fa_id_in_botapi_type": "BotAPI-ID-Typ",
+    "fa_show_registration_date": "Registrierungsdatum anzeigen",
+    "fa_hide_phone_in_settings": "Telefonnummer in den Einstellungen ausblenden",
+    "fa_hide_stories": "Geschichten ausblenden",
+   
+    "fa_chats": "Chats",
+    "fa_recent_stickers_hidden": "Letzte Sticker: Ausgeblendet",
+    "fa_recent_stickers": "Neueste Sticker: %1",
+    "fa_disable_custom_chat_background": "Benutzerdefinierten Chat-Hintergrund ausblenden",
+    "fa_hide_all_chats_folder": "Ordner Alle Chats ausblenden",
+   
+    "fa_appearance": "Aussehen",
+    "fa_rounding": "Rundung: %1",
+   
+    "fa_other": "Andere",
+    "fa_dc_status": "DC-Status",
+    "fa_update_client": "FAgram aktualisieren",
+   
+    "fa_donate": "Spenden",
+    "fa_choose_method": "Eine Methode auswählen",
+    "fa_ton_wallet": "TON Wallet",
+    "fa_address_copied": "Adresse kopiert",
+    "fa_thank_you": "Danke.",
+   
+    "fa_clean_debug_logs": "Protokolle löschen",
+    "fa_cleaning_debug_logs": "Reinigung…",
+    "fa_cleaned_debug_logs": "Protokolle gelöscht!",
+   
+    "fa_channel": "Kanal",
+    "fa_group": "Chat",
+    "fa_beta": "Beta",
+    "fa_source_code": "Quellcode"
+}
