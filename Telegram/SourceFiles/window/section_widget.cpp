@@ -488,9 +488,14 @@ auto ChatThemeValueFromPeer(
 			return rpl::single(controller->defaultChatTheme());
 		}
 		const auto theme = resolved.theme.value_or(Data::CloudTheme());
-		const auto paper = resolved.paper
-			? resolved.paper->paper
-			: Data::WallPaper(0);
+		if (disable_custom_chat_background) {
+			const auto paper = Data::WallPaper(0);
+		}
+		else {
+			const auto paper = resolved.paper
+				? resolved.paper->paper
+				: Data::WallPaper(0);
+		}
 		const auto type = resolved.dark
 			? Data::CloudThemeType::Dark
 			: Data::CloudThemeType::Light;
