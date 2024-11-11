@@ -2,6 +2,8 @@
     "fa_client_preferences": "Настройки FAgram",
     
     "fa_copy_id": "Копировать ID",
+    "fa_id_copied": "ID скопирован",
+
     "fa_copy_registration_date": "Копировать дату регистрации",
     "fa_copy_callback_data": "Копировать Callback data",
     
@@ -38,6 +40,7 @@
     "fa_donate": "Донат",
     "fa_choose_method": "Выберите метод",
     "fa_ton_wallet": "TON Wallet",
+    "fa_address_copied": "Адрес скопирован",
     "fa_thank_you": "Спасибо.",
     
     "fa_clean_debug_logs": "Очистить логи",

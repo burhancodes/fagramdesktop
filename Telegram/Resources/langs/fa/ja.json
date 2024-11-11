@@ -2,6 +2,8 @@
     "fa_client_preferences": "FAgram 設定",
     
     "fa_copy_id": "ID をコピー",
+    "fa_id_copied": "ID をコピーしました",
+
     "fa_copy_registration_date": "登録日をコピー",
     "fa_copy_callback_data": "コールバック データをコピー",
     
@@ -38,6 +40,7 @@
     "fa_donate": "寄付",
     "fa_choose_method": "方法の選択",
     "fa_ton_wallet": "TON ウォレット",
+    "fa_address_copied": "アドレスをコピーしました",
     "fa_thank_you": "ありがとうございます。",
     
     "fa_clean_debug_logs": "デバッグ ログをクリーンアップします",

@@ -2,6 +2,7 @@
     "fa_client_preferences": "Preferencias de FAgram",
     
     "fa_copy_id": "Copiar ID",
+    "fa_id_copied": "ID copiado",
     "fa_copy_registration_date": "Copiar fecha de registro",
     "fa_copy_callback_data": "Copiar datos de devolución de llamada",
     
@@ -38,6 +39,7 @@
     "fa_donate": "Donar",
     "fa_choose_method": "Seleccionar método",
     "fa_ton_wallet": "Monedero TON",
+    "fa_address_copied": "Dirección copiada",
     "fa_thank_you": "Gracias",
     
     "fa_clean_debug_logs": "Limpiar registros de depuración",

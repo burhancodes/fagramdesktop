@@ -1426,7 +1426,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
                 const auto idText = IDString(user);
                 if (!idText.isEmpty()) {
                     QGuiApplication::clipboard()->setText(idText);
-                //    controller->showToast(rpl::single(QString("ID copied")));
+                    controller->showToast(FAlang::Translate(QString("fa_id_copied")));
                 }
                 return false;
             });
@@ -1537,7 +1537,7 @@ object_ptr<Ui::RpWidget> DetailsFiller::setupInfo() {
                 const auto idText = IDString(user);
                 if (!idText.isEmpty()) {
                     QGuiApplication::clipboard()->setText(idText);
-                //    controller->showToast(rpl::single(QString("ID copied")));
+                    controller->showToast(FAlang::Translate(QString("fa_id_copied")));
                 }
                 return false;
             });

@@ -117,7 +117,7 @@ namespace Settings {
 			{ &st::menuIconSettings }
 		)->setClickedCallback([=] {
 			QGuiApplication::clipboard()->setText(QString("UQAZN72cWgDpsjssz7gv5NUJiV5vo9xoGrbzy7Z3qDUmVMvX"));
-            controller->showToast(QString("Address copied."), 1000);
+            controller->showToast(FAlang::Translate(QString("fa_address_copied")), 1000);
 		});
 
 		Ui::AddDividerText(container, FAlang::RplTranslate(QString("fa_thank_you")));

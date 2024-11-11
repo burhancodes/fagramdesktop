@@ -2,6 +2,8 @@
     "fa_client_preferences": "FAgram Preferences",    
 
     "fa_copy_id": "Copy ID",
+    "fa_id_copied": "ID copied",
+
     "fa_copy_registration_date": "Copy Registration date",
     "fa_copy_callback_data": "Copy Callback data",
 
@@ -38,6 +40,7 @@
     "fa_donate": "Donate",
     "fa_choose_method": "Choose method",
     "fa_ton_wallet": "TON Wallet",
+    "fa_address_copied": "Address copied",
     "fa_thank_you": "Thank you.", 
     
     "fa_clean_debug_logs": "Clean Debug Logs",
