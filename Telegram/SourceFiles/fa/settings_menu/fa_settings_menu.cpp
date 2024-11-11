@@ -17,6 +17,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "fa/settings_menu/sections/fa_donate.h"
 
 #include "fa/lang/fa_lang.h"
+#include "fa/settings/fa_settings.h"
 
 #include "core/application.h"
 #include "lang_auto.h"
