@@ -56,8 +56,14 @@
   <qresource prefix="/fa_lang">
     <file alias="en.json">../../langs/fa/en.json</file>
     <file alias="es.json">../../langs/fa/es.json</file>
-    <file alias="ja.json">../../langs/fa/ja.json</file>
+    <file alias="es.json">../../langs/fa/es.json</file>
+    <file alias="es.json">../../langs/fa/de.json</file>
+    <file alias="es.json">../../langs/fa/fr.json</file>
+    <file alias="es.json">../../langs/fa/it.json</file>
+    <file alias="es.json">../../langs/fa/kk.json</file>
+    <file alias="es.json">../../langs/fa/uz.json</file>
     <file alias="uk.json">../../langs/fa/uk.json</file>
     <file alias="ru.json">../../langs/fa/ru.json</file>
+    <file alias="ja.json">../../langs/fa/ja.json</file>
   </qresource>
 </RCC>
