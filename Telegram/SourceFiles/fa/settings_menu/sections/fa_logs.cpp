@@ -75,7 +75,7 @@ namespace Settings {
 			FAlang::RplTranslate(QString("fa_clean_debug_logs")),
 			rpl::single(QString("")),
 			st::settingsButton,
-			{ &st::settingsButtonNoIcon }
+			{ &st::menuIconClear }
 		)->setClickedCallback([=] {
 			Core::App().openLocalUrl("tg://fa/clean_debug_logs", {});
 		});
