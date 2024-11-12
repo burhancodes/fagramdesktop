@@ -35,4 +35,9 @@ bool HandleNothing(
 	const Match &match,
 	const QVariant &context);
 
+bool HandleSwitchDebugLogs(
+	Window::SessionController *controller,
+	const Match &match,
+	const QVariant &context);
+
 }
