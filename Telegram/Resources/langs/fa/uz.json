@@ -55,5 +55,8 @@
     "fa_channel": "Kanal",
     "fa_group": "Chat",
     "fa_beta": "Beta",
-    "fa_source_code": "Manba kodi"
+    "fa_source_code": "Manba kodi",
+
+    "fa_production_server": "Asosiy server (standart)",
+    "fa_test_server": "Sinov serveri"
 }

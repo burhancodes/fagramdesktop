@@ -55,5 +55,8 @@
     "fa_channel": "Kanal",
     "fa_group": "Chat",
     "fa_beta": "Beta",
-    "fa_source_code": "Quellcode"
+    "fa_source_code": "Quellcode",
+
+    "fa_production_server": "Produktionsserver (Standard)",
+    "fa_test_server": "Testserver"
 }

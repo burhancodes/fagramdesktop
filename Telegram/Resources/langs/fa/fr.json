@@ -55,5 +55,8 @@
     "fa_channel": "Chaîne",
     "fa_group": "Chatter",
     "fa_beta": "Bêta",
-    "fa_source_code": "Code source"
+    "fa_source_code": "Code source",
+
+    "fa_production_server": "Serveur de production (Standard)",
+    "fa_test_server": "Serveur de test"
 }

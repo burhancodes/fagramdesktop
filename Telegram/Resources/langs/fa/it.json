@@ -55,5 +55,8 @@
     "fa_channel": "Canale",
     "fa_group": "Chat",
     "fa_beta": "Beta",
-    "fa_source_code": "Codice sorgente"
+    "fa_source_code": "Codice sorgente",
+
+    "fa_production_server": "Server di produzione (Standard)",
+    "fa_test_server": "Server di prova"
 }

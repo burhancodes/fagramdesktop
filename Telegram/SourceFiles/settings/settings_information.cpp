@@ -7,6 +7,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "settings/settings_information.h"
 
+#include "fa/lang/fa_lang.h"
 #include "fa/settings/fa_settings.h"
 
 #include "ui/wrap/vertical_layout.h"
@@ -914,20 +915,11 @@ not_null<Ui::SlideWrap<Ui::SettingsButton>*> AccountsList::setupAdd() {
 	button->setAcceptBoth(true);
 	button->clicks(
 	) | rpl::start_with_next([=](Qt::MouseButton which) {
-		if (which == Qt::LeftButton) {
-			const auto modifiers = button->clickModifiers();
-			const auto newWindow = (modifiers & Qt::ControlModifier);
-			add(Environment::Production, newWindow);
-			return;
-		} else if (which != Qt::RightButton
-			|| !IsAltShift(button->clickModifiers())) {
-			return;
-		}
 		_contextMenu = base::make_unique_q<Ui::PopupMenu>(_outer);
-		_contextMenu->addAction("Production Server", [=] {
+		_contextMenu->addAction(FAlang::Translate(QString("fa_production_server")), [=] {
 			add(Environment::Production);
 		});
-		_contextMenu->addAction("Test Server", [=] {
+		_contextMenu->addAction(FAlang::Translate(QString("fa_test_server")), [=] {
 			add(Environment::Test);
 		});
 		_contextMenu->popup(QCursor::pos());

@@ -54,5 +54,8 @@
     "fa_channel": "Канал",
     "fa_group": "Чат",
     "fa_beta": "Бета",
-    "fa_source_code": "Початковий код"
-   }
+    "fa_source_code": "Початковий код",
+
+    "fa_production_server": "Основний сервер (стандартний)",
+    "fa_test_server": "Тестовий сервер"
+}
