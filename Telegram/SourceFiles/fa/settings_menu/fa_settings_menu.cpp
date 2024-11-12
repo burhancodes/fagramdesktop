@@ -47,7 +47,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #define SettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
 	container, \
-    #LangKey, \
+    FAlang::RplTranslate(QString(#LangKey)), \
 	st::settingsButtonNoIcon \
 ))->toggleOn( \
 	rpl::single(::FASettings::JsonSettings::GetBool(#Option)) \
@@ -55,6 +55,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 ) | rpl::filter([](bool enabled) { \
 	return (enabled != ::FASettings::JsonSettings::GetBool(#Option)); \
 }) | rpl::start_with_next([](bool enabled) { \
+	::FASettings::JsonSettings::Write(); \
 	::FASettings::JsonSettings::Set(#Option, enabled); \
 	::FASettings::JsonSettings::Write(); \
 }, container->lifetime());
