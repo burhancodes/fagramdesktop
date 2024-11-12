@@ -80,9 +80,9 @@ namespace Settings {
 			Core::App().openLocalUrl("tg://fa/clean_debug_logs", {});
 		});
 
-		Ui::AddSkip(content);
-    	Ui::AddDivider(content);
-    	Ui::AddSkip(content);
+		Ui::AddSkip(container);
+    	Ui::AddDivider(container);
+    	Ui::AddSkip(container);
 
 		Ui::AddDividerText(container, FAlang::RplTranslate(QString("fa_logs_dir")));
     }
