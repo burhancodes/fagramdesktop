@@ -107,4 +107,18 @@ bool HandleSwitchDebugLogs(
 
 	return true;
 }
+
+bool HandleRestart(
+	Window::SessionController *controller,
+	const Match &match,
+	const QVariant &context)
+{
+	if (!controller) {
+		return false;
+	}
+
+	Core::Restart();
+
+	return true;
+}
 }

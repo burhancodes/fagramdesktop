@@ -1053,7 +1053,7 @@ Fn<void(const MTP::Error &error)> MtpChecker::failHandler() {
 } // namespace
 
 bool UpdaterDisabled() {
-	return UpdaterIsDisabled;
+	return true;
 }
 
 void SetUpdaterDisabledAtStartup() {
