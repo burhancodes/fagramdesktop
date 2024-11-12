@@ -44,6 +44,8 @@
     "fa_thank_you": "Rahmat.",
    
     "fa_debug_logs": "Jurnallar",
+    "fa_debug_logs_on": "Jurnallar yoqilgan!",
+    "fa_debug_logs_off": "Jurnallar o'chirilgan",
     "fa_clean_debug_logs": "Jurnallarni tozalash",
     "fa_cleaning_debug_logs": "Tozalanmoqda...",
     "fa_cleaned_debug_logs": "Jurnallar tozalandi!",

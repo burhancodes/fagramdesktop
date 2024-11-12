@@ -44,6 +44,8 @@
     "fa_thank_you": "Merci.",
    
     "fa_debug_logs": "Journaux",
+    "fa_debug_logs_on": "Les journaux sont activés !",
+    "fa_debug_logs_off": "Les journaux sont désactivés",
     "fa_clean_debug_logs": "Effacer les journaux",
     "fa_cleaning_debug_logs": "Nettoyage...",
     "fa_cleaned_debug_logs": "Journaux effacés !",

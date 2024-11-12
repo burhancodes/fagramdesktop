@@ -44,6 +44,8 @@
     "fa_thank_you": "Grazie.",
    
     "fa_debug_logs": "Registri",
+    "fa_debug_logs_on": "I registri sono attivi!",
+    "fa_debug_logs_off": "I registri sono disattivati",
     "fa_clean_debug_logs": "Cancella registri",
     "fa_cleaning_debug_logs": "Pulizia...",
     "fa_cleaned_debug_logs": "Log cancellati!",

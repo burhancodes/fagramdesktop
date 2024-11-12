@@ -44,6 +44,8 @@
     "fa_thank_you": "Thank you.", 
     
     "fa_debug_logs": "Logs",
+    "fa_debug_logs_on": "Logs on!",
+    "fa_debug_logs_off": "Logs off",
     "fa_clean_debug_logs": "Clean Debug Logs",
     "fa_cleaning_debug_logs": "Cleaning...",
     "fa_cleaned_debug_logs": "Debug Logs Cleaned!",

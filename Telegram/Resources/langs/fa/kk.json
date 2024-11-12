@@ -44,6 +44,8 @@
     "fa_thankyou": "Рахмет.",
    
     "fa_debug_logs": "Журналдар",
+    "fa_debug_logs_on": "Журналдар қосулы!",
+    "fa_debug_logs_off": "Журналдар өшірілген",
     "fa_clean_debug_logs": "Журналдарды тазалау",
     "fa_cleaning_debug_logs": "Тазалау...",
     "fa_cleaned_debug_logs": "Журналдар тазартылды!",

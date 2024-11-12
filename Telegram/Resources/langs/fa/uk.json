@@ -43,6 +43,8 @@
     "fa_thank_you": "Дякую.",
    
     "fa_debug_logs": "Логи",
+    "fa_debug_logs_on": "Логи включені!",
+    "fa_debug_logs_off": "Логи вимкнені",
     "fa_clean_debug_logs": "Очистити логи",
     "fa_cleaning_debug_logs": "Очищення...",
     "fa_cleaned_debug_logs": "Логи очищені!",

@@ -44,6 +44,8 @@
     "fa_thank_you": "Danke.",
    
     "fa_debug_logs": "Protokolle",
+    "fa_debug_logs_on": "Protokolle sind aktiv!",
+    "fa_debug_logs_off": "Protokolle sind deaktiviert",
     "fa_clean_debug_logs": "Protokolle löschen",
     "fa_cleaning_debug_logs": "Reinigung…",
     "fa_cleaned_debug_logs": "Protokolle gelöscht!",
