@@ -47,7 +47,7 @@
     "fa_clean_debug_logs": "Очистить логи",
     "fa_cleaning_debug_logs": "Очистка...",
     "fa_cleaned_debug_logs": "Логи очищены!",
-    "fa_logs_dir": "Ты можешь найти логи в папке Debuglogs которая находится рядом с FAgram",
+    "fa_logs_dir": "Ты можешь найти логи в папке DebugLogs которая находится рядом с FAgram",
     
     "fa_links": "Ссылки",
     "fa_channel": "Канал",

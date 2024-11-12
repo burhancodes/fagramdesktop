@@ -47,7 +47,7 @@
     "fa_clean_debug_logs": "Clean Debug Logs",
     "fa_cleaning_debug_logs": "Cleaning...",
     "fa_cleaned_debug_logs": "Debug Logs Cleaned!",
-    "fa_logs_dir": "You can find the logs in the Debuglogs folder which is located next to FAgram",
+    "fa_logs_dir": "You can find the logs in the DebugLogs folder which is located next to FAgram",
 
     "fa_links": "Links",
     "fa_channel": "Channel",

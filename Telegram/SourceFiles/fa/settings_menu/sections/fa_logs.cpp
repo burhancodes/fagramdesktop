@@ -67,8 +67,6 @@ namespace Settings {
 
     void FALogs::SetupLogs(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
         Ui::AddSubsectionTitle(container, FAlang::RplTranslate(QString("fa_debug_logs")));
-
-		SettingsMenuJsonSwitch(fa_debug_logs, debug_logs)
     	
     	AddButtonWithLabel(
 			container,
@@ -79,11 +77,10 @@ namespace Settings {
 		)->setClickedCallback([=] {
 			Core::App().openLocalUrl("tg://fa/clean_debug_logs", {});
 		});
+		
+		SettingsMenuJsonSwitch(fa_debug_logs, debug_logs)
 
 		Ui::AddSkip(container);
-    	Ui::AddDivider(container);
-    	Ui::AddSkip(container);
-
 		Ui::AddDividerText(container, FAlang::RplTranslate(QString("fa_logs_dir")));
     }
 

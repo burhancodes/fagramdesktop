@@ -47,7 +47,7 @@
     "fa_clean_debug_logs": "デバッグ ログをクリーンアップします",
     "fa_cleaning_debug_logs": "クリーンアップしています...",
     "fa_cleaned_debug_logs": "デバッグ ログをクリーンアップしました!",
-    "fa_logs_dir": "FAgram の隣にある Debug Logs フォルダーでログを見つけることができます",
+    "fa_logs_dir": "FAgram の隣にある DebugLogs フォルダーでログを見つけることができます",
     
     "fa_links": "リンク",
     "fa_channel": "チャネル",

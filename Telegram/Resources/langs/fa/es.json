@@ -46,7 +46,7 @@
     "fa_clean_debug_logs": "Limpiar registros de depuración",
     "fa_cleaning_debug_logs": "Limpiando...",
     "fa_cleaned_debug_logs": "¡Se limpiaron los registros de depuración!",
-    "fa_logs_dir": "Puedes encontrar los registros en la carpeta Registros de depuración que se encuentra junto a FAgram",
+    "fa_logs_dir": "Puedes encontrar los registros en la carpeta DebugLogs que se encuentra junto a FAgram",
     
     "fa_links": "Enlaces",
     "fa_channel": "Canal",
