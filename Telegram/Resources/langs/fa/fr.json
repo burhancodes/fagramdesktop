@@ -27,7 +27,7 @@
     "fa_chats": "Chats",
     "fa_recent_stickers_hidden": "Autocollants récents : Masqués",
     "fa_recent_stickers": "Autocollants récents : %1",
-    "fa_disable_custom_chat_background": "Masquer l'arrière-plan du chat personnalisé",
+    "fa_disable_custom_chat_background": "β Masquer l'arrière-plan du chat personnalisé",
     "fa_hide_all_chats_folder": "Masquer le dossier Tous les chats",
    
     "fa_apparence": "Apparence",
@@ -47,6 +47,7 @@
     "fa_clean_debug_logs": "Effacer les journaux",
     "fa_cleaning_debug_logs": "Nettoyage...",
     "fa_cleaned_debug_logs": "Journaux effacés !",
+    "fa_logs_dir": "Vous pouvez trouver les logs dans le dossier Debug Logs qui se trouve à côté de FAgram",
    
     "fa_links": "Liens",
     "fa_channel": "Chaîne",

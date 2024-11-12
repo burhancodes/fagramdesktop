@@ -27,7 +27,7 @@
     "fa_chats": "Chats",
     "fa_recent_stickers_hidden": "Recent stickers: Hidden",
     "fa_recent_stickers": "Recent stickers: %1",
-    "fa_disable_custom_chat_background": "Hide custom background of chat",
+    "fa_disable_custom_chat_background": "β Hide custom background of chat",
     "fa_hide_all_chats_folder": "Hide All Chats folder",
 
     "fa_appearance": "Appearance",
@@ -47,6 +47,7 @@
     "fa_clean_debug_logs": "Clean Debug Logs",
     "fa_cleaning_debug_logs": "Cleaning...",
     "fa_cleaned_debug_logs": "Debug Logs Cleaned!",
+    "fa_logs_dir": "You can find the logs in the Debuglogs folder which is located next to FAgram",
 
     "fa_links": "Links",
     "fa_channel": "Channel",

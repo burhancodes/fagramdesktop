@@ -27,7 +27,7 @@
     "fa_chats": "Чати",
     "fa_recent_stickers_hidden": "Останні стікери: Приховано",
     "fa_recent_stickers": "Останні наклейки: %1",
-    "fa_disable_custom_chat_background": "Приховати кастомне тло чату",
+    "fa_disable_custom_chat_background": "β Приховати кастомне тло чату",
     "fa_hide_all_chats_folder": "Приховати папку Усі чати",
    
     "fa_appearance": "Зовнішній вигляд",
@@ -46,6 +46,7 @@
     "fa_clean_debug_logs": "Очистити логи",
     "fa_cleaning_debug_logs": "Очищення...",
     "fa_cleaned_debug_logs": "Логи очищені!",
+    "fa_logs_dir": "Ти можеш знайти логі в папці Debug Logs, яка знаходиться поряд з FAgram",
    
     "fa_links": "Посилання",
     "fa_channel": "Канал",

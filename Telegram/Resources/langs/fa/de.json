@@ -27,7 +27,7 @@
     "fa_chats": "Chats",
     "fa_recent_stickers_hidden": "Letzte Sticker: Ausgeblendet",
     "fa_recent_stickers": "Neueste Sticker: %1",
-    "fa_disable_custom_chat_background": "Benutzerdefinierten Chat-Hintergrund ausblenden",
+    "fa_disable_custom_chat_background": "β Benutzerdefinierten Chat-Hintergrund ausblenden",
     "fa_hide_all_chats_folder": "Ordner Alle Chats ausblenden",
    
     "fa_appearance": "Aussehen",
@@ -47,6 +47,7 @@
     "fa_clean_debug_logs": "Protokolle löschen",
     "fa_cleaning_debug_logs": "Reinigung…",
     "fa_cleaned_debug_logs": "Protokolle gelöscht!",
+    "fa_logs_dir": "Sie finden die Protokolle im Ordner Debug Logs, der sich neben FAgram befindet",
    
     "fa_links": "Links",
     "fa_channel": "Kanal",

@@ -15,6 +15,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "fa/settings_menu/sections/fa_chats.h"
 #include "fa/settings_menu/sections/fa_appearance.h"
 #include "fa/settings_menu/sections/fa_donate.h"
+#include "fa/settings_menu/sections/fa_logs.h"
 
 #include "fa/lang/fa_lang.h"
 #include "fa/settings/fa_settings.h"
@@ -102,6 +103,10 @@ namespace Settings {
 			FAlang::RplTranslate(QString("fa_appearance")),
 			FAAppearance::Id(),
 			{ &st::menuIconPalette });
+    	addSection(
+			FAlang::RplTranslate(QString("fa_debug_logs")),
+			FALogs::Id(),
+			{ &st::menuIconClear });
     }
 
     void FA::SetupOther(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
@@ -120,18 +125,6 @@ namespace Settings {
 				showOther(type);
 			});
 		};
-
-        SettingsMenuJsonSwitch(fa_debug_logs, debug_logs)
-    	
-    	AddButtonWithLabel(
-			container,
-			FAlang::RplTranslate(QString("fa_clean_debug_logs")),
-			rpl::single(QString("")),
-			st::settingsButton,
-			{ &st::menuIconClear }
-		)->setClickedCallback([=] {
-			Core::App().openLocalUrl("tg://fa/clean_debug_logs", {});
-		});
 
     	AddButtonWithLabel(
 			container,

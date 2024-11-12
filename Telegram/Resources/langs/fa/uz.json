@@ -27,7 +27,7 @@
     "fa_chats": "Chatlar",
     "fa_recent_stickers_hidden": "Oxirgi stikerlar: Yashirin",
     "fa_recent_stickers": "Oxirgi stikerlar: %1",
-    "fa_disable_custom_chat_background": "Maxsus suhbat fonini yashirish",
+    "fa_disable_custom_chat_background": "β Maxsus suhbat fonini yashirish",
     "fa_hide_all_chats_folder": "Barcha suhbatlar jildini yashirish",
    
     "fa_appearance": "Tashqi ko'rinish",
@@ -47,6 +47,7 @@
     "fa_clean_debug_logs": "Jurnallarni tozalash",
     "fa_cleaning_debug_logs": "Tozalanmoqda...",
     "fa_cleaned_debug_logs": "Jurnallar tozalandi!",
+    "fa_logs_dir": "Siz jurnallarni FAgram yonidagi disk raskadrovka jurnallari papkasidan topishingiz mumkin",
    
     "fa_links": "Aloqalar",
     "fa_channel": "Kanal",

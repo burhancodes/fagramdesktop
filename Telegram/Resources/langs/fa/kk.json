@@ -27,7 +27,7 @@
     "fa_chats": "Чаттар",
     "fa_recent_stickers_hidden": "Соңғы стикерлер: жасырын",
     "fa_recent_stickers": "Соңғы стикерлер: % 1",
-    "fa_disable_custom_chat_background": "Арнаулы чат фонын жасыру",
+    "fa_disable_custom_chat_background": "β Арнаулы чат фонын жасыру",
     "fa_hide_all_chats_folder": "Барлық чаттар қалтасын жасыру",
    
     "fa_appearance": "Көрініс",
@@ -47,6 +47,7 @@
     "fa_clean_debug_logs": "Журналдарды тазалау",
     "fa_cleaning_debug_logs": "Тазалау...",
     "fa_cleaned_debug_logs": "Журналдар тазартылды!",
+    "fa_logs_dir": "Сіз журналдарды FAgram жанында орналасқан Debug Logs қалтасынан таба аласыз",
    
     "fa_links": "Сілтемелер",
     "fa_channel": "Арна",
