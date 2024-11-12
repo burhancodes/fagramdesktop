@@ -16,9 +16,9 @@ namespace FAlang {
 
     QString langCode = kDefaultLanguage;
 
-    std::unique_ptr<QFile> GetLangFile() {
+    std::unique_ptr<QFile> GetLangFile(bool useDefault) {
         auto file = std::make_unique<QFile>(qsl(":/fa_lang/%1.json").arg(langCode));
-        if (!file->exists()) {
+        if (!file->exists() || useDefault) {
             file->setFileName(qsl(":/fa_lang/en.json"));
         }
         return file;
@@ -30,7 +30,7 @@ namespace FAlang {
     }
 
     QString Translate(const QString &key) {
-        auto langFile = GetLangFile();
+        auto langFile = GetLangFile(false);
         if (!langFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
             return key;
         }
@@ -42,7 +42,18 @@ namespace FAlang {
         QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData, &parseError);
 
         if (parseError.error != QJsonParseError::NoError) {
-            return key;
+            langFile = GetLangFile(true);
+            if (!langFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
+                return key;
+            }
+
+            jsonData = langFile->readAll();
+            langFile->close();
+
+            jsonDoc = QJsonDocument::fromJson(jsonData, &parseError);
+            if (parseError.error != QJsonParseError::NoError) {
+                return key;
+            }
         }
 
         QJsonObject jsonObj = jsonDoc.object();
