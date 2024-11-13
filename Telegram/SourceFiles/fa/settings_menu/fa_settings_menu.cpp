@@ -128,16 +128,6 @@ namespace Settings {
 
     	AddButtonWithLabel(
 			container,
-			FAlang::RplTranslate(QString("fa_restart_client")),
-			rpl::single(QString("")),
-			st::settingsButton,
-			{ &st::menuIconRestartBot }
-		)->setClickedCallback([=] {
-			Core::App().openLocalUrl("tg://fa/restart", {});
-		});
-
-    	AddButtonWithLabel(
-			container,
 			FAlang::RplTranslate(QString("fa_dc_status")),
 			rpl::single(QString("")),
 			st::settingsButton,
@@ -198,6 +188,8 @@ namespace Settings {
     }
 
     void FA::SetupDown(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
+
+		AddSubsectionTitle(container, FAlang::RplTranslate(QString("fa_fagram")));
 
 		const auto addSection = [&](
 				rpl::producer<QString> label,
