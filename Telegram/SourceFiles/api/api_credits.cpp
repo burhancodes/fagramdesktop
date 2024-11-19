@@ -117,11 +117,12 @@ constexpr auto kTransactionsLimit = 100;
 			? base::unixtime::parse(tl.data().vtransaction_date()->v)
 			: QDateTime(),
 		.successLink = qs(tl.data().vtransaction_url().value_or_empty()),
-		.convertStars = int(stargift
+		.starsConverted = int(stargift
 			? stargift->data().vconvert_stars().v
 			: 0),
 		.floodSkip = int(tl.data().vfloodskip_number().value_or(0)),
 		.converted = stargift && incoming,
+		.stargift = stargift.has_value(),
 		.reaction = tl.data().is_reaction(),
 		.refunded = tl.data().is_refund(),
 		.pending = tl.data().is_pending(),
@@ -174,7 +175,8 @@ constexpr auto kTransactionsLimit = 100;
 		.balance = status.data().vbalance().v,
 		.subscriptionsMissingBalance
 			= status.data().vsubscriptions_missing_balance().value_or_empty(),
-		.allLoaded = !status.data().vnext_offset().has_value(),
+		.allLoaded = !status.data().vnext_offset().has_value()
+			&& !status.data().vsubscriptions_next_offset().has_value(),
 		.token = qs(status.data().vnext_offset().value_or_empty()),
 		.tokenSubscriptions = qs(
 			status.data().vsubscriptions_next_offset().value_or_empty()),

@@ -30,6 +30,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "ui/text/text_utilities.h"
 #include "ui/widgets/box_content_divider.h"
 #include "ui/widgets/buttons.h"
+#include "ui/widgets/checkbox.h"
 #include "ui/widgets/fields/input_field.h"
 #include "ui/widgets/labels.h"
 #include "ui/wrap/slide_wrap.h"
@@ -843,6 +844,43 @@ void SetupTopContent(
 
 }
 
+void SetupView(
+		not_null<Window::SessionController*> controller,
+		not_null<Ui::VerticalLayout*> content) {
+	const auto wrap = content->add(
+		object_ptr<Ui::SlideWrap<Ui::VerticalLayout>>(
+			content,
+			object_ptr<Ui::VerticalLayout>(content)));
+	wrap->toggleOn(controller->enoughSpaceForFiltersValue());
+	content = wrap->entity();
+
+	Ui::AddDivider(content);
+	Ui::AddSkip(content);
+	Ui::AddSubsectionTitle(content, tr::lng_filters_view_subtitle());
+
+	const auto group = std::make_shared<Ui::RadioenumGroup<bool>>(
+		Core::App().settings().chatFiltersHorizontal());
+	const auto addSend = [&](bool value, const QString &text) {
+		content->add(
+			object_ptr<Ui::Radioenum<bool>>(
+				content,
+				group,
+				value,
+				text,
+				st::settingsSendType),
+			st::settingsSendTypePadding);
+	};
+	addSend(false, tr::lng_filters_vertical(tr::now));
+	addSend(true, tr::lng_filters_horizontal(tr::now));
+
+	group->setChangedCallback([=](bool value) {
+		Core::App().settings().setChatFiltersHorizontal(value);
+		Core::App().saveSettingsDelayed();
+	});
+	Ui::AddSkip(content);
+	Ui::AddSkip(content);
+}
+
 } // namespace
 
 Folders::Folders(
@@ -870,6 +908,8 @@ void Folders::setupContent(not_null<Window::SessionController*> controller) {
 	SetupTopContent(content, _showFinished.events());
 
 	_save = SetupFoldersContent(controller, content);
+
+	SetupView(controller, content);
 
 	Ui::ResizeFitChild(this, content);
 }

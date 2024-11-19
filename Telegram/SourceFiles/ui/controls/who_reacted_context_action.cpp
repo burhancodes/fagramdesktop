@@ -13,12 +13,15 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "ui/effects/ripple_animation.h"
 #include "ui/chat/group_call_userpics.h"
 #include "ui/text/text_custom_emoji.h"
+#include "ui/emoji_config.h"
 #include "ui/painter.h"
 #include "ui/ui_utility.h"
 #include "lang/lang_keys.h"
 #include "styles/style_chat.h"
 #include "styles/style_chat_helpers.h"
 #include "styles/style_menu_icons.h"
+
+#include <QtCore/QLocale>
 
 namespace Lang {
 namespace {

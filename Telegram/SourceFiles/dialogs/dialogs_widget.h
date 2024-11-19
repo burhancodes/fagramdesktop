@@ -129,6 +129,7 @@ public:
 	[[nodiscard]] RowDescriptor resolveChatNext(RowDescriptor from = {}) const;
 	[[nodiscard]] RowDescriptor resolveChatPrevious(RowDescriptor from = {}) const;
 	void updateHasFocus(not_null<QWidget*> focused);
+	void toggleFiltersMenu(bool value);
 
 	// Float player interface.
 	bool floatPlayerHandleWheelEvent(QEvent *e) override;
@@ -295,7 +296,7 @@ private:
 	bool _dragForward = false;
 	base::Timer _chooseByDragTimer;
 
-	Layout _layout = Layout::Main;
+	const Layout _layout = Layout::Main;
 	int _narrowWidth = 0;
 	object_ptr<Ui::RpWidget> _searchControls;
 	object_ptr<HistoryView::TopBarWidget> _subsectionTopBar = { nullptr };
@@ -316,6 +317,8 @@ private:
 	std::unique_ptr<Ui::GroupCallBar> _forumGroupCallBar;
 	std::unique_ptr<Ui::RequestsBar> _forumRequestsBar;
 	std::unique_ptr<HistoryView::ContactStatus> _forumReportBar;
+
+	base::unique_qptr<Ui::RpWidget> _chatFilters;
 
 	object_ptr<Ui::ElasticScroll> _scroll;
 	QPointer<InnerWidget> _inner;
