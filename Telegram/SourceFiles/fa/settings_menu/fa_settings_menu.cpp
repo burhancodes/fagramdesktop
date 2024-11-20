@@ -189,7 +189,7 @@ namespace Settings {
 
     void FA::SetupDown(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
 
-		AddSubsectionTitle(container, FAlang::RplTranslate(QString("fa_fagram")));
+		AddSubsectionTitle(container, rpl::single(QString("FAgram")));
 
 		const auto addSection = [&](
 				rpl::producer<QString> label,
