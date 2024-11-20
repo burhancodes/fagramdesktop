@@ -36,6 +36,8 @@
     "fa_other": "その他",
     "fa_dc_status": "DC ステータス",
     "fa_update_client": "FAgram を更新",
+    "fa_restart_client": "FAgram を再起動",
+    "fa_quit_client": "FAgram を終了",
     
     "fa_donate": "寄付",
     "fa_choose_method": "方法の選択",

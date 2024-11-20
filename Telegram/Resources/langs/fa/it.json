@@ -36,6 +36,8 @@
     "fa_other": "Altro",
     "fa_dc_status": "Stato DC",
     "fa_update_client": "Aggiorna FAgram",
+    "fa_restart_client": "Riavvia FAgram",
+    "fa_quit_client": "Esci da FAgram",
    
     "fa_donate": "Fai una donazione",
     "fa_choose_method": "Scegli un metodo",

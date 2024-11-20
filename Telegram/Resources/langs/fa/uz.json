@@ -36,6 +36,8 @@
     "fa_other": "Boshqa",
     "fa_dc_status": "DC holati",
     "fa_update_client": "FAgramni yangilash",
+    "fa_restart_client": "FAgramni qayta ishga tushiring",
+    "fa_quit_client": "FAgramdan chiqish",
    
     "fa_donate": "Xayriya",
     "fa_choose_method": "Usulni tanlang",

@@ -36,6 +36,8 @@
     "fa_other": "Інше",
     "fa_dc_status": "Статус DC",
     "fa_update_client": "Оновити FAgram",
+    "fa_restart_client": "Перезапустить FAgram",
+    "fa_quit_client": "Выйти из FAgram",
    
     "fa_donate": "Донат",
     "fa_choose_method": "Виберіть метод",
