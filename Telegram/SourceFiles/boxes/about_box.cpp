@@ -4,6 +4,8 @@ the unofficial desktop application for the Telegram messaging service.
 */
 #include "boxes/about_box.h"
 
+#include "fa/lang/fa_lang.h"
+
 #include "lang/lang_keys.h"
 #include "mainwidget.h"
 #include "mainwindow.h"
@@ -25,7 +27,7 @@ the unofficial desktop application for the Telegram messaging service.
 namespace {
 
 rpl::producer<TextWithEntities> Text1() {
-	return tr::lng_about_text1(
+	return tr::lng_fa_about_text1(
 		lt_api_link,
 		tr::lng_about_text1_api(
 		) | Ui::Text::ToLink("https://core.telegram.org/api"),
@@ -33,7 +35,7 @@ rpl::producer<TextWithEntities> Text1() {
 }
 
 rpl::producer<TextWithEntities> Text2() {
-	return tr::lng_about_text2(
+	return tr::lng_fa_about_text2(
 		lt_gpl_link,
 		rpl::single(Ui::Text::Link(
 			"GNU GPL",
@@ -46,7 +48,7 @@ rpl::producer<TextWithEntities> Text2() {
 }
 
 rpl::producer<TextWithEntities> Text3() {
-	return tr::lng_about_text3(
+	return tr::lng_fa_about_text3(
 		lt_faq_link,
 		tr::lng_about_text3_faq() | Ui::Text::ToLink(telegramFaqLink()),
 		Ui::Text::WithEntities);

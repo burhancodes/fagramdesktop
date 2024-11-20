@@ -3887,10 +3887,10 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 "lng_upload_show_file" = "Show file";
 
 "lng_about_version" = "version {version}";
-"lng_about_text1" = "Unofficial telegram client based on {api_link} and Tdesktop\nfor speed and security.";
-"lng_about_text1_api" = "Telegram API";
-"lng_about_text2" = "This software is licensed under {gpl_link} version 3.\nSource code is available on {github_link}.";
-"lng_about_text3" = "Visit the {faq_link} for more info.";
+"lng_fa_about_text1" = "Unofficial Telegram client based on {api_link} and TDesktop with many features for speed and security.";
+"lng_fa_about_text1_api" = "Telegram API";
+"lng_fa_about_text2" = "This software is licensed under {gpl_link} version 3.\nSource code is available on {github_link}.";
+"lng_fa_about_text3" = "Visit the {faq_link} for more info.";
 "lng_about_text3_faq" = "Telegram FAQ";
 "lng_about_done" = "Done";
 
