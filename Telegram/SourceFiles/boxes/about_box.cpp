@@ -29,7 +29,7 @@ namespace {
 rpl::producer<TextWithEntities> Text1() {
 	return tr::lng_fa_about_text1(
 		lt_api_link,
-		tr::lng_about_text1_api(
+		tr::lng_fa_about_text1_api(
 		) | Ui::Text::ToLink("https://core.telegram.org/api"),
 		Ui::Text::WithEntities);
 }
