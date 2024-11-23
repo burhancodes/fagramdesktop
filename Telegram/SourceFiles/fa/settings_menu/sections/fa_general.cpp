@@ -52,6 +52,22 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 	::FASettings::JsonSettings::Write(); \
 }, container->lifetime());
 
+#define RestartSettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
+	container, \
+    FAlang::RplTranslate(QString(#LangKey)), \
+	st::settingsButtonNoIcon \
+))->toggleOn( \
+	rpl::single(::FASettings::JsonSettings::GetBool(#Option)) \
+)->toggledValue( \
+) | rpl::filter([](bool enabled) { \
+	return (enabled != ::FASettings::JsonSettings::GetBool(#Option)); \
+}) | rpl::start_with_next([](bool enabled) { \
+	::FASettings::JsonSettings::Write(); \
+	::FASettings::JsonSettings::Set(#Option, enabled); \
+	::FASettings::JsonSettings::Write(); \
+	::Core::Restart; \
+}, container->lifetime());
+
 namespace Settings {
 
     rpl::producer<QString> FAGeneral::title() {
@@ -77,7 +93,7 @@ namespace Settings {
         SettingsMenuJsonSwitch(fa_show_registration_date, show_registration_date)
         SettingsMenuJsonSwitch(fa_hide_phone_in_settings, hide_phone_number)
         Ui::AddDivider(container);
-        SettingsMenuJsonSwitch(fa_hide_stories, hide_stories)
+        RestartSettingsMenuJsonSwitch(fa_hide_stories, hide_stories)
 		Ui::AddDividerText(container, FAlang::RplTranslate(QString("fa_settings_change_after_restart")));
     }
 

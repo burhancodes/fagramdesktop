@@ -38,7 +38,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "api/api_blocked_peers.h"
 #include "ui/widgets/continuous_sliders.h"
 
-#define SettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
+#define RestartSettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
 	container, \
     FAlang::RplTranslate(QString(#LangKey)), \
 	st::settingsButtonNoIcon \
@@ -51,6 +51,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 	::FASettings::JsonSettings::Write(); \
 	::FASettings::JsonSettings::Set(#Option, enabled); \
 	::FASettings::JsonSettings::Write(); \
+	::Core::Restart; \
 }, container->lifetime());
 
 namespace Settings {
@@ -101,7 +102,9 @@ namespace Settings {
 			::FASettings::JsonSettings::GetInt("roundness"),
 			updateUserpicRoundness);
     	updateUserpicRoundnessLabel(::FASettings::JsonSettings::GetInt("roundness"));
-		SettingsMenuJsonSwitch(fa_use_default_rounding, use_default_rounding)
+        Ui::AddDivider(container);
+		RestartSettingsMenuJsonSwitch(fa_use_default_rounding, use_default_rounding)
+		Ui::AddDividerText(container, FAlang::RplTranslate(QString("fa_settings_change_after_restart")));
     }
 
     void FAAppearance::SetupFAAppearance(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {

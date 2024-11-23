@@ -52,6 +52,22 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 	::FASettings::JsonSettings::Write(); \
 }, container->lifetime());
 
+#define RestartSettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
+	container, \
+    FAlang::RplTranslate(QString(#LangKey)), \
+	st::settingsButtonNoIcon \
+))->toggleOn( \
+	rpl::single(::FASettings::JsonSettings::GetBool(#Option)) \
+)->toggledValue( \
+) | rpl::filter([](bool enabled) { \
+	return (enabled != ::FASettings::JsonSettings::GetBool(#Option)); \
+}) | rpl::start_with_next([](bool enabled) { \
+	::FASettings::JsonSettings::Write(); \
+	::FASettings::JsonSettings::Set(#Option, enabled); \
+	::FASettings::JsonSettings::Write(); \
+	::Core::Restart; \
+}, container->lifetime());
+
 namespace Settings {
 
     rpl::producer<QString> FAChats::title() {
@@ -100,7 +116,7 @@ namespace Settings {
 		Ui::AddSkip(container);
         Ui::AddDivider(container);
 		Ui::AddSkip(container);
-		SettingsMenuJsonSwitch(fa_hide_all_chats_folder, hide_all_chats_folder)
+		RestartSettingsMenuJsonSwitch(fa_hide_all_chats_folder, hide_all_chats_folder)
 		Ui::AddDividerText(container, FAlang::RplTranslate(QString("fa_settings_change_after_restart")));
     }
 
