@@ -18,7 +18,7 @@ void PaintOutlineSegments(
 		float64 fromFullProgress) {
 	Expects(!segments.empty());
 
-	bool use_default_rounding = FASettings::JsonSettings("use_default_rounding");
+	bool use_default_rounding = FASettings::JsonSettings::GetBool("use_default_rounding");
 
 	p.setBrush(Qt::NoBrush);
 	const auto count = std::min(int(segments.size()), kOutlineSegmentsMax);
