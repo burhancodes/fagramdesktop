@@ -730,16 +730,22 @@ void SetupAccountsWrap(
 			const auto rect = QRectF(shift, shift, diameter, diameter);
 			auto hq = PainterHighQualityEnabler(p);
 			auto pen = st::windowBgActive->p; // The same as '+' in add.
+			bool use_default_rounding = FASettings::JsonSettings::GetBool("use_default_rounding");
 			pen.setWidthF(line);
 			p.setPen(pen);
 			p.setBrush(Qt::NoBrush);
-			// p.drawEllipse(rect);
-			auto height = rect.height();
-			auto width = rect.width();
-			p.drawRoundedRect(
-				rect, 
-				height * FASettings::JsonSettings::GetInt("roundness") / 100, 
-				width * FASettings::JsonSettings::GetInt("roundness") / 100);
+			if (use_default_rounding) {
+				p.drawEllipse(rect);
+			}
+			else {
+				auto height = rect.height();
+				auto width = rect.width();
+				p.drawRoundedRect(
+					rect, 
+					height * FASettings::JsonSettings::GetInt("roundness") / 100, 
+					width * FASettings::JsonSettings::GetInt("roundness") / 100
+				);
+			}
 		}
 	}, state->userpic.lifetime());
 

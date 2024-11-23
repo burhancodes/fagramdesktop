@@ -325,10 +325,16 @@ void EmptyUserpic::paintCircle(
 		int y,
 		int outerWidth,
 		int size) const {
+	bool use_default_rounding = FASettings::JsonSettings::GetBool("use_default_rounding");
 	paint(p, x, y, outerWidth, size, [&] {
-		double customRadius = (double) size * ((double) FASettings::JsonSettings::GetInt("roundness") / 100);
-		p.drawRoundedRect(x, y, size, size, 
-			customRadius, customRadius);
+		if (!use_default_rounding) {
+			double customRadius = (double) size * ((double) FASettings::JsonSettings::GetInt("roundness") / 100);
+			p.drawRoundedRect(x, y, size, size, 
+				customRadius, customRadius);
+		}
+		else {
+			p.drawEllipse(x, y, size, size);
+		}
 	});
 }
 
@@ -339,10 +345,16 @@ void EmptyUserpic::paintRounded(
 		int outerWidth,
 		int size,
 		int radius) const {
+	bool use_default_rounding = FASettings::JsonSettings::GetBool("use_default_rounding");
 	paint(p, x, y, outerWidth, size, [&] {
-		double customRadius = (double) size * ((double) FASettings::JsonSettings::GetInt("roundness") / 100);
-		p.drawRoundedRect(x, y, size, size, 
-			customRadius, customRadius);
+		if (!use_default_rounding) {
+			double customRadius = (double) size * ((double) FASettings::JsonSettings::GetInt("roundness") / 100);
+			p.drawRoundedRect(x, y, size, size, 
+				customRadius, customRadius);
+		}
+		else {
+			p.drawRoundedRect(x, y, size, size, radius, radius);
+		}
 	});
 }
 
@@ -352,10 +364,16 @@ void EmptyUserpic::paintSquare(
 		int y,
 		int outerWidth,
 		int size) const {
+	bool use_default_rounding = FASettings::JsonSettings::GetBool("use_default_rounding");
 	paint(p, x, y, outerWidth, size, [&] {
-		double customRadius = (double) size * ((double) FASettings::JsonSettings::GetInt("roundness") / 100);
-		p.drawRoundedRect(x, y, size, size, 
-			customRadius, customRadius);
+		if (!use_default_rounding) {
+			double customRadius = (double) size * ((double) FASettings::JsonSettings::GetInt("roundness") / 100);
+			p.drawRoundedRect(x, y, size, size, 
+				customRadius, customRadius);
+		}
+		else {
+			p.fillRect(x, y, size, size, p.brush());
+		}
 	});
 }
 
@@ -384,12 +402,19 @@ void EmptyUserpic::PaintSavedMessages(
 		const style::color &fg) {
 	x = style::RightToLeft() ? (outerWidth - x - size) : x;
 
+	bool use_default_rounding = FASettings::JsonSettings::GetBool("use_default_rounding");
+
 	PainterHighQualityEnabler hq(p);
 	p.setBrush(std::move(bg));
 	p.setPen(Qt::NoPen);
-	double customRadius = (double) size * ((double) FASettings::JsonSettings::GetInt("roundness") / 100);
-	p.drawRoundedRect(x, y, size, size, 
-		customRadius, customRadius);
+	if (!use_default_rounding) {
+		double customRadius = (double) size * ((double) FASettings::JsonSettings::GetInt("roundness") / 100);
+		p.drawRoundedRect(x, y, size, size, 
+			customRadius, customRadius);
+	}
+	else {
+		p.drawEllipse(x, y, size, size)
+	}
 
 	PaintSavedMessagesInner(p, x, y, size, fg);
 }
@@ -425,12 +450,19 @@ void EmptyUserpic::PaintRepliesMessages(
 		const style::color &fg) {
 	x = style::RightToLeft() ? (outerWidth - x - size) : x;
 
+	bool use_default_rounding = FASettings::JsonSettings::GetBool("use_default_rounding");
+
 	PainterHighQualityEnabler hq(p);
 	p.setBrush(bg);
 	p.setPen(Qt::NoPen);
-	double customRadius = (double) size * ((double) FASettings::JsonSettings::GetInt("roundness") / 100);
-	p.drawRoundedRect(x, y, size, size, 
-		customRadius, customRadius);
+	if (!use_default_rounding) {
+		double customRadius = (double) size * ((double) FASettings::JsonSettings::GetInt("roundness") / 100);
+		p.drawRoundedRect(x, y, size, size, 
+			customRadius, customRadius);
+	}
+	else {
+		p.drawEllipse(x, y, size, size);
+	}
 
 	PaintRepliesMessagesInner(p, x, y, size, fg);
 }

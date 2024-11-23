@@ -45,6 +45,9 @@ void SendAsButton::paintEvent(QPaintEvent *e) {
 	const auto top = (height() - _st.size) / 2;
 
 	const auto active = _activeAnimation.value(_active ? 1. : 0.);
+
+	bool use_default_rounding = FASettings::JsonSettings::GetBool("use_default_rounding");
+
 	if (active < 1. && !_userpic.isNull()) {
 		p.drawImage(QRect(left, top, _st.size, _st.size), _userpic);
 	}
@@ -55,8 +58,13 @@ void SendAsButton::paintEvent(QPaintEvent *e) {
 		p.setBrush(_st.activeBg);
 		{
 			PainterHighQualityEnabler hq(p);
-			auto radius = _st.size * FASettings::JsonSettings::GetInt("roundness") / 100;
-			p.drawRoundedRect(left, top, _st.size, _st.size, radius, radius);
+			if (!use_default_rounding) {
+				auto radius = _st.size * FASettings::JsonSettings::GetInt("roundness") / 100;
+				p.drawRoundedRect(left, top, _st.size, _st.size, radius, radius);
+			}
+			else {
+				p.drawEllipse(left, top, _st.size, _st.size);
+			}
 		}
 
 		CrossAnimation::paint(

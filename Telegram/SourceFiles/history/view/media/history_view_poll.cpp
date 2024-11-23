@@ -912,6 +912,7 @@ void Poll::paintRecentVoters(
 	auto created = false;
 	for (auto &recent : _recentVoters) {
 		const auto was = !recent.userpic.null();
+		bool use_default_rounding = FASettings::JsonSettings::GetBool("use_default_rounding");
 		recent.peer->paintUserpic(p, recent.userpic, x, y, size);
 		if (!was && !recent.userpic.null()) {
 			created = true;
@@ -920,8 +921,13 @@ void Poll::paintRecentVoters(
 			p.setPen(pen);
 			p.setBrush(Qt::NoBrush);
 			PainterHighQualityEnabler hq(p);
-			auto radius = FASettings::JsonSettings::GetInt("roundness") / 100. * size;
-			p.drawRoundedRect(x, y, size, size, radius, radius);
+			if (use_default_rounding) {
+				auto radius = FASettings::JsonSettings::GetInt("roundness") / 100. * size;
+				p.drawRoundedRect(x, y, size, size, radius, radius);
+			}
+			else {
+				p.drawEllipse(x, y, size, size);
+			}
 		};
 		if (usesBubblePattern(context)) {
 			const auto add = st::lineWidth * 2;

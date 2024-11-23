@@ -400,24 +400,39 @@ void PeerData::paintUserpic(
 		bool forceCircle) const {
 	const auto cloud = userpicCloudImage(view);
 	const auto ratio = style::DevicePixelRatio();
-	Ui::ValidateUserpicCache(
-		view,
-		cloud,
-		cloud ? nullptr : ensureEmptyUserpic().get(),
-		size * ratio,
-		isForum());
 
-	p.save();
-	auto hq = PainterHighQualityEnabler(p);
-	QPainterPath roundedRect;
-	QImage image = view.cached;
-	roundedRect.addRoundedRect(
-		QRect(x, y, size, size),
-		size * FASettings::JsonSettings::GetInt("roundness") / 100.,
-		size * FASettings::JsonSettings::GetInt("roundness") / 100.);
-    p.setClipPath(roundedRect);
-	p.drawImage(x, y, image);
-	p.restore();
+	bool use_default_rounding = FASettings::JsonSettings::GetBool("use_default_rounding");
+
+	if (use_default_rounding) {
+		Ui::ValidateUserpicCache(
+			view,
+			cloud,
+			cloud ? nullptr : ensureEmptyUserpic().get(),
+			size * ratio,
+			!forceCircle && isForum());
+		p.drawImage(QRect(x, y, size, size), view.cached);
+	}
+	
+	else {
+		Ui::ValidateUserpicCache(
+			view,
+			cloud,
+			cloud ? nullptr : ensureEmptyUserpic().get(),
+			size * ratio,
+			isForum());
+
+		p.save();
+		auto hq = PainterHighQualityEnabler(p);
+		QPainterPath roundedRect;
+		QImage image = view.cached;
+		roundedRect.addRoundedRect(
+			QRect(x, y, size, size),
+			size * FASettings::JsonSettings::GetInt("roundness") / 100.,
+			size * FASettings::JsonSettings::GetInt("roundness") / 100.);
+    	p.setClipPath(roundedRect);
+		p.drawImage(x, y, image);
+		p.restore();
+	}
 }
 
 void PeerData::loadUserpic() {

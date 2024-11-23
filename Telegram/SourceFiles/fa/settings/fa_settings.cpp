@@ -192,6 +192,9 @@ const std::map<QString, Definition, std::greater<QString>> DefinitionMap {
 		.type = SettingType::IntSetting,
 		.defaultValue = 30,
 		.limitHandler = IntLimit(0, 100, 30), }},
+	{ "use_default_rounding", {
+		.type = SettingType::BoolSetting,
+		.defaultValue = true, }},
 	{ "roundness", {
 		.type = SettingType::IntSetting,
 		.defaultValue = 50,

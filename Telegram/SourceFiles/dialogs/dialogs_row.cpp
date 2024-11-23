@@ -515,18 +515,30 @@ void Row::PaintCornerBadgeFrame(
 		? st::dialogsOnlineBadgeFgActive
 		: st::dialogsOnlineBadgeFg);
 
-	QRectF badgeRect = QRectF(
-				photoSize - skip.x() - size,
-				photoSize - skip.y() - size,
-				size,
-				size
-			).marginsRemoved({ shrink, shrink, shrink, shrink });
-	auto radius = size * FASettings::JsonSettings::GetInt("roundness") / 100;
-	auto isVideoCallOrOnline = (peer->isChannel() && Data::ChannelHasActiveCall(peer->asChannel())) || online;
+	bool use_default_rounding = FASettings::JsonSettings::GetBool("use_default_rounding");
 
-	if (!isVideoCallOrOnline || (isVideoCallOrOnline)) {
-		q.drawRoundedRect(badgeRect, radius, radius);
-	} else { q.drawEllipse(badgeRect); }
+	if (use_default_rounding) {
+		q.drawEllipse(QRectF(
+			photoSize - skip.x() - size,
+			photoSize - skip.y() - size,
+			size,
+			size
+		).marginsRemoved({ shrink, shrink, shrink, shrink }));
+	}
+	else {
+		QRectF badgeRect = QRectF(
+					photoSize - skip.x() - size,
+					photoSize - skip.y() - size,
+					size,
+					size
+				).marginsRemoved({ shrink, shrink, shrink, shrink });
+		auto radius = size * FASettings::JsonSettings::GetInt("roundness") / 100;
+		auto isVideoCallOrOnline = (peer->isChannel() && Data::ChannelHasActiveCall(peer->asChannel())) || online;
+
+		if (!isVideoCallOrOnline || (isVideoCallOrOnline)) {
+			q.drawRoundedRect(badgeRect, radius, radius);
+		} else { q.drawEllipse(badgeRect); }
+	}
 }
 
 void Row::paintUserpic(

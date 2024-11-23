@@ -101,6 +101,7 @@ namespace Settings {
 			::FASettings::JsonSettings::GetInt("roundness"),
 			updateUserpicRoundness);
     	updateUserpicRoundnessLabel(::FASettings::JsonSettings::GetInt("roundness"));
+		SettingsMenuJsonSwitch(fa_use_default_rounding, use_default_rounding)
     }
 
     void FAAppearance::SetupFAAppearance(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {

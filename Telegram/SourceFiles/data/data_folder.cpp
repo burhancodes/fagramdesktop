@@ -267,12 +267,19 @@ void Folder::paintUserpic(
 		int size,
 		const style::color *overrideBg,
 		const style::color *overrideFg) const {
+	bool use_default_rounding = FASettings::JsonSettings::GetInt("use_default_rounding");
+
 	p.setPen(Qt::NoPen);
 	p.setBrush(overrideBg ? *overrideBg : st::historyPeerArchiveUserpicBg);
 	{
 		PainterHighQualityEnabler hq(p);
-		auto radius = FASettings::JsonSettings::GetInt("roundness") / 100. * size;
-		p.drawRoundedRect(x, y, size, size, radius, radius);
+		if (!use_default_rounding) {
+			auto radius = FASettings::JsonSettings::GetInt("roundness") / 100. * size;
+			p.drawRoundedRect(x, y, size, size, radius, radius);
+		}
+		else {
+			p.drawEllipse(x, y, size, size);
+		}
 	}
 	if (size == st::defaultDialogRow.photoSize) {
 		const auto rect = QRect{ x, y, size, size };

@@ -18,14 +18,18 @@ void PaintOutlineSegments(
 		float64 fromFullProgress) {
 	Expects(!segments.empty());
 
+	bool use_default_rounding = FASettings::JsonSettings("use_default_rounding");
+
 	p.setBrush(Qt::NoBrush);
 	const auto count = std::min(int(segments.size()), kOutlineSegmentsMax);
-	p.setPen(QPen(segments.front().brush, segments.front().width));
-	p.drawRoundedRect(
-		ellipse, 
-		ellipse.height() * FASettings::JsonSettings::GetInt("roundness") * 0.0102, 
-		ellipse.width() * FASettings::JsonSettings::GetInt("roundness") * 0.0102);
-	return;
+	if (!use_default_rounding) {
+		p.setPen(QPen(segments.front().brush, segments.front().width));
+		p.drawRoundedRect(
+			ellipse, 
+			ellipse.height() * FASettings::JsonSettings::GetInt("roundness") * 0.0102, 
+			ellipse.width() * FASettings::JsonSettings::GetInt("roundness") * 0.0102);
+		return;
+	}
 	const auto small = 160;
 	const auto full = arc::kFullLength;
 	const auto separator = (full > 1.1 * small * count)

@@ -630,10 +630,17 @@ void InlineList::paintSingleBg(
 		const QRect &fill,
 		const QColor &color,
 		float64 opacity) const {
+	bool use_default_rounding = FASettings::JsonSettings::GetBool("use_default_rounding");
 	p.setOpacity(opacity);
 	if (!areTags()) {
 		// const auto radius = fill.height() / 2.;
-		const auto radius = FASettings::JsonSettings::GetInt("roundness") / 100. * fill.height();
+		auto radius;
+		if (!use_default_rounding) {
+			radius = FASettings::JsonSettings::GetInt("roundness") / 100. * fill.height();
+		}
+		else {
+			radius = fill.height() / 2.;
+		}
 		p.setBrush(color);
 		p.drawRoundedRect(fill, radius, radius);
 		return;

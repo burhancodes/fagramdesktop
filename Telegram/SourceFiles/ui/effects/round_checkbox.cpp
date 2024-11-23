@@ -415,12 +415,18 @@ void RoundImageCheckbox::paint(Painter &p, int x, int y, int outerWidth) const {
 			const auto pen = QPen(
 				segments ? _segments.front().brush : _st.selectFg->b,
 				segments ? _segments.front().width : _st.selectWidth);
+			bool use_default_rounding = FASettings::JsonSettings::GetBool("use_default_rounding");
 			p.setPen(pen);
 			if (!radius) {
-				p.drawRoundedRect(
-					outline,
-				 	outline.height() * FASettings::JsonSettings::GetInt("roundness") / 100, 
-					outline.width() * FASettings::JsonSettings::GetInt("roundness") / 100);
+				if (!use_default_rounding) {
+					p.drawRoundedRect(
+						outline,
+				 		outline.height() * FASettings::JsonSettings::GetInt("roundness") / 100, 
+						outline.width() * FASettings::JsonSettings::GetInt("roundness") / 100);
+				}
+				else {
+					p.drawEllipse(outline);
+				}
 			} else {
 				p.drawRoundedRect(outline, *radius, *radius);
 			}

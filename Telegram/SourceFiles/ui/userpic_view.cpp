@@ -39,6 +39,7 @@ void ValidateUserpicCache(
 		|| (cloud && !view.empty.null())
 		|| (empty && empty != view.empty.get())
 		|| (empty && view.paletteVersion != version);
+	bool use_default_rounding =  FASettings::JsonSettings::GetBool("use_default_rounding");
 	if (!regenerate) {
 		return;
 	}
@@ -46,34 +47,70 @@ void ValidateUserpicCache(
 	view.forum = forumValue;
 	view.paletteVersion = version;
 
-	auto radius = size * (FASettings::JsonSettings::GetInt("roundness") / 100);
+	if (!use_default_rounding) {
+		auto radius = size * (FASettings::JsonSettings::GetInt("roundness") / 100);
+		if (cloud) {
+			view.cached = cloud->scaled(
+				full,
+				Qt::IgnoreAspectRatio,
+				Qt::SmoothTransformation);
 
-	if (cloud) {
-		view.cached = cloud->scaled(
-			full,
-			Qt::IgnoreAspectRatio,
-			Qt::SmoothTransformation);
+			radius /= style::DevicePixelRatio();
 
-		radius /= style::DevicePixelRatio();
+			view.cached = Images::Round(
+				std::move(view.cached),
+				Images::CornersMask(radius));
+		} else {
+			if (view.cached.size() != full) {
+				view.cached = QImage(full, QImage::Format_ARGB32_Premultiplied);
+			}
+			view.cached.fill(Qt::transparent);
 
-		view.cached = Images::Round(
-			std::move(view.cached),
-			Images::CornersMask(radius));
-	} else {
-		if (view.cached.size() != full) {
-			view.cached = QImage(full, QImage::Format_ARGB32_Premultiplied);
+			auto p = QPainter(&view.cached);
+
+			empty->paintRounded(
+				p,
+				0,
+				0,
+				size,
+				size,
+				radius);
 		}
-		view.cached.fill(Qt::transparent);
+	}
+	else {
+		if (cloud) {
+			view.cached = cloud->scaled(
+				full,
+				Qt::IgnoreAspectRatio,
+				Qt::SmoothTransformation);
+			if (forum) {
+				view.cached = Images::Round(
+					std::move(view.cached),
+					Images::CornersMask(size
+						* Ui::ForumUserpicRadiusMultiplier()
+						/ style::DevicePixelRatio()));
+			} else {
+				view.cached = Images::Circle(std::move(view.cached));
+			}
+		} else {
+			if (view.cached.size() != full) {
+				view.cached = QImage(full, QImage::Format_ARGB32_Premultiplied);
+			}
+			view.cached.fill(Qt::transparent);
 
-		auto p = QPainter(&view.cached);
-
-		empty->paintRounded(
-			p,
-			0,
-			0,
-			size,
-			size,
-			radius);
+			auto p = QPainter(&view.cached);
+			if (forum) {
+				empty->paintRounded(
+					p,
+					0,
+					0,
+					size,
+					size,
+					size * Ui::ForumUserpicRadiusMultiplier());
+			} else {
+				empty->paintCircle(p, 0, 0, size, size);
+			}
+		}
 	}
 }
 

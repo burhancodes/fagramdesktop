@@ -92,17 +92,23 @@ if (_video && _video->ready()) {
 
 		const auto now = paused ? crl::time(0) : crl::now();
 
-		p.save();
+		bool use_default_rounding = FASettings::JsonSettings::GetBool("use_default_rounding");
 
-		QPainterPath clipPath;
-		QImage frame = _video->current(request(size), now);
-		auto radius = frame.height() * FASettings::JsonSettings::GetInt("roundness") / 100.;
-		clipPath.addRoundedRect(
-			QRect(x, y, frame.width(), frame.height()),
-			radius, radius);
-		p.setClipPath(clipPath);
-		p.drawImage(x, y, frame);
-		p.restore();
+		if (use_default_rounding) {
+			p.drawImage(x, y, _video->current(request(size), now));
+		}
+		else {
+			p.save();
+			QPainterPath clipPath;
+			QImage frame = _video->current(request(size), now);
+			auto radius = frame.height() * FASettings::JsonSettings::GetInt("roundness") / 100.;
+			clipPath.addRoundedRect(
+				QRect(x, y, frame.width(), frame.height()),
+				radius, radius);
+			p.setClipPath(clipPath);
+			p.drawImage(x, y, frame);
+			p.restore();
+		}
 	} else {
 		_peer->paintUserpicLeft(p, view, x, y, w, size);
 	}
