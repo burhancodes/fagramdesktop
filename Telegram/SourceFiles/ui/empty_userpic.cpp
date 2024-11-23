@@ -413,7 +413,7 @@ void EmptyUserpic::PaintSavedMessages(
 			customRadius, customRadius);
 	}
 	else {
-		p.drawEllipse(x, y, size, size)
+		p.drawEllipse(x, y, size, size);
 	}
 
 	PaintSavedMessagesInner(p, x, y, size, fg);
