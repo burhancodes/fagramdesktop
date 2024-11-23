@@ -296,7 +296,7 @@ private:
 	void addInfo();
 	void addStoryArchive();
 	void addNewWindow();
-	void addToggleFolder();
+	void addToggleFolder(bool onlyForChannels);
 	void addToggleUnreadMark();
 	void addToggleArchive();
 	void addClearHistory();
@@ -636,10 +636,14 @@ void Filler::addStoryArchive() {
 	}, &st::menuIconStoriesArchiveSection);
 }
 
-void Filler::addToggleFolder() {
+void Filler::addToggleFolder(bool onlyForChannels) {
 	const auto controller = _controller;
 	const auto history = _request.key.history();
 	if (_topic || !history || !history->owner().chatsFilters().has()) {
+		return;
+	}
+	if (onlyForChannels
+		&& (!history->peer->isChannel() || !history->inChatList())) {
 		return;
 	}
 	_addAction(PeerMenuCallback::Args{
@@ -1433,7 +1437,7 @@ void Filler::fillContextMenuActions() {
 	addToggleMuteSubmenu(false);
 	addToggleUnreadMark();
 	addToggleTopicClosed();
-	addToggleFolder();
+	addToggleFolder(false);
 	if (const auto user = _peer->asUser()) {
 		if (!user->isContact()) {
 			addBlockUser();
@@ -1483,6 +1487,7 @@ void Filler::fillProfileActions() {
 	addViewDiscussion();
 	addGoToFirstMessage();
 	addExportChat();
+	addToggleFolder(true);
 	addBlockUser();
 	addReport();
 	addLeaveChat();
@@ -2092,7 +2097,17 @@ QPointer<Ui::BoxContent> ShowForwardMessagesBox(
 
 	class ListBox final : public PeerListBox {
 	public:
-		using PeerListBox::PeerListBox;
+		ListBox(
+			QWidget *parent,
+			std::unique_ptr<PeerListController> controller,
+			Fn<void(not_null<ListBox*>)> init)
+		: PeerListBox(
+			parent,
+			std::move(controller),
+			[=](not_null<PeerListBox*> box) {
+				init(static_cast<ListBox*>(box.get()));
+			}) {
+		}
 
 		void setBottomSkip(int bottomSkip) {
 			PeerListBox::setInnerBottomSkip(bottomSkip);
@@ -2117,9 +2132,21 @@ QPointer<Ui::BoxContent> ShowForwardMessagesBox(
 			_forwardOptions = forwardOptions;
 		}
 
+		not_null<PeerListContent*> peerListContent() const {
+			return PeerListBox::content();
+		}
+
+		void setFilterId(FilterId filterId) {
+			_filterId = filterId;
+		}
+		[[nodiscard]] FilterId filterId() const {
+			return _filterId;
+		}
+
 	private:
 		rpl::event_stream<> _focusRequests;
 		Ui::ForwardOptions _forwardOptions;
+		FilterId _filterId = 0;
 
 	};
 
@@ -2135,6 +2162,12 @@ QPointer<Ui::BoxContent> ShowForwardMessagesBox(
 			},
 			.premiumRequiredError = WritePremiumRequiredError,
 		}) {
+		}
+
+		std::unique_ptr<PeerListRow> createRestoredRow(
+				not_null<PeerData*> peer) override final {
+			return ChooseRecipientBoxController::createRow(
+				peer->owner().history(peer));
 		}
 
 		using PeerListController::setSearchNoResultsText;
@@ -2188,87 +2221,56 @@ QPointer<Ui::BoxContent> ShowForwardMessagesBox(
 		not_null<Controller*> controller;
 		base::unique_qptr<Ui::PopupMenu> menu;
 	};
+
+	const auto applyFilter = [=](not_null<ListBox*> box, FilterId id) {
+		box->scrollToY(0);
+		auto &filters = session->data().chatsFilters();
+		const auto &list = filters.list();
+		if (list.size() <= 1) {
+			return;
+		}
+		if (box->filterId() == id) {
+			return;
+		}
+		box->setFilterId(id);
+
+		using SavedState = PeerListController::SavedStateBase;
+		auto state = std::make_unique<PeerListState>();
+		state->controllerState = std::make_unique<SavedState>();
+
+		const auto addList = [&](auto chats) {
+			for (const auto &row : chats->all()) {
+				if (const auto history = row->history()) {
+					state->list.push_back(history->peer);
+				}
+			}
+		};
+
+		if (!id) {
+			state->list.push_back(session->user());
+			addList(session->data().chatsList()->indexed());
+			const auto folderId = Data::Folder::kId;
+			if (const auto folder = session->data().folderLoaded(folderId)) {
+				addList(folder->chatsList()->indexed());
+			}
+			addList(session->data().contactsNoChatsList());
+		} else {
+			addList(session->data().chatsFilters().chatsList(id)->indexed());
+		}
+		box->peerListContent()->restoreState(std::move(state));
+	};
+
 	const auto state = [&] {
 		auto controller = std::make_unique<Controller>(session);
 		const auto controllerRaw = controller.get();
-		auto init = [=](not_null<PeerListBox*> box) {
+		auto init = [=](not_null<ListBox*> box) {
 			controllerRaw->setSearchNoResultsText(
 				tr::lng_bot_chats_not_found(tr::now));
 			box->setSpecialTabMode(true);
-			auto applyFilter = [=](FilterId id) {
-				box->scrollToY(0);
-				auto &filters = session->data().chatsFilters();
-				const auto &list = filters.list();
-				if (list.size() <= 1) {
-					return;
-				}
-				const auto pinned = [&] {
-					const auto &list = id
-						? filters.chatsList(id)
-						: session->data().chatsList(nullptr);
-					const auto pinned = list->pinned()->order();
-					auto peers = std::vector<not_null<PeerData*>>();
-					peers.reserve(pinned.size());
-					auto foundSelf = !!id;
-					for (const auto &pin : pinned) {
-						if (!foundSelf && pin.peer()->isSelf()) {
-							peers.insert(peers.begin(), pin.peer());
-							foundSelf = true;
-						} else {
-							peers.push_back(pin.peer());
-						}
-					}
-					if (!foundSelf) {
-						peers.insert(peers.begin(), session->user());
-					}
-					return peers;
-				}();
-				box->peerListSortRows([&](
-						const PeerListRow &r1,
-						const PeerListRow &r2) {
-					const auto it1 = ranges::find(pinned, r1.peer());
-					const auto it2 = ranges::find(pinned, r2.peer());
-					if (it1 == pinned.end() && it2 != pinned.end()) {
-						return false;
-					} else if (it2 == pinned.end() && it1 != pinned.end()) {
-						return true;
-					} else if (it1 != pinned.end() && it2 != pinned.end()) {
-						return it1 < it2;
-					}
-					const auto history1 = session->data().history(r1.peer());
-					const auto history2 = session->data().history(r2.peer());
-					const auto date1 = history1->lastMessage()
-						? history1->lastMessage()->date()
-						: TimeId(0);
-					const auto date2 = history2->lastMessage()
-						? history2->lastMessage()->date()
-						: TimeId(0);
-					return date1 > date2;
-				});
-				const auto filter = ranges::find(
-					list,
-					id,
-					&Data::ChatFilter::id);
-				if (filter == list.end()) {
-					return;
-				}
-				box->peerListPartitionRows([&](const PeerListRow &row) {
-					const auto rowPtr = const_cast<PeerListRow*>(&row);
-					if (!filter->id()) {
-						box->peerListSetRowHidden(rowPtr, false);
-					} else {
-						const auto result = filter->contains(
-							session->data().history(row.peer()));
-						box->peerListSetRowHidden(rowPtr, !result);
-					}
-					return false;
-				});
-				box->peerListRefreshRows();
-			};
 			const auto chatsFilters = Ui::AddChatFiltersTabsStrip(
 				box,
 				session,
-				std::move(applyFilter));
+				[=](FilterId id) { applyFilter(box, id); });
 			chatsFilters->lower();
 			chatsFilters->heightValue() | rpl::start_with_next([box](int h) {
 				box->setAddedTopScrollSkip(h);

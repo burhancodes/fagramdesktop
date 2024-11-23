@@ -630,10 +630,13 @@ QSize WebPage::countOptimalSize() {
 		_durationWidth = st::msgDateFont->width(_duration);
 	}
 	if (!_openButton.isEmpty()) {
-		accumulate_max(
-			maxWidth,
-			rect::m::sum::h(st::historyPageButtonPadding)
-				+ _openButton.maxWidth());
+		const auto w = rect::m::sum::h(st::historyPageButtonPadding)
+			+ _openButton.maxWidth();
+		if (sponsored) {
+			accumulate_max(maxWidth, w);
+		} else {
+			maxWidth += w;
+		}
 	}
 	maxWidth += rect::m::sum::h(padding);
 	minHeight += rect::m::sum::v(padding);
@@ -1232,8 +1235,9 @@ void WebPage::draw(Painter &p, const PaintContext &context) const {
 			.position = QPoint(
 				inner.x() + (inner.width() - _openButton.maxWidth()) / 2,
 				end + st::historyPageButtonPadding.top()),
-			.availableWidth = paintw,
+			.availableWidth = inner.width(),
 			.now = context.now,
+			.elisionLines = 1,
 		});
 	}
 }
