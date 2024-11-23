@@ -32,6 +32,7 @@
 
     "fa_appearance": "Appearance",
     "fa_rounding": "Rounding: %1",
+    "fa_use_default_rounding": "Use Default Rounding",
 
     "fa_other": "Other",
     "fa_dc_status": "DC Status",

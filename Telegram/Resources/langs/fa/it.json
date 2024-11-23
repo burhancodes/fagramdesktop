@@ -32,6 +32,7 @@
    
     "fa_appearance": "Aspetto",
     "fa_rounding": "Arrotondamento: %1",
+    "fa_use_default_rounding": "Usa arrotondamento predefinito",
    
     "fa_other": "Altro",
     "fa_dc_status": "Stato DC",

@@ -32,6 +32,7 @@
     
     "fa_appearance": "外観",
     "fa_rounding": "切り上げ: %1",
+    "fa_use_default_rounding": "デフォルトの丸めを使用する",
     
     "fa_other": "その他",
     "fa_dc_status": "DC ステータス",

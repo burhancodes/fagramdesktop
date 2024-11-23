@@ -32,6 +32,7 @@
    
     "fa_apparence": "Apparence",
     "fa_rounding": "Arrondi : %1",
+    "fa_use_default_rounding": "Utiliser l'arrondi par défaut",
    
     "fa_other": "Autre",
     "fa_dc_status": "Statut DC",

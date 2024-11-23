@@ -32,6 +32,7 @@
    
     "fa_appearance": "Зовнішній вигляд",
     "fa_rounding": "Округлення: %1",
+    "fa_use_default_rounding": "Використовувати округлення за замовчуванням",
    
     "fa_other": "Інше",
     "fa_dc_status": "Статус DC",

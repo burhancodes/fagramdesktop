@@ -31,6 +31,7 @@
     
     "fa_appearance": "Apariencia",
     "fa_rounding": "Redondeo: %1",
+    "fa_use_default_rounding": "Usar redondeo predeterminado",
     
     "fa_other": "Otro",
     "fa_dc_status": "Estado de DC",
