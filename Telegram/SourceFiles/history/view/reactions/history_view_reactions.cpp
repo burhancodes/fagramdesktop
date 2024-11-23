@@ -634,7 +634,7 @@ void InlineList::paintSingleBg(
 	p.setOpacity(opacity);
 	if (!areTags()) {
 		// const auto radius = fill.height() / 2.;
-		auto radius;
+		double radius;
 		if (!use_default_rounding) {
 			radius = FASettings::JsonSettings::GetInt("roundness") / 100. * fill.height();
 		}
