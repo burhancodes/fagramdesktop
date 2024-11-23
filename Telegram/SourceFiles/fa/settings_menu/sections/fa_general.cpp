@@ -65,7 +65,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 	::FASettings::JsonSettings::Write(); \
 	::FASettings::JsonSettings::Set(#Option, enabled); \
 	::FASettings::JsonSettings::Write(); \
-	::Core::Restart; \
+	::Core::Restart(); \
 }, container->lifetime());
 
 namespace Settings {
