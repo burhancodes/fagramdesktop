@@ -48,7 +48,6 @@ jobs:
     strategy:
       matrix:
         arch: [Win32, x64]
-        generator: [""]
 
     env:
       UPLOAD_ARTIFACT: "true"
@@ -75,7 +74,7 @@ jobs:
         with:
           arch: ${{ matrix.arch }}
 
-      - name: Clone
+      - name: Clone repository
         uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -85,8 +84,6 @@ jobs:
         shell: bash
         run: |
           echo "CACHE_KEY=$(sha256sum $TBUILD/$REPO_NAME/$PREPARE_PATH | awk '{ print $1 }')" >> $GITHUB_ENV
-
-          echo "Configurate git for cherry-picks."
           git config --global user.email "you@example.com"
           git config --global user.name "Sample"
 
@@ -95,79 +92,71 @@ jobs:
           nuget sources Disable -Name "Microsoft Visual Studio Offline Packages"
           nuget sources Add -Source https://api.nuget.org/v3/index.json & exit 0
 
-      - name: Libraries
+      - name: ThirdParty cache
+        id: cache-third-party
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.TBUILD }}\ThirdParty
+          key: ${{ runner.OS }}-${{ matrix.arch }}-third-party-${{ env.CACHE_KEY }}
+          restore-keys: ${{ runner.OS }}-${{ matrix.arch }}-third-party-
+
+      - name: Libraries cache
+        id: cache-libs
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.TBUILD }}\Libraries
+          key: ${{ runner.OS }}-${{ matrix.arch }}-libs-${{ env.CACHE_KEY }}
+          restore-keys: ${{ runner.OS }}-${{ matrix.arch }}-libs-
+
+      - name: Prepare Libraries
         env:
           GYP_MSVS_OVERRIDE_PATH: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\'
           GYP_MSVS_VERSION: 2022
         run: |
           cd %TBUILD%
-          %REPO_NAME%\Telegram\build\prepare\win.bat skip-release silent
+          %REPO_NAME%\Telegram\build\prepare\win.bat release silent
 
-      - name: Read configuration matrix
+      - name: Build Configuration Matrix
         shell: bash
         run: |
           ARTIFACT_NAME="Telegram"
-
           ARCH=""
+
           if [ -n "${{ matrix.arch }}" ]; then
             case "${{ matrix.arch }}" in
               Win32) ARCH="x86";;
               *) ARCH="${{ matrix.arch }}";;
             esac
-            echo "Architecture from matrix: $ARCH"
             ARTIFACT_NAME="${ARTIFACT_NAME}_${{ matrix.arch }}"
           fi
 
-          GENERATOR=""
-          if [ -n "${{ matrix.generator }}" ]; then
-            GENERATOR="-G \"${{ matrix.generator }}\""
-            echo "Generator from matrix: $GENERATOR"
-            ARTIFACT_NAME="${ARTIFACT_NAME}_${{ matrix.generator }}"
-          fi
-          echo "TDESKTOP_BUILD_GENERATOR=$GENERATOR" >> $GITHUB_ENV
-
-          [ -n "$GENERATOR" ] && ARCH=""
           echo "TDESKTOP_BUILD_ARCH=$ARCH" >> $GITHUB_ENV
-
-          DEFINE=""
-          if [ -n "${{ matrix.defines }}" ]; then
-            DEFINE="-D ${{ matrix.defines }}=ON"
-            echo "Define from matrix: $DEFINE"
-            ARTIFACT_NAME="${ARTIFACT_NAME}_${{ matrix.defines }}"
-          fi
-          echo "TDESKTOP_BUILD_DEFINE=$DEFINE" >> $GITHUB_ENV
-
           echo "ARTIFACT_NAME=$ARTIFACT_NAME" >> $GITHUB_ENV
-
-          API="-D TDESKTOP_API_ID=${{ secrets.API_ID_CONFIG }} -D TDESKTOP_API_HASH=${{ secrets.API_HASH_CONFIG }}"
+          
+          API="-D TDESKTOP_API_ID=${{ secrets.API_ID_RELEASE }} -D TDESKTOP_API_HASH=${{ secrets.API_HASH_RELEASE }}"
           echo "TDESKTOP_BUILD_API=$API" >> $GITHUB_ENV
 
-      - name: Free up some disk space
+      - name: Free up disk space
         run: |
           cd %TBUILD%
-          del /S Libraries\*.pdb
-          del /S Libraries\*.pch
-          del /S Libraries\*.obj
+          del /S Libraries\*.pdb Libraries\*.pch Libraries\*.obj
 
-      - name: Telegram Desktop build
+      - name: Build Telegram Desktop
         if: env.ONLY_CACHE == 'false'
         run: |
           cd %TBUILD%\%REPO_NAME%\Telegram
-
-          call configure.bat ^ 
-          %TDESKTOP_BUILD_GENERATOR% ^ 
-          %TDESKTOP_BUILD_ARCH% ^ 
-          %TDESKTOP_BUILD_API% ^ 
-          -D CMAKE_C_FLAGS="/bigobj /WX" ^ 
-          -D CMAKE_CXX_FLAGS="/bigobj /WX" ^ 
-          -D DESKTOP_APP_DISABLE_AUTOUPDATE=NO ^ 
-          -D DESKTOP_APP_DISABLE_CRASH_REPORTS=OFF ^ 
-          -D DESKTOP_APP_NO_PDB=ON ^ 
-          %TDESKTOP_BUILD_DEFINE%
+          call configure.bat ^
+          %TDESKTOP_BUILD_ARCH% ^
+          %TDESKTOP_BUILD_API% ^
+          -D CMAKE_C_FLAGS="/bigobj /WX" ^
+          -D CMAKE_CXX_FLAGS="/bigobj /WX" ^
+          -D DESKTOP_APP_DISABLE_AUTOUPDATE=NO ^
+          -D DESKTOP_APP_DISABLE_CRASH_REPORTS=OFF ^
+          -D DESKTOP_APP_NO_PDB=ON
 
           cmake --build ..\out --config Release --parallel
 
-      - name: Move artifact
+      - name: Move artifacts
         if: (env.UPLOAD_ARTIFACT == 'true') || (github.ref == 'refs/heads/nightly')
         run: |
           set OUT=%TBUILD%\%REPO_NAME%\out\Release
@@ -176,7 +165,7 @@ jobs:
           move %OUT%\Updater.exe artifact/
 
       - uses: actions/upload-artifact@v4
-        name: Upload artifact
+        name: Upload Release Artifacts
         if: (env.UPLOAD_ARTIFACT == 'true') || (github.ref == 'refs/heads/nightly')
         with:
           name: ${{ env.ARTIFACT_NAME }}
