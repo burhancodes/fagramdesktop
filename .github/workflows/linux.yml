@@ -44,7 +44,7 @@ jobs:
           docker run --rm \
           -m 3g \
           -v $PWD:/usr/src/tdesktop \
-          -e CONFIG=Debug \
+          -e CONFIG=Release \
           fagram:build \
           cmake \
           -D CMAKE_EXE_LINKER_FLAGS="-s" \
