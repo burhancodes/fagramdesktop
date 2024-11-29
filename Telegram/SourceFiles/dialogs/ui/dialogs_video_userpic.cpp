@@ -15,6 +15,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "data/data_photo_media.h"
 #include "data/data_file_origin.h"
 #include "data/data_session.h"
+#include "dialogs/dialogs_entry.h"
 #include "dialogs/ui/dialogs_layout.h"
 #include "ui/painter.h"
 #include "styles/style_dialogs.h"
