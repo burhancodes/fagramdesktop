@@ -53,10 +53,10 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "FAteam"
             VALUE "FileDescription", "FAgram Desktop Updater"
-            VALUE "FileVersion", "1.1.1.0"
+            VALUE "FileVersion", "1.1.2.0"
             VALUE "LegalCopyright", "Copyright (C) 2024"
             VALUE "ProductName", "FAgram Desktop"
-            VALUE "ProductVersion", "1.1.1.0"
+            VALUE "ProductVersion", "1.1.2.0"
         END
     END
     BLOCK "VarFileInfo"
