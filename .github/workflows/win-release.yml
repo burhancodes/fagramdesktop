@@ -1,4 +1,4 @@
-name: Windows Release
+name: Release Build for Windows
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - 'LEGAL'
       - 'LICENSE'
       - '.github/**'
-      - '!.github/workflows/win.yml'
+      - '!.github/workflows/win-release.yml'
       - 'lib/xdg/**'
       - 'snap/**'
       - 'Telegram/build/docker/**'
@@ -42,7 +42,7 @@ on:
 jobs:
 
   windows:
-    name: Windows Release
+    name: Windows Release Build
     runs-on: windows-latest
 
     strategy:
@@ -114,7 +114,7 @@ jobs:
           GYP_MSVS_VERSION: 2022
         run: |
           cd %TBUILD%
-          %REPO_NAME%\Telegram\build\prepare\win.bat release silent
+          %REPO_NAME%\Telegram\build\prepare\win.bat silent
 
       - name: Build Configuration Matrix
         shell: bash
