@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "api/api_polls.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "api/api_common.h"
 #include "api/api_updates.h"
 #include "apiwrap.h"
@@ -157,6 +159,12 @@ void Polls::sendVotes(
 		_pollVotesRequestIds.erase(itemId);
 		hideSending();
 		_session->updates().applyUpdates(result);
+
+		bool mark_read_after_action = FASettings::JsonSettings::GetBool("mark_read_after_action");
+		if (mark_read_after_action && item)
+		{
+			readHistory(item);
+		}
 	}).fail([=] {
 		_pollVotesRequestIds.erase(itemId);
 		hideSending();

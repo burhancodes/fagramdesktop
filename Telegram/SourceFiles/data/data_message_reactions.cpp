@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "data/data_message_reactions.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "api/api_global_privacy.h"
 #include "chat_helpers/stickers_lottie.h"
 #include "core/application.h"
@@ -1462,6 +1464,11 @@ void Reactions::send(not_null<HistoryItem*> item, bool addToRecent) {
 	)).done([=](const MTPUpdates &result) {
 		_sentRequests.remove(id);
 		_owner->session().api().applyUpdates(result);
+
+		bool mark_read_after_action = FASettings::JsonSettings::GetBool("mark_read_after_action");
+		if (mark_read_after_action && item) {
+			readHistory(item);
+		}
 	}).fail([=](const MTP::Error &error) {
 		_sentRequests.remove(id);
 	}).send();

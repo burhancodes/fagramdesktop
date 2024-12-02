@@ -188,6 +188,9 @@ const std::map<QString, Definition, std::greater<QString>> DefinitionMap {
 	{ "hide_stories", {
 		.type = SettingType::BoolSetting,
 		.defaultValue = false, }},
+	{ "mark_read_after_action", {
+		.type = SettingType::BoolSetting,
+		.defaultValue = false, }},
 	{ "recent_stickers_limit", {
 		.type = SettingType::IntSetting,
 		.defaultValue = 30,

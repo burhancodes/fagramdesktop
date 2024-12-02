@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "boxes/share_box.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "api/api_premium.h"
 #include "base/random.h"
 #include "lang/lang_keys.h"
@@ -1608,6 +1610,13 @@ ShareBox::SubmitCallback ShareBox::DefaultForwardCallback(
 							show->hideLayer();
 						}
 					}
+
+					bool mark_read_after_action = FASettings::JsonSettings::GetBool("mark_read_after_action");
+					if (mark_read_after_action && history->lastMessage())
+					{
+						readHistory(history->lastMessage());
+					}
+
 					finish();
 				}).fail([=](const MTP::Error &error) {
 					if (error.type() == u"VOICE_MESSAGES_FORBIDDEN"_q) {

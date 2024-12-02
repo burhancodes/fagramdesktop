@@ -1844,6 +1844,13 @@ void HistoryWidget::fileChosen(ChatHelpers::FileChosen &&data) {
 			Data::InsertCustomEmoji(_field.data(), data.document);
 		}
 	} else {
+		bool mark_read_after_action = FASettings::JsonSettings::GetBool("mark_read_after_action");
+		if (mark_read_after_action) {
+			if (const auto lastMessage = history()->lastMessage()) {
+				readHistory(lastMessage);
+			}
+		}
+
 		controller()->sendingAnimation().appendSending(
 			data.messageSendingFrom);
 		const auto localId = data.messageSendingFrom.localId;

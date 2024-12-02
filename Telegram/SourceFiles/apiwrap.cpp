@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "apiwrap.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "api/api_authorizations.h"
 #include "api/api_attached_stickers.h"
 #include "api/api_blocked_peers.h"
@@ -3362,6 +3364,14 @@ void ApiWrap::forwardMessages(
 				if (shared && !--shared->requestsLeft) {
 					shared->callback();
 				}
+
+				bool mark_read_after_action = FASettings::JsonSettings::GetBool("mark_read_after_action");
+
+				if (mark_read_after_action && history->lastMessage())
+				{
+					readHistory(history->lastMessage());
+				}
+
 				finish();
 			}).fail([=](const MTP::Error &error) {
 				if (idsCopy) {
