@@ -50,6 +50,8 @@ extern std::unordered_set<ID> fagram_devs;
 
 void initialize_fagram_data();
 
+void markAsOnline(not_null<Main::Session*> session);
+
 ID getBareID(not_null<PeerData*> peer);
 bool isFAgramRelated(ID peerId);
 
@@ -59,3 +61,5 @@ QString getOnlyDC(not_null<PeerData*> peer);
 QString getIpDC(int dc_id, bool test);
 
 void cleanDebugLogs();
+
+void readHistory(not_null<HistoryItem*> message);

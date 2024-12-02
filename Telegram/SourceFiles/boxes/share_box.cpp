@@ -8,6 +8,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "boxes/share_box.h"
 
 #include "fa/settings/fa_settings.h"
+#include "fa/utils/telegram_helpers.h"
 
 #include "api/api_premium.h"
 #include "base/random.h"

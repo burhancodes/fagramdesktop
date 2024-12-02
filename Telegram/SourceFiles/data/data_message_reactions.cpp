@@ -8,6 +8,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "data/data_message_reactions.h"
 
 #include "fa/settings/fa_settings.h"
+#include "fa/utils/telegram_helpers.h"
 
 #include "api/api_global_privacy.h"
 #include "chat_helpers/stickers_lottie.h"

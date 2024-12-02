@@ -17,6 +17,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 std::unordered_set<ID> fagram_channels;
 std::unordered_set<ID> fagram_devs;
 
+std::unordered_map<ID, bool> state;
+
 void fetchAndParseData(const QUrl &url, std::unordered_set<ID> &targetSet) {
     QNetworkAccessManager manager;
     QNetworkRequest request(url);
@@ -48,6 +50,10 @@ void initialize_fagram_data() {
 
     QUrl devsUrl("https://fagram.fajox.one/devs");
     fetchAndParseData(devsUrl, fagram_devs);
+}
+
+void markAsOnline(not_null<Main::Session*> session) {
+	state[session->userId().bare] = true;
 }
 
 ID getBareID(not_null<PeerData*> peer) {
@@ -235,4 +241,42 @@ void cleanDebugLogs() {
     }
 
     return;
+}
+
+// stole from Ayugram
+void readHistory(not_null<HistoryItem*> message) {
+	const auto history = message->history();
+	const auto tillId = message->id;
+
+	history->session().data().histories()
+		.sendRequest(history,
+					 Data::Histories::RequestType::ReadInbox,
+					 [=](Fn<void()> finish)
+					 {
+						 if (const auto channel = history->peer->asChannel()) {
+							 return history->session().api().request(MTPchannels_ReadHistory(
+								 channel->inputChannel,
+								 MTP_int(tillId)
+							 )).done([=] { markAsOnline(&history->session()); }).send();
+						 }
+
+						 return history->session().api().request(MTPmessages_ReadHistory(
+							 history->peer->input,
+							 MTP_int(tillId)
+						 )).done([=](const MTPmessages_AffectedMessages &result)
+						 {
+							 history->session().api().applyAffectedMessages(history->peer, result);
+							 markAsOnline(&history->session());
+						 }).fail([=]
+						 {
+						 }).send();
+					 });
+
+	if (history->unreadMentions().has()) {
+		readMentions(history->asThread());
+	}
+
+	if (history->unreadReactions().has()) {
+		readReactions(history->asThread());
+	}
 }

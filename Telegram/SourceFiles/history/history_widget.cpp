@@ -8,6 +8,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "history/history_widget.h"
 
 #include "fa/settings/fa_settings.h"
+#include "fa/utils/telegram_helpers.h"
 
 #include "api/api_editing.h"
 #include "api/api_bot.h"
