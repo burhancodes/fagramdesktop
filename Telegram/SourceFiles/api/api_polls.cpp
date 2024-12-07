@@ -8,6 +8,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "api/api_polls.h"
 
 #include "fa/settings/fa_settings.h"
+#include "fa/utils/telegram_helpers.h"
 
 #include "api/api_common.h"
 #include "api/api_updates.h"
