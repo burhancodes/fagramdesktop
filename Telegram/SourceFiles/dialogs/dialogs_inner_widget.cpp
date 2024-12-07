@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "dialogs/dialogs_inner_widget.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "dialogs/dialogs_three_state_icon.h"
 #include "dialogs/ui/chat_search_empty.h"
 #include "dialogs/ui/chat_search_in.h"
@@ -1216,41 +1218,44 @@ void InnerWidget::paintEvent(QPaintEvent *e) {
 }
 
 [[nodiscard]] RightButton *InnerWidget::maybeCacheRightButton(Row *row) {
-	if (const auto user = MaybeBotWithApp(row)) {
-		const auto it = _rightButtons.find(user->id);
-		if (it == _rightButtons.end()) {
-			auto rightButton = RightButton();
-			const auto text
-				= tr::lng_profile_open_app_short(tr::now).toUpper();
-			rightButton.text.setText(st::dialogRowOpenBotTextStyle, text);
-			const auto size = QSize(
-				rightButton.text.maxWidth()
-					+ rightButton.text.minHeight(),
-				st::dialogRowOpenBotHeight);
-			const auto generateBg = [&](const style::color &c) {
-				auto bg = QImage(
-					style::DevicePixelRatio() * size,
-					QImage::Format_ARGB32_Premultiplied);
-				bg.setDevicePixelRatio(style::DevicePixelRatio());
-				bg.fill(Qt::transparent);
-				{
-					auto p = QPainter(&bg);
-					auto hq = PainterHighQualityEnabler(p);
-					p.setPen(Qt::NoPen);
-					p.setBrush(c);
-					const auto r = size.height() / 2;
-					p.drawRoundedRect(Rect(size), r, r);
-				}
-				return bg;
-			};
-			rightButton.bg = generateBg(st::activeButtonBg);
-			rightButton.selectedBg = generateBg(st::activeButtonBgOver);
-			rightButton.activeBg = generateBg(st::activeButtonFg);
-			return &(_rightButtons.emplace(
-				user->id,
-				std::move(rightButton)).first->second);
-		} else {
-			return &(it->second);
+	bool hide_open_webapp_button_chatlist = FASettings::JsonSettings::GetBool("hide_open_webapp_button_chatlist");
+	if (!hide_open_webapp_button_chatlist) {
+		if (const auto user = MaybeBotWithApp(row)) {
+			const auto it = _rightButtons.find(user->id);
+			if (it == _rightButtons.end()) {
+				auto rightButton = RightButton();
+				const auto text
+					= tr::lng_profile_open_app_short(tr::now).toUpper();
+				rightButton.text.setText(st::dialogRowOpenBotTextStyle, text);
+				const auto size = QSize(
+					rightButton.text.maxWidth()
+						+ rightButton.text.minHeight(),
+					st::dialogRowOpenBotHeight);
+				const auto generateBg = [&](const style::color &c) {
+					auto bg = QImage(
+						style::DevicePixelRatio() * size,
+						QImage::Format_ARGB32_Premultiplied);
+					bg.setDevicePixelRatio(style::DevicePixelRatio());
+					bg.fill(Qt::transparent);
+					{
+						auto p = QPainter(&bg);
+						auto hq = PainterHighQualityEnabler(p);
+						p.setPen(Qt::NoPen);
+						p.setBrush(c);
+						const auto r = size.height() / 2;
+						p.drawRoundedRect(Rect(size), r, r);
+					}
+					return bg;
+				};
+				rightButton.bg = generateBg(st::activeButtonBg);
+				rightButton.selectedBg = generateBg(st::activeButtonBgOver);
+				rightButton.activeBg = generateBg(st::activeButtonFg);
+				return &(_rightButtons.emplace(
+					user->id,
+					std::move(rightButton)).first->second);
+			} else {
+				return &(it->second);
+			}
 		}
 	}
 	return nullptr;

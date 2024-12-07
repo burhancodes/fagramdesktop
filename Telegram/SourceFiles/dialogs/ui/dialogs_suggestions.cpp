@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "dialogs/ui/dialogs_suggestions.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "api/api_chat_participants.h"
 #include "apiwrap.h"
 #include "base/unixtime.h"
@@ -190,11 +192,14 @@ RecentRow::RecentRow(not_null<PeerData*> peer)
 : PeerListRow(peer)
 , _history(peer->owner().history(peer))
 , _mainAppText([&]() -> std::unique_ptr<Ui::Text::String> {
-	if (const auto user = peer->asUser()) {
-		if (user->botInfo && user->botInfo->hasMainApp) {
-			return std::make_unique<Ui::Text::String>(
-				st::dialogRowOpenBotTextStyle,
-				tr::lng_profile_open_app_short(tr::now).toUpper());
+	bool hide_open_webapp_button_chatlist = FASettings::JsonSettings::GetBool("hide_open_webapp_button_chatlist");
+	if (!hide_open_webapp_button_chatlist) {
+		if (const auto user = peer->asUser()) {
+			if (user->botInfo && user->botInfo->hasMainApp) {
+				return std::make_unique<Ui::Text::String>(
+					st::dialogRowOpenBotTextStyle,
+					tr::lng_profile_open_app_short(tr::now).toUpper());
+			}
 		}
 	}
 	return nullptr;

@@ -113,6 +113,7 @@ namespace Settings {
 			updateRecentStickersLimitHeight);
 		updateRecentStickersLimitLabel(::FASettings::JsonSettings::GetInt("recent_stickers_limit"));
 		SettingsMenuJsonSwitch(fa_disable_custom_chat_background, disable_custom_chat_background)
+		SettingsMenuJsonSwitch(fa_hide_open_webapp_button_chatlist, hide_open_webapp_button_chatlist)
 		Ui::AddSkip(container);
         Ui::AddDivider(container);
 		Ui::AddSkip(container);
