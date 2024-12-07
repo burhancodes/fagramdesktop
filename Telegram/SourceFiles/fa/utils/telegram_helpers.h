@@ -52,6 +52,10 @@ void initialize_fagram_data();
 
 void markAsOnline(not_null<Main::Session*> session);
 
+void readMentions(base::weak_ptr<Data::Thread> weakThread);
+void readReactions(base::weak_ptr<Data::Thread> weakThread);
+void readHistory(not_null<HistoryItem*> message);
+
 ID getBareID(not_null<PeerData*> peer);
 bool isFAgramRelated(ID peerId);
 
@@ -61,5 +65,3 @@ QString getOnlyDC(not_null<PeerData*> peer);
 QString getIpDC(int dc_id, bool test);
 
 void cleanDebugLogs();
-
-void readHistory(not_null<HistoryItem*> message);

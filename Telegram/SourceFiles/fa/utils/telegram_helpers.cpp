@@ -56,6 +56,98 @@ void markAsOnline(not_null<Main::Session*> session) {
 	state[session->userId().bare] = true;
 }
 
+// stole from Ayugram
+void readMentions(base::weak_ptr<Data::Thread> weakThread) {
+	const auto thread = weakThread.get();
+	if (!thread) {
+		return;
+	}
+	const auto peer = thread->peer();
+	const auto topic = thread->asTopic();
+	const auto rootId = topic ? topic->rootId() : 0;
+	using Flag = MTPmessages_ReadMentions::Flag;
+	peer->session().api().request(MTPmessages_ReadMentions(
+		MTP_flags(rootId ? Flag::f_top_msg_id : Flag()),
+		peer->input,
+		MTP_int(rootId)
+	)).done([=](const MTPmessages_AffectedHistory &result)
+	{
+		const auto offset = peer->session().api().applyAffectedHistory(
+			peer,
+			result);
+		if (offset > 0) {
+			readMentions(weakThread);
+		} else {
+			peer->owner().history(peer)->clearUnreadMentionsFor(rootId);
+		}
+	}).send();
+}
+
+// stole from Ayugram
+void readReactions(base::weak_ptr<Data::Thread> weakThread) {
+	const auto thread = weakThread.get();
+	if (!thread) {
+		return;
+	}
+	const auto topic = thread->asTopic();
+	const auto peer = thread->peer();
+	const auto rootId = topic ? topic->rootId() : 0;
+	using Flag = MTPmessages_ReadReactions::Flag;
+	peer->session().api().request(MTPmessages_ReadReactions(
+		MTP_flags(rootId ? Flag::f_top_msg_id : Flag(0)),
+		peer->input,
+		MTP_int(rootId)
+	)).done([=](const MTPmessages_AffectedHistory &result)
+	{
+		const auto offset = peer->session().api().applyAffectedHistory(
+			peer,
+			result);
+		if (offset > 0) {
+			readReactions(weakThread);
+		} else {
+			peer->owner().history(peer)->clearUnreadReactionsFor(rootId);
+		}
+	}).send();
+}
+
+// stole from Ayugram
+void readHistory(not_null<HistoryItem*> message) {
+	const auto history = message->history();
+	const auto tillId = message->id;
+
+	history->session().data().histories()
+		.sendRequest(history,
+					 Data::Histories::RequestType::ReadInbox,
+					 [=](Fn<void()> finish)
+					 {
+						 if (const auto channel = history->peer->asChannel()) {
+							 return history->session().api().request(MTPchannels_ReadHistory(
+								 channel->inputChannel,
+								 MTP_int(tillId)
+							 )).done([=] { markAsOnline(&history->session()); }).send();
+						 }
+
+						 return history->session().api().request(MTPmessages_ReadHistory(
+							 history->peer->input,
+							 MTP_int(tillId)
+						 )).done([=](const MTPmessages_AffectedMessages &result)
+						 {
+							 history->session().api().applyAffectedMessages(history->peer, result);
+							 markAsOnline(&history->session());
+						 }).fail([=]
+						 {
+						 }).send();
+					 });
+
+	if (history->unreadMentions().has()) {
+		readMentions(history->asThread());
+	}
+
+	if (history->unreadReactions().has()) {
+		readReactions(history->asThread());
+	}
+}
+
 ID getBareID(not_null<PeerData*> peer) {
     return peerIsUser(peer->id)
                ? peerToUser(peer->id).bare
@@ -241,42 +333,4 @@ void cleanDebugLogs() {
     }
 
     return;
-}
-
-// stole from Ayugram
-void readHistory(not_null<HistoryItem*> message) {
-	const auto history = message->history();
-	const auto tillId = message->id;
-
-	history->session().data().histories()
-		.sendRequest(history,
-					 Data::Histories::RequestType::ReadInbox,
-					 [=](Fn<void()> finish)
-					 {
-						 if (const auto channel = history->peer->asChannel()) {
-							 return history->session().api().request(MTPchannels_ReadHistory(
-								 channel->inputChannel,
-								 MTP_int(tillId)
-							 )).done([=] { markAsOnline(&history->session()); }).send();
-						 }
-
-						 return history->session().api().request(MTPmessages_ReadHistory(
-							 history->peer->input,
-							 MTP_int(tillId)
-						 )).done([=](const MTPmessages_AffectedMessages &result)
-						 {
-							 history->session().api().applyAffectedMessages(history->peer, result);
-							 markAsOnline(&history->session());
-						 }).fail([=]
-						 {
-						 }).send();
-					 });
-
-	if (history->unreadMentions().has()) {
-		readMentions(history->asThread());
-	}
-
-	if (history->unreadReactions().has()) {
-		readReactions(history->asThread());
-	}
 }
