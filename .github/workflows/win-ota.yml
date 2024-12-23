@@ -69,7 +69,10 @@ jobs:
 
           echo "Creating packer_private.h file..."
 
-          powershell -Command "$privateKey = '${{ secrets.RSA_PRIVATE_KEY }}'; Set-Content -Path 'C:\temp\DesktopPrivate\packer_private.h' -Value '#pragma once`nconst char *PrivateKey = \"$privateKey\";'"
+          powershell -Command "
+          $privateKey = '${{ secrets.RSA_PRIVATE_KEY }}'
+          $content = '#pragma once`nconst char *PrivateKey = `\"' + $privateKey + '`\";'
+          Set-Content -Path 'C:\temp\DesktopPrivate\packer_private.h' -Value $content"
 
       - name: Set up environment paths
         shell: bash
