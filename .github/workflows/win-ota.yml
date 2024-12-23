@@ -63,12 +63,12 @@ jobs:
 
       - name: Create DesktopPrivate directory and packer_private.h
         run: |
-          set DESKTOP_PRIVATE_PATH=%USERPROFILE%\DesktopPrivate
-          if not exist "%DESKTOP_PRIVATE_PATH%" (
-            mkdir "%DESKTOP_PRIVATE_PATH%"
-          )
-          echo "#pragma once" > "%DESKTOP_PRIVATE_PATH%\packer_private.h"
-          echo "const char *PrivateKey = \"${{ secrets.RSA_PRIVATE_KEY }}\";" >> "%DESKTOP_PRIVATE_PATH%\packer_private.h"
+          echo "Creating DesktopPrivate directory..."
+          mkdir "%USERPROFILE%\DesktopPrivate" || echo "Directory already exists"
+          
+          echo "Creating packer_private.h file..."
+          echo "#pragma once" > "%USERPROFILE%\DesktopPrivate\packer_private.h"
+          echo "const char *PrivateKey = \"${{ secrets.RSA_PRIVATE_KEY }}\";" >> "%USERPROFILE%\DesktopPrivate\packer_private.h"
 
       - name: Set up environment paths
         shell: bash
