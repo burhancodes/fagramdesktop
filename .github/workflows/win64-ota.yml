@@ -1,4 +1,4 @@
-name: OTA Release Build for Windows
+name: OTA Release Build for Windows x64
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
 
     strategy:
       matrix:
-        arch: [Win32, x64]
+        arch: [x64]
 
     env:
       REPO_NAME: "Telegram"
@@ -114,22 +114,23 @@ jobs:
         run: |
           cd %TBUILD%\%REPO_NAME%\Telegram
           call configure.bat ^ 
-          -D DESKTOP_APP_DISABLE_AUTOUPDATE=NO ^ 
-          -D DESKTOP_APP_PRIVATE_TARGET=win64 ^ 
+          %TDESKTOP_BUILD_ARCH% ^
+          %TDESKTOP_BUILD_API% ^
           -D CMAKE_C_FLAGS="/bigobj /WX-" ^ 
           -D CMAKE_CXX_FLAGS="/bigobj /WX-" ^ 
           -D DESKTOP_APP_DISABLE_AUTOUPDATE=NO ^ 
           -D DESKTOP_APP_DISABLE_CRASH_REPORTS=OFF ^ 
-          -D DESKTOP_APP_NO_PDB=ON
-
+          -D DESKTOP_APP_NO_PDB=ON ^
+          -D DESKTOP_APP_DISABLE_AUTOUPDATE=NO ^ 
+          -D DESKTOP_APP_PRIVATE_TARGET=win64 ^
+          
           cmake --build ..\out --config Release --parallel
 
-      - name: Move all DesktopPrivate files
+      - name: Move all files from OUT to artifact
         run: |
           set OUT=%TBUILD%\%REPO_NAME%\out\Release
           mkdir artifact
-          move %OUT%\Telegram.exe artifact/
-          move %OUT%\Updater.exe artifact/
+          xcopy %OUT%\* artifact\ /E /H /C /I /Y
           xcopy %GITHUB_WORKSPACE%\DesktopPrivate\* artifact\ /E /H /C /I
 
       - uses: actions/upload-artifact@v4
