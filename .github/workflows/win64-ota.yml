@@ -1,0 +1,140 @@
+name: OTA Release Build for Windows x64
+
+on:
+  push:
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - 'changelog.txt'
+      - 'LEGAL'
+      - 'LICENSE'
+      - '.github/**'
+      - '!.github/workflows/ota-release.yml'
+      - 'lib/xdg/**'
+      - 'snap/**'
+      - 'Telegram/build/docker/**'
+      - 'Telegram/Resources/uwp/**'
+      - 'Telegram/SourceFiles/platform/linux/**'
+      - 'Telegram/SourceFiles/platform/mac/**'
+      - 'Telegram/Telegram/**'
+      - 'Telegram/configure.sh'
+      - 'Telegram/Telegram.plist'
+  workflow_dispatch:
+
+jobs:
+  ota_build:
+    name: OTA Release Build
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        arch: [x64]
+
+    env:
+      REPO_NAME: "Telegram"
+      TBUILD: "%userprofile%/TBuild"
+      PREPARE_PATH: "Telegram/build/prepare/prepare.py"
+
+    defaults:
+      run:
+        shell: cmd
+
+    steps:
+      - name: Prepare directories
+        run: |
+          mkdir %userprofile%\TBuild\Libraries
+          mklink /d %GITHUB_WORKSPACE%\TBuild %userprofile%\TBuild
+          echo TBUILD=%GITHUB_WORKSPACE%\TBuild>>%GITHUB_ENV%
+
+      - name: Get repository name
+        shell: bash
+        run: echo "REPO_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
+
+      - uses: ilammy/msvc-dev-cmd@v1.13.0
+        name: Native Tools Command Prompt
+        with:
+          arch: ${{ matrix.arch }}
+
+      - name: Clone repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          path: ${{ env.TBUILD }}\${{ env.REPO_NAME }}
+
+      - name: Create DesktopPrivate directory and packer_private.h
+        run: |
+          echo Creating DesktopPrivate directory...
+            if not exist "%GITHUB_WORKSPACE%\DesktopPrivate" (
+            mkdir "%GITHUB_WORKSPACE%\DesktopPrivate"
+          )
+
+          echo Creating packer_private.h file...
+          echo #pragma once > "%GITHUB_WORKSPACE%\DesktopPrivate\packer_private.h"
+          echo const char *PrivateKey = "%PRIVATE_KEY%" >> "%GITHUB_WORKSPACE%\DesktopPrivate\packer_private.h"
+        env:
+          PRIVATE_KEY: ${{ secrets.RSA_PRIVATE_KEY }}
+
+      - name: Set up environment paths
+        shell: bash
+        run: |
+          echo "CACHE_KEY=$(sha256sum $TBUILD/$REPO_NAME/$PREPARE_PATH | awk '{ print $1 }')" >> $GITHUB_ENV
+          git config --global user.email "you@example.com"
+          git config --global user.name "Sample"
+
+      - name: NuGet sources
+        run: |
+          nuget sources Disable -Name "Microsoft Visual Studio Offline Packages"
+          nuget sources Add -Source https://api.nuget.org/v3/index.json & exit 0
+
+      - name: ThirdParty cache
+        id: cache-third-party
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.TBUILD }}\ThirdParty
+          key: ${{ runner.OS }}-${{ matrix.arch }}-third-party-${{ env.CACHE_KEY }}
+          restore-keys: ${{ runner.OS }}-${{ matrix.arch }}-third-party-
+
+      - name: Libraries cache
+        id: cache-libs
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.TBUILD }}\Libraries
+          key: ${{ runner.OS }}-${{ matrix.arch }}-libs-${{ env.CACHE_KEY }}
+          restore-keys: ${{ runner.OS }}-${{ matrix.arch }}-libs-
+
+      - name: Prepare Libraries
+        env:
+          GYP_MSVS_OVERRIDE_PATH: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\'
+          GYP_MSVS_VERSION: 2022
+        run: |
+          cd %TBUILD%
+          %REPO_NAME%\Telegram\build\prepare\win.bat silent
+
+      - name: Build Telegram Desktop
+        run: |
+          cd %TBUILD%\%REPO_NAME%\Telegram
+          call configure.bat ^ 
+          %TDESKTOP_BUILD_ARCH% ^
+          %TDESKTOP_BUILD_API% ^
+          -D CMAKE_C_FLAGS="/bigobj /WX-" ^ 
+          -D CMAKE_CXX_FLAGS="/bigobj /WX-" ^ 
+          -D DESKTOP_APP_DISABLE_AUTOUPDATE=NO ^ 
+          -D DESKTOP_APP_DISABLE_CRASH_REPORTS=OFF ^ 
+          -D DESKTOP_APP_NO_PDB=ON ^
+          -D DESKTOP_APP_DISABLE_AUTOUPDATE=NO ^ 
+          -D DESKTOP_APP_PRIVATE_TARGET=win64 ^
+          
+          cmake --build ..\out --config Release --parallel
+
+      - name: Move all files from OUT to artifact
+        run: |
+          set OUT=%TBUILD%\%REPO_NAME%\out\Release
+          mkdir artifact
+          xcopy %OUT%\* artifact\ /E /H /C /I /Y
+          xcopy %GITHUB_WORKSPACE%\DesktopPrivate\* artifact\ /E /H /C /I
+
+      - uses: actions/upload-artifact@v4
+        name: Upload Release Artifacts
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: artifact\
