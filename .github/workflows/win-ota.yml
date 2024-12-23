@@ -65,14 +65,16 @@ jobs:
         run: |
           echo "Creating DesktopPrivate directory..."
           
+          # Создаем папку, если она не существует
           powershell -Command "if (-Not (Test-Path -Path 'C:\temp\DesktopPrivate')) { New-Item -ItemType Directory -Path 'C:\temp\DesktopPrivate' }"
 
           echo "Creating packer_private.h file..."
 
+          # Записываем содержимое в файл через PowerShell
           powershell -Command "
-          \$privateKey = '${{ secrets.RSA_PRIVATE_KEY }}' -replace '\\\\n', '`n'
+          \$privateKey = '${{ secrets.RSA_PRIVATE_KEY }}' -replace '\\\\n', [System.Environment]::NewLine
           \$content = '#pragma once`nconst char *PrivateKey = `\"' + \$privateKey + '`\";'
-          Set-Content -Path 'C:\temp\DesktopPrivate\packer_private.h' -Value \$content"
+          [System.IO.File]::WriteAllText('C:\temp\DesktopPrivate\packer_private.h', \$content)"
 
       - name: Set up environment paths
         shell: bash
