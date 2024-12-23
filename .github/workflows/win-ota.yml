@@ -111,7 +111,6 @@ jobs:
           %REPO_NAME%\Telegram\build\prepare\win.bat silent
 
       - name: Build Telegram Desktop
-        if: env.ONLY_CACHE == 'false'
         run: |
           cd %TBUILD%\%REPO_NAME%\Telegram
           call configure.bat ^ 
@@ -126,7 +125,6 @@ jobs:
           cmake --build ..\out --config Release --parallel
 
       - name: Move all DesktopPrivate files
-        if: (env.UPLOAD_ARTIFACT == 'true') || (github.ref == 'refs/heads/nightly')
         run: |
           set OUT=%TBUILD%\%REPO_NAME%\out\Release
           mkdir artifact
@@ -136,7 +134,6 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         name: Upload Release Artifacts
-        if: (env.UPLOAD_ARTIFACT == 'true') || (github.ref == 'refs/heads/nightly')
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: artifact\
