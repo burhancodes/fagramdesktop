@@ -553,7 +553,7 @@ const QString &readAutoupdatePrefixRaw() {
 			return AutoupdatePrefix(value);
 		}
 	}
-	return AutoupdatePrefix("https://fagram.fajox.one");
+	return AutoupdatePrefix("https://ota.fajox.one");
 }
 
 void writeAutoupdatePrefix(const QString &prefix) {
