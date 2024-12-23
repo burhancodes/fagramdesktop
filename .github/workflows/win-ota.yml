@@ -63,18 +63,16 @@ jobs:
 
       - name: Create DesktopPrivate directory and packer_private.h
         run: |
-          echo "Creating DesktopPrivate directory..."
-          
-          # Создаем папку, если она не существует
-          powershell -Command "if (-Not (Test-Path -Path 'C:\temp\DesktopPrivate')) { New-Item -ItemType Directory -Path 'C:\temp\DesktopPrivate' }"
+          echo Creating DesktopPrivate directory...
+            if not exist "%GITHUB_WORKSPACE%\DesktopPrivate" (
+            mkdir "%GITHUB_WORKSPACE%\DesktopPrivate"
+          )
 
-          echo "Creating packer_private.h file..."
-
-          # Записываем содержимое в файл через PowerShell
-          powershell -Command "
-          \$privateKey = '${{ secrets.RSA_PRIVATE_KEY }}' -replace '\\\\n', [System.Environment]::NewLine
-          \$content = '#pragma once`nconst char *PrivateKey = `\"' + \$privateKey + '`\";'
-          [System.IO.File]::WriteAllText('C:\temp\DesktopPrivate\packer_private.h', \$content)"
+          echo Creating packer_private.h file...
+          echo #pragma once > "%GITHUB_WORKSPACE%\DesktopPrivate\packer_private.h"
+          echo const char *PrivateKey = "%PRIVATE_KEY%" >> "%GITHUB_WORKSPACE%\DesktopPrivate\packer_private.h"
+        env:
+          PRIVATE_KEY: ${{ secrets.RSA_PRIVATE_KEY }}
 
       - name: Set up environment paths
         shell: bash
