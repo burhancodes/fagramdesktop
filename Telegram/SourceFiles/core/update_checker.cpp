@@ -5,6 +5,7 @@ the unofficial desktop client based on Telegram Desktop.
 For license and copyright information please follow this link:
 https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
+
 #include "core/update_checker.h"
 
 #include "platform/platform_specific.h"
@@ -1053,7 +1054,7 @@ Fn<void(const MTP::Error &error)> MtpChecker::failHandler() {
 } // namespace
 
 bool UpdaterDisabled() {
-	return true;
+	return UpdaterIsDisabled;
 }
 
 void SetUpdaterDisabledAtStartup() {
@@ -1635,16 +1636,16 @@ void UpdateApplication() {
 	if (UpdaterDisabled()) {
 		const auto url = [&] {
 #ifdef OS_WIN_STORE
-			return "https://t.me/FAgramNews";
+			return "https://www.microsoft.com/en-us/store/p/telegram-desktop/9nztwsqntd0s";
 #elif defined OS_MAC_STORE // OS_WIN_STORE
-			return "https://t.me/FAgramNews";
+			return "https://itunes.apple.com/ae/app/telegram-desktop/id946399090";
 #else // OS_WIN_STORE || OS_MAC_STORE
 			if (KSandbox::isFlatpak()) {
-				return "https://t.me/FAgramNews";
+				return "https://flathub.org/apps/details/org.telegram.desktop";
 			} else if (KSandbox::isSnap()) {
-				return "https://t.me/FAgramNews";
+				return "https://snapcraft.io/telegram-desktop";
 			}
-			return "https://t.me/FAgramNews";
+			return "https://desktop.telegram.org";
 #endif // OS_WIN_STORE || OS_MAC_STORE
 		}();
 		UrlClickHandler::Open(url);
@@ -1678,7 +1679,7 @@ QString countAlphaVersionSignature(uint64 version) { // duplicated in packer.cpp
 		return QString();
 	}
 
-	QByteArray signedData = (qstr("FAgramBeta_") + QString::number(version, 16).toLower()).toUtf8();
+	QByteArray signedData = (qstr("TelegramBeta_") + QString::number(version, 16).toLower()).toUtf8();
 
 	static const int32 shaSize = 20, keySize = 128;
 
