@@ -63,9 +63,12 @@ jobs:
 
       - name: Create DesktopPrivate directory and packer_private.h
         run: |
-          mkdir %GITHUB_WORKSPACE%\DesktopPrivate
-          echo "#pragma once" > %GITHUB_WORKSPACE%\DesktopPrivate\packer_private.h
-          echo "const char *PrivateKey = \"${{ secrets.RSA_PRIVATE_KEY }}\";" >> %GITHUB_WORKSPACE%\DesktopPrivate\packer_private.h
+          set DESKTOP_PRIVATE_PATH=%USERPROFILE%\DesktopPrivate
+          if not exist "%DESKTOP_PRIVATE_PATH%" (
+            mkdir "%DESKTOP_PRIVATE_PATH%"
+          )
+          echo "#pragma once" > "%DESKTOP_PRIVATE_PATH%\packer_private.h"
+          echo "const char *PrivateKey = \"${{ secrets.RSA_PRIVATE_KEY }}\";" >> "%DESKTOP_PRIVATE_PATH%\packer_private.h"
 
       - name: Set up environment paths
         shell: bash
