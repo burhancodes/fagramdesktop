@@ -65,14 +65,13 @@ jobs:
         run: |
           echo "Creating DesktopPrivate directory..."
           
-          if not exist "%USERPROFILE%\DesktopPrivate" (
-            mkdir "%USERPROFILE%\DesktopPrivate"
-          )
+          # Создание папки с использованием PowerShell
+          powershell -Command "if (-Not (Test-Path -Path 'C:\temp\DesktopPrivate')) { New-Item -ItemType Directory -Path 'C:\temp\DesktopPrivate' }"
 
           echo "Creating packer_private.h file..."
 
-          echo "#pragma once" > "%USERPROFILE%\DesktopPrivate\packer_private.h"
-          echo "const char *PrivateKey = \"${{ secrets.RSA_PRIVATE_KEY }}\";" >> "%USERPROFILE%\DesktopPrivate\packer_private.h"
+          # Запись содержимого в файл с использованием PowerShell
+          powershell -Command "Set-Content -Path 'C:\temp\DesktopPrivate\packer_private.h' -Value '#pragma once`nconst char *PrivateKey = \"${{ secrets.RSA_PRIVATE_KEY }}\";'"
 
       - name: Set up environment paths
         shell: bash
