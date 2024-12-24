@@ -51,5 +51,6 @@
     "fa_beta": "Бета",
     "fa_source_code": "Початковий код",
     "fa_production_server": "Основний сервер (стандартний)",
-    "fa_test_server": "Тестовий сервер"
+    "fa_test_server": "Тестовий сервер",
+    "fa_translation": "Переклад"
 }
