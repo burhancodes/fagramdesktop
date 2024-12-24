@@ -1,426 +1,55 @@
-[
-    {
-        "identifier": "fa_client_preferences",
-        "source_string": "FAgram Preferences",
-        "translation": "FAgram параметрлері",
-        "context": " -> fa_client_preferences",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_copy_id",
-        "source_string": "Copy ID",
-        "translation": "Идентификаторды көшіру",
-        "context": " -> fa_copy_id",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_id_copied",
-        "source_string": "ID copied",
-        "translation": "ID көшірілді",
-        "context": " -> fa_id_copied",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_copy_registration_date",
-        "source_string": "Copy Registration date",
-        "translation": "Тіркеу күнін көшіру",
-        "context": " -> fa_copy_registration_date",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_copy_callback_data",
-        "source_string": "Copy Callback data",
-        "translation": "Кері шақыру деректерін көшіру",
-        "context": " -> fa_copy_callback_data",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_registration_date",
-        "source_string": "Registration date",
-        "translation": "Тіркеу күні",
-        "context": " -> fa_registration_date",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_not_found",
-        "source_string": "Not found.",
-        "translation": "Табылмады.",
-        "context": " -> fa_not_found",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_settings_change_after_restart",
-        "source_string": "^ This setting will be changed after restart of the client ^",
-        "translation": "^Бұл параметр клиент қайта іске қосылғаннан кейін өзгертіледі^",
-        "context": " -> fa_settings_change_after_restart",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_categories",
-        "source_string": "Categories",
-        "translation": "санаттар",
-        "context": " -> fa_categories",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_general",
-        "source_string": "General",
-        "translation": "Жалпы",
-        "context": " -> fa_general",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_seconds_message",
-        "source_string": "Show Seconds of Message",
-        "translation": "Хабар секундтарын көрсету",
-        "context": " -> fa_show_seconds_message",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_disable_ads",
-        "source_string": "Disable ads",
-        "translation": "Жарнамаларды өшіру",
-        "context": " -> fa_disable_ads",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_start_token",
-        "source_string": "Show Start Token in Bot",
-        "translation": "Бастау белгісін боттың басында көрсету",
-        "context": " -> fa_show_start_token",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_peer_ids",
-        "source_string": "Show Peer IDs",
-        "translation": "Тең идентификаторды көрсету",
-        "context": " -> fa_show_peer_ids",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_dc_ids",
-        "source_string": "Show DC IDs in label of peer ids",
-        "translation": "Per ID астында DC идентификаторын көрсету",
-        "context": " -> fa_show_dc_ids",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_id_in_botapi_type",
-        "source_string": "BotAPI IDs type",
-        "translation": "BotAPI ID түрі",
-        "context": " -> fa_id_in_botapi_type",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_registration_date",
-        "source_string": "Show Registration Date",
-        "translation": "Тіркеу күнін көрсету",
-        "context": " -> fa_show_registration_date",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_hide_phone_in_settings",
-        "source_string": "Hide Phone number in Settings",
-        "translation": "Параметрлерде телефон нөмірін жасыру",
-        "context": " -> fa_hide_phone_in_settings",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_hide_stories",
-        "source_string": "Hide Stories",
-        "translation": "Оқиғаларды жасыру",
-        "context": " -> fa_hide_stories",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_mark_read_after_action",
-        "source_string": "β Read after action",
-        "translation": "β Әрекеттен кейін оқу",
-        "context": " -> fa_mark_read_after_action",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_chats",
-        "source_string": "Chats",
-        "translation": "Чаттар",
-        "context": " -> fa_chats",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_recent_stickers_hidden",
-        "source_string": "Recent stickers: Hidden",
-        "translation": "Соңғы стикерлер: жасырын",
-        "context": " -> fa_recent_stickers_hidden",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_recent_stickers",
-        "source_string": "Recent stickers: %1",
-        "translation": "Соңғы стикерлер: % 1",
-        "context": " -> fa_recent_stickers",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_disable_custom_chat_background",
-        "source_string": "β Hide custom background of chat",
-        "translation": "β Арнаулы чат фонын жасыру",
-        "context": " -> fa_disable_custom_chat_background",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_hide_open_webapp_button_chatlist",
-        "source_string": "Hide Open Webapp button",
-        "translation": "Webapp қолданбасын ашу түймешігін жасыру",
-        "context": " -> fa_hide_open_webapp_button_chatlist",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_hide_all_chats_folder",
-        "source_string": "Hide All Chats folder",
-        "translation": "Барлық чаттар қалтасын жасыру",
-        "context": " -> fa_hide_all_chats_folder",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_appearance",
-        "source_string": "Appearance",
-        "translation": "Көрініс",
-        "context": " -> fa_appearance",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_rounding",
-        "source_string": "Rounding: %1",
-        "translation": "Дөңгелектеу: % 1",
-        "context": " -> fa_rounding",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_use_default_rounding",
-        "source_string": "Use Default Rounding",
-        "translation": "Әдепкі дөңгелектеуді пайдалану",
-        "context": " -> fa_use_default_rounding",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_other",
-        "source_string": "Other",
-        "translation": "Басқа",
-        "context": " -> fa_other",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_dc_status",
-        "source_string": "DC Status",
-        "translation": "DC күйі",
-        "context": " -> fa_dc_status",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_update_client",
-        "source_string": "Update FAgram",
-        "translation": "FAgram жаңарту",
-        "context": " -> fa_update_client",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_restart_client",
-        "source_string": "Restart FAgram",
-        "translation": "FAgram қайта іске қосу",
-        "context": " -> fa_restart_client",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_quit_client",
-        "source_string": "Quit FAgram",
-        "translation": "FAgram-дан шығу",
-        "context": " -> fa_quit_client",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_donate",
-        "source_string": "Donate",
-        "translation": "Қайырымдылық",
-        "context": " -> fa_donate",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_choose_method",
-        "source_string": "Choose method",
-        "translation": "Әдіс таңдау",
-        "context": " -> fa_choose_method",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_ton_wallet",
-        "source_string": "TON Wallet",
-        "translation": "TON әмиян",
-        "context": " -> fa_ton_wallet",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_address_copied",
-        "source_string": "Address copied",
-        "translation": "Мекенжай көшірілді",
-        "context": " -> fa_address_copied",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_thank_you",
-        "source_string": "Thank you.",
-        "translation": "Рақмет сізге.",
-        "context": " -> fa_thank_you",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_debug_logs",
-        "source_string": "Logs",
-        "translation": "Журналдар",
-        "context": " -> fa_debug_logs",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_debug_logs_on",
-        "source_string": "Logs on!",
-        "translation": "Журналдар қосулы!",
-        "context": " -> fa_debug_logs_on",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_debug_logs_off",
-        "source_string": "Logs off",
-        "translation": "Журналдар өшірілген",
-        "context": " -> fa_debug_logs_off",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_clean_debug_logs",
-        "source_string": "Clean Debug Logs",
-        "translation": "Журналдарды тазалау",
-        "context": " -> fa_clean_debug_logs",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_cleaning_debug_logs",
-        "source_string": "Cleaning...",
-        "translation": "Тазалау...",
-        "context": " -> fa_cleaning_debug_logs",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_cleaned_debug_logs",
-        "source_string": "Debug Logs Cleaned!",
-        "translation": "Журналдар тазартылды!",
-        "context": " -> fa_cleaned_debug_logs",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_logs_dir",
-        "source_string": "You can find the logs in the DebugLogs folder which is located next to FAgram",
-        "translation": "Сіз журналдарды FAgram жанында орналасқан DebugLogs қалтасынан таба аласыз",
-        "context": " -> fa_logs_dir",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_links",
-        "source_string": "Links",
-        "translation": "Сілтемелер",
-        "context": " -> fa_links",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_channel",
-        "source_string": "Channel",
-        "translation": "Арна",
-        "context": " -> fa_channel",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_group",
-        "source_string": "Group",
-        "translation": "Чат",
-        "context": " -> fa_group",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_beta",
-        "source_string": "Beta",
-        "translation": "Бета",
-        "context": " -> fa_beta",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_source_code",
-        "source_string": "Source code",
-        "translation": "бастапқы код",
-        "context": " -> fa_source_code",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_production_server",
-        "source_string": "Production Server (Standard)",
-        "translation": "Негізгі сервер (стандарт)",
-        "context": " -> fa_production_server",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_test_server",
-        "source_string": "Test Server",
-        "translation": "Тест сервер",
-        "context": " -> fa_test_server",
-        "labels": "en.json",
-        "max_length": null
-    }
-]
+{
+    "fa_client_preferences": "FAgram параметрлері",
+    "fa_copy_id": "Идентификаторды көшіру",
+    "fa_id_copied": "ID көшірілді",
+    "fa_copy_registration_date": "Тіркеу күнін көшіру",
+    "fa_copy_callback_data": "Кері шақыру деректерін көшіру",
+    "fa_registration_date": "Тіркеу күні",
+    "fa_not_found": "Табылмады.",
+    "fa_settings_change_after_restart": "^Бұл параметр клиент қайта іске қосылғаннан кейін өзгертіледі^",
+    "fa_categories": "санаттар",
+    "fa_general": "Жалпы",
+    "fa_show_seconds_message": "Хабар секундтарын көрсету",
+    "fa_disable_ads": "Жарнамаларды өшіру",
+    "fa_show_start_token": "Бастау белгісін боттың басында көрсету",
+    "fa_show_peer_ids": "Тең идентификаторды көрсету",
+    "fa_show_dc_ids": "Per ID астында DC идентификаторын көрсету",
+    "fa_id_in_botapi_type": "BotAPI ID түрі",
+    "fa_show_registration_date": "Тіркеу күнін көрсету",
+    "fa_hide_phone_in_settings": "Параметрлерде телефон нөмірін жасыру",
+    "fa_hide_stories": "Оқиғаларды жасыру",
+    "fa_mark_read_after_action": "β Әрекеттен кейін оқу",
+    "fa_chats": "Чаттар",
+    "fa_recent_stickers_hidden": "Соңғы стикерлер: жасырын",
+    "fa_recent_stickers": "Соңғы стикерлер: % 1",
+    "fa_disable_custom_chat_background": "β Арнаулы чат фонын жасыру",
+    "fa_hide_open_webapp_button_chatlist": "Webapp қолданбасын ашу түймешігін жасыру",
+    "fa_hide_all_chats_folder": "Барлық чаттар қалтасын жасыру",
+    "fa_appearance": "Көрініс",
+    "fa_rounding": "Дөңгелектеу: % 1",
+    "fa_use_default_rounding": "Әдепкі дөңгелектеуді пайдалану",
+    "fa_other": "Басқа",
+    "fa_dc_status": "DC күйі",
+    "fa_update_client": "FAgram жаңарту",
+    "fa_restart_client": "FAgram қайта іске қосу",
+    "fa_quit_client": "FAgram-дан шығу",
+    "fa_donate": "Қайырымдылық",
+    "fa_choose_method": "Әдіс таңдау",
+    "fa_ton_wallet": "TON әмиян",
+    "fa_address_copied": "Мекенжай көшірілді",
+    "fa_thank_you": "Рақмет сізге.",
+    "fa_debug_logs": "Журналдар",
+    "fa_debug_logs_on": "Журналдар қосулы!",
+    "fa_debug_logs_off": "Журналдар өшірілген",
+    "fa_clean_debug_logs": "Журналдарды тазалау",
+    "fa_cleaning_debug_logs": "Тазалау...",
+    "fa_cleaned_debug_logs": "Журналдар тазартылды!",
+    "fa_logs_dir": "Сіз журналдарды FAgram жанында орналасқан DebugLogs қалтасынан таба аласыз",
+    "fa_links": "Сілтемелер",
+    "fa_channel": "Арна",
+    "fa_group": "Чат",
+    "fa_beta": "Бета",
+    "fa_source_code": "бастапқы код",
+    "fa_production_server": "Негізгі сервер (стандарт)",
+    "fa_test_server": "Тест сервер"
+}

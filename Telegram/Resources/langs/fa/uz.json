@@ -1,426 +1,55 @@
-[
-    {
-        "identifier": "fa_client_preferences",
-        "source_string": "FAgram Preferences",
-        "translation": "FAgram sozlamalari",
-        "context": " -> fa_client_preferences",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_copy_id",
-        "source_string": "Copy ID",
-        "translation": "IDni nusxalash",
-        "context": " -> fa_copy_id",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_id_copied",
-        "source_string": "ID copied",
-        "translation": "ID ko'chirildi",
-        "context": " -> fa_id_copied",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_copy_registration_date",
-        "source_string": "Copy Registration date",
-        "translation": "Ro'yxatdan o'tish sanasini nusxalash",
-        "context": " -> fa_copy_registration_date",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_copy_callback_data",
-        "source_string": "Copy Callback data",
-        "translation": "Qayta qo'ng'iroq ma'lumotlarini nusxalash",
-        "context": " -> fa_copy_callback_data",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_registration_date",
-        "source_string": "Registration date",
-        "translation": "Ro'yxatdan o'tgan sana",
-        "context": " -> fa_registration_date",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_not_found",
-        "source_string": "Not found.",
-        "translation": "topilmadi.",
-        "context": " -> fa_not_found",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_settings_change_after_restart",
-        "source_string": "^ This setting will be changed after restart of the client ^",
-        "translation": "^Bu sozlama mijoz qayta ishga tushirilgandan so'ng o'zgartiriladi^",
-        "context": " -> fa_settings_change_after_restart",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_categories",
-        "source_string": "Categories",
-        "translation": "Kategoriyalar",
-        "context": " -> fa_categories",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_general",
-        "source_string": "General",
-        "translation": "Umumiy",
-        "context": " -> fa_general",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_seconds_message",
-        "source_string": "Show Seconds of Message",
-        "translation": "Xabar soniyalarini ko'rsatish",
-        "context": " -> fa_show_seconds_message",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_disable_ads",
-        "source_string": "Disable ads",
-        "translation": "Reklamalarni o'chirish",
-        "context": " -> fa_disable_ads",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_start_token",
-        "source_string": "Show Start Token in Bot",
-        "translation": "Bot boshlanishida start tokenini ko'rsatish",
-        "context": " -> fa_show_start_token",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_peer_ids",
-        "source_string": "Show Peer IDs",
-        "translation": "Tengdosh identifikatorini ko'rsatish",
-        "context": " -> fa_show_peer_ids",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_dc_ids",
-        "source_string": "Show DC IDs in label of peer ids",
-        "translation": "Peer ID ostida DC identifikatorini ko'rsatish",
-        "context": " -> fa_show_dc_ids",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_id_in_botapi_type",
-        "source_string": "BotAPI IDs type",
-        "translation": "BotAPI ID turi",
-        "context": " -> fa_id_in_botapi_type",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_registration_date",
-        "source_string": "Show Registration Date",
-        "translation": "Ro'yxatdan o'tish sanasini ko'rsatish",
-        "context": " -> fa_show_registration_date",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_hide_phone_in_settings",
-        "source_string": "Hide Phone number in Settings",
-        "translation": "Sozlamalarda telefon raqamini yashirish",
-        "context": " -> fa_hide_phone_in_settings",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_hide_stories",
-        "source_string": "Hide Stories",
-        "translation": "Hikoyalarni yashirish",
-        "context": " -> fa_hide_stories",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_mark_read_after_action",
-        "source_string": "β Read after action",
-        "translation": "β Amaldan keyin o'qing",
-        "context": " -> fa_mark_read_after_action",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_chats",
-        "source_string": "Chats",
-        "translation": "Chatlar",
-        "context": " -> fa_chats",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_recent_stickers_hidden",
-        "source_string": "Recent stickers: Hidden",
-        "translation": "Oxirgi stikerlar: Yashirin",
-        "context": " -> fa_recent_stickers_hidden",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_recent_stickers",
-        "source_string": "Recent stickers: %1",
-        "translation": "Oxirgi stikerlar: %1",
-        "context": " -> fa_recent_stickers",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_disable_custom_chat_background",
-        "source_string": "β Hide custom background of chat",
-        "translation": "β Maxsus suhbat fonini yashirish",
-        "context": " -> fa_disable_custom_chat_background",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_hide_open_webapp_button_chatlist",
-        "source_string": "Hide Open Webapp button",
-        "translation": "Web ilovasini ochish tugmachasini yashirish",
-        "context": " -> fa_hide_open_webapp_button_chatlist",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_hide_all_chats_folder",
-        "source_string": "Hide All Chats folder",
-        "translation": "Barcha suhbatlar jildini yashirish",
-        "context": " -> fa_hide_all_chats_folder",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_appearance",
-        "source_string": "Appearance",
-        "translation": "Tashqi ko'rinish",
-        "context": " -> fa_appearance",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_rounding",
-        "source_string": "Rounding: %1",
-        "translation": "Yaxlitlash: %1",
-        "context": " -> fa_rounding",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_use_default_rounding",
-        "source_string": "Use Default Rounding",
-        "translation": "Birlamchi yaxlitlashdan foydalanish",
-        "context": " -> fa_use_default_rounding",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_other",
-        "source_string": "Other",
-        "translation": "Boshqa",
-        "context": " -> fa_other",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_dc_status",
-        "source_string": "DC Status",
-        "translation": "DC holati",
-        "context": " -> fa_dc_status",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_update_client",
-        "source_string": "Update FAgram",
-        "translation": "FAgramni yangilash",
-        "context": " -> fa_update_client",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_restart_client",
-        "source_string": "Restart FAgram",
-        "translation": "FAgramni qayta ishga tushiring",
-        "context": " -> fa_restart_client",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_quit_client",
-        "source_string": "Quit FAgram",
-        "translation": "FAgramdan chiqish",
-        "context": " -> fa_quit_client",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_donate",
-        "source_string": "Donate",
-        "translation": "Xayriya",
-        "context": " -> fa_donate",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_choose_method",
-        "source_string": "Choose method",
-        "translation": "Usulni tanlang",
-        "context": " -> fa_choose_method",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_ton_wallet",
-        "source_string": "TON Wallet",
-        "translation": "TON hamyon",
-        "context": " -> fa_ton_wallet",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_address_copied",
-        "source_string": "Address copied",
-        "translation": "Manzil ko'chirildi",
-        "context": " -> fa_address_copied",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_thank_you",
-        "source_string": "Thank you.",
-        "translation": "Rahmat.",
-        "context": " -> fa_thank_you",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_debug_logs",
-        "source_string": "Logs",
-        "translation": "Jurnallar",
-        "context": " -> fa_debug_logs",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_debug_logs_on",
-        "source_string": "Logs on!",
-        "translation": "Jurnallar yoqilgan!",
-        "context": " -> fa_debug_logs_on",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_debug_logs_off",
-        "source_string": "Logs off",
-        "translation": "Jurnallar o'chirilgan",
-        "context": " -> fa_debug_logs_off",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_clean_debug_logs",
-        "source_string": "Clean Debug Logs",
-        "translation": "Jurnallarni tozalash",
-        "context": " -> fa_clean_debug_logs",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_cleaning_debug_logs",
-        "source_string": "Cleaning...",
-        "translation": "Tozalanmoqda...",
-        "context": " -> fa_cleaning_debug_logs",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_cleaned_debug_logs",
-        "source_string": "Debug Logs Cleaned!",
-        "translation": "Jurnallar tozalandi!",
-        "context": " -> fa_cleaned_debug_logs",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_logs_dir",
-        "source_string": "You can find the logs in the DebugLogs folder which is located next to FAgram",
-        "translation": "Jurnallarni FAgram yonidagi DebugLogs jildida topishingiz mumkin.",
-        "context": " -> fa_logs_dir",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_links",
-        "source_string": "Links",
-        "translation": "Aloqalar",
-        "context": " -> fa_links",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_channel",
-        "source_string": "Channel",
-        "translation": "Kanal",
-        "context": " -> fa_channel",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_group",
-        "source_string": "Group",
-        "translation": "Chat",
-        "context": " -> fa_group",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_beta",
-        "source_string": "Beta",
-        "translation": "Beta",
-        "context": " -> fa_beta",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_source_code",
-        "source_string": "Source code",
-        "translation": "Manba kodi",
-        "context": " -> fa_source_code",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_production_server",
-        "source_string": "Production Server (Standard)",
-        "translation": "Asosiy server (standart)",
-        "context": " -> fa_production_server",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_test_server",
-        "source_string": "Test Server",
-        "translation": "Sinov serveri",
-        "context": " -> fa_test_server",
-        "labels": "en.json",
-        "max_length": null
-    }
-]
+{
+    "fa_client_preferences": "FAgram sozlamalari",
+    "fa_copy_id": "IDni nusxalash",
+    "fa_id_copied": "ID ko'chirildi",
+    "fa_copy_registration_date": "Ro'yxatdan o'tish sanasini nusxalash",
+    "fa_copy_callback_data": "Qayta qo'ng'iroq ma'lumotlarini nusxalash",
+    "fa_registration_date": "Ro'yxatdan o'tgan sana",
+    "fa_not_found": "topilmadi.",
+    "fa_settings_change_after_restart": "^Bu sozlama mijoz qayta ishga tushirilgandan so'ng o'zgartiriladi^",
+    "fa_categories": "Kategoriyalar",
+    "fa_general": "Umumiy",
+    "fa_show_seconds_message": "Xabar soniyalarini ko'rsatish",
+    "fa_disable_ads": "Reklamalarni o'chirish",
+    "fa_show_start_token": "Bot boshlanishida start tokenini ko'rsatish",
+    "fa_show_peer_ids": "Tengdosh identifikatorini ko'rsatish",
+    "fa_show_dc_ids": "Peer ID ostida DC identifikatorini ko'rsatish",
+    "fa_id_in_botapi_type": "BotAPI ID turi",
+    "fa_show_registration_date": "Ro'yxatdan o'tish sanasini ko'rsatish",
+    "fa_hide_phone_in_settings": "Sozlamalarda telefon raqamini yashirish",
+    "fa_hide_stories": "Hikoyalarni yashirish",
+    "fa_mark_read_after_action": "β Amaldan keyin o'qing",
+    "fa_chats": "Chatlar",
+    "fa_recent_stickers_hidden": "Oxirgi stikerlar: Yashirin",
+    "fa_recent_stickers": "Oxirgi stikerlar: %1",
+    "fa_disable_custom_chat_background": "β Maxsus suhbat fonini yashirish",
+    "fa_hide_open_webapp_button_chatlist": "Web ilovasini ochish tugmachasini yashirish",
+    "fa_hide_all_chats_folder": "Barcha suhbatlar jildini yashirish",
+    "fa_appearance": "Tashqi ko'rinish",
+    "fa_rounding": "Yaxlitlash: %1",
+    "fa_use_default_rounding": "Birlamchi yaxlitlashdan foydalanish",
+    "fa_other": "Boshqa",
+    "fa_dc_status": "DC holati",
+    "fa_update_client": "FAgramni yangilash",
+    "fa_restart_client": "FAgramni qayta ishga tushiring",
+    "fa_quit_client": "FAgramdan chiqish",
+    "fa_donate": "Xayriya",
+    "fa_choose_method": "Usulni tanlang",
+    "fa_ton_wallet": "TON hamyon",
+    "fa_address_copied": "Manzil ko'chirildi",
+    "fa_thank_you": "Rahmat.",
+    "fa_debug_logs": "Jurnallar",
+    "fa_debug_logs_on": "Jurnallar yoqilgan!",
+    "fa_debug_logs_off": "Jurnallar o'chirilgan",
+    "fa_clean_debug_logs": "Jurnallarni tozalash",
+    "fa_cleaning_debug_logs": "Tozalanmoqda...",
+    "fa_cleaned_debug_logs": "Jurnallar tozalandi!",
+    "fa_logs_dir": "Jurnallarni FAgram yonidagi DebugLogs jildida topishingiz mumkin.",
+    "fa_links": "Aloqalar",
+    "fa_channel": "Kanal",
+    "fa_group": "Chat",
+    "fa_beta": "Beta",
+    "fa_source_code": "Manba kodi",
+    "fa_production_server": "Asosiy server (standart)",
+    "fa_test_server": "Sinov serveri"
+}
