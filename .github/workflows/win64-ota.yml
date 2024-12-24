@@ -1,4 +1,4 @@
-name: OTA Release Build for Windows x64
+name: OTA Build for Windows
 
 on:
   push:
@@ -16,17 +16,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  ota_build:
-    name: OTA Release Build
+
+  windows:
+    name: Windows Release Build
     runs-on: windows-latest
 
     strategy:
       matrix:
-        arch: [x64]
+        arch: [Win32, x64]
 
     env:
-      REPO_NAME: "Telegram"
-      TBUILD: "%userprofile%/TBuild"
+      UPLOAD_ARTIFACT: "true"
+      ONLY_CACHE: "false"
       PREPARE_PATH: "Telegram/build/prepare/prepare.py"
 
     defaults:
@@ -39,6 +40,16 @@ jobs:
           mkdir %userprofile%\TBuild\Libraries
           mklink /d %GITHUB_WORKSPACE%\TBuild %userprofile%\TBuild
           echo TBUILD=%GITHUB_WORKSPACE%\TBuild>>%GITHUB_ENV%
+          echo Creating DesktopPrivate directory...
+            if not exist "%GITHUB_WORKSPACE%\DesktopPrivate" (
+            mkdir "%GITHUB_WORKSPACE%\DesktopPrivate"
+          )
+
+          echo Creating packer_private.h file...
+          echo #pragma once > "%GITHUB_WORKSPACE%\DesktopPrivate\packer_private.h"
+          echo const char *PrivateKey = "%PRIVATE_KEY%" >> "%GITHUB_WORKSPACE%\DesktopPrivate\packer_private.h"
+        env:
+          PRIVATE_KEY: ${{ secrets.RSA_PRIVATE_KEY }}
 
       - name: Get repository name
         shell: bash
@@ -54,19 +65,6 @@ jobs:
         with:
           submodules: recursive
           path: ${{ env.TBUILD }}\${{ env.REPO_NAME }}
-
-      - name: Create DesktopPrivate directory and packer_private.h
-        run: |
-          echo Creating DesktopPrivate directory...
-            if not exist "%GITHUB_WORKSPACE%\DesktopPrivate" (
-            mkdir "%GITHUB_WORKSPACE%\DesktopPrivate"
-          )
-
-          echo Creating packer_private.h file...
-          echo #pragma once > "%GITHUB_WORKSPACE%\DesktopPrivate\packer_private.h"
-          echo const char *PrivateKey = "%PRIVATE_KEY%" >> "%GITHUB_WORKSPACE%\DesktopPrivate\packer_private.h"
-        env:
-          PRIVATE_KEY: ${{ secrets.RSA_PRIVATE_KEY }}
 
       - name: Set up environment paths
         shell: bash
@@ -130,22 +128,23 @@ jobs:
           del /S Libraries\*.pdb Libraries\*.pch Libraries\*.obj
 
       - name: Build Telegram Desktop
+        if: env.ONLY_CACHE == 'false'
         run: |
           cd %TBUILD%\%REPO_NAME%\Telegram
-          call configure.bat ^ 
+          call configure.bat ^
           %TDESKTOP_BUILD_ARCH% ^
           %TDESKTOP_BUILD_API% ^
           -D CMAKE_C_FLAGS="/bigobj /WX-" ^
           -D CMAKE_CXX_FLAGS="/bigobj /WX-" ^
-          -D DESKTOP_APP_DISABLE_AUTOUPDATE=NO ^ 
-          -D DESKTOP_APP_DISABLE_CRASH_REPORTS=OFF ^ 
+          -D DESKTOP_APP_DISABLE_CRASH_REPORTS=OFF ^
           -D DESKTOP_APP_NO_PDB=ON ^
-          -D DESKTOP_APP_DISABLE_AUTOUPDATE=NO ^ 
+          -D DESKTOP_APP_DISABLE_AUTOUPDATE=NO ^
           -D DESKTOP_APP_PRIVATE_TARGET=win64 ^
-          
+
           cmake --build ..\out --config Release --parallel
 
-      - name: Move all files from OUT to artifact
+      - name: Move artifacts
+        if: (env.UPLOAD_ARTIFACT == 'true') || (github.ref == 'refs/heads/nightly')
         run: |
           set OUT=%TBUILD%\%REPO_NAME%\out\Release
           mkdir artifact
@@ -154,6 +153,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         name: Upload Release Artifacts
+        if: (env.UPLOAD_ARTIFACT == 'true') || (github.ref == 'refs/heads/nightly')
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: artifact\
