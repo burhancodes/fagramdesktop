@@ -40,11 +40,6 @@ bool HandleSwitchDebugLogs(
 	const Match &match,
 	const QVariant &context);
 
-bool HandleUpdate(
-	Window::SessionController *controller,
-	const Match &match,
-	const QVariant &context);
-
 bool HandleRestart(
 	Window::SessionController *controller,
 	const Match &match,

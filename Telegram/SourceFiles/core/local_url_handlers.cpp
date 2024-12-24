@@ -1451,10 +1451,6 @@ const std::vector<LocalUrlHandler> &LocalUrlHandlers() {
 			FAUrlHandlers::HandleSwitchDebugLogs
 		},
 		{
-			u"^fa/update/?(.+)?(#|$)"_q,
-			FAUrlHandlers::HandleUpdate
-		},
-		{
 			u"^fa/restart/?(.+)?(#|$)"_q,
 			FAUrlHandlers::HandleRestart
 		},

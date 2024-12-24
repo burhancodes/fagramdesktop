@@ -108,20 +108,6 @@ bool HandleSwitchDebugLogs(
 	return true;
 }
 
-bool HandleUpdate(
-	Window::SessionController *controller,
-	const Match &match,
-	const QVariant &context)
-{
-	if (!controller) {
-		return false;
-	}
-
-	Core::App().openLocalUrl("tg://resolve?domain=FAgram_Group&thread=11", {});
-
-	return true;
-}
-
 bool HandleRestart(
 	Window::SessionController *controller,
 	const Match &match,

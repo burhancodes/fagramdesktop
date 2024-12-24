@@ -207,16 +207,6 @@ namespace Settings {
 
     	AddButtonWithLabel(
 			container,
-			FAlang::RplTranslate(QString("fa_update_client")),
-			rpl::single(QString("")),
-			st::settingsButton,
-			{ &st::menuIconRestartBot }
-		)->setClickedCallback([=] {
-			Core::App().openLocalUrl("tg://fa/update", {});
-		});
-
-    	AddButtonWithLabel(
-			container,
 			FAlang::RplTranslate(QString("fa_restart_client")),
 			rpl::single(QString("")),
 			st::settingsButton,
