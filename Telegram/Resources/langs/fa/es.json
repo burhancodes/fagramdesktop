@@ -1,66 +1,426 @@
-{
-    "fa_client_preferences": "Preferencias de FAgram",
-    
-    "fa_copy_id": "Copiar ID",
-    "fa_id_copied": "ID copiado",
-    "fa_copy_registration_date": "Copiar fecha de registro",
-    "fa_copy_callback_data": "Copiar datos de devolución de llamada",
-    
-    "fa_registration_date": "Fecha de registro",
-    "fa_not_found": "No encontrado.",
-    "fa_settings_change_after_restart": "^ Esta configuración se cambiará después de reiniciar el cliente ^",
-    
-    "fa_categories": "Categorías",
-    
-    "fa_general": "General",
-    "fa_show_seconds_message": "Mostrar segundos del mensaje",
-    "fa_disable_ads": "Deshabilitar anuncios",
-    "fa_show_start_token": "Mostrar token de inicio en bot",
-    "fa_show_peer_ids": "Mostrar ID de pares",
-    "fa_show_dc_ids": "Mostrar ID de DC en la etiqueta de los ID de pares",
-    "fa_id_in_botapi_type": "Tipo de ID de BotAPI",
-    "fa_show_registration_date": "Mostrar fecha de registro",
-    "fa_hide_phone_in_settings": "Ocultar número de teléfono en configuración",
-    "fa_hide_stories": "Ocultar historias",
-    "fa_mark_read_after_action": "β Leer después de la acción",
-    
-    "fa_chats": "Chats",
-    "fa_recent_stickers_hidden": "Stickers recientes: Ocultos",
-    "fa_recent_stickers": "Stickers recientes: %1",
-    "fa_disable_custom_chat_background": "β Ocultar el fondo personalizado del chat",
-    "fa_hide_open_webapp_button_chatlist": "Ocultar el botón Abrir aplicación web",
-    "fa_hide_all_chats_folder": "Ocultar carpeta Todos los chats",
-    
-    "fa_appearance": "Apariencia",
-    "fa_rounding": "Redondeo: %1",
-    "fa_use_default_rounding": "Usar redondeo predeterminado",
-    
-    "fa_other": "Otro",
-    "fa_dc_status": "Estado de DC",
-    "fa_update_client": "Actualizar FAgram",
-    "fa_restart_client": "Reiniciar FAgram",
-    "fa_quit_client": "Salir de FAgram",
-    
-    "fa_donate": "Donar",
-    "fa_choose_method": "Seleccionar método",
-    "fa_ton_wallet": "Monedero TON",
-    "fa_address_copied": "Dirección copiada",
-    "fa_thank_you": "Gracias",
-    
-    "fa_debug_logs": "Registros",
-    "fa_debug_logs_on": "¡Los registros están activados!",
-    "fa_debug_logs_off": "Los registros están desactivados",
-    "fa_clean_debug_logs": "Limpiar registros de depuración",
-    "fa_cleaning_debug_logs": "Limpiando...",
-    "fa_cleaned_debug_logs": "¡Se limpiaron los registros de depuración!",
-    "fa_logs_dir": "Puedes encontrar los registros en la carpeta DebugLogs que se encuentra junto a FAgram",
-    
-    "fa_links": "Enlaces",
-    "fa_channel": "Canal",
-    "fa_group": "Grupo",
-    "fa_beta": "Beta",
-    "fa_source_code": "Código fuente",
-
-    "fa_production_server": "Servidor de producción (Estándar)",
-    "fa_test_server": "Servidor de prueba"
-}
+[
+    {
+        "identifier": "fa_client_preferences",
+        "source_string": "FAgram Preferences",
+        "translation": "Preferencias de FAgram",
+        "context": " -> fa_client_preferences",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_copy_id",
+        "source_string": "Copy ID",
+        "translation": "Copiar ID",
+        "context": " -> fa_copy_id",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_id_copied",
+        "source_string": "ID copied",
+        "translation": "ID copiado",
+        "context": " -> fa_id_copied",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_copy_registration_date",
+        "source_string": "Copy Registration date",
+        "translation": "Copiar fecha de registro",
+        "context": " -> fa_copy_registration_date",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_copy_callback_data",
+        "source_string": "Copy Callback data",
+        "translation": "Copiar datos de devolución de llamada",
+        "context": " -> fa_copy_callback_data",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_registration_date",
+        "source_string": "Registration date",
+        "translation": "Fecha de registro",
+        "context": " -> fa_registration_date",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_not_found",
+        "source_string": "Not found.",
+        "translation": "No encontrado.",
+        "context": " -> fa_not_found",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_settings_change_after_restart",
+        "source_string": "^ This setting will be changed after restart of the client ^",
+        "translation": "^ Esta configuración se cambiará después de reiniciar el cliente ^",
+        "context": " -> fa_settings_change_after_restart",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_categories",
+        "source_string": "Categories",
+        "translation": "Categorías",
+        "context": " -> fa_categories",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_general",
+        "source_string": "General",
+        "translation": "General",
+        "context": " -> fa_general",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_show_seconds_message",
+        "source_string": "Show Seconds of Message",
+        "translation": "Mostrar segundos del mensaje",
+        "context": " -> fa_show_seconds_message",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_disable_ads",
+        "source_string": "Disable ads",
+        "translation": "Deshabilitar anuncios",
+        "context": " -> fa_disable_ads",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_show_start_token",
+        "source_string": "Show Start Token in Bot",
+        "translation": "Mostrar token de inicio en bot",
+        "context": " -> fa_show_start_token",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_show_peer_ids",
+        "source_string": "Show Peer IDs",
+        "translation": "Mostrar ID de pares",
+        "context": " -> fa_show_peer_ids",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_show_dc_ids",
+        "source_string": "Show DC IDs in label of peer ids",
+        "translation": "Mostrar ID de DC en la etiqueta de los ID de pares",
+        "context": " -> fa_show_dc_ids",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_id_in_botapi_type",
+        "source_string": "BotAPI IDs type",
+        "translation": "Tipo de ID de BotAPI",
+        "context": " -> fa_id_in_botapi_type",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_show_registration_date",
+        "source_string": "Show Registration Date",
+        "translation": "Mostrar fecha de registro",
+        "context": " -> fa_show_registration_date",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_hide_phone_in_settings",
+        "source_string": "Hide Phone number in Settings",
+        "translation": "Ocultar número de teléfono en configuración",
+        "context": " -> fa_hide_phone_in_settings",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_hide_stories",
+        "source_string": "Hide Stories",
+        "translation": "Ocultar historias",
+        "context": " -> fa_hide_stories",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_mark_read_after_action",
+        "source_string": "β Read after action",
+        "translation": "β Leer después de la acción",
+        "context": " -> fa_mark_read_after_action",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_chats",
+        "source_string": "Chats",
+        "translation": "Charlas",
+        "context": " -> fa_chats",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_recent_stickers_hidden",
+        "source_string": "Recent stickers: Hidden",
+        "translation": "Stickers recientes: Ocultos",
+        "context": " -> fa_recent_stickers_hidden",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_recent_stickers",
+        "source_string": "Recent stickers: %1",
+        "translation": "Stickers recientes: %1",
+        "context": " -> fa_recent_stickers",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_disable_custom_chat_background",
+        "source_string": "β Hide custom background of chat",
+        "translation": "β Ocultar el fondo personalizado del chat",
+        "context": " -> fa_disable_custom_chat_background",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_hide_open_webapp_button_chatlist",
+        "source_string": "Hide Open Webapp button",
+        "translation": "Ocultar el botón Abrir aplicación web",
+        "context": " -> fa_hide_open_webapp_button_chatlist",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_hide_all_chats_folder",
+        "source_string": "Hide All Chats folder",
+        "translation": "Ocultar carpeta Todos los chats",
+        "context": " -> fa_hide_all_chats_folder",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_appearance",
+        "source_string": "Appearance",
+        "translation": "Apariencia",
+        "context": " -> fa_appearance",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_rounding",
+        "source_string": "Rounding: %1",
+        "translation": "Redondeo: %1",
+        "context": " -> fa_rounding",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_use_default_rounding",
+        "source_string": "Use Default Rounding",
+        "translation": "Usar redondeo predeterminado",
+        "context": " -> fa_use_default_rounding",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_other",
+        "source_string": "Other",
+        "translation": "Otro",
+        "context": " -> fa_other",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_dc_status",
+        "source_string": "DC Status",
+        "translation": "Estado de DC",
+        "context": " -> fa_dc_status",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_update_client",
+        "source_string": "Update FAgram",
+        "translation": "Actualizar FAgram",
+        "context": " -> fa_update_client",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_restart_client",
+        "source_string": "Restart FAgram",
+        "translation": "Reiniciar FAgram",
+        "context": " -> fa_restart_client",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_quit_client",
+        "source_string": "Quit FAgram",
+        "translation": "Salir de FAgram",
+        "context": " -> fa_quit_client",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_donate",
+        "source_string": "Donate",
+        "translation": "Donar",
+        "context": " -> fa_donate",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_choose_method",
+        "source_string": "Choose method",
+        "translation": "Seleccionar método",
+        "context": " -> fa_choose_method",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_ton_wallet",
+        "source_string": "TON Wallet",
+        "translation": "Monedero TON",
+        "context": " -> fa_ton_wallet",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_address_copied",
+        "source_string": "Address copied",
+        "translation": "Dirección copiada",
+        "context": " -> fa_address_copied",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_thank_you",
+        "source_string": "Thank you.",
+        "translation": "Gracias",
+        "context": " -> fa_thank_you",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_debug_logs",
+        "source_string": "Logs",
+        "translation": "Registros",
+        "context": " -> fa_debug_logs",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_debug_logs_on",
+        "source_string": "Logs on!",
+        "translation": "¡Los registros están activados!",
+        "context": " -> fa_debug_logs_on",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_debug_logs_off",
+        "source_string": "Logs off",
+        "translation": "Los registros están desactivados",
+        "context": " -> fa_debug_logs_off",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_clean_debug_logs",
+        "source_string": "Clean Debug Logs",
+        "translation": "Limpiar registros de depuración",
+        "context": " -> fa_clean_debug_logs",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_cleaning_debug_logs",
+        "source_string": "Cleaning...",
+        "translation": "Limpiando...",
+        "context": " -> fa_cleaning_debug_logs",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_cleaned_debug_logs",
+        "source_string": "Debug Logs Cleaned!",
+        "translation": "¡Se limpiaron los registros de depuración!",
+        "context": " -> fa_cleaned_debug_logs",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_logs_dir",
+        "source_string": "You can find the logs in the DebugLogs folder which is located next to FAgram",
+        "translation": "Puedes encontrar los registros en la carpeta DebugLogs que se encuentra junto a FAgram",
+        "context": " -> fa_logs_dir",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_links",
+        "source_string": "Links",
+        "translation": "Enlaces",
+        "context": " -> fa_links",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_channel",
+        "source_string": "Channel",
+        "translation": "Canal",
+        "context": " -> fa_channel",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_group",
+        "source_string": "Group",
+        "translation": "Grupo",
+        "context": " -> fa_group",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_beta",
+        "source_string": "Beta",
+        "translation": "Beta",
+        "context": " -> fa_beta",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_source_code",
+        "source_string": "Source code",
+        "translation": "Código fuente",
+        "context": " -> fa_source_code",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_production_server",
+        "source_string": "Production Server (Standard)",
+        "translation": "Servidor de producción (Estándar)",
+        "context": " -> fa_production_server",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_test_server",
+        "source_string": "Test Server",
+        "translation": "Servidor de prueba",
+        "context": " -> fa_test_server",
+        "labels": "en.json",
+        "max_length": null
+    }
+]
