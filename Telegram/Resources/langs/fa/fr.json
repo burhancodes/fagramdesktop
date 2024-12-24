@@ -51,5 +51,6 @@
     "fa_beta": "Bêta",
     "fa_source_code": "Code source",
     "fa_production_server": "Serveur de production (Standard)",
-    "fa_test_server": "Serveur de test"
+    "fa_test_server": "Serveur de test",
+    "fa_translation": "Traduction"
 }
