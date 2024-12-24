@@ -178,6 +178,16 @@ namespace Settings {
 
     	AddButtonWithLabel(
 			container,
+			FAlang::RplTranslate(QString("fa_translation")),
+			rpl::single(QString("Crowdin")),
+			st::settingsButton,
+			{ &st::menuIconDelete }
+		)->setClickedCallback([=] {
+			UrlClickHandler::Open("https://crowdin.com/project/fagram");
+		});
+
+    	AddButtonWithLabel(
+			container,
 			FAlang::RplTranslate(QString("fa_source_code")),
 			rpl::single(QString("Github")),
 			st::settingsButton,
