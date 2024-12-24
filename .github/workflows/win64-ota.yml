@@ -1,18 +1,6 @@
 name: OTA Build for Windows
 
 on:
-  push:
-    paths-ignore:
-      - 'docs/**'
-      - '**.md'
-      - 'changelog.txt'
-      - 'LEGAL'
-      - 'LICENSE'
-      - '.github/**'
-      - '!.github/workflows/win64-ota.yml'
-      - 'lib/xdg/**'
-      - 'snap/**'
-      - 'Telegram/**'
   workflow_dispatch:
 
 jobs:
