@@ -3,6 +3,7 @@ name: Release Build for Windows
 on:
   push:
     paths-ignore:
+      - './'
       - '!.github/workflows/win-release.yml'
   workflow_dispatch:
 
