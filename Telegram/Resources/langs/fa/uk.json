@@ -1,426 +1,55 @@
-[
-    {
-        "identifier": "fa_client_preferences",
-        "source_string": "FAgram Preferences",
-        "translation": "Налаштування FAgram",
-        "context": " -> fa_client_preferences",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_copy_id",
-        "source_string": "Copy ID",
-        "translation": "Копіювати ID",
-        "context": " -> fa_copy_id",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_id_copied",
-        "source_string": "ID copied",
-        "translation": "ID скопійовано",
-        "context": " -> fa_id_copied",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_copy_registration_date",
-        "source_string": "Copy Registration date",
-        "translation": "Копіювати дату реєстрації",
-        "context": " -> fa_copy_registration_date",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_copy_callback_data",
-        "source_string": "Copy Callback data",
-        "translation": "Копіювати Callback data",
-        "context": " -> fa_copy_callback_data",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_registration_date",
-        "source_string": "Registration date",
-        "translation": "Дата реєстрації",
-        "context": " -> fa_registration_date",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_not_found",
-        "source_string": "Not found.",
-        "translation": "Не знайдено.",
-        "context": " -> fa_not_found",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_settings_change_after_restart",
-        "source_string": "^ This setting will be changed after restart of the client ^",
-        "translation": "^ Ця настройка буде змінена після перезапуску клієнта ^",
-        "context": " -> fa_settings_change_after_restart",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_categories",
-        "source_string": "Categories",
-        "translation": "Категорії",
-        "context": " -> fa_categories",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_general",
-        "source_string": "General",
-        "translation": "Загальні",
-        "context": " -> fa_general",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_seconds_message",
-        "source_string": "Show Seconds of Message",
-        "translation": "Показувати секунди повідомлення",
-        "context": " -> fa_show_seconds_message",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_disable_ads",
-        "source_string": "Disable ads",
-        "translation": "Вимкнути рекламу",
-        "context": " -> fa_disable_ads",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_start_token",
-        "source_string": "Show Start Token in Bot",
-        "translation": "Показувати стартовий токен у старті бота",
-        "context": " -> fa_show_start_token",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_peer_ids",
-        "source_string": "Show Peer IDs",
-        "translation": "Показувати Peer ID",
-        "context": " -> fa_show_peer_ids",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_dc_ids",
-        "source_string": "Show DC IDs in label of peer ids",
-        "translation": "Показати DC ID під Peer ID",
-        "context": " -> fa_show_dc_ids",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_id_in_botapi_type",
-        "source_string": "BotAPI IDs type",
-        "translation": "Тип ID BotAPI",
-        "context": " -> fa_id_in_botapi_type",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_show_registration_date",
-        "source_string": "Show Registration Date",
-        "translation": "Показати дату реєстрації",
-        "context": " -> fa_show_registration_date",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_hide_phone_in_settings",
-        "source_string": "Hide Phone number in Settings",
-        "translation": "Приховати номер телефону в налаштуваннях",
-        "context": " -> fa_hide_phone_in_settings",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_hide_stories",
-        "source_string": "Hide Stories",
-        "translation": "Приховати історії",
-        "context": " -> fa_hide_stories",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_mark_read_after_action",
-        "source_string": "β Read after action",
-        "translation": "β Прочитати після дії",
-        "context": " -> fa_mark_read_after_action",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_chats",
-        "source_string": "Chats",
-        "translation": "Чати",
-        "context": " -> fa_chats",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_recent_stickers_hidden",
-        "source_string": "Recent stickers: Hidden",
-        "translation": "Останні стікери: Приховано",
-        "context": " -> fa_recent_stickers_hidden",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_recent_stickers",
-        "source_string": "Recent stickers: %1",
-        "translation": "Останні наклейки: %1",
-        "context": " -> fa_recent_stickers",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_disable_custom_chat_background",
-        "source_string": "β Hide custom background of chat",
-        "translation": "β Приховати кастомне тло чату",
-        "context": " -> fa_disable_custom_chat_background",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_hide_open_webapp_button_chatlist",
-        "source_string": "Hide Open Webapp button",
-        "translation": "Приховати кнопку відкриття Webapp",
-        "context": " -> fa_hide_open_webapp_button_chatlist",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_hide_all_chats_folder",
-        "source_string": "Hide All Chats folder",
-        "translation": "Приховати папку Усі чати",
-        "context": " -> fa_hide_all_chats_folder",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_appearance",
-        "source_string": "Appearance",
-        "translation": "Зовнішній вигляд",
-        "context": " -> fa_appearance",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_rounding",
-        "source_string": "Rounding: %1",
-        "translation": "Округлення: %1",
-        "context": " -> fa_rounding",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_use_default_rounding",
-        "source_string": "Use Default Rounding",
-        "translation": "Використовувати округлення за замовчуванням",
-        "context": " -> fa_use_default_rounding",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_other",
-        "source_string": "Other",
-        "translation": "Інше",
-        "context": " -> fa_other",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_dc_status",
-        "source_string": "DC Status",
-        "translation": "Статус DC",
-        "context": " -> fa_dc_status",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_update_client",
-        "source_string": "Update FAgram",
-        "translation": "Оновити FAgram",
-        "context": " -> fa_update_client",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_restart_client",
-        "source_string": "Restart FAgram",
-        "translation": "Перезапустить FAgram",
-        "context": " -> fa_restart_client",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_quit_client",
-        "source_string": "Quit FAgram",
-        "translation": "Выйти из FAgram",
-        "context": " -> fa_quit_client",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_donate",
-        "source_string": "Donate",
-        "translation": "Донат",
-        "context": " -> fa_donate",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_choose_method",
-        "source_string": "Choose method",
-        "translation": "Виберіть метод",
-        "context": " -> fa_choose_method",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_ton_wallet",
-        "source_string": "TON Wallet",
-        "translation": "Гаманець TON",
-        "context": " -> fa_ton_wallet",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_address_copied",
-        "source_string": "Address copied",
-        "translation": "Адресу скопійовано",
-        "context": " -> fa_address_copied",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_thank_you",
-        "source_string": "Thank you.",
-        "translation": "Дякую.",
-        "context": " -> fa_thank_you",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_debug_logs",
-        "source_string": "Logs",
-        "translation": "Логи",
-        "context": " -> fa_debug_logs",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_debug_logs_on",
-        "source_string": "Logs on!",
-        "translation": "Логи включені!",
-        "context": " -> fa_debug_logs_on",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_debug_logs_off",
-        "source_string": "Logs off",
-        "translation": "Логи вимкнені",
-        "context": " -> fa_debug_logs_off",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_clean_debug_logs",
-        "source_string": "Clean Debug Logs",
-        "translation": "Очистити логи",
-        "context": " -> fa_clean_debug_logs",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_cleaning_debug_logs",
-        "source_string": "Cleaning...",
-        "translation": "Очищення...",
-        "context": " -> fa_cleaning_debug_logs",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_cleaned_debug_logs",
-        "source_string": "Debug Logs Cleaned!",
-        "translation": "Логи очищені!",
-        "context": " -> fa_cleaned_debug_logs",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_logs_dir",
-        "source_string": "You can find the logs in the DebugLogs folder which is located next to FAgram",
-        "translation": "Ти можеш знайти логі в папці DebugLogs, яка знаходиться поряд з FAgram",
-        "context": " -> fa_logs_dir",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_links",
-        "source_string": "Links",
-        "translation": "Посилання",
-        "context": " -> fa_links",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_channel",
-        "source_string": "Channel",
-        "translation": "Канал",
-        "context": " -> fa_channel",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_group",
-        "source_string": "Group",
-        "translation": "Чат",
-        "context": " -> fa_group",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_beta",
-        "source_string": "Beta",
-        "translation": "Бета",
-        "context": " -> fa_beta",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_source_code",
-        "source_string": "Source code",
-        "translation": "Початковий код",
-        "context": " -> fa_source_code",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_production_server",
-        "source_string": "Production Server (Standard)",
-        "translation": "Основний сервер (стандартний)",
-        "context": " -> fa_production_server",
-        "labels": "en.json",
-        "max_length": null
-    },
-    {
-        "identifier": "fa_test_server",
-        "source_string": "Test Server",
-        "translation": "Тестовий сервер",
-        "context": " -> fa_test_server",
-        "labels": "en.json",
-        "max_length": null
-    }
-]
+{
+    "fa_client_preferences": "Налаштування FAgram",
+    "fa_copy_id": "Копіювати ID",
+    "fa_id_copied": "ID скопійовано",
+    "fa_copy_registration_date": "Копіювати дату реєстрації",
+    "fa_copy_callback_data": "Копіювати Callback data",
+    "fa_registration_date": "Дата реєстрації",
+    "fa_not_found": "Не знайдено.",
+    "fa_settings_change_after_restart": "^ Ця настройка буде змінена після перезапуску клієнта ^",
+    "fa_categories": "Категорії",
+    "fa_general": "Загальні",
+    "fa_show_seconds_message": "Показувати секунди повідомлення",
+    "fa_disable_ads": "Вимкнути рекламу",
+    "fa_show_start_token": "Показувати стартовий токен у старті бота",
+    "fa_show_peer_ids": "Показувати Peer ID",
+    "fa_show_dc_ids": "Показати DC ID під Peer ID",
+    "fa_id_in_botapi_type": "Тип ID BotAPI",
+    "fa_show_registration_date": "Показати дату реєстрації",
+    "fa_hide_phone_in_settings": "Приховати номер телефону в налаштуваннях",
+    "fa_hide_stories": "Приховати історії",
+    "fa_mark_read_after_action": "β Прочитати після дії",
+    "fa_chats": "Чати",
+    "fa_recent_stickers_hidden": "Останні стікери: Приховано",
+    "fa_recent_stickers": "Останні наклейки: %1",
+    "fa_disable_custom_chat_background": "β Приховати кастомне тло чату",
+    "fa_hide_open_webapp_button_chatlist": "Приховати кнопку відкриття Webapp",
+    "fa_hide_all_chats_folder": "Приховати папку Усі чати",
+    "fa_appearance": "Зовнішній вигляд",
+    "fa_rounding": "Округлення: %1",
+    "fa_use_default_rounding": "Використовувати округлення за замовчуванням",
+    "fa_other": "Інше",
+    "fa_dc_status": "Статус DC",
+    "fa_update_client": "Оновити FAgram",
+    "fa_restart_client": "Перезапустить FAgram",
+    "fa_quit_client": "Выйти из FAgram",
+    "fa_donate": "Донат",
+    "fa_choose_method": "Виберіть метод",
+    "fa_ton_wallet": "Гаманець TON",
+    "fa_address_copied": "Адресу скопійовано",
+    "fa_thank_you": "Дякую.",
+    "fa_debug_logs": "Логи",
+    "fa_debug_logs_on": "Логи включені!",
+    "fa_debug_logs_off": "Логи вимкнені",
+    "fa_clean_debug_logs": "Очистити логи",
+    "fa_cleaning_debug_logs": "Очищення...",
+    "fa_cleaned_debug_logs": "Логи очищені!",
+    "fa_logs_dir": "Ти можеш знайти логі в папці DebugLogs, яка знаходиться поряд з FAgram",
+    "fa_links": "Посилання",
+    "fa_channel": "Канал",
+    "fa_group": "Чат",
+    "fa_beta": "Бета",
+    "fa_source_code": "Початковий код",
+    "fa_production_server": "Основний сервер (стандартний)",
+    "fa_test_server": "Тестовий сервер"
+}
