@@ -51,5 +51,6 @@
     "fa_beta": "Бета",
     "fa_source_code": "бастапқы код",
     "fa_production_server": "Негізгі сервер (стандарт)",
-    "fa_test_server": "Тест сервер"
+    "fa_test_server": "Тест сервер",
+    "fa_translation": "Аударма"
 }
