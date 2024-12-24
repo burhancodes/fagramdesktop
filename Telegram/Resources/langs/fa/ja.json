@@ -1,67 +1,426 @@
-{
-    "fa_client_preferences": "FAgram 設定",
-    
-    "fa_copy_id": "ID をコピー",
-    "fa_id_copied": "ID をコピーしました",
-
-    "fa_copy_registration_date": "登録日をコピー",
-    "fa_copy_callback_data": "コールバック データをコピー",
-    
-    "fa_registration_date": "登録日",
-    "fa_not_found": "見つかりません。",
-    "fa_settings_change_after_restart": "^ この設定はクライアントの再起動後に変更されます ^",
-    
-    "fa_categories": "カテゴリ",
-    
-    "fa_general": "一般",
-    "fa_show_seconds_message": "メッセージの秒数を表示",
-    "fa_disable_ads": "広告を無効にする",
-    "fa_show_start_token": "ボットで開始トークンを表示",
-    "fa_show_peer_ids": "ピア ID を表示",
-    "fa_show_dc_ids": "DC ID を表示ピア ID のラベル",
-    "fa_id_in_botapi_type": "BotAPI ID の種類",
-    "fa_show_registration_date": "登録日を表示",
-    "fa_hide_phone_in_settings": "設定で電話番号を非表示",
-    "fa_hide_stories": "ストーリーを非表示",
-    "fa_mark_read_after_action": "β アクション後の読み取り",
-    
-    "fa_chats": "チャット",
-    "fa_recent_stickers_hidden": "最近のステッカー: 非表示",
-    "fa_recent_stickers": "最近のステッカー: %1",
-    "fa_disable_custom_chat_background": "β チャットのカスタム背景を非表示にする",
-    "fa_hide_open_webapp_button_chatlist": "Webアプリを開くボタンを非表示にする",
-    "fa_hide_all_chats_folder": "すべてのチャット フォルダを非表示",
-    
-    "fa_appearance": "外観",
-    "fa_rounding": "切り上げ: %1",
-    "fa_use_default_rounding": "デフォルトの丸めを使用する",
-    
-    "fa_other": "その他",
-    "fa_dc_status": "DC ステータス",
-    "fa_update_client": "FAgram を更新",
-    "fa_restart_client": "FAgram を再起動",
-    "fa_quit_client": "FAgram を終了",
-    
-    "fa_donate": "寄付",
-    "fa_choose_method": "方法の選択",
-    "fa_ton_wallet": "TON ウォレット",
-    "fa_address_copied": "アドレスをコピーしました",
-    "fa_thank_you": "ありがとうございます。",
-    
-    "fa_debug_logs": "ログ",
-    "fa_debug_logs_on": "ログはオンです!",
-    "fa_debug_logs_off": "ログはオフになっています",
-    "fa_clean_debug_logs": "デバッグ ログをクリーンアップします",
-    "fa_cleaning_debug_logs": "クリーンアップしています...",
-    "fa_cleaned_debug_logs": "デバッグ ログをクリーンアップしました!",
-    "fa_logs_dir": "FAgram の隣にある DebugLogs フォルダーでログを見つけることができます",
-    
-    "fa_links": "リンク",
-    "fa_channel": "チャネル",
-    "fa_group": "グループ",
-    "fa_beta": "ベータ",
-    "fa_source_code": "ソース コード",
-
-    "fa_production_server": "本番サーバー (標準)",
-    "fa_test_server": "テストサーバー"
-}
+[
+    {
+        "identifier": "fa_client_preferences",
+        "source_string": "FAgram Preferences",
+        "translation": "FAgram 設定",
+        "context": " -> fa_client_preferences",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_copy_id",
+        "source_string": "Copy ID",
+        "translation": "ID をコピー",
+        "context": " -> fa_copy_id",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_id_copied",
+        "source_string": "ID copied",
+        "translation": "ID をコピーしました",
+        "context": " -> fa_id_copied",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_copy_registration_date",
+        "source_string": "Copy Registration date",
+        "translation": "登録日をコピー",
+        "context": " -> fa_copy_registration_date",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_copy_callback_data",
+        "source_string": "Copy Callback data",
+        "translation": "コールバック データをコピー",
+        "context": " -> fa_copy_callback_data",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_registration_date",
+        "source_string": "Registration date",
+        "translation": "登録日",
+        "context": " -> fa_registration_date",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_not_found",
+        "source_string": "Not found.",
+        "translation": "見つかりません。",
+        "context": " -> fa_not_found",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_settings_change_after_restart",
+        "source_string": "^ This setting will be changed after restart of the client ^",
+        "translation": "^ この設定はクライアントの再起動後に変更されます ^",
+        "context": " -> fa_settings_change_after_restart",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_categories",
+        "source_string": "Categories",
+        "translation": "カテゴリ",
+        "context": " -> fa_categories",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_general",
+        "source_string": "General",
+        "translation": "一般",
+        "context": " -> fa_general",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_show_seconds_message",
+        "source_string": "Show Seconds of Message",
+        "translation": "メッセージの秒数を表示",
+        "context": " -> fa_show_seconds_message",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_disable_ads",
+        "source_string": "Disable ads",
+        "translation": "広告を無効にする",
+        "context": " -> fa_disable_ads",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_show_start_token",
+        "source_string": "Show Start Token in Bot",
+        "translation": "ボットで開始トークンを表示",
+        "context": " -> fa_show_start_token",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_show_peer_ids",
+        "source_string": "Show Peer IDs",
+        "translation": "ピア ID を表示",
+        "context": " -> fa_show_peer_ids",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_show_dc_ids",
+        "source_string": "Show DC IDs in label of peer ids",
+        "translation": "DC ID を表示ピア ID のラベル",
+        "context": " -> fa_show_dc_ids",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_id_in_botapi_type",
+        "source_string": "BotAPI IDs type",
+        "translation": "BotAPI ID の種類",
+        "context": " -> fa_id_in_botapi_type",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_show_registration_date",
+        "source_string": "Show Registration Date",
+        "translation": "登録日を表示",
+        "context": " -> fa_show_registration_date",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_hide_phone_in_settings",
+        "source_string": "Hide Phone number in Settings",
+        "translation": "設定で電話番号を非表示",
+        "context": " -> fa_hide_phone_in_settings",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_hide_stories",
+        "source_string": "Hide Stories",
+        "translation": "ストーリーを非表示",
+        "context": " -> fa_hide_stories",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_mark_read_after_action",
+        "source_string": "β Read after action",
+        "translation": "β アクション後の読み取り",
+        "context": " -> fa_mark_read_after_action",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_chats",
+        "source_string": "Chats",
+        "translation": "チャット",
+        "context": " -> fa_chats",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_recent_stickers_hidden",
+        "source_string": "Recent stickers: Hidden",
+        "translation": "最近のステッカー: 非表示",
+        "context": " -> fa_recent_stickers_hidden",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_recent_stickers",
+        "source_string": "Recent stickers: %1",
+        "translation": "最近のステッカー: %1",
+        "context": " -> fa_recent_stickers",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_disable_custom_chat_background",
+        "source_string": "β Hide custom background of chat",
+        "translation": "β チャットのカスタム背景を非表示にする",
+        "context": " -> fa_disable_custom_chat_background",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_hide_open_webapp_button_chatlist",
+        "source_string": "Hide Open Webapp button",
+        "translation": "Webアプリを開くボタンを非表示にする",
+        "context": " -> fa_hide_open_webapp_button_chatlist",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_hide_all_chats_folder",
+        "source_string": "Hide All Chats folder",
+        "translation": "すべてのチャット フォルダを非表示",
+        "context": " -> fa_hide_all_chats_folder",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_appearance",
+        "source_string": "Appearance",
+        "translation": "外観",
+        "context": " -> fa_appearance",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_rounding",
+        "source_string": "Rounding: %1",
+        "translation": "切り上げ: %1",
+        "context": " -> fa_rounding",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_use_default_rounding",
+        "source_string": "Use Default Rounding",
+        "translation": "デフォルトの丸めを使用する",
+        "context": " -> fa_use_default_rounding",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_other",
+        "source_string": "Other",
+        "translation": "その他",
+        "context": " -> fa_other",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_dc_status",
+        "source_string": "DC Status",
+        "translation": "DC ステータス",
+        "context": " -> fa_dc_status",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_update_client",
+        "source_string": "Update FAgram",
+        "translation": "FAgram を更新",
+        "context": " -> fa_update_client",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_restart_client",
+        "source_string": "Restart FAgram",
+        "translation": "FAgram を再起動",
+        "context": " -> fa_restart_client",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_quit_client",
+        "source_string": "Quit FAgram",
+        "translation": "FAgram を終了",
+        "context": " -> fa_quit_client",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_donate",
+        "source_string": "Donate",
+        "translation": "寄付",
+        "context": " -> fa_donate",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_choose_method",
+        "source_string": "Choose method",
+        "translation": "方法の選択",
+        "context": " -> fa_choose_method",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_ton_wallet",
+        "source_string": "TON Wallet",
+        "translation": "TON ウォレット",
+        "context": " -> fa_ton_wallet",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_address_copied",
+        "source_string": "Address copied",
+        "translation": "アドレスをコピーしました",
+        "context": " -> fa_address_copied",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_thank_you",
+        "source_string": "Thank you.",
+        "translation": "ありがとうございます。",
+        "context": " -> fa_thank_you",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_debug_logs",
+        "source_string": "Logs",
+        "translation": "ログ",
+        "context": " -> fa_debug_logs",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_debug_logs_on",
+        "source_string": "Logs on!",
+        "translation": "ログはオンです!",
+        "context": " -> fa_debug_logs_on",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_debug_logs_off",
+        "source_string": "Logs off",
+        "translation": "ログはオフになっています",
+        "context": " -> fa_debug_logs_off",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_clean_debug_logs",
+        "source_string": "Clean Debug Logs",
+        "translation": "デバッグ ログをクリーンアップします",
+        "context": " -> fa_clean_debug_logs",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_cleaning_debug_logs",
+        "source_string": "Cleaning...",
+        "translation": "クリーンアップしています...",
+        "context": " -> fa_cleaning_debug_logs",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_cleaned_debug_logs",
+        "source_string": "Debug Logs Cleaned!",
+        "translation": "デバッグ ログをクリーンアップしました!",
+        "context": " -> fa_cleaned_debug_logs",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_logs_dir",
+        "source_string": "You can find the logs in the DebugLogs folder which is located next to FAgram",
+        "translation": "FAgram の隣にある DebugLogs フォルダーでログを見つけることができます",
+        "context": " -> fa_logs_dir",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_links",
+        "source_string": "Links",
+        "translation": "リンク",
+        "context": " -> fa_links",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_channel",
+        "source_string": "Channel",
+        "translation": "チャネル",
+        "context": " -> fa_channel",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_group",
+        "source_string": "Group",
+        "translation": "グループ",
+        "context": " -> fa_group",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_beta",
+        "source_string": "Beta",
+        "translation": "ベータ",
+        "context": " -> fa_beta",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_source_code",
+        "source_string": "Source code",
+        "translation": "ソース コード",
+        "context": " -> fa_source_code",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_production_server",
+        "source_string": "Production Server (Standard)",
+        "translation": "本番サーバー (標準)",
+        "context": " -> fa_production_server",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "fa_test_server",
+        "source_string": "Test Server",
+        "translation": "テストサーバー",
+        "context": " -> fa_test_server",
+        "labels": "en.json",
+        "max_length": null
+    }
+]
