@@ -18,12 +18,12 @@ on:
 jobs:
 
   windows:
-    name: Windows Release Build
+    name: Windows OTA Build
     runs-on: windows-latest
 
     strategy:
       matrix:
-        arch: [Win32, x64]
+        arch: [x64]
 
     env:
       UPLOAD_ARTIFACT: "true"
