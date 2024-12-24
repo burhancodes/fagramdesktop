@@ -135,9 +135,9 @@ jobs:
       - name: Move artifacts
         if: (env.UPLOAD_ARTIFACT == 'true') || (github.ref == 'refs/heads/nightly')
         run: |
-          set OUT=%TBUILD%\%REPO_NAME%\out
+          set OUT=%TBUILD%
           mkdir artifact
-          move %OUT%\Packer.exe artifact/
+          move %OUT%\* artifact/
 
       - uses: actions/upload-artifact@v4
         name: Upload Release Artifacts
