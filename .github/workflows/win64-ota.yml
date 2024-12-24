@@ -30,13 +30,13 @@ jobs:
           echo TBUILD=%GITHUB_WORKSPACE%\TBuild>>%GITHUB_ENV%
 
           echo Creating DesktopPrivate directory...
-          if not exist "%GITHUB_WORKSPACE%\DesktopPrivate" (
-            mkdir "%GITHUB_WORKSPACE%\DesktopPrivate"
+          if not exist "%GITHUB_WORKSPACE%\TBuild\DesktopPrivate" (
+            mkdir "%GITHUB_WORKSPACE%\TBuild\DesktopPrivate"
           )
 
           echo Creating packer_private.h file...
-          echo #pragma once > "%GITHUB_WORKSPACE%\DesktopPrivate\packer_private.h"
-          echo const char *PrivateKey = "%PRIVATE_KEY%;" >> "%GITHUB_WORKSPACE%\DesktopPrivate\packer_private.h"
+          echo #pragma once > "%GITHUB_WORKSPACE%\TBuild\DesktopPrivate\packer_private.h"
+          echo const char *PrivateKey = "%PRIVATE_KEY%;" >> "%GITHUB_WORKSPACE%\TBuild\DesktopPrivate\packer_private.h"
         env:
           PRIVATE_KEY: ${{ secrets.RSA_PRIVATE_KEY }}
 
