@@ -101,8 +101,8 @@ jobs:
           call configure.bat ^ 
           %TDESKTOP_BUILD_ARCH% ^
           %TDESKTOP_BUILD_API% ^
-          -D CMAKE_C_FLAGS="/bigobj /WX-" ^ 
-          -D CMAKE_CXX_FLAGS="/bigobj /WX-" ^ 
+          -D CMAKE_C_FLAGS="/bigobj /WX" ^
+          -D CMAKE_CXX_FLAGS="/bigobj /WX" ^ 
           -D DESKTOP_APP_DISABLE_AUTOUPDATE=NO ^ 
           -D DESKTOP_APP_DISABLE_CRASH_REPORTS=OFF ^ 
           -D DESKTOP_APP_NO_PDB=ON ^
