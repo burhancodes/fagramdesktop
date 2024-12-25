@@ -128,7 +128,7 @@ jobs:
           -D DESKTOP_APP_DISABLE_CRASH_REPORTS=OFF ^
           -D DESKTOP_APP_NO_PDB=ON ^
           -D DESKTOP_APP_DISABLE_AUTOUPDATE=NO ^
-          -D DESKTOP_APP_PRIVATE_TARGET=win64 ^
+          -D DESKTOP_APP_SPECIAL_TARGET=YES
 
           cmake --build ..\out --config Release --parallel
 
