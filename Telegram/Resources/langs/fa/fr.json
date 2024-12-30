@@ -52,5 +52,6 @@
     "fa_source_code": "Code source",
     "fa_production_server": "Serveur de production (Standard)",
     "fa_test_server": "Serveur de test",
-    "fa_translation": "Traduction"
+    "fa_translation": "Traduction",
+    "fa_force_snow": "Force snow"
 }
