@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "window/window_main_menu.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "apiwrap.h"
 #include "base/qt_signal_producer.h"
 #include "boxes/about_box.h"
@@ -496,7 +498,7 @@ MainMenu::MainMenu(
 
 	initResetScaleButton();
 
-	if (CanCheckSpecialEvent() && CheckSpecialEvent()) {
+	if ((CanCheckSpecialEvent() && CheckSpecialEvent()) || FASettings::JsonSettings::GetBool("force_snow")) {
 		const auto snowLifetime = lifetime().make_state<rpl::lifetime>();
 		const auto rebuild = [=] {
 			const auto snowRaw = Ui::CreateChild<Ui::RpWidget>(this);

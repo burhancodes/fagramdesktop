@@ -105,6 +105,8 @@ namespace Settings {
         Ui::AddDivider(container);
 		RestartSettingsMenuJsonSwitch(fa_use_default_rounding, use_default_rounding)
 		Ui::AddDividerText(container, FAlang::RplTranslate(QString("fa_settings_change_after_restart")));
+        Ui::AddDivider(container);
+		SettingsMenuJsonSwitch(fa_force_snow, force_snow)
     }
 
     void FAAppearance::SetupFAAppearance(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
