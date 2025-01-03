@@ -49,6 +49,12 @@ The latest version is available for
 * Hunspell ([LGPL](https://github.com/hunspell/hunspell/blob/master/COPYING.LESSER))
 * Ada ([Apache License 2.0](https://github.com/ada-url/ada/blob/main/LICENSE-APACHE))
 
+## <h2 border="none"><img src="https://github.com/hikariatama/assets/raw/master/981-consultation-flat.webp" height="54" align="middle">Translation</h2>
+
+> You can help to translate FAgram.
+
+* <h3><b><a href="https://crowdin.com/project/fagram">Crowdin</a></b></h3>
+
 ## <h2><img src="https://github.com/hikariatama/assets/raw/master/1326-command-window-line-flat.webp" height="50" align="middle"> Build instructions</h2>
 
 * Windows [32-bit](docs/building-win.md) [(64-bit)](docs/building-win-x64.md)
