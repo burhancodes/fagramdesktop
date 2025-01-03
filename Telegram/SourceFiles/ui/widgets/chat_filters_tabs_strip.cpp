@@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include "boxes/filters/edit_filter_box.h"
 #include "boxes/premium_limits_box.h"
 #include "core/application.h"
+#include "core/ui_integration.h"
 #include "data/data_chat_filters.h"
 #include "data/data_peer_values.h" // Data::AmPremiumValue.
 #include "data/data_premium_limits.h"
@@ -20,6 +21,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include "lang/lang_keys.h"
 #include "main/main_session.h"
 #include "settings/settings_folders.h"
+#include "ui/widgets/menu/menu_action.h"
+#include "ui/power_saving.h"
 #include "ui/ui_utility.h"
 #include "ui/widgets/chat_filters_tabs_slider_reorder.h"
 #include "ui/widgets/menu/menu_add_action_callback_factory.h"
@@ -42,6 +45,7 @@ struct State final {
 	Ui::Animations::Simple animation;
 	std::optional<FilterId> lastFilterId = std::nullopt;
 	rpl::lifetime rebuildLifetime;
+	rpl::lifetime reorderLifetime;
 	base::unique_qptr<Ui::PopupMenu> menu;
 
 	Api::RemoveComplexChatFilter removeApi;
@@ -147,17 +151,38 @@ void ShowFiltersListMenu(
 	const auto premiumFrom = (reorderAll ? 0 : 1) + maxLimit;
 
 	for (auto i = 0; i < list.size(); ++i) {
-		const auto &filter = list[i];
-		auto text = filter.title().isEmpty()
+		const auto title = list[i].title();
+		const auto text = title.text.empty()
 			? tr::lng_filters_all_short(tr::now)
-			: filter.title();
-
-		const auto action = state->menu->addAction(std::move(text), [=] {
+			: title.text.text;
+		const auto callback = [=] {
 			if (i != active) {
 				changeActive(i);
 			}
-		}, (i == active) ? &st::mediaPlayerMenuCheck : nullptr);
+		};
+		const auto icon = (i == active)
+			? &st::mediaPlayerMenuCheck
+			: nullptr;
+		const auto action = Ui::Menu::CreateAction(
+			state->menu.get(),
+			text,
+			callback);
+		auto item = base::make_unique_q<Ui::Menu::Action>(
+			state->menu.get(),
+			state->menu->st().menu,
+			action,
+			icon,
+			icon);
 		action->setEnabled(i < premiumFrom);
+		if (!title.text.empty()) {
+			const auto context = Core::MarkedTextContext{
+				.session = session,
+				.customEmojiRepaint = [raw = item.get()] { raw->update(); },
+				.customEmojiLoopLimit = title.isStatic ? -1 : 0,
+			};
+			item->setMarkedText(title.text, QString(), context);
+		}
+		state->menu->addAction(std::move(item));
 	}
 	session->data().chatsFilters().changed() | rpl::start_with_next([=] {
 		state->menu->hideMenu();
@@ -176,10 +201,10 @@ not_null<Ui::RpWidget*> AddChatFiltersTabsStrip(
 		not_null<Ui::RpWidget*> parent,
 		not_null<Main::Session*> session,
 		Fn<void(FilterId)> choose,
+		ChatHelpers::PauseReason pauseLevel,
 		Window::SessionController *controller,
 		bool trackActiveFilterAndUnreadAndReorder) {
 
-	const auto &scrollSt = st::defaultScrollArea;
 	const auto wrap = Ui::CreateChild<Ui::SlideWrap<Ui::RpWidget>>(
 		parent,
 		object_ptr<Ui::RpWidget>(parent));
@@ -191,7 +216,10 @@ not_null<Ui::RpWidget*> AddChatFiltersTabsStrip(
 		}
 	}
 	const auto container = wrap->entity();
-	const auto scroll = Ui::CreateChild<Ui::ScrollArea>(container, scrollSt);
+	const auto scroll = Ui::CreateChild<Ui::ScrollArea>(
+		container,
+		st::dialogsTabsScroll,
+		true);
 	const auto slider = scroll->setOwnedWidget(
 		object_ptr<Ui::ChatsFiltersTabs>(
 			parent,
@@ -199,6 +227,33 @@ not_null<Ui::RpWidget*> AddChatFiltersTabsStrip(
 				? st::dialogsSearchTabs
 				: st::chatsFiltersTabs));
 	const auto state = wrap->lifetime().make_state<State>();
+	const auto reassignUnreadValue = [=] {
+		const auto &list = session->data().chatsFilters().list();
+		auto includeMuted = Data::IncludeMutedCounterFoldersValue();
+		for (auto i = 0; i < list.size(); i++) {
+			rpl::combine(
+				Data::UnreadStateValue(session, list[i].id()),
+				rpl::duplicate(includeMuted)
+			) | rpl::start_with_next([=](
+					const Dialogs::UnreadState &state,
+					bool includeMuted) {
+				const auto chats = state.chatsTopic
+					? (state.chats - state.chatsTopic + state.forums)
+					: state.chats;
+				const auto chatsMuted = state.chatsTopicMuted
+					? (state.chatsMuted
+						- state.chatsTopicMuted
+						+ state.forumsMuted)
+					: state.chatsMuted;
+				const auto muted = (chatsMuted + state.marksMuted);
+				const auto count = (chats + state.marks)
+					- (includeMuted ? 0 : muted);
+				const auto isMuted = includeMuted && (count == muted);
+				slider->setUnreadCount(i, count, isMuted);
+				slider->fitWidthToSections();
+			}, state->reorderLifetime);
+		}
+	};
 	if (trackActiveFilterAndUnreadAndReorder) {
 		using Reorder = Ui::ChatsFiltersTabsReorder;
 		state->reorder = std::make_unique<Reorder>(slider, scroll);
@@ -241,6 +296,8 @@ not_null<Ui::RpWidget*> AddChatFiltersTabsStrip(
 				});
 				if (data.state == Reorder::State::Applied) {
 					applyReorder(data.oldPosition, data.newPosition);
+					state->reorderLifetime.destroy();
+					reassignUnreadValue();
 				}
 			}
 		}, slider->lifetime());
@@ -293,14 +350,25 @@ not_null<Ui::RpWidget*> AddChatFiltersTabsStrip(
 		if ((list.size() <= 1 && !slider->width()) || state->ignoreRefresh) {
 			return;
 		}
+		const auto context = Core::MarkedTextContext{
+			.session = session,
+			.customEmojiRepaint = [=] { slider->update(); },
+		};
+		const auto paused = [=] {
+			return On(PowerSaving::kEmojiChat)
+				|| controller->isGifPausedAtLeastFor(pauseLevel);
+		};
 		const auto sectionsChanged = slider->setSectionsAndCheckChanged(
 			ranges::views::all(
 				list
 			) | ranges::views::transform([](const Data::ChatFilter &filter) {
-				return filter.title().isEmpty()
-					? tr::lng_filters_all_short(tr::now)
-					: filter.title();
-			}) | ranges::to_vector);
+				auto title = filter.title();
+				return title.text.empty()
+					? TextWithEntities{ tr::lng_filters_all_short(tr::now) }
+					: title.isStatic
+					? Data::ForceCustomEmojiStatic(title.text)
+					: title.text;
+			}) | ranges::to_vector, context, paused);
 		if (!sectionsChanged) {
 			return;
 		}
@@ -329,30 +397,7 @@ not_null<Ui::RpWidget*> AddChatFiltersTabsStrip(
 			}
 		}
 		if (trackActiveFilterAndUnreadAndReorder) {
-			auto includeMuted = Data::IncludeMutedCounterFoldersValue();
-			for (auto i = 0; i < list.size(); i++) {
-				rpl::combine(
-					Data::UnreadStateValue(session, list[i].id()),
-					rpl::duplicate(includeMuted)
-				) | rpl::start_with_next([=](
-						const Dialogs::UnreadState &state,
-						bool includeMuted) {
-					const auto chats = state.chatsTopic
-						? (state.chats - state.chatsTopic + state.forums)
-						: state.chats;
-					const auto chatsMuted = state.chatsTopicMuted
-						? (state.chatsMuted
-							- state.chatsTopicMuted
-							+ state.forumsMuted)
-						: state.chatsMuted;
-					const auto muted = (chatsMuted + state.marksMuted);
-					const auto count = (chats + state.marks)
-						- (includeMuted ? 0 : muted);
-					const auto isMuted = includeMuted && (count == muted);
-					slider->setUnreadCount(i, count, isMuted);
-					slider->fitWidthToSections();
-				}, state->rebuildLifetime);
-			}
+			reassignUnreadValue();
 		}
 		[&] {
 			const auto lookingId = state->lastFilterId.value_or(list[0].id());
@@ -447,7 +492,7 @@ not_null<Ui::RpWidget*> AddChatFiltersTabsStrip(
 		parent->widthValue() | rpl::filter(rpl::mappers::_1 > 0),
 		slider->heightValue() | rpl::filter(rpl::mappers::_1 > 0)
 	) | rpl::start_with_next([=](int w, int h) {
-		scroll->resize(w, h + scrollSt.deltax * 4);
+		scroll->resize(w, h);
 		container->resize(w, h);
 		wrap->resize(w, h);
 	}, wrap->lifetime());

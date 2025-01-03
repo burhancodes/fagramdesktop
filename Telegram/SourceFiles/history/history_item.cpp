@@ -7,6 +7,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "history/history_item.h"
 
+#include "api/api_premium.h"
 #include "api/api_sensitive_content.h"
 #include "lang/lang_keys.h"
 #include "mainwidget.h"
@@ -59,6 +60,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "data/data_channel.h"
 #include "data/data_chat.h"
 #include "data/data_game.h"
+#include "data/data_histories.h"
 #include "data/data_history_messages.h"
 #include "data/data_user.h"
 #include "data/data_group_call.h" // Data::GroupCall::id().
@@ -136,6 +138,9 @@ template <typename T>
 		HistoryItemCommonFields fields,
 		not_null<History*> history,
 		not_null<HistoryItem*> original) {
+	if (fields.flags & MessageFlag::FakeHistoryItem) {
+		return fields;
+	}
 	fields.flags |= NewForwardedFlags(history->peer, fields.from, original);
 	return fields;
 }
@@ -446,6 +451,12 @@ HistoryItem::HistoryItem(
 			Get<HistoryMessageFactcheck>()->data = check;
 		}
 	}
+
+	if (const auto until = data.vreport_delivery_until_date()) {
+		if (base::unixtime::now() < TimeId(until->v)) {
+			history->owner().histories().reportDelivery(this);
+		}
+	}
 }
 
 HistoryItem::HistoryItem(
@@ -459,15 +470,16 @@ HistoryItem::HistoryItem(
 	.from = data.vfrom_id() ? peerFromMTP(*data.vfrom_id()) : PeerId(0),
 	.date = data.vdate().v,
 }) {
-	if (data.vaction().type() != mtpc_messageActionPhoneCall) {
-		createServiceFromMtp(data);
-	} else {
+	data.vaction().match([&](const MTPDmessageActionPhoneCall &data) {
 		createComponents(CreateConfig());
 		_media = std::make_unique<Data::MediaCall>(
 			this,
-			Data::ComputeCallData(data.vaction().c_messageActionPhoneCall()));
+			Data::ComputeCallData(data));
 		setTextValue({});
-	}
+	}, [&](const auto &) {
+		createServiceFromMtp(data);
+	});
+	setReactions(data.vreactions());
 	applyTTL(data);
 }
 
@@ -509,7 +521,8 @@ HistoryItem::HistoryItem(
 	auto config = CreateConfig();
 
 	const auto originalMedia = original->media();
-	const auto dropForwardInfo = original->computeDropForwardedInfo();
+	const auto dropForwardInfo = fields.ignoreForwardFrom
+		|| original->computeDropForwardedInfo();
 	const auto topicRootId = fields.replyTo.topicRootId;
 	config.reply.messageId = config.reply.topMessageId = topicRootId;
 	config.reply.topicPost = (topicRootId != 0) ? 1 : 0;
@@ -597,9 +610,22 @@ HistoryItem::HistoryItem(
 		}
 	}
 
-	setText(dropForwardInfo
+	const auto dropText = fields.ignoreForwardCaptions
+		&& _media
+		&& (_media->photo() || _media->document())
+		&& !_media->webpage();
+	setText(dropText
+		? TextWithEntities()
+		: dropForwardInfo
 		? DropDisallowedCustomEmoji(history->peer, original->originalText())
 		: original->originalText());
+
+	if (fields.groupedId) {
+		setGroupId(MessageGroupId::FromRaw(
+			history->peer->id,
+			fields.groupedId,
+			_flags & MessageFlag::IsOrWasScheduled));
+	}
 }
 
 HistoryItem::HistoryItem(
@@ -935,10 +961,16 @@ void HistoryItem::resolveDependent(not_null<HistoryMessageReply*> reply) {
 	if (!reply->acquireResolve()) {
 		return;
 	} else if (const auto messageId = reply->messageId()) {
+		if (Data::IsScheduledMsgId(messageId)) {
+			reply->updateData(this);
+			if (!reply->acquireResolve()) {
+				return;
+			}
+		}
 		RequestDependentMessageItem(
 			this,
 			reply->externalPeerId(),
-			reply->messageId());
+			messageId);
 	} else if (reply->storyId()) {
 		RequestDependentMessageStory(
 			this,
@@ -2011,6 +2043,7 @@ void HistoryItem::applyEditionToHistoryCleared() {
 			MTPMessageReplyHeader(),
 			MTP_int(date()),
 			MTP_messageActionHistoryClear(),
+			MTPMessageReactions(),
 			MTPint() // ttl_period
 		).c_messageService());
 }
@@ -2564,8 +2597,10 @@ void HistoryItem::translationDone(LanguageId to, TextWithEntities result) {
 }
 
 bool HistoryItem::canReact() const {
-	if (!isRegular() || isService()) {
+	if (!isRegular()) {
 		return false;
+	} else if (isService()) {
+		return _flags & MessageFlag::ReactionsAllowed;
 	} else if (const auto media = this->media()) {
 		if (media->call()) {
 			return false;
@@ -2675,6 +2710,10 @@ std::vector<Data::MessageReaction> HistoryItem::reactionsWithLocal() const {
 
 int HistoryItem::reactionsPaidScheduled() const {
 	return _reactions ? _reactions->scheduledPaid() : 0;
+}
+
+bool HistoryItem::reactionsLocalAnonymous() const {
+	return _reactions ? _reactions->localPaidAnonymous() : false;
 }
 
 bool HistoryItem::reactionsAreTags() const {
@@ -5320,19 +5359,28 @@ void HistoryItem::setServiceMessageByAction(const MTPmessageAction &action) {
 			&_history->session(),
 			amount,
 			currency);
-		result.links.push_back(peer->createOpenLink());
-		result.text = isSelf
-			? tr::lng_action_gift_sent(tr::now,
-				lt_cost,
-				cost,
-				Ui::Text::WithEntities)
-			: tr::lng_action_gift_received(
+		const auto anonymous = _from->isServiceUser();
+		if (anonymous) {
+			result.text = tr::lng_action_gift_received_anonymous(
 				tr::now,
-				lt_user,
-				Ui::Text::Link(peer->shortName(), 1), // Link 1.
 				lt_cost,
 				cost,
 				Ui::Text::WithEntities);
+		} else {
+			result.links.push_back(peer->createOpenLink());
+			result.text = isSelf
+				? tr::lng_action_gift_sent(tr::now,
+					lt_cost,
+					cost,
+					Ui::Text::WithEntities)
+				: tr::lng_action_gift_received(
+					tr::now,
+					lt_user,
+					Ui::Text::Link(peer->shortName(), 1), // Link 1.
+					lt_cost,
+					cost,
+					Ui::Text::WithEntities);
+		}
 		return result;
 	};
 
@@ -5357,19 +5405,44 @@ void HistoryItem::setServiceMessageByAction(const MTPmessageAction &action) {
 		auto result = PreparedServiceText();
 		const auto isSelf = _from->isSelf();
 		const auto peer = isSelf ? _history->peer : _from;
-		const auto stars = action.vgift().data().vstars().v;
+		const auto stars = action.vgift().match([&](
+				const MTPDstarGift &data) {
+			return uint64(data.vstars().v)
+				+ uint64(action.vupgrade_stars().value_or_empty());
+		}, [](const MTPDstarGiftUnique &) {
+			return uint64();
+		});
+		if (!stars) {
+			if (!isSelf) {
+				result.links.push_back(peer->createOpenLink());
+			}
+			result.text = isSelf
+				? tr::lng_action_gift_unique_sent(
+					tr::now,
+					Ui::Text::WithEntities)
+				: tr::lng_action_gift_unique_received(
+					tr::now,
+					lt_user,
+					Ui::Text::Link(peer->shortName(), 1), // Link 1.
+					Ui::Text::WithEntities);
+			return result;
+		}
 		const auto cost = TextWithEntities{
 			tr::lng_action_gift_for_stars(tr::now, lt_count, stars),
 		};
 		const auto anonymous = _from->isServiceUser();
-		if (anonymous) {
-			result.text = tr::lng_action_gift_received_anonymous(
-				tr::now,
-				lt_cost,
-				cost,
-				Ui::Text::WithEntities);
+		if (anonymous || _history->peer->isSelf()) {
+			result.text = (anonymous
+				? tr::lng_action_gift_received_anonymous
+				: tr::lng_action_gift_self_bought)(
+					tr::now,
+					lt_cost,
+					cost,
+					Ui::Text::WithEntities);
 		} else {
-			result.links.push_back(peer->createOpenLink());
+			if (!isSelf) {
+				result.links.push_back(peer->createOpenLink());
+			}
 			result.text = isSelf
 				? tr::lng_action_gift_sent(tr::now,
 					lt_cost,
@@ -5383,6 +5456,30 @@ void HistoryItem::setServiceMessageByAction(const MTPmessageAction &action) {
 					cost,
 					Ui::Text::WithEntities);
 		}
+		return result;
+	};
+
+	auto prepareStarGiftUnique = [&](
+			const MTPDmessageActionStarGiftUnique &action) {
+		auto result = PreparedServiceText();
+		const auto isSelf = _from->isSelf();
+		const auto peer = isSelf ? _history->peer : _from;
+		result.links.push_back(peer->createOpenLink());
+		result.text = _history->peer->isSelf()
+			? tr::lng_action_gift_upgraded_self(
+				tr::now,
+				Ui::Text::WithEntities)
+			: (action.is_upgrade()
+				? (isSelf
+					? tr::lng_action_gift_upgraded_mine
+					: tr::lng_action_gift_upgraded)
+				: (isSelf
+					? tr::lng_action_gift_transferred_mine
+					: tr::lng_action_gift_transferred))(
+						tr::now,
+						lt_user,
+						Ui::Text::Link(peer->shortName(), 1), // Link 1.
+						Ui::Text::WithEntities);
 		return result;
 	};
 
@@ -5432,6 +5529,7 @@ void HistoryItem::setServiceMessageByAction(const MTPmessageAction &action) {
 		prepareGiftStars,
 		prepareGiftPrize,
 		prepareStarGift,
+		prepareStarGiftUnique,
 		PrepareEmptyText<MTPDmessageActionRequestedPeerSentMe>,
 		PrepareErrorText<MTPDmessageActionEmpty>));
 
@@ -5481,17 +5579,13 @@ void HistoryItem::applyAction(const MTPMessageAction &action) {
 			}
 		}
 	}, [&](const MTPDmessageActionGiftPremium &data) {
+		const auto session = &history()->session();
 		_media = std::make_unique<Data::MediaGiftBox>(
 			this,
 			_from,
 			Data::GiftCode{
 				.message = (data.vmessage()
-					? TextWithEntities{
-						.text = qs(data.vmessage()->data().vtext()),
-						.entities = Api::EntitiesFromMTP(
-							&history()->session(),
-							data.vmessage()->data().ventities().v),
-					}
+					? Api::ParseTextWithEntities(session, *data.vmessage())
 					: TextWithEntities()),
 				.count = data.vmonths().v,
 				.type = Data::GiftType::Premium,
@@ -5563,12 +5657,8 @@ void HistoryItem::applyAction(const MTPMessageAction &action) {
 				.unclaimed = data.is_unclaimed(),
 			});
 	}, [&](const MTPDmessageActionStarGift &data) {
-		const auto &gift = data.vgift().data();
-		const auto document = history()->owner().processDocument(
-			gift.vsticker());
 		using Fields = Data::GiftCode;
-		_media = std::make_unique<Data::MediaGiftBox>(this, _from, Fields{
-			.document = document->sticker() ? document.get() : nullptr,
+		auto fields = Fields{
 			.message = (data.vmessage()
 				? TextWithEntities{
 					.text = qs(data.vmessage()->data().vtext()),
@@ -5577,15 +5667,56 @@ void HistoryItem::applyAction(const MTPMessageAction &action) {
 						data.vmessage()->data().ventities().v),
 				}
 				: TextWithEntities()),
+			.upgradeMsgId = data.vupgrade_msg_id().value_or_empty(),
 			.starsConverted = int(data.vconvert_stars().value_or_empty()),
-			.limitedCount = gift.vavailability_total().value_or_empty(),
-			.limitedLeft = gift.vavailability_remains().value_or_empty(),
-			.count = int(gift.vstars().v),
+			.starsUpgradedBySender = int(
+				data.vupgrade_stars().value_or_empty()),
 			.type = Data::GiftType::StarGift,
+			.upgradable = data.is_can_upgrade(),
 			.anonymous = data.is_name_hidden(),
 			.converted = data.is_converted(),
+			.upgraded = data.is_upgraded(),
 			.saved = data.is_saved(),
-		});
+		};
+		if (auto gift = Api::FromTL(&history()->session(), data.vgift())) {
+			fields.stargiftId = gift->id;
+			fields.starsToUpgrade = gift->starsToUpgrade;
+			fields.document = gift->document;
+			fields.limitedCount = gift->limitedCount;
+			fields.limitedLeft = gift->limitedLeft;
+			fields.count = gift->stars;
+			fields.unique = gift->unique;
+		}
+		_media = std::make_unique<Data::MediaGiftBox>(
+			this,
+			_from,
+			std::move(fields));
+	}, [&](const MTPDmessageActionStarGiftUnique &data) {
+		using Fields = Data::GiftCode;
+		auto fields = Fields{
+			.type = Data::GiftType::StarGift,
+			.transferred = data.is_transferred(),
+			.refunded = data.is_refunded(),
+			.upgrade = data.is_upgrade(),
+			.saved = data.is_saved(),
+		};
+		if (auto gift = Api::FromTL(&history()->session(), data.vgift())) {
+			fields.stargiftId = gift->id;
+			fields.document = gift->document;
+			fields.limitedCount = gift->limitedCount;
+			fields.limitedLeft = gift->limitedLeft;
+			fields.count = gift->stars;
+			fields.unique = std::move(gift->unique);
+			if (const auto unique = fields.unique.get()) {
+				unique->starsForTransfer
+					= data.vtransfer_stars().value_or(-1);
+				unique->exportAt = data.vcan_export_at().value_or_empty();
+			}
+		}
+		_media = std::make_unique<Data::MediaGiftBox>(
+			this,
+			_from,
+			std::move(fields));
 	}, [](const auto &) {
 	});
 }

@@ -417,7 +417,7 @@ void InnerWidget::fill() {
 		session->data().customEmojiManager().registerInternalEmoji(
 			st::topicButtonArrow,
 			st::channelEarnLearnArrowMargins,
-			false));
+			true));
 	const auto addAboutWithLearn = [&](const tr::phrase<lngtag_link> &text) {
 		auto label = Ui::CreateLabelWithCustomEmoji(
 			container,
@@ -954,10 +954,7 @@ void InnerWidget::fill() {
 			),
 			rpl::duplicate(availableBalanceValue),
 			rpl::duplicate(dateValue),
-			std::move(dateValue) | rpl::map([=](const QDateTime &dt) {
-				return !dt.isNull()
-					|| (!_state.creditsEarn.isWithdrawalEnabled);
-			}),
+			_state.creditsEarn.isWithdrawalEnabled,
 			rpl::duplicate(
 				availableBalanceValue
 			) | rpl::map(creditsToUsdMap));

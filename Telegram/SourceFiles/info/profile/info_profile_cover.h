@@ -143,10 +143,11 @@ private:
 
 	const style::InfoProfileCover &_st;
 	const Role _role = Role::Info;
-    const not_null<Window::SessionController*> _controller;
-    const not_null<PeerData*> _peer;
-    const std::unique_ptr<EmojiStatusPanel> _emojiStatusPanel;
-    const std::unique_ptr<Badge> _badge;
+	const not_null<Window::SessionController*> _controller;
+	const not_null<PeerData*> _peer;
+	const std::unique_ptr<EmojiStatusPanel> _emojiStatusPanel;
+	const std::unique_ptr<Badge> _verify;
+	const std::unique_ptr<Badge> _badge;
     const std::unique_ptr<Badge> _devBadge;
 	rpl::variable<int> _onlineCount;
 

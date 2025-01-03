@@ -2265,13 +2265,30 @@ QPointer<Ui::BoxContent> ShowForwardMessagesBox(
 		auto init = [=](not_null<ListBox*> box) {
 			controllerRaw->setSearchNoResultsText(
 				tr::lng_bot_chats_not_found(tr::now));
+			const auto lastFilterId = box->lifetime().make_state<FilterId>(0);
 			const auto chatsFilters = Ui::AddChatFiltersTabsStrip(
 				box,
 				session,
-				[=](FilterId id) { applyFilter(box, id); });
+				[=](FilterId id) {
+					*lastFilterId = id;
+					applyFilter(box, id);
+				},
+				Window::GifPauseReason::Layer);
 			chatsFilters->lower();
-			chatsFilters->heightValue() | rpl::start_with_next([box](int h) {
-				box->setAddedTopScrollSkip(h);
+			rpl::combine(
+				chatsFilters->heightValue(),
+				rpl::producer<bool>([=](auto consumer) {
+					auto lifetime = rpl::lifetime();
+					consumer.put_next(false);
+					box->appendQueryChangedCallback([=](const QString &q) {
+						const auto hasQuery = !q.isEmpty();
+						applyFilter(box, hasQuery ? 0 : (*lastFilterId));
+						consumer.put_next_copy(hasQuery);
+					});
+					return lifetime;
+				})
+			) | rpl::start_with_next([box](int h, bool hasQuery) {
+				box->setAddedTopScrollSkip(hasQuery ? 0 : h);
 			}, box->lifetime());
 			box->multiSelectHeightValue() | rpl::start_with_next([=](int h) {
 				chatsFilters->moveToLeft(0, h);
@@ -2798,10 +2815,10 @@ void UnpinAllMessages(
 }
 
 void MenuAddMarkAsReadAllChatsAction(
-		not_null<Window::SessionController*> controller,
+		not_null<Main::Session*> session,
+		std::shared_ptr<Ui::Show> show,
 		const PeerMenuCallback &addAction) {
-	// There is no async to make weak from controller.
-	auto callback = [=, owner = &controller->session().data()] {
+	auto callback = [=, owner = &session->data()] {
 		auto boxCallback = [=](Fn<void()> &&close) {
 			close();
 
@@ -2810,10 +2827,37 @@ void MenuAddMarkAsReadAllChatsAction(
 				MarkAsReadChatList(folder->chatsList());
 			}
 		};
-		controller->show(
-			Ui::MakeConfirmBox({
-				tr::lng_context_mark_read_all_sure(),
-				std::move(boxCallback)
+		show->show(
+			Box([=](not_null<Ui::GenericBox*> box) {
+				Ui::AddSkip(box->verticalLayout());
+				Ui::AddSkip(box->verticalLayout());
+				const auto userpic = Ui::CreateChild<Ui::UserpicButton>(
+					box->verticalLayout(),
+					session->user(),
+					st::mainMenuUserpic);
+				Ui::IconWithTitle(
+					box->verticalLayout(),
+					userpic,
+					Ui::CreateChild<Ui::FlatLabel>(
+						box->verticalLayout(),
+						Info::Profile::NameValue(session->user()),
+						box->getDelegate()->style().title));
+				auto text = rpl::combine(
+					tr::lng_context_mark_read_all_sure(),
+					tr::lng_context_mark_read_all_sure_2(
+						Ui::Text::RichLangValue)
+				) | rpl::map([](QString t1, TextWithEntities t2) {
+					return TextWithEntities()
+						.append(std::move(t1))
+						.append('\n')
+						.append('\n')
+						.append(std::move(t2));
+				});
+				Ui::ConfirmBox(box, {
+					.text = std::move(text),
+					.confirmed = std::move(boxCallback),
+					.confirmStyle = &st::attentionBoxButton,
+				});
 			}),
 			Ui::LayerOption::CloseOther);
 	};

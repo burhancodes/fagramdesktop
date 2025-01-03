@@ -712,7 +712,7 @@ public:
 		update();
 	}
 
-	std::unique_ptr<PeerListState> saveState() const;
+	[[nodiscard]] std::unique_ptr<PeerListState> saveState() const;
 	void restoreState(std::unique_ptr<PeerListState> state);
 
 	void showRowMenu(
@@ -720,8 +720,12 @@ public:
 		bool highlightRow,
 		Fn<void(not_null<Ui::PopupMenu*>)> destroyed);
 
-	auto scrollToRequests() const {
+	[[nodiscard]] auto scrollToRequests() const {
 		return _scrollToRequests.events();
+	}
+
+	[[nodiscard]] auto noSearchSubmits() const {
+		return _noSearchSubmits.events();
 	}
 
 	~PeerListContent();
@@ -889,6 +893,8 @@ private:
 	object_ptr<Ui::FlatLabel> _searchNoResults = { nullptr };
 	object_ptr<Ui::FlatLabel> _searchLoading = { nullptr };
 	object_ptr<Ui::RpWidget> _loadingAnimation = { nullptr };
+
+	rpl::event_stream<> _noSearchSubmits;
 
 	std::vector<std::unique_ptr<PeerListRow>> _searchRows;
 	base::Timer _repaintByStatus;
@@ -1106,6 +1112,7 @@ public:
 	[[nodiscard]] std::vector<PeerListRowId> collectSelectedIds();
 	[[nodiscard]] std::vector<not_null<PeerData*>> collectSelectedRows();
 	[[nodiscard]] rpl::producer<int> multiSelectHeightValue() const;
+	[[nodiscard]] rpl::producer<> noSearchSubmits() const;
 
 	void peerListSetTitle(rpl::producer<QString> title) override {
 		setTitle(std::move(title));
@@ -1129,6 +1136,8 @@ public:
 	void setAddedTopScrollSkip(int skip);
 
 	void showFinished() override;
+
+	void appendQueryChangedCallback(Fn<void(QString)>);
 
 protected:
 	void prepare() override;
@@ -1167,6 +1176,7 @@ private:
 	object_ptr<Ui::SlideWrap<Ui::MultiSelect>> _select = { nullptr };
 
 	const std::shared_ptr<Main::SessionShow> _show;
+	Fn<void(QString)> _customQueryChangedCallback;
 	std::unique_ptr<PeerListController> _controller;
 	Fn<void(PeerListBox*)> _init;
 	bool _scrollBottomFixed = false;

@@ -12,16 +12,13 @@ class object_ptr;
 
 class PeerData;
 
-namespace Api {
-struct UserStarGift;
-} // namespace Api
-
 namespace Data {
 struct Boost;
 struct CreditsHistoryEntry;
 struct SubscriptionEntry;
 struct GiftCode;
 struct CreditTopupOption;
+struct UserStarGift;
 } // namespace Data
 
 namespace Main {
@@ -76,7 +73,7 @@ void AddWithdrawalWidget(
 	rpl::producer<QString> secondButtonUrl,
 	rpl::producer<StarsAmount> availableBalanceValue,
 	rpl::producer<QDateTime> dateValue,
-	rpl::producer<bool> lockedValue,
+	bool withdrawalEnabled,
 	rpl::producer<QString> usdValue);
 
 void ReceiptCreditsBox(
@@ -103,7 +100,8 @@ void CreditsPrizeBox(
 void UserStarGiftBox(
 	not_null<Ui::GenericBox*> box,
 	not_null<Window::SessionController*> controller,
-	const Api::UserStarGift &data);
+	not_null<UserData*> owner,
+	const Data::UserStarGift &data);
 void StarGiftViewBox(
 	not_null<Ui::GenericBox*> box,
 	not_null<Window::SessionController*> controller,
@@ -179,5 +177,11 @@ void MaybeRequestBalanceIncrease(
 	SmallBalanceSource source,
 	Fn<void(SmallBalanceResult)> done);
 
-} // namespace Settings
+void AddMiniStars(
+	not_null<Ui::VerticalLayout*> content,
+	not_null<Ui::RpWidget*> widget,
+	int photoSize,
+	int boxWidth,
+	float64 heightRatio);
 
+} // namespace Settings
