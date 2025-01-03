@@ -38,6 +38,21 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "api/api_blocked_peers.h"
 #include "ui/widgets/continuous_sliders.h"
 
+#define SettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
+	container, \
+    FAlang::RplTranslate(QString(#LangKey)), \
+	st::settingsButtonNoIcon \
+))->toggleOn( \
+	rpl::single(::FASettings::JsonSettings::GetBool(#Option)) \
+)->toggledValue( \
+) | rpl::filter([](bool enabled) { \
+	return (enabled != ::FASettings::JsonSettings::GetBool(#Option)); \
+}) | rpl::start_with_next([](bool enabled) { \
+	::FASettings::JsonSettings::Write(); \
+	::FASettings::JsonSettings::Set(#Option, enabled); \
+	::FASettings::JsonSettings::Write(); \
+}, container->lifetime());
+
 #define RestartSettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
 	container, \
     FAlang::RplTranslate(QString(#LangKey)), \
