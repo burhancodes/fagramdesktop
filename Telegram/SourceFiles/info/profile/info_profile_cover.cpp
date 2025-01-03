@@ -760,7 +760,6 @@ void Cover::refreshNameGeometry(int newWidth) {
 	}
 	_name->resizeToNaturalWidth(nameWidth);
 	_name->moveToLeft(_st.nameLeft, _st.nameTop, newWidth);
-	const auto badgeLeft = _st.nameLeft + _name->width();
 	auto nameLeft = _st.nameLeft;
 	const auto badgeTop = _st.nameTop;
 	const auto badgeBottom = _st.nameTop + _name->height();
