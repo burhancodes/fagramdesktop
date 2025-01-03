@@ -23,6 +23,12 @@ The latest version is available for
   <img width=150, alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
 </a>
 
+## <h2 border="none"><img src="https://github.com/hikariatama/assets/raw/master/981-consultation-flat.webp" height="54" align="middle">Translation</h2>
+
+> You can help to translate FAgram.
+
+* <h3><b><a href="https://crowdin.com/project/fagram">Crowdin</a></b></h3>
+
 ## <h2><img src="https://github.com/hikariatama/assets/raw/master/1312-micro-sd-card-flat.webp" height="50" align="middle"> Third-party</h2>
 
 * Qt 6 ([LGPL](http://doc.qt.io/qt-6/lgpl.html)) and Qt 5.15 ([LGPL](http://doc.qt.io/qt-5/lgpl.html)) slightly patched
@@ -48,12 +54,6 @@ The latest version is available for
 * CMake ([New BSD License](https://github.com/Kitware/CMake/blob/master/Copyright.txt))
 * Hunspell ([LGPL](https://github.com/hunspell/hunspell/blob/master/COPYING.LESSER))
 * Ada ([Apache License 2.0](https://github.com/ada-url/ada/blob/main/LICENSE-APACHE))
-
-## <h2 border="none"><img src="https://github.com/hikariatama/assets/raw/master/981-consultation-flat.webp" height="54" align="middle">Translation</h2>
-
-> You can help to translate FAgram.
-
-* <h3><b><a href="https://crowdin.com/project/fagram">Crowdin</a></b></h3>
 
 ## <h2><img src="https://github.com/hikariatama/assets/raw/master/1326-command-window-line-flat.webp" height="50" align="middle"> Build instructions</h2>
 
