@@ -181,7 +181,7 @@ namespace Settings {
 			FAlang::RplTranslate(QString("fa_translation")),
 			rpl::single(QString("Crowdin")),
 			st::settingsButton,
-			{ &st::menuIconDelete }
+			{ &st::menuIconChatBubble }
 		)->setClickedCallback([=] {
 			UrlClickHandler::Open("https://crowdin.com/project/fagram");
 		});
