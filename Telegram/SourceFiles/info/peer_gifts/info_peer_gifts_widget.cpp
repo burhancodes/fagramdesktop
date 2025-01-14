@@ -39,7 +39,7 @@ constexpr auto kPerPage = 50;
 		.from = ((gift.anonymous || !gift.fromId)
 			? nullptr
 			: to->owner().peer(gift.fromId).get()),
-		.userpic = true,
+		.userpic = !gift.info.unique,
 		.hidden = gift.hidden,
 		.mine = to->isSelf(),
 	};
@@ -116,7 +116,7 @@ InnerWidget::InnerWidget(
 	not_null<UserData*> user)
 : BoxContentDivider(parent)
 , _window(controller->parentController())
-, _delegate(_window)
+, _delegate(_window, GiftButtonMode::Minimal)
 , _controller(controller)
 , _about(std::make_unique<Ui::FlatLabel>(
 	this,
@@ -271,6 +271,7 @@ void InnerWidget::validateButtons() {
 	const auto fullw = _perRow * (_single.width() + skipw) - skipw;
 	const auto left = padding.left() + (available - fullw) / 2;
 	const auto oneh = _single.height() + st::giftBoxGiftSkip.y();
+	const auto mode = GiftButton::Mode::Minimal;
 	auto x = left;
 	auto y = vskip + fromRow * oneh;
 	auto views = std::vector<View>();
@@ -301,7 +302,7 @@ void InnerWidget::validateButtons() {
 				.entry = index,
 			});
 		}
-		views.back().button->setDescriptor(descriptor);
+		views.back().button->setDescriptor(descriptor, mode);
 		views.back().button->setClickedCallback(callback);
  	};
 	for (auto j = fromRow; j != tillRow; ++j) {

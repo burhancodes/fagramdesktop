@@ -312,7 +312,7 @@ Cover::Cover(
 	) | rpl::map([=] {
 		const auto info = peer->botVerifyDetails();
 		return Badge::Content{
-			.badge = info ? BadgeType::Verified : BadgeType::None,
+			.badge = info ? BadgeType::BotVerified : BadgeType::None,
 			.emojiStatusId = info ? info->iconId : DocumentId(),
 		};
 	});
@@ -768,9 +768,7 @@ void Cover::refreshNameGeometry(int newWidth) {
 	_verify->move(nameLeft - margins.left(), badgeTop, badgeBottom);
 	if (const auto widget = _verify->widget()) {
 		const auto skip = widget->width()
-			+ st::infoVerifiedCheckPosition.x()
-			- margins.left()
-			- margins.right();
+			+ st::infoVerifiedCheckPosition.x();
 		nameLeft += skip;
 		nameWidth -= skip;
 	}
