@@ -1880,6 +1880,7 @@ void HistoryWidget::fileChosen(ChatHelpers::FileChosen &&data) {
 			}
 		}
 	}
+}
 
 void HistoryWidget::saveCloudDraft() {
 	controller()->session().api().saveCurrentDraftToCloud();
