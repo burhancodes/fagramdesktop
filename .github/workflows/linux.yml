@@ -46,8 +46,6 @@ jobs:
 
       - name: Create Tar
         run: |
-          mkdir -p $REPO_NAME/arch/usr/bin
-          cp $REPO_NAME/out/Release/fagram $REPO_NAME/arch/usr/bin/
           cd $REPO_NAME/arch
           bash setup.sh
           tar -czvf fagram-${{ env.TAGNAME }}.tar.gz usr
