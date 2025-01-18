@@ -13,7 +13,7 @@ for icon_size in 16 32 48 64 128 256 512; do
 done
 
 cp ../Telegram/Resources/icons/tray_monochrome.svg usr/share/icons/hicolor/symbolic/apps/fagram-symbolic.svg
-cp ../out/Release/fagram usr/bin/
+cp ../out/Release/Telegram usr/bin/fagram
 cp ../lib/xdg/org.fagram.desktop.desktop usr/share/applications/
 cp ../lib/xdg/org.fagram.desktop.metainfo.xml usr/share/metainfo/
 cp ../lib/xdg/org.fagram.desktop.service usr/share/dbus-1/services/
