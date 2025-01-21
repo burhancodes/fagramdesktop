@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "main/main_session.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "apiwrap.h"
 #include "api/api_peer_colors.h"
 #include "api/api_updates.h"
@@ -262,6 +264,11 @@ rpl::producer<> Session::downloaderTaskFinished() const {
 }
 
 bool Session::premium() const {
+	bool local_premium = FASettings::JsonSettings::GetBool("local_premium");
+	if (local_premium) {
+		return true;
+	}
+
 	return _user->isPremium();
 }
 
