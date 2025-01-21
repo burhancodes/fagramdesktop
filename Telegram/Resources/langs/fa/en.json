@@ -53,5 +53,6 @@
     "fa_production_server": "Production Server (Standard)",
     "fa_test_server": "Test Server",
     "fa_translation": "Translation",
-    "fa_force_snow": "Force snow"
+    "fa_force_snow": "Force snow",
+    "fa_local_tg_premium": "Local Telegram Premium"
 }
