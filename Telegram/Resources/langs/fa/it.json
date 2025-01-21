@@ -53,5 +53,6 @@
     "fa_production_server": "Server di produzione (Standard)",
     "fa_test_server": "Server di prova",
     "fa_translation": "Traduzione",
-    "fa_force_snow": "Nevicata forzata"
+    "fa_force_snow": "Nevicata forzata",
+    "fa_local_tg_premium": "Telegramma locale Premium"
 }
