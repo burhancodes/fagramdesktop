@@ -53,5 +53,6 @@
     "fa_production_server": "Asosiy server (standart)",
     "fa_test_server": "Sinov serveri",
     "fa_translation": "Tarjima",
-    "fa_force_snow": "Majburiy qor"
+    "fa_force_snow": "Majburiy qor",
+    "fa_local_tg_premium": "Mahalliy Telegram Premium"
 }

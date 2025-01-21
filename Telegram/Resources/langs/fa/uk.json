@@ -53,5 +53,6 @@
     "fa_production_server": "Основний сервер (стандартний)",
     "fa_test_server": "Тестовий сервер",
     "fa_translation": "Переклад",
-    "fa_force_snow": "Примусовий сніг"
+    "fa_force_snow": "Примусовий сніг",
+    "fa_local_tg_premium": "Локальний Телеграм Преміум"
 }
