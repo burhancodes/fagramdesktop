@@ -7,6 +7,9 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 
 #include "telegram_helpers.h"
+
+#include "core/application.h"
+
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonArray>
 #include <QtNetwork/QNetworkRequest>
