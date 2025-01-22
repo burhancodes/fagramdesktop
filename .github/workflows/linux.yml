@@ -63,3 +63,14 @@ jobs:
           tag_name: ${{ env.TAGNAME }}
           token: ${{ secrets.PAT }}
           files: ${{ env.REPO_NAME }}/arch/fagram-${{ env.TAGNAME }}.tar.gz
+
+  trigger-rpm:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Trigger repository dispatch event
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.BVPAT }}
+          repository: burhancodes/fagram-rpm
+          event-type: new-release
