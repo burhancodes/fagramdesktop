@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "data/data_peer_values.h"
 
+#include "fa/settings/fa_settings.h"
+
 #include "lang/lang_keys.h"
 #include "data/data_channel.h"
 #include "data/data_chat.h"
@@ -395,6 +397,11 @@ rpl::producer<bool> PeerPremiumValue(not_null<PeerData*> peer) {
 }
 
 rpl::producer<bool> AmPremiumValue(not_null<Main::Session*> session) {
+	bool local_premium = FASettings::JsonSettings::GetBool("local_premium");
+	if (local_premium) {
+		return rpl::single(true);
+	}
+
 	return PeerPremiumValue(session->user());
 }
 

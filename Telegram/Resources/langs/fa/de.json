@@ -53,5 +53,6 @@
     "fa_production_server": "Produktionsserver (Standard)",
     "fa_test_server": "Testserver",
     "fa_translation": "Übersetzung",
-    "fa_force_snow": "Erzwungener Schneefall"
+    "fa_force_snow": "Erzwungener Schneefall",
+    "fa_local_tg_premium": "Lokales Telegramm Premium"
 }

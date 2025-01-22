@@ -90,6 +90,7 @@ namespace Settings {
         SettingsMenuJsonSwitch(fa_show_peer_ids, show_peer_id);
         SettingsMenuJsonSwitch(fa_show_dc_ids, show_dc_id);
         SettingsMenuJsonSwitch(fa_id_in_botapi_type, show_id_botapi)
+        SettingsMenuJsonSwitch(fa_local_tg_premium, local_premium)
         SettingsMenuJsonSwitch(fa_mark_read_after_action, mark_read_after_action)
         SettingsMenuJsonSwitch(fa_show_registration_date, show_registration_date)
         SettingsMenuJsonSwitch(fa_hide_phone_in_settings, hide_phone_number)
