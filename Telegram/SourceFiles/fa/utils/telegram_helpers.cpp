@@ -337,17 +337,3 @@ void cleanDebugLogs() {
 
     return;
 }
-
-
-// thanks ayugram
-Main::Session *getSession(ID userId) {
-	for (const auto &[index, account] : Core::App().domain().accounts()) {
-		if (const auto session = account->maybeSession()) {
-			if (session->userId().bare == userId) {
-				return session;
-			}
-		}
-	}
-
-	return nullptr;
-}

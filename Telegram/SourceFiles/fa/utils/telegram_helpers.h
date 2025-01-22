@@ -65,5 +65,3 @@ QString getOnlyDC(not_null<PeerData*> peer);
 QString getIpDC(int dc_id, bool test);
 
 void cleanDebugLogs();
-
-Main::Session *getSession(ID userId);

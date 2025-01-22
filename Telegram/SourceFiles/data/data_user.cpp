@@ -487,9 +487,7 @@ bool UserData::isPremium() const {
 	if (id) {
 		bool local_premium = FASettings::JsonSettings::GetBool("local_premium");
 		if (local_premium) {
-			if (getSession(id.value)) {
-				return true;
-			}
+			return true;
 		}
 	}
 
