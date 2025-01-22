@@ -55,3 +55,11 @@ jobs:
         with:
           name: fagram-${{ env.TAGNAME }}
           path: ${{ env.REPO_NAME }}/arch/fagram-${{ env.TAGNAME }}.tar.gz
+
+      - name: Upload artifact to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: fagram-${{ env.TAGNAME }}
+          tag_name: ${{ env.TAGNAME }}
+          token: ${{ secrets.PAT }}
+          files: ${{ env.REPO_NAME }}/arch/fagram-${{ env.TAGNAME }}.tar.gz
