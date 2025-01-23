@@ -1,6 +1,7 @@
 1.1.6 (x.01.2025)
 
 - Local tg premium
+- Changed changelog link
 - About text with tgd version
 - Fix FAgram icon on some platforms
 - Updated to tdesktop v5.10.4

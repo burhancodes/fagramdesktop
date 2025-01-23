@@ -94,33 +94,7 @@ void AboutBox::resizeEvent(QResizeEvent *e) {
 }
 
 void AboutBox::showVersionHistory() {
-	if (cRealAlphaVersion()) {
-		auto url = u"https://t.me/FAgramNews"_q;
-		if (Platform::IsWindows32Bit()) {
-			url += u"win/%1.zip"_q;
-		} else if (Platform::IsWindows64Bit()) {
-			url += u"win64/%1.zip"_q;
-		} else if (Platform::IsWindowsARM64()) {
-			url += u"winarm/%1.zip"_q;
-		} else if (Platform::IsMac()) {
-			url += u"mac/%1.zip"_q;
-		} else if (Platform::IsLinux()) {
-			url += u"linux/%1.tar.xz"_q;
-		} else {
-			Unexpected("Platform value.");
-		}
-		url = url.arg(u"talpha%1_%2"_q.arg(cRealAlphaVersion()).arg(Core::countAlphaVersionSignature(cRealAlphaVersion())));
-
-		QGuiApplication::clipboard()->setText(url);
-
-		getDelegate()->show(
-			Ui::MakeInformBox(
-				"The link to the current private alpha "
-				"version of Telegram Desktop was copied to the clipboard."),
-			Ui::LayerOption::CloseOther);
-	} else {
-		File::OpenUrl(Core::App().changelogLink());
-	}
+	File::OpenUrl(Core::App().changelogLink());
 }
 
 void AboutBox::keyPressEvent(QKeyEvent *e) {
