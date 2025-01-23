@@ -615,23 +615,24 @@ Cover::Cover(
 		std::make_unique<Badge>(
 			this,
 			st::infoPeerBadge,
-			peer,
+			&peer->session(),
+			_badgeContent.value(),
 			_emojiStatusPanel.get(),
 			[=] {
 				return controller->isGifPausedAtLeastFor(
 					Window::GifPauseReason::Layer);
 			}))
 , _verified(
-	std::make_unique<Badge>(
-		this,
-		st::infoPeerBadge,
-		&peer->session(),
-		VerifiedContentForPeer(peer),
-		_emojiStatusPanel.get(),
-		[=] {
-			return controller->isGifPausedAtLeastFor(
-				Window::GifPauseReason::Layer);
-		}))
+		std::make_unique<Badge>(
+			this,
+			st::infoPeerBadge,
+			&peer->session(),
+			VerifiedContentForPeer(peer),
+			_emojiStatusPanel.get(),
+			[=] {
+				return controller->isGifPausedAtLeastFor(
+					Window::GifPauseReason::Layer);
+			}))
 , _parentForTooltip(std::move(parentForTooltip))
 , _badgeTooltipHide([=] { hideBadgeTooltip(); })
 , _userpic(topic
