@@ -178,13 +178,13 @@ object_ptr<Ui::RpWidget> InnerWidget::setupSharedMedia(
 			icon,
 			st::infoSharedMediaButtonIconPosition);
 	};
-	const auto addSimilarChannelsButton = [&](
-			not_null<ChannelData*> channel,
+	const auto addSimilarPeersButton = [&](
+			not_null<PeerData*> peer,
 			const style::icon &icon) {
-		auto result = Media::AddSimilarChannelsButton(
+		auto result = Media::AddSimilarPeersButton(
 			content,
 			_controller,
-			channel,
+			peer,
 			tracker);
 		object_ptr<Profile::FloatingIcon>(
 			result,
@@ -221,12 +221,12 @@ object_ptr<Ui::RpWidget> InnerWidget::setupSharedMedia(
 			st::infoSharedMediaButtonIconPosition);
 	};
 	auto addPeerGiftsButton = [&](
-			not_null<UserData*> user,
+			not_null<PeerData*> peer,
 			const style::icon &icon) {
 		auto result = Media::AddPeerGiftsButton(
 			content,
 			_controller,
-			user,
+			peer,
 			tracker);
 		object_ptr<Profile::FloatingIcon>(
 			result,
@@ -236,9 +236,7 @@ object_ptr<Ui::RpWidget> InnerWidget::setupSharedMedia(
 
 	if (!_topic) {
 		addStoriesButton(_peer, st::infoIconMediaStories);
-		if (const auto user = _peer->asUser()) {
-			addPeerGiftsButton(user, st::infoIconMediaGifts);
-		}
+		addPeerGiftsButton(_peer, st::infoIconMediaGifts);
 		addSavedSublistButton(_peer, st::infoIconMediaSaved);
 	}
 	addMediaButton(MediaType::Photo, st::infoIconMediaPhoto);
@@ -248,10 +246,12 @@ object_ptr<Ui::RpWidget> InnerWidget::setupSharedMedia(
 	addMediaButton(MediaType::Link, st::infoIconMediaLink);
 	addMediaButton(MediaType::RoundVoiceFile, st::infoIconMediaVoice);
 	addMediaButton(MediaType::GIF, st::infoIconMediaGif);
-	if (const auto user = _peer->asUser()) {
+	if (const auto bot = _peer->asBot()) {
+		addSimilarPeersButton(bot, st::infoIconMediaBot);
+	} else if (const auto channel = _peer->asBroadcast()) {
+		addSimilarPeersButton(channel, st::infoIconMediaChannel);
+	} else if (const auto user = _peer->asUser()) {
 		addCommonGroupsButton(user, st::infoIconMediaGroup);
-	} else if (const auto channel = _peer->asChannel()) {
-		addSimilarChannelsButton(channel, st::infoIconMediaChannel);
 	}
 
 	auto result = object_ptr<Ui::SlideWrap<Ui::VerticalLayout>>(

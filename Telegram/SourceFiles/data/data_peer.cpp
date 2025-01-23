@@ -680,6 +680,20 @@ bool PeerData::canManageTopics() const {
 	return false;
 }
 
+bool PeerData::canManageGifts() const {
+	if (const auto channel = asChannel()) {
+		return channel->canPostMessages();
+	}
+	return isSelf();
+}
+
+bool PeerData::canTransferGifts() const {
+	if (const auto channel = asChannel()) {
+		return channel->amCreator();
+	}
+	return isSelf();
+}
+
 bool PeerData::canEditMessagesIndefinitely() const {
 	if (const auto user = asUser()) {
 		return user->isSelf();
@@ -939,6 +953,16 @@ void PeerData::fullUpdated() {
 	setLoadedStatus(LoadedStatus::Full);
 }
 
+UserData *PeerData::asBot() {
+	return isBot() ? static_cast<UserData*>(this) : nullptr;
+}
+
+const UserData *PeerData::asBot() const {
+	return isBot()
+		? static_cast<const UserData*>(this)
+		: nullptr;
+}
+
 UserData *PeerData::asUser() {
 	return isUser() ? static_cast<UserData*>(this) : nullptr;
 }
@@ -1143,11 +1167,11 @@ bool PeerData::changeBackgroundEmojiId(DocumentId id) {
 }
 
 void PeerData::setEmojiStatus(const MTPEmojiStatus &status) {
-	const auto parsed = Data::ParseEmojiStatus(status);
+	const auto parsed = owner().emojiStatuses().parse(status);
 	setEmojiStatus(parsed.id, parsed.until);
 }
 
-void PeerData::setEmojiStatus(DocumentId emojiStatusId, TimeId until) {
+void PeerData::setEmojiStatus(EmojiStatusId emojiStatusId, TimeId until) {
 	if (_emojiStatusId != emojiStatusId) {
 		_emojiStatusId = emojiStatusId;
 		session().changes().peerUpdated(this, UpdateFlag::EmojiStatus);
@@ -1155,8 +1179,15 @@ void PeerData::setEmojiStatus(DocumentId emojiStatusId, TimeId until) {
 	owner().emojiStatuses().registerAutomaticClear(this, until);
 }
 
-DocumentId PeerData::emojiStatusId() const {
+EmojiStatusId PeerData::emojiStatusId() const {
 	return _emojiStatusId;
+}
+
+bool PeerData::isBot() const {
+	if (const auto user = asUser()) {
+		return user->isBot();
+	}
+	return false;
 }
 
 bool PeerData::isSelf() const {
@@ -1541,6 +1572,15 @@ void PeerData::setStoriesState(StoriesState state) {
 	} else {
 		Unexpected("PeerData::setStoriesState for non-user/non-channel.");
 	}
+}
+
+int PeerData::peerGiftsCount() const {
+	if (const auto user = asUser()) {
+		return user->peerGiftsCount();
+	} else if (const auto channel = asChannel()) {
+		return channel->peerGiftsCount();
+	}
+	return 0;
 }
 
 void PeerData::setIsBlocked(bool is) {
