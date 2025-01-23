@@ -3,7 +3,7 @@
 - Local tg premium
 - Changed changelog link
 - About text with tgd version
-- Fix FAgram icon on some platforms
+- Fixed FAgram icon on some platforms
 - Updated to tdesktop v5.10.4
 
 1.1.5 (05.01.2025)
