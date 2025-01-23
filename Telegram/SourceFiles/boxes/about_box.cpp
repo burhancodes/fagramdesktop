@@ -161,7 +161,7 @@ QString currentVersionText() {
 		result += " arm64";
 	}
 
-	result += " (TGD: " + AppTGDVersion + ")";
+	result += QString(" (TGD: %1)").arg(QString::fromLatin1(AppTGDVersion));
 
 	return result;
 }
