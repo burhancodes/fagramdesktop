@@ -337,3 +337,15 @@ void cleanDebugLogs() {
 
     return;
 }
+
+bool is_me(ID userId) {
+	for (const auto &[index, account] : Core::App().domain().accounts()) {
+		if (const auto session = account->maybeSession()) {
+			if (session->userId().bare == userId) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
