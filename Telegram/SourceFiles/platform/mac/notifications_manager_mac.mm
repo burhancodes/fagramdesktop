@@ -197,11 +197,7 @@ bool ByDefault() {
 }
 
 void Create(Window::Notifications::System *system) {
-	if (Supported()) {
-		system->setManager(std::make_unique<Manager>(system));
-	} else {
-		system->setManager(nullptr);
-	}
+	system->setManager([=] { return std::make_unique<Manager>(system); });
 }
 
 class Manager::Private : public QObject {
@@ -532,7 +528,10 @@ bool Manager::doSkipToast() const {
 }
 
 void Manager::doMaybePlaySound(Fn<void()> playSound) {
-	// Play through native notification system.
+	// Play through native notification system if toasts are enabled.
+	if (!Core::App().settings().desktopNotify()) {
+		playSound();
+	}
 }
 
 void Manager::doMaybeFlashBounce(Fn<void()> flashBounce) {

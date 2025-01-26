@@ -84,7 +84,9 @@ private:
 	};
 	struct View {
 		std::unique_ptr<GiftButton> button;
-		int entry = 0;
+		Data::SavedStarGiftId manageId;
+		uint64 giftId = 0;
+		int index = 0;
 	};
 
 	void visibleTopBottomUpdated(
@@ -163,7 +165,7 @@ void InnerWidget::subscribeToUpdates() {
 	_peer->owner().giftUpdates(
 	) | rpl::start_with_next([=](const Data::GiftUpdate &update) {
 		const auto savedId = [](const Entry &entry) {
-			return entry.gift.id;
+			return entry.gift.manageId;
 		};
 		const auto i = ranges::find(_entries, update.id, savedId);
 		if (i == end(_entries)) {
@@ -179,8 +181,8 @@ void InnerWidget::subscribeToUpdates() {
 				--_totalCount;
 			}
 			for (auto &view : _views) {
-				if (view.entry >= index) {
-					--view.entry;
+				if (view.index >= index) {
+					--view.index;
 				}
 			}
 		} else if (update.action == Action::Save
@@ -191,8 +193,9 @@ void InnerWidget::subscribeToUpdates() {
 				data.hidden = i->gift.hidden;
 			});
 			for (auto &view : _views) {
-				if (view.entry == index) {
-					view.entry = -1;
+				if (view.index == index) {
+					view.index = -1;
+					view.manageId = {};
 				}
 			}
 		} else {
@@ -263,7 +266,6 @@ void InnerWidget::loadMore() {
 
 		if (base::take(_reloading)) {
 			_entries.clear();
-			_views.clear();
 		}
 		_entries.reserve(_entries.size() + data.vgifts().v.size());
 		for (const auto &gift : data.vgifts().v) {
@@ -320,42 +322,59 @@ void InnerWidget::validateButtons() {
 	auto y = vskip + fromRow * oneh;
 	auto views = std::vector<View>();
 	views.reserve((tillRow - fromRow) * _perRow);
-	const auto add = [&](int index) {
-		const auto already = ranges::find(_views, index, &View::entry);
+	const auto idUsed = [&](uint64 giftId, int column, int row) {
+		for (auto j = row; j != tillRow; ++j) {
+			for (auto i = column; i != _perRow; ++i) {
+				const auto index = j * _perRow + i;
+				if (index >= _entries.size()) {
+					return false;
+				} else if (_entries[index].gift.info.id == giftId) {
+					return true;
+				}
+			}
+			column = 0;
+		}
+		return false;
+	};
+	const auto add = [&](int column, int row) {
+		const auto index = row * _perRow + column;
+		if (index >= _entries.size()) {
+			return false;
+		}
+		const auto giftId = _entries[index].gift.info.id;
+		const auto manageId = _entries[index].gift.manageId;
+		const auto already = ranges::find(_views, giftId, &View::giftId);
 		if (already != end(_views)) {
 			views.push_back(base::take(*already));
-			return;
-		}
-		const auto &descriptor = _entries[index].descriptor;
-		const auto callback = [=] {
-			showGift(index);
-		};
-		const auto unused = ranges::find_if(_views, [&](const View &v) {
-			return v.button
-				&& ((v.entry < fromRow * _perRow)
-					|| (v.entry >= tillRow * _perRow));
-		});
-		if (unused != end(_views)) {
-			views.push_back(base::take(*unused));
-			views.back().entry = index;
 		} else {
-			auto button = std::make_unique<GiftButton>(this, &_delegate);
-			button->show();
-			views.push_back({
-				.button = std::move(button),
-				.entry = index,
+			const auto &descriptor = _entries[index].descriptor;
+			const auto unused = ranges::find_if(_views, [&](const View &v) {
+				return v.button && !idUsed(v.giftId, column, row);
 			});
+			if (unused != end(_views)) {
+				views.push_back(base::take(*unused));
+			} else {
+				auto button = std::make_unique<GiftButton>(this, &_delegate);
+				button->show();
+				views.push_back({ .button = std::move(button) });
+			}
+			auto &view = views.back();
+			const auto callback = [=] {
+				showGift(index);
+			};
+			view.index = index;
+			view.manageId = manageId;
+			view.giftId = giftId;
+			view.button->setDescriptor(descriptor, mode);
+			view.button->setClickedCallback(callback);
 		}
-		views.back().button->setDescriptor(descriptor, mode);
-		views.back().button->setClickedCallback(callback);
- 	};
+		return true;
+	};
 	for (auto j = fromRow; j != tillRow; ++j) {
 		for (auto i = 0; i != _perRow; ++i) {
-			const auto index = j * _perRow + i;
-			if (index >= _entries.size()) {
+			if (!add(i, j)) {
 				break;
 			}
-			add(index);
 			views.back().button->setGeometry(
 				QRect(QPoint(x, y), _single),
 				_delegate.buttonExtend());
@@ -368,6 +387,8 @@ void InnerWidget::validateButtons() {
 }
 
 void InnerWidget::showGift(int index) {
+	Expects(index >= 0 && index < _entries.size());
+
 	_window->show(Box(
 		::Settings::SavedStarGiftBox,
 		_window,

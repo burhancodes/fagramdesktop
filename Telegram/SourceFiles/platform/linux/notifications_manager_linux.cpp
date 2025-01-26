@@ -192,7 +192,7 @@ private:
 	const not_null<Manager*> _manager;
 	NotificationId _id;
 
-	//Media::Audio::LocalDiskCache _sounds;
+	Media::Audio::LocalDiskCache _sounds;
 
 	Gio::Application _application;
 	Gio::Notification _notification;
@@ -222,7 +222,7 @@ NotificationData::NotificationData(
 	NotificationId id)
 : _manager(manager)
 , _id(id)
-//, _sounds(cWorkingDir() + u"tdata/audio_cache"_q)
+, _sounds(cWorkingDir() + u"tdata/audio_cache"_q)
 , _application(UseGNotification()
 		? Gio::Application::get_default()
 		: nullptr)
@@ -236,8 +236,7 @@ NotificationData::NotificationData(
 bool NotificationData::init(const Info &info) {
 	const auto &title = info.title;
 	const auto &subtitle = info.subtitle;
-	//const auto sound = info.sound ? info.sound() : Media::Audio::LocalSound();
-	//const auto path = sound ? _sounds.path(sound) : QString();
+
 	if (_application) {
 		_notification = Gio::Notification::new_(
 			subtitle.isEmpty()
@@ -365,18 +364,23 @@ bool NotificationData::init(const Info &info) {
 		_hints.insert_value("action-icons", GLib::Variant::new_boolean(true));
 	}
 
-	// suppress system sound if telegram sound activated,
-	// otherwise use system sound
 	if (HasCapability("sound")) {
-		if (Core::App().settings().soundNotify()) {
+		const auto sound = info.sound
+			? info.sound()
+			: Media::Audio::LocalSound();
+
+		const auto path = sound
+			? _sounds.path(sound).toStdString()
+			: std::string();
+
+		if (!path.empty()) {
+			_hints.insert_value(
+				"sound-file",
+				GLib::Variant::new_string(path));
+		} else {
 			_hints.insert_value(
 				"suppress-sound",
 				GLib::Variant::new_boolean(true));
-		} else {
-			// sound name according to http://0pointer.de/public/sound-naming-spec.html
-			_hints.insert_value(
-				"sound-name",
-				GLib::Variant::new_string("message-new-instant"));
 		}
 	}
 
@@ -624,8 +628,9 @@ bool ByDefault() {
 		"actions",
 		// To have quick reply
 		"inline-reply",
+	}, HasCapability) && ranges::any_of(std::array{
 		// To not to play sound with Don't Disturb activated
-		// (no, using sound capability is not a way)
+		"sound",
 		"inhibitions",
 	}, HasCapability);
 }
@@ -635,22 +640,11 @@ void Create(Window::Notifications::System *system) {
 
 	const auto managerSetter = [=](
 			XdgNotifications::NotificationsProxy proxy) {
-		using ManagerType = Window::Notifications::ManagerType;
-		if ((Core::App().settings().nativeNotifications() || Enforced())
-			&& Supported()) {
-			if (system->manager().type() != ManagerType::Native) {
-				auto manager = std::make_unique<Manager>(system);
-				manager->_private->init(proxy);
-				system->setManager(std::move(manager));
-			}
-		} else if (Enforced()) {
-			if (system->manager().type() != ManagerType::Dummy) {
-				using DummyManager = Window::Notifications::DummyManager;
-				system->setManager(std::make_unique<DummyManager>(system));
-			}
-		} else if (system->manager().type() != ManagerType::Default) {
-			system->setManager(nullptr);
-		}
+		system->setManager([=] {
+			auto manager = std::make_unique<Manager>(system);
+			manager->_private->init(proxy);
+			return manager;
+		});
 	};
 
 	const auto counter = std::make_shared<int>(2);
@@ -963,7 +957,11 @@ bool Manager::doSkipToast() const {
 }
 
 void Manager::doMaybePlaySound(Fn<void()> playSound) {
-	_private->invokeIfNotInhibited(std::move(playSound));
+	if (UseGNotification()
+		|| !HasCapability("sound")
+		|| !Core::App().settings().desktopNotify()) {
+		_private->invokeIfNotInhibited(std::move(playSound));
+	}
 }
 
 void Manager::doMaybeFlashBounce(Fn<void()> flashBounce) {

@@ -4,7 +4,7 @@
 - Changed changelog link
 - About text with tgd version
 - Fixed FAgram icon on some platforms
-- Updated to tdesktop v5.10.4
+- Updated to tdesktop v5.10.6
 
 1.1.5 (05.01.2025)
 
