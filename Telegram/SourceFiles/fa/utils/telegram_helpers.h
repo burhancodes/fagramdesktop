@@ -31,6 +31,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "history/history_item.h"
 #include "history/history_item_components.h"
 #include "history/history_unread_things.h"
+#include "main/main_domain.h"
 #include "main/main_account.h"
 #include "main/main_session.h"
 #include "ui/text/format_values.h"
