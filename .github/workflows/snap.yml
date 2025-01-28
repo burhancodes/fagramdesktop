@@ -30,8 +30,13 @@ jobs:
       - name: Free up some disk space.
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
 
+      - name: Clean previous builds.
+        run: |
+          sudo snapcraft clean
+
       - name: Telegram Desktop snap build.
-        run: sudo -u $USER snap run snapcraft --verbosity=quiet
+        run: |
+          sudo -u $USER snap run snapcraft --debug
 
       - name: Move artifact.
         if: env.UPLOAD_ARTIFACT == 'true'
