@@ -1,4 +1,4 @@
-1.1.6 (x.01.2025)
+1.1.6 (28.01.2025)
 
 - Local tg premium
 - Changed changelog link
