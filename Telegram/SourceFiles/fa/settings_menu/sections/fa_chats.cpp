@@ -62,10 +62,16 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 ) | rpl::filter([](bool enabled) { \
 	return (enabled != ::FASettings::JsonSettings::GetBool(#Option)); \
 }) | rpl::start_with_next([](bool enabled) { \
-	::FASettings::JsonSettings::Write(); \
-	::FASettings::JsonSettings::Set(#Option, enabled); \
-	::FASettings::JsonSettings::Write(); \
-	::Core::Restart(); \
+	controller->show(Ui::MakeConfirmBox({
+		.text = FAlang::RplTranslate(QString("fa_setting_need_restart")),
+		.confirmed = [=] {
+			::FASettings::JsonSettings::Write(); \
+			::FASettings::JsonSettings::Set(#Option, enabled); \
+			::FASettings::JsonSettings::Write(); \
+			::Core::Restart(); \
+		},
+		.confirmText = FAlang::RplTranslate(QString("fa_restart")),
+	}));
 }, container->lifetime());
 
 namespace Settings {
@@ -114,11 +120,7 @@ namespace Settings {
 		updateRecentStickersLimitLabel(::FASettings::JsonSettings::GetInt("recent_stickers_limit"));
 		SettingsMenuJsonSwitch(fa_disable_custom_chat_background, disable_custom_chat_background)
 		SettingsMenuJsonSwitch(fa_hide_open_webapp_button_chatlist, hide_open_webapp_button_chatlist)
-		Ui::AddSkip(container);
-        Ui::AddDivider(container);
-		Ui::AddSkip(container);
 		RestartSettingsMenuJsonSwitch(fa_hide_all_chats_folder, hide_all_chats_folder)
-		Ui::AddDividerText(container, FAlang::RplTranslate(QString("fa_settings_change_after_restart")));
     }
 
     void FAChats::SetupFAChats(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {

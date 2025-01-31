@@ -63,10 +63,16 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 ) | rpl::filter([](bool enabled) { \
 	return (enabled != ::FASettings::JsonSettings::GetBool(#Option)); \
 }) | rpl::start_with_next([](bool enabled) { \
-	::FASettings::JsonSettings::Write(); \
-	::FASettings::JsonSettings::Set(#Option, enabled); \
-	::FASettings::JsonSettings::Write(); \
-	::Core::Restart(); \
+	controller->show(Ui::MakeConfirmBox({
+		.text = FAlang::RplTranslate(QString("fa_setting_need_restart")),
+		.confirmed = [=] {
+			::FASettings::JsonSettings::Write(); \
+			::FASettings::JsonSettings::Set(#Option, enabled); \
+			::FASettings::JsonSettings::Write(); \
+			::Core::Restart(); \
+		},
+		.confirmText = FAlang::RplTranslate(QString("fa_restart")),
+	}));
 }, container->lifetime());
 
 namespace Settings {
@@ -119,8 +125,6 @@ namespace Settings {
     	updateUserpicRoundnessLabel(::FASettings::JsonSettings::GetInt("roundness"));
         Ui::AddDivider(container);
 		RestartSettingsMenuJsonSwitch(fa_use_default_rounding, use_default_rounding)
-		Ui::AddDividerText(container, FAlang::RplTranslate(QString("fa_settings_change_after_restart")));
-        Ui::AddDivider(container);
 		SettingsMenuJsonSwitch(fa_force_snow, force_snow)
     }
 
