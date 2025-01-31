@@ -68,3 +68,5 @@ QString getIpDC(int dc_id, bool test);
 void cleanDebugLogs();
 
 bool is_me(ID userId);
+
+void MessageDetails(not_null<Ui::PopupMenu*> menu, HistoryItem *item);

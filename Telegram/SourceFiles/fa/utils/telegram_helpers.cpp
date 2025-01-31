@@ -8,6 +8,9 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #include "telegram_helpers.h"
 
+#include "fa/lang/fa_lang.h"
+#include "fa/settings/fa_settings.h"
+
 #include "core/application.h"
 
 #include <QtCore/QJsonDocument>
@@ -348,4 +351,216 @@ bool is_me(ID userId) {
 	}
 
 	return false;
+}
+
+// thanks ayugram
+void MessageDetails(not_null<Ui::PopupMenu*> menu, HistoryItem *item) {
+    bool show_message_details = FASettings::JsonSettings::GetBool("fa_show_message_details");
+    if (!show_message_details) {
+        return;
+    }
+
+	if (item->isLocal()) {
+		return;
+	}
+
+	const auto view = item->mainView();
+	const auto forwarded = item->Get<HistoryMessageForwarded>();
+	const auto views = item->Get<HistoryMessageViews>();
+	const auto media = item->media();
+
+	const auto isSticker = media && media->document() && media->document()->sticker();
+
+	const auto emojiPacks = HistoryView::CollectEmojiPacks(item, HistoryView::EmojiPacksSource::Message);
+	auto containsSingleCustomEmojiPack = emojiPacks.size() == 1;
+	if (!containsSingleCustomEmojiPack && emojiPacks.size() > 1) {
+		const auto author = emojiPacks.front().id >> 32;
+		auto sameAuthor = true;
+		for (const auto &pack : emojiPacks) {
+			if (pack.id >> 32 != author) {
+				sameAuthor = false;
+				break;
+			}
+		}
+
+		containsSingleCustomEmojiPack = sameAuthor;
+	}
+
+	const auto isForwarded = forwarded && !forwarded->story && forwarded->psaType.isEmpty();
+
+	const auto messageId = QString::number(item->id.bare);
+	const auto messageDate = base::unixtime::parse(item->date());
+	const auto messageEditDate = base::unixtime::parse(view ? view->displayedEditDate() : TimeId(0));
+
+	const auto messageForwardedDate =
+		isForwarded && forwarded
+			? base::unixtime::parse(forwarded->originalDate)
+			: QDateTime();
+
+	const auto
+		messageViews = item->hasViews() && item->viewsCount() > 0 ? QString::number(item->viewsCount()) : QString();
+	const auto messageForwards = views && views->forwardsCount > 0 ? QString::number(views->forwardsCount) : QString();
+
+	const auto mediaSize = media ? getMediaSize(item) : QString();
+	const auto mediaMime = media ? getMediaMime(item) : QString();
+	// todo: bitrate (?)
+	const auto mediaName = media ? getMediaName(item) : QString();
+	const auto mediaResolution = media ? getMediaResolution(item) : QString();
+	const auto mediaDC = media ? getMediaDC(item) : QString();
+
+	const auto hasAnyPostField =
+		!messageViews.isEmpty() ||
+		!messageForwards.isEmpty();
+
+	const auto hasAnyMediaField =
+		!mediaSize.isEmpty() ||
+		!mediaMime.isEmpty() ||
+		!mediaName.isEmpty() ||
+		!mediaResolution.isEmpty() ||
+		!mediaDC.isEmpty();
+
+	const auto callback = Ui::Menu::CreateAddActionCallback(menu);
+
+	callback(Window::PeerMenuCallback::Args{
+		.text = tr::ayu_MessageDetailsPC(tr::now),
+		.handler = nullptr,
+		.icon = &st::menuIconInfo,
+		.fillSubmenu = [&](not_null<Ui::PopupMenu*> menu2)
+		{
+			if (hasAnyPostField) {
+				if (!messageViews.isEmpty()) {
+					menu2->addAction(Ui::ContextActionWithSubText(
+						menu2->menu(),
+						st::menuIconShowInChat,
+						FAlang::Translate(QString("fa_message_details_views")),
+						messageViews
+					));
+				}
+
+				if (!messageForwards.isEmpty()) {
+					menu2->addAction(Ui::ContextActionWithSubText(
+						menu2->menu(),
+						st::menuIconViewReplies,
+						FAlang::Translate(QString("fa_message_details_share")),
+						messageForwards
+					));
+				}
+
+				menu2->addSeparator();
+			}
+
+			menu2->addAction(Ui::ContextActionWithSubText(
+				menu2->menu(),
+				st::menuIconInfo,
+				QString("ID"),
+				messageId
+			));
+
+			menu2->addAction(Ui::ContextActionWithSubText(
+				menu2->menu(),
+				st::menuIconSchedule,
+				FAlang::Translate(QString("fa_message_details_date")),
+				formatDateTime(messageDate)
+			));
+
+			if (view && view->displayedEditDate()) {
+				menu2->addAction(Ui::ContextActionWithSubText(
+					menu2->menu(),
+					st::menuIconEdit,
+					FAlang::Translate(QString("fa_message_details_edit_date")),
+					formatDateTime(messageEditDate)
+				));
+			}
+
+			if (isForwarded) {
+				menu2->addAction(Ui::ContextActionWithSubText(
+					menu2->menu(),
+					st::menuIconTTL,
+					FAlang::Translate(QString("fa_message_details_forwarded_date")),
+					formatDateTime(messageForwardedDate)
+				));
+			}
+
+			if (media && hasAnyMediaField) {
+				menu2->addSeparator();
+
+				if (!mediaSize.isEmpty()) {
+					menu2->addAction(Ui::ContextActionWithSubText(
+						menu2->menu(),
+						st::menuIconDownload,
+						FAlang::Translate(QString("fa_message_details_filesize")),
+						mediaSize
+					));
+				}
+
+				if (!mediaMime.isEmpty()) {
+					const auto mime = Core::MimeTypeForName(mediaMime);
+
+					menu2->addAction(Ui::ContextActionWithSubText(
+						menu2->menu(),
+						st::menuIconShowAll,
+						FAlang::Translate(QString("fa_message_details_type")),
+						mime.name()
+					));
+				}
+
+				if (!mediaName.isEmpty()) {
+					auto const shortified = mediaName.length() > 20 ? "…" + mediaName.right(20) : mediaName;
+
+					menu2->addAction(Ui::ContextActionWithSubText(
+						menu2->menu(),
+						st::ayuEditsHistoryIcon,
+						FAlang::Translate(QString("fa_message_details_filename")),
+						shortified,
+						[=]
+						{
+							QGuiApplication::clipboard()->setText(mediaName);
+						}
+					));
+				}
+
+				if (!mediaResolution.isEmpty()) {
+					menu2->addAction(Ui::ContextActionWithSubText(
+						menu2->menu(),
+						st::menuIconStats,
+						FAlang::Translate(QString("fa_message_details_resoultion")),
+						mediaResolution
+					));
+				}
+
+				if (!mediaDC.isEmpty()) {
+					menu2->addAction(Ui::ContextActionWithSubText(
+						menu2->menu(),
+						st::menuIconBoosts,
+						FAlang::Translate(QString("fa_message_details_datacenter")),
+						mediaDC
+					));
+				}
+
+				if (isSticker) {
+					const auto authorId = getUserIdFromPackId(media->document()->sticker()->set.id);
+
+					if (authorId != 0) {
+						menu2->addAction(Ui::ContextActionStickerAuthor(
+							menu2->menu(),
+							&item->history()->session(),
+							authorId
+						));
+					}
+				}
+			}
+
+			if (containsSingleCustomEmojiPack) {
+				const auto authorId = getUserIdFromPackId(emojiPacks.front().id);
+
+				if (authorId != 0) {
+					menu2->addAction(Ui::ContextActionStickerAuthor(
+						menu2->menu(),
+						&item->history()->session(),
+						authorId
+					));
+				}
+			}
+		},
+	});
 }
