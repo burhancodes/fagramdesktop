@@ -54,25 +54,25 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 }, container->lifetime());
 
 #define RestartSettingsMenuJsonSwitch(LangKey, Option) container->add(object_ptr<Button>( \
-	container, \
+    container, \
     FAlang::RplTranslate(QString(#LangKey)), \
-	st::settingsButtonNoIcon \
+    st::settingsButtonNoIcon \
 ))->toggleOn( \
-	rpl::single(::FASettings::JsonSettings::GetBool(#Option)) \
+    rpl::single(::FASettings::JsonSettings::GetBool(#Option)) \
 )->toggledValue( \
 ) | rpl::filter([](bool enabled) { \
-	return (enabled != ::FASettings::JsonSettings::GetBool(#Option)); \
-}) | rpl::start_with_next([](bool enabled) { \
-	controller->show(Ui::MakeConfirmBox({
-		.text = FAlang::RplTranslate(QString("fa_setting_need_restart")),
-		.confirmed = [=] {
-			::FASettings::JsonSettings::Write(); \
-			::FASettings::JsonSettings::Set(#Option, enabled); \
-			::FASettings::JsonSettings::Write(); \
-			::Core::Restart(); \
-		},
-		.confirmText = FAlang::RplTranslate(QString("fa_restart")),
-	}));
+    return (enabled != ::FASettings::JsonSettings::GetBool(#Option)); \
+}) | rpl::start_with_next([=](bool enabled) { \
+    controller->show(Ui::MakeConfirmBox({ \
+        .text = FAlang::RplTranslate(QString("fa_setting_need_restart")), \
+        .confirmed = [=] { \
+            ::FASettings::JsonSettings::Write(); \
+            ::FASettings::JsonSettings::Set(#Option, enabled); \
+            ::FASettings::JsonSettings::Write(); \
+            ::Core::Restart(); \
+        }, \
+        .confirmText = FAlang::RplTranslate(QString("fa_restart")) \
+    })); \
 }, container->lifetime());
 
 namespace Settings {

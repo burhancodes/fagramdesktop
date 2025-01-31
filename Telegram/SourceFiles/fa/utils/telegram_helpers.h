@@ -35,6 +35,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "main/main_account.h"
 #include "main/main_session.h"
 #include "ui/text/format_values.h"
+#include "ui/widgets/popup_menu.h"
 
 #include <string>     
 #include <utility>    
