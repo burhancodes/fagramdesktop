@@ -23,6 +23,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "ui/widgets/labels.h"
 #include "ui/widgets/checkbox.h"
 #include "ui/vertical_list.h"
+#include "ui/boxes/confirm_box.h"
 #include "boxes/connection_box.h"
 #include "platform/platform_specific.h"
 #include "window/window_session_controller.h"

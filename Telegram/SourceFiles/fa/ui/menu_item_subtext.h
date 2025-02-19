@@ -8,7 +8,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 
 #pragma once
 
-#include "ayu/data/entities.h"
+#include "fa/data/entities.h"
 #include "main/main_session.h"
 
 #include "base/unique_qptr.h"
