@@ -89,7 +89,7 @@ namespace Settings {
         setupContent(controller);
     }
 
-    void FAAppearance::SetupAppearance(not_null<Ui::VerticalLayout *> container) {
+    void FAAppearance::SetupAppearance(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
         Ui::AddSubsectionTitle(container, FAlang::RplTranslate(("fa_appearance")));
 
 		const auto roundnessPreview = container->add(
@@ -131,7 +131,7 @@ namespace Settings {
 
     void FAAppearance::SetupFAAppearance(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
 		Ui::AddSkip(container);
-    	SetupAppearance(container);
+    	SetupAppearance(container, controller);
     }
 
     void FAAppearance::setupContent(not_null<Window::SessionController *> controller) {

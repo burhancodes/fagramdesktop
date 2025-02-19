@@ -88,7 +88,7 @@ namespace Settings {
         setupContent(controller);
     }
 
-    void FAGeneral::SetupGeneral(not_null<Ui::VerticalLayout *> container) {
+    void FAGeneral::SetupGeneral(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
         Ui::AddSubsectionTitle(container, FAlang::RplTranslate(QString("fa_general")));
 
 		SettingsMenuJsonSwitch(fa_show_seconds_message, seconds_message);
@@ -106,7 +106,7 @@ namespace Settings {
 
     void FAGeneral::SetupFAGeneral(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
 		Ui::AddSkip(container);
-    	SetupGeneral(container);
+    	SetupGeneral(container, controller);
     }
 
     void FAGeneral::setupContent(not_null<Window::SessionController *> controller) {

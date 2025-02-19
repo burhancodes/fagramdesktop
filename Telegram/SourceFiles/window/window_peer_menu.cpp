@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "window/window_peer_menu.h"
 
+#include "fa/lang/fa_lang.h"
+
 #include "base/call_delayed.h"
 #include "menu/menu_check_item.h"
 #include "boxes/share_box.h"
@@ -882,7 +884,7 @@ void Filler::addBlockUser() {
 void Filler::addGoToFirstMessage()
 {
 	_addAction(
-		QString("Go to beginning"),
+		FAlang::Translate(QString("fa_go_to_beginning")),
 		GoToFirstMessageHandler(_controller, _peer),
 		&st::menuIconGoToBeginning);
 }

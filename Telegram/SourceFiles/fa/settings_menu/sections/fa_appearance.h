@@ -27,7 +27,7 @@ namespace Settings {
         [[nodiscard]] rpl::producer<QString> title() override;
 
     private:
-        void SetupAppearance(not_null<Ui::VerticalLayout *> container);
+        void SetupAppearance(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller);
         
         void SetupFAAppearance(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> null);
         void setupContent(not_null<Window::SessionController *> controller);

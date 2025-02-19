@@ -613,7 +613,7 @@ void MessageDetails(not_null<Ui::PopupMenu*> menu, HistoryItem *item) {
 
 					menu2->addAction(Ui::ContextActionWithSubText(
 						menu2->menu(),
-						st::ayuEditsHistoryIcon,
+						st::menuIconInfo,
 						FAlang::Translate(QString("fa_message_details_filename")),
 						shortified,
 						[=]
@@ -667,4 +667,17 @@ void MessageDetails(not_null<Ui::PopupMenu*> menu, HistoryItem *item) {
 			}
 		},
 	});
+}
+
+
+ID getUserIdFromPackId(uint64 id) {
+	auto ownerId = id >> 32;
+	if ((id >> 16 & 0xff) == 0x3f) {
+		ownerId |= 0x80000000;
+	}
+	if (id >> 24 & 0xff) {
+		ownerId += 0x100000000;
+	}
+
+	return ownerId;
 }

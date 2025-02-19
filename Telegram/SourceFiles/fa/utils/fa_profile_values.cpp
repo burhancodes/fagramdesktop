@@ -38,7 +38,7 @@ rpl::producer<TextWithEntities> IDValue(not_null<PeerData*> peer) {
     return rpl::single(IDString(peer)) | Ui::Text::ToWithEntities();
 }
 
-// suddenly stole into materialgram
+// suddenly stole from materialgram
 
 QString parseRegistrationTime(QString prefix, long long regTime) {
     return prefix + QDateTime::fromSecsSinceEpoch(regTime)

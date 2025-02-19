@@ -25,8 +25,10 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "data/data_channel.h"
 #include "data/data_user.h"
 #include "data/data_chat.h"
+#include "data/data_histories.h"
 #include "data/data_forum_topic.h"
 #include "data/data_session.h"
+#include "history/history.h"
 #include "history/view/history_view_context_menu.h"
 #include "history/view/history_view_element.h"
 #include "window/window_session_controller.h"
@@ -65,3 +67,5 @@ void cleanDebugLogs();
 bool is_me(ID userId);
 
 void MessageDetails(not_null<Ui::PopupMenu*> menu, HistoryItem *item);
+
+ID getUserIdFromPackId(uint64 id);

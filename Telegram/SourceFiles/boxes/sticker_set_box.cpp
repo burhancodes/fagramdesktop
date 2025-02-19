@@ -7,6 +7,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 */
 #include "boxes/sticker_set_box.h"
 
+#include "fa/lang/fa_lang.h"
+
 #include "api/api_common.h"
 #include "api/api_toggling_media.h"
 #include "apiwrap.h"
@@ -821,7 +823,7 @@ void StickerSetBox::updateButtons() {
 						[=] { share(); closeBox(); },
 						&st::menuIconShare);
 					(*menu)->addAction(
-						QString("Pack owner"),
+						FAlang::Translate(QString("fa_pack_owner")),
 						[=] { pack_owner(); closeBox(); },
 						&st::menuIconProfile);
 					(*menu)->popup(QCursor::pos());
@@ -876,7 +878,7 @@ void StickerSetBox::updateButtons() {
 							archive,
 							&st::menuIconArchive);
 						(*menu)->addAction(
-							QString("Pack owner"),
+							FAlang::Translate(QString("fa_pack_owner")),
 							[=] { pack_owner(); closeBox(); },
 							&st::menuIconProfile);
 					}

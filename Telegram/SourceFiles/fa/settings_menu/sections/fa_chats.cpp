@@ -88,7 +88,7 @@ namespace Settings {
         setupContent(controller);
     }
 
-    void FAChats::SetupChats(not_null<Ui::VerticalLayout *> container) {
+    void FAChats::SetupChats(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
         Ui::AddSubsectionTitle(container, FAlang::RplTranslate(QString("fa_chats")));
 
 		const auto recentStickersLimitLabel = container->add(
@@ -126,7 +126,7 @@ namespace Settings {
 
     void FAChats::SetupFAChats(not_null<Ui::VerticalLayout *> container, not_null<Window::SessionController *> controller) {
 		Ui::AddSkip(container);
-    	SetupChats(container);
+    	SetupChats(container, controller);
     }
 
     void FAChats::setupContent(not_null<Window::SessionController *> controller) {
