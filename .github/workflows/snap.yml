@@ -24,26 +24,14 @@ jobs:
           sudo iptables -P FORWARD ACCEPT
           sudo snap install --classic snapcraft
           sudo usermod -aG lxd $USER
-          sudo lxd init --auto
-          sudo lxd waitready
+          sudo snap run lxd init --auto
+          sudo snap run lxd waitready
 
       - name: Free up some disk space.
-        run: |
-          sudo apt-get update
-          sudo apt-get remove -y '^aspnetcore-.*' || echo "::warning::The command [sudo apt-get remove -y '^aspnetcore-.*'] failed to complete successfully. Proceeding..."
-          sudo apt-get remove -y '^dotnet-.*' --fix-missing || echo "::warning::The command [sudo apt-get remove -y '^dotnet-.*' --fix-missing] failed to complete successfully. Proceeding..."
-          sudo apt-get remove -y '^llvm-.*' --fix-missing || echo "::warning::The command [sudo apt-get remove -y '^llvm-.*' --fix-missing] failed to complete successfully. Proceeding..."
-          sudo apt-get remove -y 'php.*' --fix-missing || echo "::warning::The command [sudo apt-get remove -y 'php.*' --fix-missing] failed to complete successfully. Proceeding..."
-          sudo apt-get remove -y '^mongodb-.*' --fix-missing || echo "::warning::The command [sudo apt-get remove -y '^mongodb-.*' --fix-missing] failed to complete successfully. Proceeding..."
-          sudo apt-get remove -y '^mysql-.*' --fix-missing || echo "::warning::The command [sudo apt-get remove -y '^mysql-.*' --fix-missing] failed to complete successfully. Proceeding..."
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
 
-      - name: Clean previous builds.
-        run: |
-          sudo snapcraft clean
-
-      - name: Telegram Desktop snap build.
-        run: |
-          sudo -u $USER snap run snapcraft --debug
+      - name: FAgram Desktop snap build.
+        run: sg lxd -c 'snap run snapcraft --verbosity=quiet'
 
       - name: Move artifact.
         if: env.UPLOAD_ARTIFACT == 'true'
