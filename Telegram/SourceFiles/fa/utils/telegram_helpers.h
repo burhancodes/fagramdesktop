@@ -9,37 +9,31 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #pragma once
 
 #include "apiwrap.h"
-#include "api/api_text_entities.h"
-
 #include "lang_auto.h"
-#include "fa/data/entities.h"
-#include "core/mime_type.h"
-#include "data/data_channel.h"
-#include "data/data_forum.h"
-#include "data/data_forum_topic.h"
-#include "data/data_histories.h"
-#include "data/data_peer_id.h"
-#include "data/data_photo.h"
-#include "data/data_user.h"
-#include "data/data_peer.h"
-#include "inline_bots/inline_bot_result.h"
-
-#include "core/application.h"
-#include "data/data_document.h"
-#include "data/data_session.h"
-#include "history/history.h"
-#include "history/history_item.h"
+#include "mainwidget.h"
+#include "mainwindow.h"
+#include "fa/ui/menu_item_subtext.h"
 #include "history/history_item_components.h"
-#include "history/history_unread_things.h"
-#include "main/main_domain.h"
-#include "main/main_account.h"
-#include "main/main_session.h"
-#include "ui/text/format_values.h"
-#include "ui/widgets/popup_menu.h"
 
-#include <string>     
-#include <utility>    
-#include <functional>  
+#include "core/mime_type.h"
+#include "styles/style_menu_icons.h"
+#include "ui/widgets/popup_menu.h"
+#include "ui/widgets/menu/menu_add_action_callback_factory.h"
+#include "window/window_peer_menu.h"
+
+#include "base/unixtime.h"
+#include "data/data_channel.h"
+#include "data/data_user.h"
+#include "data/data_chat.h"
+#include "data/data_forum_topic.h"
+#include "data/data_session.h"
+#include "history/view/history_view_context_menu.h"
+#include "history/view/history_view_element.h"
+#include "window/window_session_controller.h"
+
+#include <string>
+#include <utility>
+#include <functional>
 #include <unordered_set>
 #include <QtCore/QJsonArray>
 #include <QtCore/QUrl>

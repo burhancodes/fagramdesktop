@@ -353,6 +353,110 @@ bool is_me(ID userId) {
 	return false;
 }
 
+QString getMediaSize(not_null<HistoryItem*> message) {
+	const auto size = getMediaSizeBytes(message);
+
+	if (size == -1) {
+		return {};
+	}
+
+	return Ui::FormatSizeText(size);
+}
+
+QString getMediaMime(not_null<HistoryItem*> message) {
+	if (!message->media()) {
+		return {};
+	}
+
+	const auto media = message->media();
+
+	const auto document = media->document();
+	const auto photo = media->photo();
+
+	if (document) {
+		// any file
+		return document->mimeString();
+	} else if (photo && photo->hasVideo()) {
+		// video
+		return "video/mp4";
+	} else if (photo && !photo->hasVideo()) {
+		// photo
+		return "image/jpeg";
+	}
+
+	return {};
+}
+
+QString getMediaName(not_null<HistoryItem*> message) {
+	if (!message->media()) {
+		return {};
+	}
+
+	const auto media = message->media();
+
+	const auto document = media->document();
+
+	if (document) {
+		return document->filename();
+	}
+
+	return {};
+}
+
+QString getMediaResolution(not_null<HistoryItem*> message) {
+	if (!message->media()) {
+		return {};
+	}
+
+	const auto media = message->media();
+
+	const auto document = media->document();
+	const auto photo = media->photo();
+
+	const auto formatQSize = [=](QSize size)
+	{
+		if (size.isNull() || size.isEmpty() || !size.isValid()) {
+			return QString();
+		}
+
+		return QString("%1x%2").arg(size.width()).arg(size.height());
+	};
+
+	if (document) {
+		return formatQSize(document->dimensions);
+	} else if (photo) {
+		auto result = photo->size(Data::PhotoSize::Large);
+		if (!result.has_value()) {
+			result = photo->size(Data::PhotoSize::Small);
+		}
+		if (!result.has_value()) {
+			result = photo->size(Data::PhotoSize::Thumbnail);
+		}
+		return result.has_value() ? formatQSize(result.value()) : QString();
+	}
+
+	return {};
+}
+
+QString getMediaDC(not_null<HistoryItem*> message) {
+	if (!message->media()) {
+		return {};
+	}
+
+	const auto media = message->media();
+
+	const auto document = media->document();
+	const auto photo = media->photo();
+
+	if (document) {
+		return getDCName(document->getDC());
+	} else if (photo) {
+		return getDCName(photo->getDC());
+	}
+
+	return {};
+}
+
 // thanks ayugram
 void MessageDetails(not_null<Ui::PopupMenu*> menu, HistoryItem *item) {
     bool show_message_details = FASettings::JsonSettings::GetBool("fa_show_message_details");
@@ -422,7 +526,7 @@ void MessageDetails(not_null<Ui::PopupMenu*> menu, HistoryItem *item) {
 	const auto callback = Ui::Menu::CreateAddActionCallback(menu);
 
 	callback(Window::PeerMenuCallback::Args{
-		.text = tr::ayu_MessageDetailsPC(tr::now),
+		.text = FAlang::Translate(QString("fa_message_details")),
 		.handler = nullptr,
 		.icon = &st::menuIconInfo,
 		.fillSubmenu = [&](not_null<Ui::PopupMenu*> menu2)
