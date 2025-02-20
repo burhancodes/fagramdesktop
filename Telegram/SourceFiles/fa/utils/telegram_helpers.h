@@ -12,12 +12,14 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "lang_auto.h"
 #include "mainwidget.h"
 #include "mainwindow.h"
+#include "main/main_domain.h"
 #include "fa/ui/menu_item_subtext.h"
 #include "history/history_item_components.h"
 
 #include "core/mime_type.h"
 #include "styles/style_menu_icons.h"
 #include "ui/widgets/popup_menu.h"
+#include "ui/text/format_values.h"
 #include "ui/widgets/menu/menu_add_action_callback_factory.h"
 #include "window/window_peer_menu.h"
 
@@ -28,6 +30,8 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "data/data_histories.h"
 #include "data/data_forum_topic.h"
 #include "data/data_session.h"
+#include "data/data_thread.h"
+#include "data/data_types.h"
 #include "history/history.h"
 #include "history/view/history_view_context_menu.h"
 #include "history/view/history_view_element.h"
@@ -50,6 +54,7 @@ void initialize_fagram_data();
 
 void markAsOnline(not_null<Main::Session*> session);
 
+int getMediaSizeBytes(not_null<HistoryItem*> message);
 void readMentions(base::weak_ptr<Data::Thread> weakThread);
 void readReactions(base::weak_ptr<Data::Thread> weakThread);
 void readHistory(not_null<HistoryItem*> message);
@@ -59,6 +64,7 @@ bool isFAgramRelated(ID peerId);
 
 QString getLocationDC(int dc_id);
 QString getPeerDC(not_null<PeerData*> peer);
+QString getDCbyID(int dc);
 QString getOnlyDC(not_null<PeerData*> peer);
 QString getIpDC(int dc_id, bool test);
 

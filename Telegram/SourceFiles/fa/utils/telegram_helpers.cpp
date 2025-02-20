@@ -62,6 +62,44 @@ void markAsOnline(not_null<Main::Session*> session) {
 	state[session->userId().bare] = true;
 }
 
+// stole from ayugram
+int getMediaSizeBytes(not_null<HistoryItem*> message) {
+	if (!message->media()) {
+		return -1;
+	}
+
+	const auto media = message->media();
+
+	const auto document = media->document();
+	const auto photo = media->photo();
+
+	int64 size = -1;
+	if (document) {
+		// any file
+		size = document->size;
+	} else if (photo && photo->hasVideo()) {
+		// video
+		size = photo->videoByteSize(Data::PhotoSize::Large);
+		if (size == 0) {
+			size = photo->videoByteSize(Data::PhotoSize::Small);
+		}
+		if (size == 0) {
+			size = photo->videoByteSize(Data::PhotoSize::Thumbnail);
+		}
+	} else if (photo && !photo->hasVideo()) {
+		// photo
+		size = photo->imageByteSize(Data::PhotoSize::Large);
+		if (size == 0) {
+			size = photo->imageByteSize(Data::PhotoSize::Small);
+		}
+		if (size == 0) {
+			size = photo->imageByteSize(Data::PhotoSize::Thumbnail);
+		}
+	}
+
+	return size;
+}
+
 // stole from Ayugram
 void readMentions(base::weak_ptr<Data::Thread> weakThread) {
 	const auto thread = weakThread.get();
@@ -240,6 +278,16 @@ QString getPeerDC(not_null<PeerData*> peer) {
     return QString("DC%1, %2").arg(dc).arg(dc_location);
 }
 
+QString getDCbyID(int dc) {
+    QString dc_location = getLocationDC(dc);
+
+    if (dc < 1) {
+        return QString("DC_UNKNOWN");
+    }
+
+    return QString("DC%1, %2").arg(dc).arg(dc_location);
+}
+
 QString getOnlyDC(not_null<PeerData*> peer) {
     int dc = 0;
 
@@ -342,14 +390,14 @@ void cleanDebugLogs() {
 }
 
 bool is_me(ID userId) {
-	for (const auto &[index, account] : Core::App().domain().accounts()) {
+	for (const auto &pair : Core::App().domain().accounts()) {
+		const auto &account = pair.second;
 		if (const auto session = account->maybeSession()) {
 			if (session->userId().bare == userId) {
 				return true;
 			}
 		}
 	}
-
 	return false;
 }
 
@@ -449,9 +497,9 @@ QString getMediaDC(not_null<HistoryItem*> message) {
 	const auto photo = media->photo();
 
 	if (document) {
-		return getDCName(document->getDC());
+		return getDCbyID(document->getDC());
 	} else if (photo) {
-		return getDCName(photo->getDC());
+		return getDCbyID(photo->getDC());
 	}
 
 	return {};
@@ -473,7 +521,7 @@ void MessageDetails(not_null<Ui::PopupMenu*> menu, HistoryItem *item) {
 	const auto views = item->Get<HistoryMessageViews>();
 	const auto media = item->media();
 
-	const auto isSticker = media && media->document() && media->document()->sticker();
+	const auto isSticker = (media && media->document() && media->document()->sticker()) ? true : false;
 
 	const auto emojiPacks = HistoryView::CollectEmojiPacks(item, HistoryView::EmojiPacksSource::Message);
 	auto containsSingleCustomEmojiPack = emojiPacks.size() == 1;
@@ -642,7 +690,7 @@ void MessageDetails(not_null<Ui::PopupMenu*> menu, HistoryItem *item) {
 				}
 
 				if (isSticker) {
-					const auto authorId = getUserIdFromPackId(media->document()->sticker()->set.id);
+					auto authorId = getUserIdFromPackId(media->document()->sticker()->set.id);
 
 					if (authorId != 0) {
 						menu2->addAction(Ui::ContextActionStickerAuthor(
@@ -655,7 +703,7 @@ void MessageDetails(not_null<Ui::PopupMenu*> menu, HistoryItem *item) {
 			}
 
 			if (containsSingleCustomEmojiPack) {
-				const auto authorId = getUserIdFromPackId(emojiPacks.front().id);
+				auto authorId = getUserIdFromPackId(emojiPacks.front().id);
 
 				if (authorId != 0) {
 					menu2->addAction(Ui::ContextActionStickerAuthor(
