@@ -1,3 +1,11 @@
+1.1.7 (x.02.2025)
+
+- Message's details
+- Confirm box in settings that need restart
+- Hungarian language
+- Fixed some functions's translation
+- Updated to tdesktop v5.11.2
+
 1.1.6 (28.01.2025)
 
 - Local tg premium
