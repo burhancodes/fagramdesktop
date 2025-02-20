@@ -160,12 +160,6 @@ void Polls::sendVotes(
 		_pollVotesRequestIds.erase(itemId);
 		hideSending();
 		_session->updates().applyUpdates(result);
-
-		bool mark_read_after_action = FASettings::JsonSettings::GetBool("mark_read_after_action");
-		if (mark_read_after_action && item)
-		{
-			readHistory(item);
-		}
 	}).fail([=] {
 		_pollVotesRequestIds.erase(itemId);
 		hideSending();

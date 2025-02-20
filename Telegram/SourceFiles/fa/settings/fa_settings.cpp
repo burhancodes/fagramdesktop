@@ -191,9 +191,6 @@ const std::map<QString, Definition, std::greater<QString>> DefinitionMap {
 	{ "hide_open_webapp_button_chatlist", {
 		.type = SettingType::BoolSetting,
 		.defaultValue = true, }},
-	{ "mark_read_after_action", {
-		.type = SettingType::BoolSetting,
-		.defaultValue = false, }},
 	{ "local_premium", {
 		.type = SettingType::BoolSetting,
 		.defaultValue = false, }},

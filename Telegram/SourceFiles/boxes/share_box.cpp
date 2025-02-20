@@ -8,7 +8,6 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "boxes/share_box.h"
 
 #include "fa/settings/fa_settings.h"
-#include "fa/utils/telegram_helpers.h"
 
 #include "api/api_premium.h"
 #include "base/random.h"
@@ -1603,12 +1602,6 @@ ShareBox::SubmitCallback ShareBox::DefaultForwardCallback(
 							show->showToast(std::move(phrase));
 							show->hideLayer();
 						}
-					}
-
-					bool mark_read_after_action = FASettings::JsonSettings::GetBool("mark_read_after_action");
-					if (mark_read_after_action && history->lastMessage())
-					{
-						readHistory(history->lastMessage());
 					}
 
 					finish();

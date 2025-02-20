@@ -1465,11 +1465,6 @@ void Reactions::send(not_null<HistoryItem*> item, bool addToRecent) {
 	)).done([=](const MTPUpdates &result) {
 		_sentRequests.remove(id);
 		_owner->session().api().applyUpdates(result);
-
-		bool mark_read_after_action = FASettings::JsonSettings::GetBool("mark_read_after_action");
-		if (mark_read_after_action && item) {
-			readHistory(item);
-		}
 	}).fail([=](const MTP::Error &error) {
 		_sentRequests.remove(id);
 	}).send();

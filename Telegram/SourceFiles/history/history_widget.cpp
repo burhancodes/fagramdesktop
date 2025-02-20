@@ -8,7 +8,6 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "history/history_widget.h"
 
 #include "fa/settings/fa_settings.h"
-#include "fa/utils/telegram_helpers.h"
 
 #include "api/api_editing.h"
 #include "api/api_bot.h"
@@ -1864,7 +1863,7 @@ void HistoryWidget::fileChosen(ChatHelpers::FileChosen &&data) {
 		} else if (!_field->isHidden()) {
 			Data::InsertCustomEmoji(_field.data(), data.document);
 		}
-	} else if (_history) {
+	} else (_history) {
 		controller()->sendingAnimation().appendSending(
 			data.messageSendingFrom);
 		const auto localId = data.messageSendingFrom.localId;
@@ -1875,13 +1874,6 @@ void HistoryWidget::fileChosen(ChatHelpers::FileChosen &&data) {
 			data.document,
 			std::move(messageToSend),
 			localId);
-	} else {
-		bool mark_read_after_action = FASettings::JsonSettings::GetBool("mark_read_after_action");
-		if (mark_read_after_action) {
-			if (const auto lastMessage = history()->lastMessage()) {
-				readHistory(lastMessage);
-			}
-		}
 	}
 }
 

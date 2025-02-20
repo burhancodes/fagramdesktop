@@ -3392,13 +3392,6 @@ void ApiWrap::forwardMessages(
 					shared->callback();
 				}
 
-				bool mark_read_after_action = FASettings::JsonSettings::GetBool("mark_read_after_action");
-
-				if (mark_read_after_action && history->lastMessage())
-				{
-					readHistory(history->lastMessage());
-				}
-
 				finish();
 			}).fail([=](const MTP::Error &error) {
 				if (idsCopy) {
