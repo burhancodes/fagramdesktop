@@ -701,3 +701,13 @@ QString formatDateTime(const QDateTime &date) {
 
 	return datePart + getLocalizedAt() + timePart;
 }
+
+QString getLocalizedAt() {
+	static const auto val = tr::lng_mediaview_date_time(
+		tr::now,
+		lt_date,
+		"",
+		lt_time,
+		"");
+	return val;
+}

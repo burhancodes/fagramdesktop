@@ -39,6 +39,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "history/history_unread_things.h"
 #include "history/view/history_view_context_menu.h"
 #include "history/view/history_view_element.h"
+#include "storage/storage_account.h"
 #include "window/window_session_controller.h"
 
 #include <string>
@@ -80,3 +81,4 @@ void MessageDetails(not_null<Ui::PopupMenu*> menu, HistoryItem *item);
 
 ID getUserIdFromPackId(uint64 id);
 QString formatDateTime(const QDateTime &date);
+QString getLocalizedAt()
