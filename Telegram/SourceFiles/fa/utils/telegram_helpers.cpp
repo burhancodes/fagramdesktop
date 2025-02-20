@@ -154,44 +154,6 @@ void readReactions(base::weak_ptr<Data::Thread> weakThread) {
 	}).send();
 }
 
-// stole from Ayugram
-void readHistory(not_null<HistoryItem*> message) {
-	const auto history = message->history();
-	const auto tillId = message->id;
-
-	history->session().data().histories()
-		.sendRequest(history,
-					 Data::Histories::RequestType::ReadInbox,
-					 [=](Fn<void()> finish)
-					 {
-						 if (const auto channel = history->peer->asChannel()) {
-							 return history->session().api().request(MTPchannels_ReadHistory(
-								 channel->inputChannel,
-								 MTP_int(tillId)
-							 )).done([=] { markAsOnline(&history->session()); }).send();
-						 }
-
-						 return history->session().api().request(MTPmessages_ReadHistory(
-							 history->peer->input,
-							 MTP_int(tillId)
-						 )).done([=](const MTPmessages_AffectedMessages &result)
-						 {
-							 history->session().api().applyAffectedMessages(history->peer, result);
-							 markAsOnline(&history->session());
-						 }).fail([=]
-						 {
-						 }).send();
-					 });
-
-	if (history->unreadMentions().has()) {
-		readMentions(history->asThread());
-	}
-
-	if (history->unreadReactions().has()) {
-		readReactions(history->asThread());
-	}
-}
-
 ID getBareID(not_null<PeerData*> peer) {
     return peerIsUser(peer->id)
                ? peerToUser(peer->id).bare

@@ -20,6 +20,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "styles/style_menu_icons.h"
 #include "ui/widgets/popup_menu.h"
 #include "ui/text/format_values.h"
+#include "export/data/export_data_types.h"
 #include "ui/widgets/menu/menu_add_action_callback_factory.h"
 #include "window/window_peer_menu.h"
 
@@ -27,12 +28,15 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "data/data_channel.h"
 #include "data/data_user.h"
 #include "data/data_chat.h"
+#include "data/data_photo.h"
+#include "data/data_document.h"
 #include "data/data_histories.h"
 #include "data/data_forum_topic.h"
 #include "data/data_session.h"
 #include "data/data_thread.h"
 #include "data/data_types.h"
 #include "history/history.h"
+#include "history/history_unread_things.h"
 #include "history/view/history_view_context_menu.h"
 #include "history/view/history_view_element.h"
 #include "window/window_session_controller.h"
@@ -44,6 +48,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include <QtCore/QJsonArray>
 #include <QtCore/QUrl>
 #include <QtCore/QDir>
+#include <QtGui/QGuiApplication>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 
@@ -57,7 +62,6 @@ void markAsOnline(not_null<Main::Session*> session);
 int getMediaSizeBytes(not_null<HistoryItem*> message);
 void readMentions(base::weak_ptr<Data::Thread> weakThread);
 void readReactions(base::weak_ptr<Data::Thread> weakThread);
-void readHistory(not_null<HistoryItem*> message);
 
 ID getBareID(not_null<PeerData*> peer);
 bool isFAgramRelated(ID peerId);
