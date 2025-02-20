@@ -352,15 +352,16 @@ void cleanDebugLogs() {
 }
 
 bool is_me(ID userId) {
-	for (const auto &pair : Core::App().domain().accounts()) {
-		const auto &account = pair.second;
-		if (const auto session = account->maybeSession()) {
-			if (session->userId().bare == userId) {
-				return true;
-			}
-		}
-	}
-	return false;
+    for (const auto &accountWithIndex : Core::App().domain().accounts()) {
+        if (const auto *account = accountWithIndex.account.get()) {
+            if (const auto *session = account->maybeSession()) {
+                if (session->userId().bare == userId) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 QString getMediaSize(not_null<HistoryItem*> message) {
@@ -690,4 +691,13 @@ ID getUserIdFromPackId(uint64 id) {
 	}
 
 	return ownerId;
+}
+
+// stole form ayugram
+QString formatDateTime(const QDateTime &date) {
+	const auto locale = QLocale::system();
+	const auto datePart = locale.toString(date.date(), QLocale::ShortFormat);
+	const auto timePart = locale.toString(date, "HH:mm:ss");
+
+	return datePart + getLocalizedAt() + timePart;
 }

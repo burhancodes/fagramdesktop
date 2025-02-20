@@ -79,3 +79,4 @@ bool is_me(ID userId);
 void MessageDetails(not_null<Ui::PopupMenu*> menu, HistoryItem *item);
 
 ID getUserIdFromPackId(uint64 id);
+QString formatDateTime(const QDateTime &date);
