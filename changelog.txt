@@ -1,6 +1,7 @@
 1.1.7 (x.02.2025)
 
 - Message's details
+- Channel's discuss button
 - Confirm box in settings that need restart
 - Hungarian language
 - Fixed some functions's translation

@@ -201,6 +201,9 @@ const std::map<QString, Definition, std::greater<QString>> DefinitionMap {
 	{ "use_default_rounding", {
 		.type = SettingType::BoolSetting,
 		.defaultValue = true, }},
+	{ "show_discuss_button", {
+		.type = SettingType::BoolSetting,
+		.defaultValue = true, }},
 	{ "roundness", {
 		.type = SettingType::IntSetting,
 		.defaultValue = 50,

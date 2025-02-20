@@ -3083,6 +3083,9 @@ void HistoryWidget::updateControlsVisibility() {
 			toggleOne(_botStart);
 			toggleOne(_unblock);
 		};
+
+		bool discuss_button = FASettings::JsonSettings::GetBool("show_discuss_button");
+		
 		if (isChoosingTheme()) {
 			_chooseTheme->show();
 			setInnerFocus();
@@ -3093,8 +3096,29 @@ void HistoryWidget::updateControlsVisibility() {
 			toggle(_unblock);
 		} else if (isJoinChannel()) {
 			toggle(_joinChannel);
+			if (hasDiscussionGroup() && discuss_button) {
+				if (_discuss->isHidden()) {
+					_discuss->clearState();
+					_discuss->show();
+				}
+			}
+			else {
+				_discuss->hide();
+				if (_joinChannel->isHidden()) {
+					_joinChannel->clearState();
+					_joinChannel->show();
+				}
+			}
 		} else if (isMuteUnmute()) {
 			toggle(_muteUnmute);
+			if (hasDiscussionGroup() && discuss_button) {
+				if (_discuss->isHidden()) {
+					_discuss->clearState();
+					_discuss->show();
+				}
+			} else {
+				_discuss->hide();
+			}
 		} else if (isBotStart()) {
 			toggle(_botStart);
 
@@ -5608,11 +5632,29 @@ void HistoryWidget::moveFieldControls() {
 		bottom - _botStart->height(),
 		width(),
 		_botStart->height());
+	bool discuss_button = FASettings::JsonSettings::GetBool("show_discuss_button");
 	_botStart->setGeometry(fullWidthButtonRect);
 	_unblock->setGeometry(fullWidthButtonRect);
-	_joinChannel->setGeometry(fullWidthButtonRect);
-	_muteUnmute->setGeometry(fullWidthButtonRect);
-	_reportMessages->setGeometry(fullWidthButtonRect);
+	if (hasDiscussionGroup() && discuss_button) {
+		_joinChannel->setGeometry(myrtlrect(
+			0,
+			fullWidthButtonRect.y(),
+			width() / 2,
+			fullWidthButtonRect.height()));
+		_muteUnmute->setGeometry(myrtlrect(
+			0,
+			fullWidthButtonRect.y(),
+			width() / 2,
+			fullWidthButtonRect.height()));
+		_discuss->setGeometry(myrtlrect(
+			width() / 2,
+			fullWidthButtonRect.y(),
+			width() - (width() / 2),
+			fullWidthButtonRect.height()));
+	} else {
+		_muteUnmute->setGeometry(fullWidthButtonRect);
+		_joinChannel->setGeometry(fullWidthButtonRect);
+		_reportMessages->setGeometry(fullWidthButtonRect);
 	if (_sendRestriction) {
 		_sendRestriction->setGeometry(fullWidthButtonRect);
 	}
