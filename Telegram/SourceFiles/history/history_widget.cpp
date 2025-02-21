@@ -379,6 +379,7 @@ HistoryWidget::HistoryWidget(
 	_botStart->addClickHandler([=] { sendBotStartCommand(); });
 	_joinChannel->addClickHandler([=] { joinChannel(); });
 	_muteUnmute->addClickHandler([=] { toggleMuteUnmute(); });
+	_discuss->addClickHandler([=] { goToDiscussionGroup(); });
 	_reportMessages->addClickHandler([=] { reportSelectedMessages(); });
 	_field->submits(
 	) | rpl::start_with_next([=](Qt::KeyboardModifiers modifiers) {
@@ -4528,6 +4529,13 @@ void HistoryWidget::toggleMuteUnmute() {
 	session().data().notifySettings().update(_peer, muteForSeconds);
 }
 
+bool HistoryWidget::hasDiscussionGroup() const {
+	const auto channel = _peer ? _peer->asChannel() : nullptr;
+	return channel
+		&& channel->isBroadcast()
+		&& (channel->flags() & ChannelDataFlag::HasLink);
+}
+
 void HistoryWidget::reportSelectedMessages() {
 	if (!_list || !_chooseForReport || !_list->getSelectionState().count) {
 		return;
@@ -5655,6 +5663,7 @@ void HistoryWidget::moveFieldControls() {
 		_muteUnmute->setGeometry(fullWidthButtonRect);
 		_joinChannel->setGeometry(fullWidthButtonRect);
 		_reportMessages->setGeometry(fullWidthButtonRect);
+	}
 	if (_sendRestriction) {
 		_sendRestriction->setGeometry(fullWidthButtonRect);
 	}

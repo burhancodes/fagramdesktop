@@ -13,6 +13,7 @@ https://github.com/fajox1/fagramdesktop/blob/master/LEGAL
 #include "mainwidget.h"
 #include "mainwindow.h"
 #include "main/main_domain.h"
+#include "main/main_account.h"
 #include "fa/ui/menu_item_subtext.h"
 #include "history/history_item_components.h"
 
