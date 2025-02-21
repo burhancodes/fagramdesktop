@@ -439,6 +439,7 @@ private:
 	void unblockUser();
 	void sendBotStartCommand();
 	void joinChannel();
+	void goToDiscussionGroup();
 
 	[[nodiscard]] bool hasDiscussionGroup() const;
 

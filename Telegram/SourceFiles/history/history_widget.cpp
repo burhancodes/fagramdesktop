@@ -4529,6 +4529,17 @@ void HistoryWidget::toggleMuteUnmute() {
 	session().data().notifySettings().update(_peer, muteForSeconds);
 }
 
+// took from 64gram
+
+void HistoryWidget::goToDiscussionGroup() {
+	const auto channel = _peer ? _peer->asChannel() : nullptr;
+	const auto chat = channel ? channel->linkedChat() : nullptr;
+	if (!chat) {
+		return;
+	}
+	controller()->showPeerHistory(chat, Window::SectionShow::Way::Forward);
+}
+
 bool HistoryWidget::hasDiscussionGroup() const {
 	const auto channel = _peer ? _peer->asChannel() : nullptr;
 	return channel
