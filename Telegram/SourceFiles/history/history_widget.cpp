@@ -4738,7 +4738,7 @@ void HistoryWidget::checkSuggestToGigagroup() {
 			controller()->show(Box([=](not_null<Ui::GenericBox*> box) {
 				box->setTitle(tr::lng_gigagroup_suggest_title());
 				box->addRow(
-					object_ptr<Ui::FlatLabel>(
+					object_ptr<Ui::FlatLabel>::create(
 						box,
 						tr::lng_gigagroup_suggest_text(
 						) | Ui::Text::ToRichLangValue(),
