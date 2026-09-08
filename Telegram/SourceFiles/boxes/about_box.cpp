@@ -166,7 +166,7 @@ namespace {
 		result += Core::CanaryVersionSuffix();
 	} else if (cAlphaVersion()) {
 		result += u" alpha %1"_q.arg(cAlphaVersion() % 1000);
-	} else if (AppBetaVersion) {
+	} else if (AppBetaVersion || AppFABetaVersion) {
 		result += " beta";
 	}
 	if (Platform::IsWindows64Bit()) {

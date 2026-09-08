@@ -317,6 +317,10 @@ void Application::run() {
 	if (FASettings::FASettings::getInstance().disableAutoUpdate()) {
 		cSetAutoUpdate(false);
 	}
+	if (FASettings::FASettings::getInstance().installBetaUpdate() != cInstallBetaVersion()) {
+		cSetInstallBetaVersion(FASettings::FASettings::getInstance().installBetaUpdate());
+		Core::Launcher::Instance().writeInstallBetaVersionsSetting();
+	}
 
 	FAlang::Load(Lang::GetInstance().baseId(), Lang::GetInstance().id());
 

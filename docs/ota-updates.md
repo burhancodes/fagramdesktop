@@ -221,3 +221,19 @@ ota/
 Both manifests are kept byte-for-byte identical so a single release publish covers every client.
 
 Old update files can be deleted — they're only needed while clients on the previous version still exist.
+
+---
+
+## Beta vs. Stable Version Numbering Rules
+
+Telegram Desktop's update checker strictly enforces monotonic integer version ordering:
+
+```cpp
+if (availableVersion <= myVersion) return;
+```
+
+**Key Rules:**
+1. **Never reuse version integers between channels**: A beta release and its subsequent stable release must never share the same `AppVersion` integer (e.g. do not release `6.5.2 beta` as `6005002` and then `6.5.2 stable` as `6005002`). If they share the same integer, users who tested the beta build will never detect or receive the stable release.
+2. **Strictly monotonic numbering**: Every published update must increment `AppVersion`. For example, `6.5.2 beta` (`6005002`) followed by `6.5.2 stable` (`6005003`), or using distinct patch increments.
+3. **Switching channels without downgrade**: If a user on a beta build turns off the "Beta updates" toggle, the client will remain on the beta build until a stable version with an integer version higher than the installed beta is published.
+

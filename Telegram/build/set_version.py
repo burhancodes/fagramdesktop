@@ -131,6 +131,13 @@ replaceInFile(scriptPath + '/../SourceFiles/core/version.h', [
   [ r'(AppBetaVersion\s+=\s+)[a-z]+', r'\g<1>' + ('true' if versionBeta else 'false') ],
 ])
 
+print('Patching fa/fa_version.h...')
+replaceInFile(scriptPath + '/../SourceFiles/fa/fa_version.h', [
+  [ r'(AppFAVersion\s+=\s+)\d+', r'\g<1>' + versionFull ],
+  [ r'(AppFAVersionStr\s+=\s+)[^;]+', r'\g<1>"' + versionStrSmall + '"' ],
+  [ r'(AppFABetaVersion\s+=\s+)[a-z]+', r'\g<1>' + ('true' if versionBeta else 'false') ],
+])
+
 parts = [versionMajor, versionMinor, versionPatch, versionAlpha]
 withcomma = ','.join(parts)
 withdot = '.'.join(parts)

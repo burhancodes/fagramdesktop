@@ -121,6 +121,20 @@ def main():
     if args.platform not in manifest:
         manifest[args.platform] = {}
 
+    if channel in manifest[args.platform]:
+        existing_version = manifest[args.platform][channel].get('released')
+        if existing_version:
+            try:
+                if int(args.version) <= int(existing_version):
+                    print(
+                        f'Warning: Published version ({args.version}) is not greater than '
+                        f'existing version ({existing_version}) on {args.platform}/{channel}! '
+                        f'Clients will reject this update due to monotonic version checking.',
+                        file=sys.stderr,
+                    )
+            except ValueError:
+                pass
+
     manifest[args.platform][channel] = {
         'released': str(args.version),
         'link': link,

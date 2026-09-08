@@ -196,6 +196,15 @@ const auto kFAGeneralMeta = BuildHelper({
 
 	builder.add(nullptr, [] {
 		return SearchEntry{
+			.id = u"fa/general/beta-updates"_q,
+			.title = fatr::fa_beta_updates(fatr::now),
+			.keywords = { u"update"_q, u"updates"_q, u"beta"_q, u"channel"_q, u"ota"_q, u"test"_q },
+			.icon = { &st::menuIconShowAll },
+		};
+	});
+
+	builder.add(nullptr, [] {
+		return SearchEntry{
 			.id = u"fa/general/start-token"_q,
 			.title = fatr::fa_show_start_token(fatr::now),
 			.keywords = { u"start"_q, u"token"_q, u"bot"_q, u"parameter"_q },
