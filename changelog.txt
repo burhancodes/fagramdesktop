@@ -1,3 +1,10 @@
+2.5.3 beta (08.09.26)
+- Updated tdesktop to v7.2.5
+- Disable auto OTA updates
+- Beta channel OTA updates
+- Updated OTA manifest to v6
+- Fixed some UI bugs
+
 2.5.2 (03.09.26)
 - Updated tdesktop to v7.1.4
 - Reimplemented FAgram Badge

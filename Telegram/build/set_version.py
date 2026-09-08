@@ -26,7 +26,10 @@ versionMinor = ''
 versionPatch = ''
 versionAlpha = '0'
 versionBeta = False
-for arg in sys.argv:
+for arg in sys.argv[1:]:
+  if arg.lower() in ('-beta', '--beta', 'beta'):
+    versionBeta = True
+    continue
   match = re.match(r'^\s*(\d+)\.(\d+)(\.(\d+)(\.(\d+|beta))?)?\s*$', arg)
   if match:
     inputVersion = arg
@@ -40,6 +43,9 @@ for arg in sys.argv:
         versionBeta = True
       else:
         versionAlpha = match.group(6)
+
+if versionBeta and 'beta' not in versionOriginal:
+  versionOriginal = versionOriginal + '.beta'
 
 if not len(versionMajor):
   print("Wrong version parameter")
