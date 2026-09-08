@@ -187,6 +187,15 @@ const auto kFAGeneralMeta = BuildHelper({
 
 	builder.add(nullptr, [] {
 		return SearchEntry{
+			.id = u"fa/general/disable-auto-update"_q,
+			.title = fatr::fa_disable_auto_update(fatr::now),
+			.keywords = { u"update"_q, u"updates"_q, u"ota"_q, u"auto"_q, u"disable"_q },
+			.icon = { &st::menuIconShowAll },
+		};
+	});
+
+	builder.add(nullptr, [] {
+		return SearchEntry{
 			.id = u"fa/general/start-token"_q,
 			.title = fatr::fa_show_start_token(fatr::now),
 			.keywords = { u"start"_q, u"token"_q, u"bot"_q, u"parameter"_q },

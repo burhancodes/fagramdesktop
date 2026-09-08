@@ -105,6 +105,7 @@ void FASettings::loadFromJson(const QJsonObject &obj) {
 	_disableAi = obj.contains("disable_ai") ? obj["disable_ai"].toBool() : _disableAi.current();
 	_disableAnimatedAvatars = obj.contains("disable_animated_avatars") ? obj["disable_animated_avatars"].toBool() : _disableAnimatedAvatars.current();
 	_disableAutoDownload = obj.contains("disable_auto_download") ? obj["disable_auto_download"].toBool() : _disableAutoDownload.current();
+	_disableAutoUpdate = obj.contains("disable_auto_update") ? obj["disable_auto_update"].toBool() : _disableAutoUpdate.current();
 	_showStartToken = obj.contains("show_start_token") ? obj["show_start_token"].toBool() : _showStartToken.current();
 	_showPeerId = obj.contains("show_peer_id") ? obj["show_peer_id"].toBool() : _showPeerId.current();
 	_showDcId = obj.contains("show_dc_id") ? obj["show_dc_id"].toBool() : _showDcId.current();
@@ -161,6 +162,7 @@ QJsonObject FASettings::saveToJson() const {
 	obj["disable_ai"] = _disableAi.current();
 	obj["disable_animated_avatars"] = _disableAnimatedAvatars.current();
 	obj["disable_auto_download"] = _disableAutoDownload.current();
+	obj["disable_auto_update"] = _disableAutoUpdate.current();
 	obj["show_start_token"] = _showStartToken.current();
 	obj["show_peer_id"] = _showPeerId.current();
 	obj["show_dc_id"] = _showDcId.current();
@@ -260,6 +262,12 @@ void FASettings::setDisableAnimatedAvatars(bool val) {
 void FASettings::setDisableAutoDownload(bool val) {
 	if (_disableAutoDownload.current() == val) return;
 	_disableAutoDownload = val;
+	save();
+}
+
+void FASettings::setDisableAutoUpdate(bool val) {
+	if (_disableAutoUpdate.current() == val) return;
+	_disableAutoUpdate = val;
 	save();
 }
 

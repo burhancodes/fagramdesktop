@@ -314,6 +314,9 @@ void Application::run() {
 	_notifications = std::make_unique<Window::Notifications::System>();
 
 	startLocalStorage();
+	if (FASettings::FASettings::getInstance().disableAutoUpdate()) {
+		cSetAutoUpdate(false);
+	}
 
 	FAlang::Load(Lang::GetInstance().baseId(), Lang::GetInstance().id());
 

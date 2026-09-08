@@ -30,6 +30,7 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 #include "window/window_session_controller.h"
 #include "lang/lang_instance.h"
 #include "core/application.h"
+#include "core/update_checker.h"
 #include "ui/controls/compose_ai_button_factory.h"
 #include "base/options.h"
 #include "storage/localstorage.h"
@@ -159,6 +160,27 @@ namespace Settings {
 			});
 		Settings::FADeepLinkMenu::AttachSettingsContextMenu(
 			autoDownloadRow, u"fa/general/disable-auto-download"_q, controller);
+
+		FA::Ui::AddCardDivider(privacyCard);
+
+		const auto autoUpdateRow = FA::Ui::AddCardToggle(
+			privacyCard,
+			fatr::fa_disable_auto_update(),
+			fatr::fa_disable_auto_update_desc(),
+			settings.disableAutoUpdateValue(),
+			[&settings](bool enabled) {
+				settings.setDisableAutoUpdate(enabled);
+				cSetAutoUpdate(!enabled);
+				Local::writeSettings();
+				Core::UpdateChecker checker;
+				if (enabled) {
+					checker.stop();
+				} else if (cAutoUpdate()) {
+					checker.start();
+				}
+			});
+		Settings::FADeepLinkMenu::AttachSettingsContextMenu(
+			autoUpdateRow, u"fa/general/disable-auto-update"_q, controller);
 
 		FA::Ui::AddModernSectionHeader(container, fatr::fa_developer_and_profile());
 		const auto devCard = FA::Ui::CreateCardContainer(container);

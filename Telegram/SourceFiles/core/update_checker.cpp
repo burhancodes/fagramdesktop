@@ -35,6 +35,7 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 #include "settings/sections/settings_advanced.h"
 #include "settings/settings_intro.h"
 #include "ui/layers/box_content.h"
+#include "fa/settings/fa_settings.h"
 
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
@@ -1989,7 +1990,9 @@ void Updater::start(bool forceWait) {
 	}
 
 	_timer.cancel();
-	if (!cAutoUpdate() || _action != Action::Waiting) {
+	if (!cAutoUpdate()
+		|| FASettings::FASettings::getInstance().disableAutoUpdate()
+		|| _action != Action::Waiting) {
 		return;
 	}
 

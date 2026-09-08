@@ -8,6 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include "settings/sections/settings_advanced.h"
 
 #include "settings/settings_common_session.h"
+#include "fa/settings/fa_settings.h"
 
 #include "api/api_global_privacy.h"
 #include "apiwrap.h"
@@ -1175,6 +1176,7 @@ void BuildUpdateSection(SectionBuilder &builder, bool atTop) {
 			return (toggled != cAutoUpdate());
 		}) | rpl::on_next([=](bool toggled) {
 			cSetAutoUpdate(toggled);
+			FASettings::FASettings::getInstance().setDisableAutoUpdate(!toggled);
 			Local::writeSettings();
 			Core::UpdateChecker checker;
 			if (cAutoUpdate()) {
@@ -1527,6 +1529,7 @@ void SetupUpdate(not_null<Ui::VerticalLayout*> container) {
 		return (toggled != cAutoUpdate());
 	}) | rpl::on_next([=](bool toggled) {
 		cSetAutoUpdate(toggled);
+		FASettings::FASettings::getInstance().setDisableAutoUpdate(!toggled);
 
 		Local::writeSettings();
 		Core::UpdateChecker checker;
