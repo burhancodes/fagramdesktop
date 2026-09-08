@@ -179,6 +179,11 @@ jobs:
           key: ${{ runner.os }}-tdesktop-out-${{ github.run_id }}
           restore-keys: ${{ runner.os }}-tdesktop-out-
 
+      - name: Ensure beta version for CI build
+        if: ${{ inputs.build_type == 'ci' }}
+        run: |
+          python3 ${{ env.REPO_NAME }}/Telegram/build/ensure_beta.py
+
       - name: Configure with CMake
         run: |
           cd ${{ env.REPO_NAME }}/Telegram
@@ -211,10 +216,11 @@ jobs:
       - name: Read version info
         run: |
           APP_VERSION=$(grep 'AppVersion ' ${{ env.REPO_NAME }}/Telegram/build/version | awk '{print $2}')
+          IS_BETA=$(grep 'BetaChannel' ${{ env.REPO_NAME }}/Telegram/build/version | awk '{print $2}')
           echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+          echo "IS_BETA=$IS_BETA" >> $GITHUB_ENV
 
       - name: Sign OTA update
-        if: ${{ inputs.build_type == 'rel' }}
         run: |
           PACKER=$(find ${{ env.REPO_NAME }}/out -name Packer -type f | head -1)
           TELEGRAM="${{ env.REPO_NAME }}/out/MinSizeRel/fagram.app"
@@ -225,10 +231,13 @@ jobs:
             exit 1
           fi
           chmod +x "$PACKER"
-          ./$PACKER -path $TELEGRAM -version $APP_VERSION
+          BETA_ARG=""
+          if [ "$IS_BETA" = "1" ] || [ "${{ inputs.build_type }}" = "ci" ]; then
+            BETA_ARG="-beta"
+          fi
+          ./$PACKER -path $TELEGRAM -version $APP_VERSION $BETA_ARG
 
       - name: Upload OTA artifact
-        if: ${{ inputs.build_type == 'rel' }}
         uses: actions/upload-artifact@v7
         with:
           name: ota-macos

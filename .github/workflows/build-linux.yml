@@ -127,6 +127,11 @@ jobs:
           key: ${{ runner.OS }}-tdesktop-out-${{ github.run_id }}
           restore-keys: ${{ runner.OS }}-tdesktop-out-
 
+      - name: Ensure beta version for CI build
+        if: ${{ inputs.build_type == 'ci' }}
+        run: |
+          python3 Telegram/build/ensure_beta.py
+
       - name: Configure & Build FAgram with CMake
         run: |
           mkdir -p ${{ env.CCACHE_DIR }}
@@ -197,11 +202,12 @@ jobs:
         run: |
           VERSION_FILE="Telegram/build/version"
           APP_VERSION=$(grep 'AppVersion ' "$VERSION_FILE" | awk '{print $2}')
+          IS_BETA=$(grep 'BetaChannel' "$VERSION_FILE" | awk '{print $2}')
           echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+          echo "IS_BETA=$IS_BETA" >> $GITHUB_ENV
           echo "app_version=$APP_VERSION" >> $GITHUB_OUTPUT
 
       - name: Sign OTA update
-        if: ${{ inputs.build_type == 'rel' }}
         run: |
           PACKER=$(find out -name Packer -type f | head -1)
           TELEGRAM=$(find out -name fagram -type f -not -path "*/install/*" | head -1)
@@ -211,11 +217,15 @@ jobs:
             find out -type f -name 'Packer' -o -name 'fagram' -o -name 'Updater'
             exit 1
           fi
+          BETA_ARG=""
+          if [ "$IS_BETA" = "1" ] || [ "${{ inputs.build_type }}" = "ci" ]; then
+            BETA_ARG="-beta"
+          fi
           docker run --rm \
           -u $(id -u) \
           -v $PWD:/usr/src/tdesktop \
           $IMAGE_TAG \
-          /bin/bash -c "cd /usr/src/tdesktop && ./$PACKER -path ./$TELEGRAM -path ./$UPDATER -version $APP_VERSION"
+          /bin/bash -c "cd /usr/src/tdesktop && ./$PACKER -path ./$TELEGRAM -path ./$UPDATER -version $APP_VERSION $BETA_ARG"
 
       - name: Create Tar
         run: |
@@ -229,7 +239,6 @@ jobs:
           path: out/install/fagram-${{ env.TAGNAME }}.tar.zst
 
       - name: Upload OTA Update
-        if: ${{ inputs.build_type == 'rel' }}
         uses: actions/upload-artifact@v7
         with:
           name: ota-linux

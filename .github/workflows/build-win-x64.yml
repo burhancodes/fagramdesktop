@@ -334,6 +334,12 @@ jobs:
           API="-D TDESKTOP_API_ID=${{ secrets.API_ID_CONFIG }} -D TDESKTOP_API_HASH=${{ secrets.API_HASH_CONFIG }} -D TDESKTOP_LASTFM_API_KEY=${{ secrets.LASTFM_API_KEY }}"
           echo "TDESKTOP_BUILD_API=$API" >> $GITHUB_ENV
 
+      - name: Ensure beta version for CI build
+        if: ${{ inputs.build_type == 'ci' }}
+        shell: bash
+        run: |
+          python3 "$TBUILD/$REPO_NAME/Telegram/build/ensure_beta.py"
+
       - name: Build FAgram Desktop
         run: |
           cd %TBUILD%\%REPO_NAME%\Telegram
@@ -401,20 +407,25 @@ jobs:
           APP_VERSION=$(grep 'AppVersion ' "$VERSION_FILE" | awk '{print $2}')
           APP_VERSION_STR=$(grep 'AppVersionStr ' "$VERSION_FILE" | awk '{print $2}')
           APP_VERSION_STR_SMALL=$(grep 'AppVersionStrSmall' "$VERSION_FILE" | awk '{print $2}')
+          IS_BETA=$(grep 'BetaChannel' "$VERSION_FILE" | awk '{print $2}')
           echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
           echo "APP_VERSION_STR=$APP_VERSION_STR" >> $GITHUB_ENV
           echo "APP_VERSION_STR_SMALL=$APP_VERSION_STR_SMALL" >> $GITHUB_ENV
           echo "APP_VERSION_STR_FULL=${APP_VERSION_STR}.0" >> $GITHUB_ENV
+          echo "IS_BETA=$IS_BETA" >> $GITHUB_ENV
           echo "app_version=$APP_VERSION" >> $GITHUB_OUTPUT
           echo "app_version_str=$APP_VERSION_STR" >> $GITHUB_OUTPUT
           echo "app_version_str_small=$APP_VERSION_STR_SMALL" >> $GITHUB_OUTPUT
           echo "app_version_str_full=${APP_VERSION_STR}.0" >> $GITHUB_OUTPUT
 
       - name: Sign OTA update
-        if: env.UPLOAD_ARTIFACT == 'true' && inputs.build_type == 'rel'
+        if: env.UPLOAD_ARTIFACT == 'true'
         run: |
           cd %TBUILD%\%REPO_NAME%\out\MinSizeRel
-          Packer.exe -path fagram.exe -path Updater.exe -version %APP_VERSION% -target win64
+          set "BETA_FLAG="
+          if "%IS_BETA%"=="1" set "BETA_FLAG=-beta"
+          if "${{ inputs.build_type }}"=="ci" set "BETA_FLAG=-beta"
+          Packer.exe -path fagram.exe -path Updater.exe -version %APP_VERSION% -target win64 %BETA_FLAG%
 
       - name: Prepare artifacts
         if: env.UPLOAD_ARTIFACT == 'true'
@@ -429,7 +440,7 @@ jobs:
           7z a -tzip FAgram_Win-x64_%RELEASE_TAG%_portable.zip *.exe icon.ico
 
       - name: Prepare OTA artifact
-        if: env.UPLOAD_ARTIFACT == 'true' && inputs.build_type == 'rel'
+        if: env.UPLOAD_ARTIFACT == 'true'
         run: |
           cd %TBUILD%\%REPO_NAME%\out\MinSizeRel
           if not exist ota mkdir ota
@@ -444,7 +455,7 @@ jobs:
 
       - uses: actions/upload-artifact@v7
         name: Upload OTA Update
-        if: env.UPLOAD_ARTIFACT == 'true' && inputs.build_type == 'rel'
+        if: env.UPLOAD_ARTIFACT == 'true'
         with:
           name: ota-win64
           path: ${{ env.TBUILD }}/${{ env.REPO_NAME }}/out/MinSizeRel/ota/
@@ -457,7 +468,7 @@ jobs:
     with:
       artifact_name: FAgram_Win-x64
       release_tag: ${{ inputs.tagname }}
-      build_type: ci
+      build_type: ${{ inputs.build_type }}
       run_id: ${{ github.run_id }}
     secrets: inherit
 
