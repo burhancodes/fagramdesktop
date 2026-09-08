@@ -310,6 +310,7 @@ private:
 	::Ui::VerticalLayout *_container = nullptr;
 	bool _inRelayout = false;
 	bool _relayoutScheduled = false;
+
 };
 
 class CardToggleRow final : public ::Ui::RippleButton {
@@ -378,10 +379,10 @@ protected:
 		Painter p(this);
 		paintRipple(p, 0, 0);
 
-		const auto paddingLeft = 16;
-		const auto paddingRight = 16;
-		const auto switchWidth = 48.0;
-		const auto switchHeight = 28.0;
+		constexpr auto paddingLeft = 16;
+		constexpr auto paddingRight = 16;
+		constexpr auto switchWidth = 48.0;
+		constexpr auto switchHeight = 28.0;
 		const auto toggleX = width() - paddingRight - switchWidth;
 		const auto toggleY = (height() - switchHeight) / 2.0;
 
@@ -389,40 +390,59 @@ protected:
 
 		PaintMd3Switch(p, toggleX, toggleY, toggled, switchWidth, switchHeight);
 
-		const auto availableTextWidth = toggleX - paddingLeft - 12.0;
-		if (availableTextWidth <= 0) {
+		const auto textW = availableTextWidth(width());
+		if (textW <= 0) {
 			return;
 		}
 
 		if (_subtitleText.trimmed().isEmpty()) {
-			p.setFont(st::semiboldFont);
+			const auto titleFont = st::semiboldFont;
+			const auto titleH = _titleText.isEmpty()
+				? 0
+				: QFontMetrics(titleFont).boundingRect(
+					QRect(0, 0, textW, 0),
+					Qt::AlignLeft | Qt::TextWordWrap,
+					_titleText).height();
+			const auto startY = std::max(8, (height() - titleH) / 2);
+
+			p.setFont(titleFont);
 			p.setPen(st::windowFg);
 			p.drawText(
-				QRect(paddingLeft, 0, availableTextWidth, height()),
-				Qt::AlignLeft | Qt::AlignVCenter | Qt::TextSingleLine,
+				QRect(paddingLeft, startY, textW, titleH),
+				Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap,
 				_titleText);
 		} else {
 			const auto titleFont = st::semiboldFont;
 			const auto subtitleFont = DescriptionFont();
 
-			const auto titleH = titleFont->height;
-			const auto subH = QFontMetrics(subtitleFont).height();
-			const auto spacing = 3;
+			const auto titleH = _titleText.isEmpty()
+				? 0
+				: QFontMetrics(titleFont).boundingRect(
+					QRect(0, 0, textW, 0),
+					Qt::AlignLeft | Qt::TextWordWrap,
+					_titleText).height();
+			const auto subH = _subtitleText.isEmpty()
+				? 0
+				: QFontMetrics(subtitleFont).boundingRect(
+					QRect(0, 0, textW, 0),
+					Qt::AlignLeft | Qt::TextWordWrap,
+					_subtitleText).height();
+			constexpr auto spacing = 3;
 			const auto totalH = titleH + spacing + subH;
-			const auto startY = (height() - totalH) / 2;
+			const auto startY = std::max(8, (height() - totalH) / 2);
 
 			p.setFont(titleFont);
 			p.setPen(st::windowFg);
 			p.drawText(
-				QRect(paddingLeft, startY, availableTextWidth, titleH),
-				Qt::AlignLeft | Qt::AlignTop | Qt::TextSingleLine,
+				QRect(paddingLeft, startY, textW, titleH),
+				Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap,
 				_titleText);
 
 			p.setFont(subtitleFont);
 			p.setPen(st::windowSubTextFg);
 			p.drawText(
-				QRect(paddingLeft, startY + titleH + spacing, availableTextWidth, subH),
-				Qt::AlignLeft | Qt::AlignTop | Qt::TextSingleLine,
+				QRect(paddingLeft, startY + titleH + spacing, textW, subH),
+				Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap,
 				_subtitleText);
 		}
 	}
@@ -437,15 +457,49 @@ protected:
 	}
 
 private:
+	int availableTextWidth(int w) const {
+		constexpr auto paddingLeft = 16;
+		constexpr auto paddingRight = 16;
+		constexpr auto switchWidth = 48;
+		constexpr auto spacing = 12;
+		return std::max(1, w - paddingLeft - paddingRight - switchWidth - spacing);
+	}
+
 	int computeHeight(int w) const {
-		if (_subtitleText.trimmed().isEmpty()) {
-			return 56;
+		const auto hasSubtitle = !_subtitleText.trimmed().isEmpty();
+		if (w <= 0) {
+			return hasSubtitle ? 68 : 56;
 		}
-		return 68;
+		const auto textW = availableTextWidth(w);
+		const auto titleH = _titleText.isEmpty()
+			? 0
+			: QFontMetrics(st::semiboldFont).boundingRect(
+				QRect(0, 0, textW, 0),
+				Qt::AlignLeft | Qt::TextWordWrap,
+				_titleText).height();
+
+		if (!hasSubtitle) {
+			constexpr auto minH = 56;
+			constexpr auto verticalPadding = 24;
+			return std::max(minH, titleH + verticalPadding);
+		}
+
+		const auto subH = QFontMetrics(DescriptionFont()).boundingRect(
+			QRect(0, 0, textW, 0),
+			Qt::AlignLeft | Qt::TextWordWrap,
+			_subtitleText).height();
+
+		constexpr auto minH = 68;
+		constexpr auto textSpacing = 3;
+		constexpr auto verticalPadding = 24;
+		return std::max(minH, titleH + textSpacing + subH + verticalPadding);
 	}
 
 	void updateHeight() {
-		resize(width(), computeHeight(width()));
+		const auto newH = computeHeight(width());
+		if (height() != newH) {
+			resize(width(), newH);
+		}
 		update();
 	}
 
@@ -455,6 +509,7 @@ private:
 	bool _checked = false;
 	bool _hasValue = false;
 	::Ui::Animations::Simple _animation;
+
 };
 
 class CardButtonRow final : public ::Ui::RippleButton {
@@ -473,13 +528,13 @@ public:
 
 		std::move(title) | rpl::on_next([this](const QString &text) {
 			_titleText = text;
-			update();
+			updateHeight();
 		}, lifetime());
 
 		if (rightLabel) {
 			std::move(rightLabel) | rpl::on_next([this](const QString &text) {
 				_rightLabelText = text;
-				update();
+				updateHeight();
 			}, lifetime());
 		}
 
@@ -487,12 +542,12 @@ public:
 			addClickHandler(std::move(onClick));
 		}
 
-		resize(width(), 56);
+		updateHeight();
 	}
 
 protected:
 	int resizeGetHeight(int newWidth) override {
-		return 56;
+		return computeHeight(newWidth);
 	}
 
 	void paintEvent(QPaintEvent *e) override {
@@ -501,22 +556,21 @@ protected:
 
 		paintRipple(p, 0, 0);
 
-		auto textLeft = 16;
+		const auto left = textLeft();
 		if (_icon) {
 			const auto iconY = (height() - _icon->height()) / 2;
 			_icon->paint(p, 16, iconY, width());
-			textLeft = 16 + _icon->width() + 14;
 		}
 
-		auto textRight = width() - 16;
+		auto right = width() - 16;
 
 		if (_showChevron) {
-			const auto chevronW = 6;
-			const auto chevronH = 10;
+			constexpr auto chevronW = 6;
+			constexpr auto chevronH = 10;
 			const auto cx = width() - 16 - chevronW;
 			const auto cy = (height() - chevronH) / 2;
 
-			QPainterPath chevron;
+			auto chevron = QPainterPath();
 			chevron.moveTo(cx, cy);
 			chevron.lineTo(cx + chevronW, cy + chevronH / 2.0);
 			chevron.lineTo(cx, cy + chevronH);
@@ -525,7 +579,7 @@ protected:
 			p.setBrush(Qt::NoBrush);
 			p.drawPath(chevron);
 
-			textRight = cx - 10;
+			right = cx - 10;
 		}
 
 		if (!_rightLabelText.isEmpty()) {
@@ -533,18 +587,27 @@ protected:
 			p.setPen(st::windowSubTextFg);
 			const auto rightLabelW = QFontMetrics(DescriptionFont()).horizontalAdvance(_rightLabelText);
 			p.drawText(
-				QRect(textRight - rightLabelW, 0, rightLabelW, height()),
+				QRect(right - rightLabelW, 0, rightLabelW, height()),
 				Qt::AlignRight | Qt::AlignVCenter | Qt::TextSingleLine,
 				_rightLabelText);
-			textRight -= rightLabelW + 10;
+			right -= rightLabelW + 10;
 		}
 
-		p.setFont(st::semiboldFont);
+		const auto availableTitleW = std::max(1, right - left);
+		const auto titleFont = st::semiboldFont;
+		const auto titleH = _titleText.isEmpty()
+			? 0
+			: QFontMetrics(titleFont).boundingRect(
+				QRect(0, 0, availableTitleW, 0),
+				Qt::AlignLeft | Qt::TextWordWrap,
+				_titleText).height();
+		const auto startY = std::max(8, (height() - titleH) / 2);
+
+		p.setFont(titleFont);
 		p.setPen(st::windowFg);
-		const auto availableTitleW = std::max(0, textRight - textLeft);
 		p.drawText(
-			QRect(textLeft, 0, availableTitleW, height()),
-			Qt::AlignLeft | Qt::AlignVCenter | Qt::TextSingleLine,
+			QRect(left, startY, availableTitleW, titleH),
+			Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap,
 			_titleText);
 	}
 
@@ -558,10 +621,54 @@ protected:
 	}
 
 private:
+	int textLeft() const {
+		return _icon ? (16 + _icon->width() + 14) : 16;
+	}
+
+	int textRight(int w) const {
+		auto right = w - 16;
+		if (_showChevron) {
+			constexpr auto chevronW = 6;
+			right -= (chevronW + 10);
+		}
+		if (!_rightLabelText.isEmpty()) {
+			const auto rightLabelW = QFontMetrics(DescriptionFont()).horizontalAdvance(_rightLabelText);
+			right -= (rightLabelW + 10);
+		}
+		return right;
+	}
+
+	int availableTitleWidth(int w) const {
+		return std::max(1, textRight(w) - textLeft());
+	}
+
+	int computeHeight(int w) const {
+		constexpr auto minH = 56;
+		if (w <= 0 || _titleText.isEmpty()) {
+			return minH;
+		}
+		const auto titleW = availableTitleWidth(w);
+		const auto titleH = QFontMetrics(st::semiboldFont).boundingRect(
+			QRect(0, 0, titleW, 0),
+			Qt::AlignLeft | Qt::TextWordWrap,
+			_titleText).height();
+		constexpr auto verticalPadding = 24;
+		return std::max(minH, titleH + verticalPadding);
+	}
+
+	void updateHeight() {
+		const auto newH = computeHeight(width());
+		if (height() != newH) {
+			resize(width(), newH);
+		}
+		update();
+	}
+
 	const style::icon *_icon = nullptr;
 	bool _showChevron = false;
 	QString _titleText;
 	QString _rightLabelText;
+
 };
 
 class CardRadioRow final : public ::Ui::RippleButton {
@@ -579,7 +686,7 @@ public:
 
 		std::move(title) | rpl::on_next([this](const QString &text) {
 			_titleText = text;
-			update();
+			updateHeight();
 		}, lifetime());
 
 		if (_group) {
@@ -599,12 +706,12 @@ public:
 			}
 		});
 
-		resize(width(), 52);
+		updateHeight();
 	}
 
 protected:
 	int resizeGetHeight(int newWidth) override {
-		return 52;
+		return computeHeight(newWidth);
 	}
 
 	void paintEvent(QPaintEvent *e) override {
@@ -613,9 +720,9 @@ protected:
 
 		paintRipple(p, 0, 0);
 
-		const auto padding = 16;
-		const auto radioSize = 18;
-		const auto radioX = padding;
+		constexpr auto padding = 16;
+		constexpr auto radioSize = 18;
+		constexpr auto radioX = padding;
 		const auto radioY = (height() - radioSize) / 2;
 
 		if (_checked) {
@@ -632,14 +739,23 @@ protected:
 			p.drawEllipse(QRectF(radioX + 1, radioY + 1, radioSize - 2, radioSize - 2));
 		}
 
-		const auto textLeft = radioX + radioSize + 14;
-		const auto textW = width() - textLeft - padding;
+		constexpr auto spacing = 14;
+		const auto textLeft = radioX + radioSize + spacing;
+		const auto textW = availableTitleWidth(width());
+		const auto titleFont = st::semiboldFont;
+		const auto titleH = _titleText.isEmpty()
+			? 0
+			: QFontMetrics(titleFont).boundingRect(
+				QRect(0, 0, textW, 0),
+				Qt::AlignLeft | Qt::TextWordWrap,
+				_titleText).height();
+		const auto startY = std::max(8, (height() - titleH) / 2);
 
-		p.setFont(st::semiboldFont);
+		p.setFont(titleFont);
 		p.setPen(st::windowFg);
 		p.drawText(
-			QRect(textLeft, 0, textW, height()),
-			Qt::AlignLeft | Qt::AlignVCenter | Qt::TextSingleLine,
+			QRect(textLeft, startY, textW, titleH),
+			Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap,
 			_titleText);
 	}
 
@@ -653,10 +769,41 @@ protected:
 	}
 
 private:
+	int availableTitleWidth(int w) const {
+		constexpr auto padding = 16;
+		constexpr auto radioSize = 18;
+		constexpr auto spacing = 14;
+		const auto textLeft = padding + radioSize + spacing;
+		return std::max(1, w - textLeft - padding);
+	}
+
+	int computeHeight(int w) const {
+		constexpr auto minH = 52;
+		if (w <= 0 || _titleText.isEmpty()) {
+			return minH;
+		}
+		const auto textW = availableTitleWidth(w);
+		const auto titleH = QFontMetrics(st::semiboldFont).boundingRect(
+			QRect(0, 0, textW, 0),
+			Qt::AlignLeft | Qt::TextWordWrap,
+			_titleText).height();
+		constexpr auto verticalPadding = 20;
+		return std::max(minH, titleH + verticalPadding);
+	}
+
+	void updateHeight() {
+		const auto newH = computeHeight(width());
+		if (height() != newH) {
+			resize(width(), newH);
+		}
+		update();
+	}
+
 	std::shared_ptr<::Ui::RadiobuttonGroup> _group;
 	int _value = 0;
 	bool _checked = false;
 	QString _titleText;
+
 };
 
 class CardSliderRowWidget final : public ::Ui::RpWidget {
@@ -695,6 +842,7 @@ private:
 	not_null<::Ui::LabelSimple*> _label;
 	not_null<MaterialSlider*> _slider;
 	not_null<::Ui::IconButton*> _reset;
+
 };
 
 class CardDividerWidget final : public ::Ui::RpWidget {
@@ -710,6 +858,7 @@ protected:
 
 	void paintEvent(QPaintEvent *e) override {
 	}
+
 };
 
 } // namespace
