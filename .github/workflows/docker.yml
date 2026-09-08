@@ -2,6 +2,7 @@
 name: Docker.
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - '.github/workflows/docker.yml'
