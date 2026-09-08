@@ -38,10 +38,8 @@ bool IsButtonVisible(const ::Ui::RpWidget *button) {
 	return button->width() > 0;
 }
 
-QImage PrepareMaterialShapeImage(int size, QColor color, float64 ratio) {
-	const auto deviceSize = QSize(
-		int(std::round(size * ratio)),
-		int(std::round(size * ratio)));
+QImage PrepareMaterialShapeImage(int size, QColor color, int ratio) {
+	const auto deviceSize = QSize(size * ratio, size * ratio);
 	auto result = QImage(deviceSize, QImage::Format_ARGB32_Premultiplied);
 	result.fill(Qt::transparent);
 
@@ -81,7 +79,7 @@ void PaintMaterialShape(
 	struct Cache {
 		QColor color;
 		int size = 0;
-		float64 ratio = 0.;
+		int ratio = 0;
 		QImage image;
 	};
 	static auto cache = Cache();
