@@ -8,6 +8,7 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 #include "history/view/history_view_top_bar_widget.h"
 
 #include "fa/settings/fa_settings.h"
+#include "fa/features/round_numbers/round_numbers.h"
 #include "boxes/peers/edit_participants_box.h" 
 #include "history/admin_log/history_admin_log_section.h"
 #include "styles/style_fa_styles.h"
@@ -159,6 +160,11 @@ TopBarWidget::TopBarWidget(
 	Lang::Updated(
 	) | rpl::on_next([=] {
 		refreshLang();
+	}, lifetime());
+
+	FA::Features::RoundNumbers::Value(
+	) | rpl::on_next([=] {
+		updateOnlineDisplay();
 	}, lifetime());
 
 	_forward->setClickedCallback([=] { _forwardSelection.fire({}); });

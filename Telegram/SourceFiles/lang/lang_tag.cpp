@@ -8,6 +8,7 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 #include "lang/lang_tag.h"
 
 #include "core/credits_amount.h"
+#include "fa/features/round_numbers/round_numbers.h"
 #include "lang/lang_keys.h"
 #include "ui/text/text.h"
 #include "base/qt/qt_common_adapters.h"
@@ -917,7 +918,7 @@ int NonZeroPartToInt(QString value) {
 		: (value.isEmpty() ? 0 : value.toInt());
 }
 
-ShortenedCount FormatCountToShort(int64 number, bool onlyK) {
+ShortenedCount FormatCountToShort(int64 number, bool onlyK, int64 kThreshold) {
 	auto result = ShortenedCount{ number };
 	const auto abs = std::abs(number);
 	const auto shorten = [&](int64 divider, char multiplier) {
@@ -938,7 +939,7 @@ ShortenedCount FormatCountToShort(int64 number, bool onlyK) {
 		shorten(1'000'000'000, 'B');
 	} else if (!onlyK && abs >= 1'000'000) {
 		shorten(1'000'000, 'M');
-	} else if (abs >= 10'000) {
+	} else if (abs >= kThreshold) {
 		shorten(1'000, 'K');
 	} else {
 		result.string = QString::number(number);
@@ -987,10 +988,12 @@ PluralResult Plural(
 		ushort keyBase,
 		float64 value,
 		lngtag_count type) {
+	type = FA::Features::RoundNumbers::ResolveCountTag(keyBase, type);
+
 	// To correctly select a shift for PluralType::Short
 	// we must first round the number.
 	const auto shortened = (type == lt_count_short)
-		? FormatCountToShort(qRound(value))
+		? FormatCountToShort(qRound(value), false, 1'000)
 		: ShortenedCount();
 
 	// Simplified.

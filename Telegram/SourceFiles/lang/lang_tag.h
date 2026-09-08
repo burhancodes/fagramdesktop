@@ -28,7 +28,8 @@ struct ShortenedCount {
 };
 [[nodiscard]] ShortenedCount FormatCountToShort(
 	int64 number,
-	bool onlyK = false);
+	bool onlyK = false,
+	int64 kThreshold = 10'000);
 [[nodiscard]] QString FormatCountDecimal(int64 number);
 [[nodiscard]] QString FormatExactCountDecimal(float64 number);
 [[nodiscard]] ShortenedCount FormatCreditsAmountToShort(

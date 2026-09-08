@@ -944,6 +944,8 @@ PRIVATE
     fa/settings/fa_settings.h
     fa/features/hide_archive_chats/hide_archive_chats.cpp
     fa/features/hide_archive_chats/hide_archive_chats.h
+    fa/features/round_numbers/round_numbers.cpp
+    fa/features/round_numbers/round_numbers.h
     fa/features/badges/badge_registry.cpp
     fa/features/badges/badge_registry.h
     fa/features/badges/badge_helpers.cpp

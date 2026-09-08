@@ -12,6 +12,7 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 #include "fa/settings_menu/sections/fa_chats.h"
 #include "fa/settings_menu/fa_deeplink_context_menu.h"
 #include "fa/features/hide_archive_chats/hide_archive_chats.h"
+#include "fa/features/round_numbers/round_numbers.h"
 #include "fa/ui/md3/fa_cards.h"
 
 #include "fa_lang_auto.h"
@@ -242,6 +243,9 @@ namespace Settings {
 			});
 		Settings::FADeepLinkMenu::AttachSettingsContextMenu(
 			msgDetailsRow, u"fa/chats/message-details"_q, controller);
+
+		FA::Ui::AddCardDivider(chatListCard);
+		FA::Features::RoundNumbers::AddToggle(chatListCard, controller);
 
 		FA::Ui::AddModernSectionHeader(container, fatr::fa_media_and_appearance());
 		const auto mediaCard = FA::Ui::CreateCardContainer(container);

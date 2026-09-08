@@ -330,6 +330,15 @@ const auto kFAChatsMeta = BuildHelper({
 
 	builder.add(nullptr, [] {
 		return SearchEntry{
+			.id = u"fa/chats/round-numbers"_q,
+			.title = fatr::fa_round_group_channel_numbers(fatr::now),
+			.keywords = { u"round"_q, u"numbers"_q, u"members"_q, u"subscribers"_q, u"count"_q, u"k"_q, u"shorten"_q },
+			.icon = { &st::menuIconChatBubble },
+		};
+	});
+
+	builder.add(nullptr, [] {
+		return SearchEntry{
 			.id = u"fa/chats/add-comma-after-mention"_q,
 			.title = fatr::fa_add_comma_after_mention(fatr::now),
 			.keywords = { u"mention"_q, u"comma"_q, u"username"_q, u"typing"_q },

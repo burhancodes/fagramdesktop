@@ -577,7 +577,7 @@ QSize SimilarChannels::countOptimalSize() {
 			: channel->membersCount();
 		if (moreCounter || counter > 1) {
 			last.counter = (moreCounter ? u"+"_q : QString())
-				+ Lang::FormatCountToShort(counter).string;
+				+ Lang::FormatCountToShort(counter, false, 1'000).string;
 		}
 		x += outer.width() + skip;
 	}

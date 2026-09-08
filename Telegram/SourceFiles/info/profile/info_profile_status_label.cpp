@@ -7,6 +7,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 */
 #include "info/profile/info_profile_status_label.h"
 
+#include "fa/features/round_numbers/round_numbers.h"
 #include "data/data_changes.h"
 #include "data/data_channel.h"
 #include "data/data_chat.h"
@@ -115,6 +116,10 @@ StatusLabel::StatusLabel(
 			refresh();
 		}, _lifetime);
 	}
+	FA::Features::RoundNumbers::Value(
+	) | rpl::on_next([=] {
+		refresh();
+	}, _lifetime);
 }
 
 void StatusLabel::setOnlineCount(int count) {

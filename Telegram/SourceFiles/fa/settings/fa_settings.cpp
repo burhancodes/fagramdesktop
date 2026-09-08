@@ -124,6 +124,7 @@ void FASettings::loadFromJson(const QJsonObject &obj) {
 	_showForwardedDateInTitle = obj.contains("show_forwarded_date_in_title") ? obj["show_forwarded_date_in_title"].toBool() : _showForwardedDateInTitle.current();
 	_showForwardsCount = obj.contains("show_forwards_count") ? obj["show_forwards_count"].toBool() : _showForwardsCount.current();
 	_disableGreetingSticker = obj.contains("disable_greeting_sticker") ? obj["disable_greeting_sticker"].toBool() : _disableGreetingSticker.current();
+	_roundGroupChannelNumbers = obj.contains("round_group_channel_numbers") ? obj["round_group_channel_numbers"].toBool() : _roundGroupChannelNumbers.current();
 	_useDefaultRounding = obj.contains("use_default_rounding") ? obj["use_default_rounding"].toBool() : _useDefaultRounding.current();
 	_showDiscussButton = obj.contains("show_discuss_button") ? obj["show_discuss_button"].toBool() : _showDiscussButton.current();
 	_showFastshareInChats = obj.contains("show_fastshare_in_chats") ? obj["show_fastshare_in_chats"].toBool() : _showFastshareInChats.current();
@@ -182,6 +183,7 @@ QJsonObject FASettings::saveToJson() const {
 	obj["show_forwarded_date_in_title"] = _showForwardedDateInTitle.current();
 	obj["show_forwards_count"] = _showForwardsCount.current();
 	obj["disable_greeting_sticker"] = _disableGreetingSticker.current();
+	obj["round_group_channel_numbers"] = _roundGroupChannelNumbers.current();
 	obj["use_default_rounding"] = _useDefaultRounding.current();
 	obj["show_discuss_button"] = _showDiscussButton.current();
 	obj["show_fastshare_in_chats"] = _showFastshareInChats.current();
@@ -373,6 +375,12 @@ void FASettings::setShowForwardsCount(bool val) {
 void FASettings::setDisableGreetingSticker(bool val) {
 	if (_disableGreetingSticker.current() == val) return;
 	_disableGreetingSticker = val;
+	save();
+}
+
+void FASettings::setRoundGroupChannelNumbers(bool val) {
+	if (_roundGroupChannelNumbers.current() == val) return;
+	_roundGroupChannelNumbers = val;
 	save();
 }
 

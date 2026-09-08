@@ -61,6 +61,7 @@ public:
 	[[nodiscard]] bool showForwardedDateInTitle() const { return _showForwardedDateInTitle.current(); }
 	[[nodiscard]] bool showForwardsCount() const { return _showForwardsCount.current(); }
 	[[nodiscard]] bool disableGreetingSticker() const { return _disableGreetingSticker.current(); }
+	[[nodiscard]] bool roundGroupChannelNumbers() const { return _roundGroupChannelNumbers.current(); }
 	[[nodiscard]] bool useDefaultRounding() const { return _useDefaultRounding.current(); }
 	[[nodiscard]] bool showDiscussButton() const { return _showDiscussButton.current(); }
 	[[nodiscard]] bool showFastshareInChats() const { return _showFastshareInChats.current(); }
@@ -117,6 +118,7 @@ public:
 	void setShowForwardedDateInTitle(bool val);
 	void setShowForwardsCount(bool val);
 	void setDisableGreetingSticker(bool val);
+	void setRoundGroupChannelNumbers(bool val);
 	void setUseDefaultRounding(bool val);
 	void setShowDiscussButton(bool val);
 	void setShowFastshareInChats(bool val);
@@ -173,6 +175,7 @@ public:
 	[[nodiscard]] rpl::producer<bool> showForwardedDateInTitleValue() const { return _showForwardedDateInTitle.value(); }
 	[[nodiscard]] rpl::producer<bool> showForwardsCountValue() const { return _showForwardsCount.value(); }
 	[[nodiscard]] rpl::producer<bool> disableGreetingStickerValue() const { return _disableGreetingSticker.value(); }
+	[[nodiscard]] rpl::producer<bool> roundGroupChannelNumbersValue() const { return _roundGroupChannelNumbers.value(); }
 	[[nodiscard]] rpl::producer<bool> useDefaultRoundingValue() const { return _useDefaultRounding.value(); }
 	[[nodiscard]] rpl::producer<bool> showDiscussButtonValue() const { return _showDiscussButton.value(); }
 	[[nodiscard]] rpl::producer<bool> showFastshareInChatsValue() const { return _showFastshareInChats.value(); }
@@ -228,6 +231,7 @@ public:
 	[[nodiscard]] rpl::producer<bool> showForwardedDateInTitleChanges() const { return _showForwardedDateInTitle.changes(); }
 	[[nodiscard]] rpl::producer<bool> showForwardsCountChanges() const { return _showForwardsCount.changes(); }
 	[[nodiscard]] rpl::producer<bool> disableGreetingStickerChanges() const { return _disableGreetingSticker.changes(); }
+	[[nodiscard]] rpl::producer<bool> roundGroupChannelNumbersChanges() const { return _roundGroupChannelNumbers.changes(); }
 	[[nodiscard]] rpl::producer<bool> useDefaultRoundingChanges() const { return _useDefaultRounding.changes(); }
 	[[nodiscard]] rpl::producer<bool> showDiscussButtonChanges() const { return _showDiscussButton.changes(); }
 	[[nodiscard]] rpl::producer<bool> showFastshareInChatsChanges() const { return _showFastshareInChats.changes(); }
@@ -289,6 +293,7 @@ private:
 	rpl::variable<bool> _showForwardedDateInTitle = false;
 	rpl::variable<bool> _showForwardsCount = true;
 	rpl::variable<bool> _disableGreetingSticker = false;
+	rpl::variable<bool> _roundGroupChannelNumbers = false;
 	rpl::variable<bool> _useDefaultRounding = true;
 	rpl::variable<bool> _showDiscussButton = true;
 	rpl::variable<bool> _showFastshareInChats = false;
