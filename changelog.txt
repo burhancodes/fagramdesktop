@@ -1,10 +1,13 @@
 2.5.4 beta (08.09.26)
+
+- Updated tdesktop to v7.2.7
 - Dynamic height & width calculation for MD3 cards and rows
 - Add back button bg styling in top bar components
 - Adjust About footer layout and text formatting
 - Round group and channel subscriber counts 
 
 2.5.3 beta (08.09.26)
+
 - Updated tdesktop to v7.2.5
 - Disable auto OTA updates
 - Beta channel OTA updates
@@ -12,6 +15,7 @@
 - Fixed some UI bugs
 
 2.5.2 (03.09.26)
+
 - Updated tdesktop to v7.1.4
 - Reimplemented FAgram Badge
 - Avatar shapes outline stroke can be disabled now

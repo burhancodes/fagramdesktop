@@ -4335,6 +4335,10 @@ void ArticleSession::applyInitialPaste() {
 	if (!data || !_editor) {
 		return;
 	}
+	if (const auto structured = ClipboardDataFromMimeData(data.get())) {
+		_editor->pasteStructuredClipboardData(*structured);
+		return;
+	}
 	const auto limits = _state->limits();
 	const auto used = CountRichPageBlocks(_state->richPage());
 	auto imported = BlocksFromMimeData(_session, data.get(), limits, used);
@@ -4343,6 +4347,13 @@ void ArticleSession::applyInitialPaste() {
 	}
 	if (imported && !imported->blocks.empty()) {
 		_editor->insertPreparedBlocks(std::move(imported->blocks));
+		return;
+	} else if (!data->hasText()) {
+		return;
+	}
+	auto plain = SplitTextIntoRichPage(TextWithEntities{ data->text() });
+	if (!plain.blocks.empty()) {
+		_editor->insertPreparedBlocks(std::move(plain.blocks));
 	}
 }
 

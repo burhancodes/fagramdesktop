@@ -12,6 +12,7 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 #include "ui/effects/animations.h"
 #include "base/timer.h"
 #include "base/object_ptr.h"
+#include "base/weak_qptr.h"
 #include "data/data_report.h"
 #include "dialogs/dialogs_key.h"
 
@@ -168,6 +169,8 @@ private:
 	[[nodiscard]] bool createMenu(
 		not_null<Ui::IconButton*> button,
 		bool withIcons = true);
+	void closeMenu();
+	void unrippleMenuButton();
 
 	void handleEmojiInteractionSeen(const QString &emoticon);
 	bool paintSendAction(
@@ -257,6 +260,7 @@ private:
 	object_ptr<Ui::IconButton> _recentActions;
 	object_ptr<Ui::IconButton> _admins;
 	base::unique_qptr<Ui::PopupMenu> _menu;
+	base::weak_qptr<Ui::IconButton> _menuButton;
 
 	object_ptr<RpWidget> _membersShowArea = { nullptr };
 	rpl::event_stream<bool> _membersShowAreaActive;

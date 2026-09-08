@@ -103,7 +103,6 @@ implib() {
 implib /usr/lib64/libgtk-3.so
 implib /usr/lib64/libgdk-3.so
 implib /usr/lib64/libgdk_pixbuf-2.0.so
-implib /usr/lib64/libpango-1.0.so
 implib /usr/lib64/libvdpau.so
 implib /usr/lib64/libva-x11.so
 implib /usr/lib64/libva-drm.so
@@ -161,7 +160,7 @@ RUN <<EOF
 git init patches
 cd patches
 git remote add origin https://github.com/desktop-app/patches.git
-git fetch --depth=1 origin 73a88cdaa13995c8666c956b80e2129ee9b6b34d
+git fetch --depth=1 origin c2cc44fca4a8d0e20d1ef0f40884d717c750f0a4
 git reset --hard FETCH_HEAD
 rm -rf .git
 EOF
@@ -762,6 +761,7 @@ cd FFmpeg
 	--enable-decoder=wmavoice \
 	--enable-encoder=aac \
 	--enable-encoder=libopenh264 \
+	--enable-encoder=libvpx_vp9 \
 	--enable-encoder=libopus \
 	--enable-encoder=pcm_s16le \
 	--enable-filter=atempo \
@@ -789,7 +789,8 @@ cd FFmpeg
 	--enable-muxer=mp4 \
 	--enable-muxer=ogg \
 	--enable-muxer=opus \
-	--enable-muxer=wav
+	--enable-muxer=wav \
+	--enable-muxer=webm
 make -j$(nproc)
 make DESTDIR=/usr/src/ffmpeg-cache install
 cd ..
@@ -879,7 +880,7 @@ COPY --link --from=openssl /usr/src/openssl-cache /
 COPY --link --from=xkbcommon /usr/src/xkbcommon-cache /
 
 RUN --mount=type=cache,target=/var/cache/ccache <<EOF
-QT=6.11.1
+QT=6.11.2
 git clone -b v$QT --depth=1 https://github.com/qt/qt5.git
 cd qt5
 git submodule update --init --recursive --depth=1 \
@@ -1000,6 +1001,33 @@ cd ..
 rm -rf tde2e
 EOF
 
+FROM builder AS tlottie
+RUN <<EOF
+RUST_TOOLCHAIN=1.96.1
+export RUSTUP_HOME=/usr/src/rustup
+export CARGO_HOME=/usr/src/cargo
+wget -O rustup-init.sh https://sh.rustup.rs
+sh rustup-init.sh -y --no-modify-path --profile minimal --default-toolchain $RUST_TOOLCHAIN
+rm rustup-init.sh
+export RUSTUP_TOOLCHAIN=$RUST_TOOLCHAIN
+export PATH=$CARGO_HOME/bin:$PATH
+export DESTDIR=/usr/src/tlottie-cache
+git init tlottie
+cd tlottie
+git remote add origin https://github.com/dkaraush/tlottie.git
+git fetch --depth=1 origin 758c7cb74444f1c3c9923065c40fdb3aad8b7d60
+git reset --hard FETCH_HEAD
+cargo rustc --lib --release --locked \
+	--features c-api --crate-type staticlib \
+	--target x86_64-unknown-linux-gnu \
+	-- --print native-static-libs
+mkdir -p $DESTDIR/usr/local/lib $DESTDIR/usr/local/include/tlottie
+objcopy --strip-debug target/x86_64-unknown-linux-gnu/release/libtlottie.a $DESTDIR/usr/local/lib/libtlottie.a
+cp include/tlottie.h $DESTDIR/usr/local/include/tlottie/tlottie.h
+cd ..
+rm -rf tlottie rustup cargo
+EOF
+
 FROM builder
 COPY --link --from=zlib /usr/src/zlib-cache /
 COPY --link --from=xz /usr/src/xz-cache /
@@ -1042,6 +1070,7 @@ COPY --link --from=breakpad /usr/src/breakpad-cache /
 COPY --link --from=webrtc /usr/src/webrtc-cache /
 COPY --link --from=ada /usr/src/ada-cache /
 COPY --link --from=tde2e /usr/src/tde2e-cache /
+COPY --link --from=tlottie /usr/src/tlottie-cache /
 
 COPY --link --from=patches /usr/src/patches patches
 RUN <<EOF

@@ -170,6 +170,7 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 #include "storage/localimageloader.h"
 #include "storage/storage_account.h"
 #include "storage/file_upload.h"
+#include "storage/storage_folder_archive.h"
 #include "storage/storage_media_prepare.h"
 #include "media/audio/media_audio.h"
 #include "media/audio/media_audio_capture.h"
@@ -721,13 +722,25 @@ HistoryWidget::HistoryWidget(
 				: Data::CanSendAnyOf(_peer, Data::FilesSendRestrictions());
 		}),
 		crl::guard(this, [=](bool f) { _field->setAcceptDrops(f); }),
-		crl::guard(this, [=] { updateControlsGeometry(); }));
+		crl::guard(this, [=] { updateControlsGeometry(); }),
+		nullptr,
+		crl::guard(this, [=] { return (_editMsgId != 0); }));
 	_attachDragAreas.document->setDroppedCallback([=](const QMimeData *data) {
 		confirmSendingFiles(data, false);
 		Window::ActivateWindow(controller);
 	});
 	_attachDragAreas.photo->setDroppedCallback([=](const QMimeData *data) {
 		confirmSendingFiles(data, true);
+		Window::ActivateWindow(controller);
+	});
+	_attachDragAreas.photo->setArchiveDroppedCallback([=](
+			const QMimeData *data) {
+		const auto urls = Core::ReadMimeUrls(data);
+		if (!urls.isEmpty()) {
+			auto list = Ui::PreparedList();
+			list.files.push_back(Storage::PrepareFilesArchive(urls));
+			confirmSendingFiles(std::move(list), QString());
+		}
 		Window::ActivateWindow(controller);
 	});
 
@@ -2510,7 +2523,14 @@ void HistoryWidget::fileChosen(ChatHelpers::FileChosen &&data) {
 				sendMenuDetails(),
 				crl::guard(this, [=](
 						Api::SendOptions options,
-						TextWithTags caption) {
+						TextWithTags caption,
+						Ui::PreparedList &&edited) {
+					if (!edited.files.empty()) {
+						sendingFilesConfirmed(
+							Ui::MakeSingleFileBundle(std::move(edited)),
+							options);
+						return;
+					}
 					controller()->sendingAnimation().appendSending(from);
 					auto messageToSend = Api::MessageToSend(
 						prepareSendAction(options));
@@ -8054,6 +8074,32 @@ bool HistoryWidget::confirmSendingFiles(
 	const auto premium = controller()->session().user()->isPremium();
 
 	if (const auto urls = Core::ReadMimeUrls(data); !urls.empty()) {
+		const auto folder = Storage::SingleFolderPath(urls);
+		if (!folder.isEmpty()) {
+			if (overrideSendImagesAsPhotos == false && !_editMsgId) {
+				const auto files = Storage::FolderFilesForSending(folder);
+				if (!files.isEmpty()) {
+					auto list = Storage::PrepareMediaList(
+						files,
+						st::sendMediaPreviewSize,
+						premium);
+					confirmSendingFiles(std::move(list), QString());
+				}
+			} else {
+				auto list = Ui::PreparedList();
+				list.files.push_back(Storage::PrepareFolderArchive(folder));
+				confirmSendingFiles(std::move(list), QString());
+			}
+			return true;
+		}
+		if (overrideSendImagesAsPhotos == true
+			&& (Storage::ComputeMimeDataState(data)
+				== Storage::MimeDataState::FilesArchive)) {
+			auto list = Ui::PreparedList();
+			list.files.push_back(Storage::PrepareFilesArchive(urls));
+			confirmSendingFiles(std::move(list), QString());
+			return true;
+		}
 		auto list = Storage::PrepareMediaList(
 			urls,
 			st::sendMediaPreviewSize,

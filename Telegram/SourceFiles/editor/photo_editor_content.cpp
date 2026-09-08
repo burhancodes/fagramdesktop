@@ -243,6 +243,10 @@ void PhotoEditorContent::clearSelection() {
 	_paint->clearSelection();
 }
 
+void PhotoEditorContent::applyTextPrefs(const TextPrefs &prefs) {
+	_paint->applyTextPrefs(prefs);
+}
+
 void PhotoEditorContent::setTextColor(const QColor &color) {
 	_paint->setTextColor(color);
 }
@@ -253,6 +257,10 @@ void PhotoEditorContent::setSelectedTextColor(const QColor &color) {
 
 rpl::producer<QColor> PhotoEditorContent::textColorRequests() const {
 	return _paint->textColorRequests();
+}
+
+rpl::producer<TextPrefs> PhotoEditorContent::textPrefsUsed() const {
+	return _paint->textPrefsUsed();
 }
 
 rpl::producer<QColor> PhotoEditorContent::textItemSelections() const {
@@ -296,6 +304,7 @@ void PhotoEditorContent::setupDragArea() {
 		nullptr,
 		nullptr,
 		[](const QMimeData *d) { return Storage::MimeDataState::Image; },
+		nullptr,
 		true);
 
 	areas.photo->setDroppedCallback([=](const QMimeData *data) {

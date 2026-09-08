@@ -30,10 +30,16 @@ namespace Storage {
 enum class MimeDataState {
 	None,
 	Files,
+	FilesArchive,
+	FilesArchiveOnly,
 	PhotoFiles,
+	PhotoFilesArchive,
 	MediaFiles,
+	MediaFilesArchive,
 	//PremiumFile,
 	Image,
+	Folder,
+	FolderArchiveOnly,
 };
 
 [[nodiscard]] std::optional<Ui::PreparedList> PreparedFileFromFilesDialog(

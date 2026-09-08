@@ -4859,7 +4859,6 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 "lng_emoji_create_new" = "Create a New Emoji";
 "lng_emoji_add_existing" = "Add an Existing Emoji";
 "lng_emoji_adapt_sticker" = "Adapt from a Sticker";
-"lng_emoji_adapt_no_video" = "Video stickers are not supported yet.";
 "lng_stickers_add_to_set" = "Add to Sticker Set";
 "lng_stickers_already_in_set" = "This Sticker is already in the Set.";
 "lng_stickers_set_is_full" = "This Sticker Set is full.";
@@ -5455,6 +5454,7 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 "lng_context_edit_msg" = "Edit";
 "lng_context_draw" = "Edit Image";
 "lng_context_edit_video" = "Edit Video";
+"lng_context_edit_gif" = "Edit GIF";
 "lng_context_add_factcheck" = "Add Fact Check";
 "lng_context_edit_factcheck" = "Edit Fact Check";
 "lng_context_add_offer" = "Add Offer";
@@ -5919,11 +5919,15 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 "lng_drag_photos_here" = "Drop photos here";
 "lng_drag_files_here" = "Drop files here";
 "lng_drag_media_here" = "Drop photos and videos";
+"lng_drag_folder_here" = "Drop folder here";
 
 "lng_drag_to_send_quick" = "to send them in a quick way";
 "lng_drag_to_send_no_compression" = "to send them without compression";
 "lng_drag_to_send_files" = "to send them as documents";
 "lng_drag_to_send_media" = "to send them as media files";
+"lng_drag_to_send_folder" = "to send it as an archive";
+"lng_drag_to_send_folder_files" = "to send all its files";
+"lng_drag_to_send_files_archive" = "to send them as one archive";
 
 "lng_drag_proxy_here" = "Connect to a proxy";
 "lng_drag_proxy_about" = "Drop the link here";
@@ -6438,6 +6442,9 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 
 "lng_call_rate_label" = "Please rate the quality of your call";
 "lng_call_rate_comment" = "Comment (optional)";
+"lng_call_rate_title" = "Rate this call";
+"lng_call_rate_description" = "Please rate the quality of this call.";
+"lng_call_ended_title" = "Call ended";
 
 "lng_call_start" = "Start Call";
 "lng_call_start_video" = "Start Video";
@@ -7921,6 +7928,15 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 "lng_photo_editor_text_style_plain" = "Plain";
 "lng_photo_editor_text_style_framed" = "Framed";
 "lng_photo_editor_text_style_semi_transparent" = "Semi-Transparent";
+"lng_photo_editor_text_style_opaque" = "Opaque";
+"lng_photo_editor_text_placeholder" = "Add Text";
+"lng_photo_editor_font" = "Font";
+"lng_photo_editor_font_default" = "Default";
+"lng_photo_editor_font_italic" = "Italic";
+"lng_photo_editor_font_serif" = "Serif";
+"lng_photo_editor_font_condensed" = "Condensed";
+"lng_photo_editor_font_monospace" = "Monospace";
+"lng_photo_editor_align" = "Alignment";
 
 "lng_photo_editor_crop_original" = "Original";
 "lng_photo_editor_crop_square" = "Square";
@@ -8756,5 +8772,8 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 "lng_rich_paste_toast_open" = "Open";
 "lng_rich_paste_toast_undo" = "Undo";
 "lng_rich_paste_toast_apply" = "Apply";
+
+"lng_folder_archive_failed" = "Failed to create archive.";
+"lng_folder_archive_status" = "ZIP archive";
 
 // Keys finished

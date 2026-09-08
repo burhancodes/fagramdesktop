@@ -90,6 +90,7 @@ void SetupSwipeHandler(SwipeHandlerArgs &&args) {
 		QPointF position;
 		QPointF delta;
 		bool touch = false;
+		bool inverted = false;
 	};
 	struct State {
 		base::unique_qptr<QObject> filter;
@@ -109,6 +110,7 @@ void SetupSwipeHandler(SwipeHandlerArgs &&args) {
 		bool started = false;
 		bool reached = false;
 		bool touch = false;
+		bool inverted = false;
 
 		rpl::lifetime lifetime;
 	};
@@ -149,6 +151,7 @@ void SetupSwipeHandler(SwipeHandlerArgs &&args) {
 		state->data.exactTranslation = exactTranslation
 			* state->directionInt;
 		state->data.cursorTop = state->cursorPosition.y();
+		state->data.inverted = state->inverted;
 		update(state->data);
 	};
 	const auto setOrientation = [=](std::optional<Qt::Orientation> o) {
@@ -209,6 +212,7 @@ void SetupSwipeHandler(SwipeHandlerArgs &&args) {
 		update(state->data);
 	};
 	const auto updateWith = [=, generateFinish = args.init](UpdateArgs args) {
+		state->inverted = args.inverted;
 		const auto fillFinishByTop = [&] {
 			if (!args.delta.x()) {
 				return;
@@ -222,6 +226,7 @@ void SetupSwipeHandler(SwipeHandlerArgs &&args) {
 			state->finishByTopData = generateFinish({
 				.cursorPosition = state->cursorPosition,
 				.direction = *state->direction,
+				.inverted = state->inverted,
 			});
 			state->threshold = style::ConvertFloatScale(kThresholdWidth)
 				* state->finishByTopData.speedRatio;
@@ -354,6 +359,7 @@ void SetupSwipeHandler(SwipeHandlerArgs &&args) {
 					.position = touches[0].pos(),
 					.delta = state->startAt - touches[0].pos(),
 					.touch = true,
+					.inverted = true,
 				};
 				updateWith(args);
 			}
@@ -380,13 +386,12 @@ void SetupSwipeHandler(SwipeHandlerArgs &&args) {
 			if (cancel) {
 				processEnd();
 			} else {
-				const auto invert = (w->inverted() ? -1 : 1);
-				const auto delta = Ui::ScrollDeltaF(w) * invert;
 				updateWith({
 					.globalCursor = w->globalPosition().toPoint(),
 					.position = QPointF(),
-					.delta = state->delta + delta * kSwipeSlow,
+					.delta = state->delta - Ui::ScrollDeltaF(w) * kSwipeSlow,
 					.touch = false,
+					.inverted = w->inverted(),
 				});
 			}
 		} break;

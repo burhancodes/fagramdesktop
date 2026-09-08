@@ -29,6 +29,15 @@ using namespace FFmpeg;
 constexpr auto kVideoTimeBase = AVRational{ 1, 1'000'000 };
 constexpr auto kMinBitrate = 600'000;
 constexpr auto kMaxBitrate = 6'800'000;
+constexpr auto kWebmStickerCrf = 28;
+constexpr auto kWebmStickerCrfLadder = std::array<std::optional<int>, 6>{
+	std::nullopt,
+	34,
+	40,
+	47,
+	55,
+	63,
+};
 constexpr auto kMaxSourceSize = 1000 * int64(1024) * 1024;
 constexpr auto kMaxTranscodeArea = 4096 * int64(4096);
 constexpr auto kAudioFrequency = 48'000;
@@ -36,6 +45,18 @@ constexpr auto kAudioBitratePerChannel = 64'000;
 constexpr auto kStaleTempTimeout = 24 * 60 * 60;
 
 constexpr auto kMp3InMp4MinFrequency = 16'000;
+
+// MAX_FRAME_RATE in openh264, a faster source overshoots by the ratio.
+constexpr auto kRateControlFps = 60.;
+
+// Measured: silence costs this much of the nominal 64 kbps.
+constexpr auto kSilentAudioBitrate = 7'000;
+
+// Measured mp4 overhead: fixed boxes plus per-sample tables.
+constexpr auto kContainerBytes = 2'000;
+constexpr auto kContainerBytesPerVideoFrame = 12;
+constexpr auto kContainerBytesPerAudioFrame = 10;
+constexpr auto kAudioFrameSamples = 1'024;
 
 // Broken source timestamps would grow silent track without bound.
 constexpr auto kMaxSilentAudioFill = crl::time(4 * 60 * 60 * 1000);
@@ -45,10 +66,19 @@ constexpr auto kSilentAudioFillMargin = crl::time(1000);
 	return QDir::tempPath() + u"/tdtranscode"_q;
 }
 
-[[nodiscard]] QString TempFileTemplate() {
+[[nodiscard]] QString TempFileTemplate(const QString &extension) {
 	const auto directory = TempDirectory();
 	QDir().mkpath(directory);
-	return directory + u"/XXXXXX.mp4"_q;
+	QFile::setPermissions(
+		directory,
+		QFileDevice::ReadUser
+			| QFileDevice::WriteUser
+			| QFileDevice::ExeUser);
+	return directory + u"/XXXXXX."_q + extension;
+}
+
+[[nodiscard]] QString TempFileTemplate() {
+	return TempFileTemplate(u"mp4"_q);
 }
 
 [[nodiscard]] int EvenDown(int value) {
@@ -101,7 +131,7 @@ struct FileFormatDeleter {
 };
 using FileFormatPointer = std::unique_ptr<AVFormatContext, FileFormatDeleter>;
 
-struct H264Encoder {
+struct VideoEncoder {
 	AVStream *stream = nullptr;
 	CodecPointer codec;
 };
@@ -126,20 +156,16 @@ struct ColorDescription {
 	};
 }
 
-[[nodiscard]] H264Encoder CreateH264Encoder(
+[[nodiscard]] VideoEncoder CreateVideoEncoder(
 		not_null<AVFormatContext*> output,
+		not_null<const AVCodec*> encoderCodec,
 		QSize size,
 		int64 bitrate,
 		float64 fps,
-		ColorDescription color) {
-	auto encoderCodec = avcodec_find_encoder_by_name("libopenh264");
-	if (!encoderCodec) {
-		encoderCodec = avcodec_find_encoder(AV_CODEC_ID_H264);
-		if (!encoderCodec) {
-			LogError(u"avcodec_find_encoder"_q, u"H264"_q);
-			return {};
-		}
-	}
+		ColorDescription color,
+		AVPixelFormat pixelFormat,
+		float64 avgFps,
+		Fn<bool(not_null<AVCodecContext*>)> setup) {
 	const auto stream = avformat_new_stream(output, encoderCodec);
 	if (!stream) {
 		LogError(u"avformat_new_stream"_q, u"video"_q);
@@ -158,13 +184,16 @@ struct ColorDescription {
 	encoder->time_base = kVideoTimeBase;
 	// Without this libopenh264 reads time base and caps at 60 fps.
 	encoder->framerate = av_d2q(rate, 1000000);
-	encoder->pix_fmt = AV_PIX_FMT_YUV420P;
+	encoder->pix_fmt = pixelFormat;
 	encoder->bit_rate = bitrate;
 	encoder->gop_size = int(base::SafeRound(rate));
 	encoder->color_range = color.range;
 	encoder->color_primaries = color.primaries;
 	encoder->color_trc = color.transfer;
 	encoder->colorspace = color.space;
+	if (setup && !setup(encoder.get())) {
+		return {};
+	}
 	if (output->oformat->flags & AVFMT_GLOBALHEADER) {
 		encoder->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
 	}
@@ -184,7 +213,85 @@ struct ColorDescription {
 		return {};
 	}
 	stream->time_base = encoder->time_base;
+	if (avgFps > 0.) {
+		stream->avg_frame_rate = av_d2q(avgFps, 100'000);
+	}
 	return { stream, std::move(encoder) };
+}
+
+[[nodiscard]] VideoEncoder CreateH264Encoder(
+		not_null<AVFormatContext*> output,
+		QSize size,
+		int64 bitrate,
+		float64 fps,
+		ColorDescription color) {
+	auto encoderCodec = avcodec_find_encoder_by_name("libopenh264");
+	if (!encoderCodec) {
+		encoderCodec = avcodec_find_encoder(AV_CODEC_ID_H264);
+		if (!encoderCodec) {
+			LogError(u"avcodec_find_encoder"_q, u"H264"_q);
+			return {};
+		}
+	}
+	return CreateVideoEncoder(
+		output,
+		encoderCodec,
+		size,
+		bitrate,
+		fps,
+		color,
+		AV_PIX_FMT_YUV420P,
+		0.,
+		nullptr);
+}
+
+[[nodiscard]] bool SetupVp9StickerOptions(
+		not_null<AVCodecContext*> encoder,
+		int crf) {
+	auto error = AvErrorWrap(av_opt_set_int(
+		encoder->priv_data,
+		"crf",
+		crf,
+		0));
+	if (error) {
+		LogError(u"av_opt_set_int"_q, error, u"crf"_q);
+		return false;
+	}
+	error = AvErrorWrap(av_opt_set_int(
+		encoder->priv_data,
+		"auto-alt-ref",
+		0,
+		0));
+	if (error) {
+		LogError(u"av_opt_set_int"_q, error, u"auto-alt-ref"_q);
+		return false;
+	}
+	return true;
+}
+
+[[nodiscard]] VideoEncoder CreateVp9WebmEncoder(
+		not_null<AVFormatContext*> output,
+		QSize size,
+		ColorDescription color,
+		int crf,
+		float64 fps) {
+	const auto encoderCodec = avcodec_find_encoder_by_name("libvpx-vp9");
+	if (!encoderCodec) {
+		LogError(u"avcodec_find_encoder"_q, u"VP9"_q);
+		return {};
+	}
+	return CreateVideoEncoder(
+		output,
+		encoderCodec,
+		size,
+		0,
+		fps,
+		color,
+		AV_PIX_FMT_YUVA420P,
+		SanitizedFps(fps),
+		[crf](not_null<AVCodecContext*> encoder) {
+			return SetupVp9StickerOptions(encoder, crf);
+		});
 }
 
 [[nodiscard]] QString MoveMoovToFront(const QString &sourcePath) {
@@ -1156,6 +1263,146 @@ QSize DownscaledSize(QSize original, int targetShorterSide) {
 		std::max(EvenDown(int(base::SafeRound(height * scale))), 2));
 }
 
+SourceInfo ProbeSource(const QString &path) {
+	auto result = SourceInfo();
+	result.fileSize = QFileInfo(path).size();
+	if (result.fileSize <= 0) {
+		return result;
+	}
+	auto wrap = ReadFileWrap();
+	wrap.file.setFileName(path);
+	if (!wrap.file.open(QIODevice::ReadOnly)) {
+		return result;
+	}
+	auto input = MakeFormatPointer(
+		&wrap,
+		&ReadFileWrap::Read,
+		nullptr,
+		&ReadFileWrap::Seek);
+	if (!input) {
+		return result;
+	} else if (AvErrorWrap(avformat_find_stream_info(input.get(), nullptr))) {
+		return result;
+	}
+	const auto videoId = av_find_best_stream(
+		input.get(),
+		AVMEDIA_TYPE_VIDEO,
+		-1,
+		-1,
+		nullptr,
+		0);
+	if (videoId < 0) {
+		return result;
+	}
+	const auto videoStream = input->streams[videoId];
+	const auto videoParameters = videoStream->codecpar;
+	result.coded = QSize(videoParameters->width, videoParameters->height);
+	if (result.coded.isEmpty()) {
+		return result;
+	}
+	result.rotation = ReadRotationFromMetadata(videoStream);
+	result.display = TransposeSizeByRotation(result.coded, result.rotation);
+	result.duration = (input->duration > 0)
+		? PtsToTime(input->duration, kUniversalTimeBase)
+		: crl::time(0);
+	const auto guessed = av_guess_frame_rate(
+		input.get(),
+		videoStream,
+		nullptr);
+	result.fps = (guessed.num > 0 && guessed.den > 0) ? av_q2d(guessed) : 0.;
+	result.videoBitrate = (videoParameters->bit_rate > 0)
+		? videoParameters->bit_rate
+		: input->bit_rate;
+	result.videoRemuxable = (videoParameters->codec_id == AV_CODEC_ID_H264)
+		|| (videoParameters->codec_id == AV_CODEC_ID_HEVC);
+
+	const auto audioId = av_find_best_stream(
+		input.get(),
+		AVMEDIA_TYPE_AUDIO,
+		-1,
+		videoId,
+		nullptr,
+		0);
+	if (audioId >= 0) {
+		const auto audioParameters = input->streams[audioId]->codecpar;
+		const auto codecId = audioParameters->codec_id;
+		result.hasAudio = true;
+		result.audioChannels = audioParameters->ch_layout.nb_channels;
+		result.audioBitrate = audioParameters->bit_rate;
+		result.audioRemuxable = (codecId == AV_CODEC_ID_AAC)
+			|| ((codecId == AV_CODEC_ID_MP3)
+				&& (audioParameters->sample_rate >= kMp3InMp4MinFrequency));
+	}
+	return result;
+}
+
+int64 EstimateTranscodedSize(
+		const VideoSource &source,
+		const SourceInfo &info) {
+	if (info.empty()) {
+		return 0;
+	}
+	const auto plan = PlanGeometry(source, info.coded, info.rotation);
+	const auto target = plan.target;
+	if (target.isEmpty()) {
+		return 0;
+	}
+	const auto limiting = (source.fpsLimit > 0.)
+		&& (info.fps > source.fpsLimit * 1.05);
+	const auto fps = SanitizedFps(limiting ? source.fpsLimit : info.fps);
+	const auto total = info.duration;
+	const auto trimmed = (source.from > 0)
+		|| ((source.till > 0) && (!total || source.till < total));
+	const auto span = TranscodedDuration(source, total);
+	if (span <= 0) {
+		return 0;
+	}
+	const auto seconds = span / 1000.;
+	const auto copyVideo = !plan.bake
+		&& !trimmed
+		&& !limiting
+		&& (target == info.coded)
+		&& info.videoRemuxable;
+	if (copyVideo && info.videoBitrate <= 0) {
+		// Frames are remuxed as they are, so the file barely changes.
+		return info.fileSize;
+	}
+	const auto videoBitrate = [&] {
+		if (copyVideo) {
+			return float64(info.videoBitrate);
+		}
+		const auto wanted = int64(TargetBitrate(target, fps));
+		// Quality mode never spends much more than the source did.
+		const auto bitrate = (info.videoBitrate > 0)
+			? std::min(wanted, info.videoBitrate)
+			: wanted;
+		return bitrate * std::min(kRateControlFps / fps, 1.);
+	}();
+	const auto silent = !source.removeAudio
+		&& !info.hasAudio
+		&& source.silentAudio;
+	const auto audioBitrate = [&]() -> float64 {
+		if (source.removeAudio || !info.hasAudio) {
+			return silent ? kSilentAudioBitrate : 0.;
+		} else if (info.audioRemuxable && info.audioBitrate > 0) {
+			return float64(info.audioBitrate);
+		}
+		return kAudioBitratePerChannel
+			* std::clamp(info.audioChannels, 1, 2);
+	}();
+	const auto container = kContainerBytes
+		+ kContainerBytesPerVideoFrame * seconds * fps
+		+ ((audioBitrate > 0. && !silent)
+			? (kContainerBytesPerAudioFrame
+				* seconds
+				* kAudioFrequency
+				/ kAudioFrameSamples)
+			: 0.);
+	const auto bytes = (videoBitrate + audioBitrate) * seconds / 8.
+		+ container;
+	return std::max(int64(base::SafeRound(bytes)), int64(1));
+}
+
 namespace {
 
 struct ReadPlan {
@@ -1235,7 +1482,8 @@ struct TranscodeAttempt {
 	if (videoId < 0) {
 		return {};
 	}
-	const auto audioId = source.removeAudio
+	const auto webm = (source.mode == VideoSource::Mode::WebmSticker);
+	const auto audioId = (source.removeAudio || webm)
 		? -1
 		: av_find_best_stream(
 			input.get(),
@@ -1292,7 +1540,8 @@ struct TranscodeAttempt {
 	// Only the audio track changes, so the frames are remuxed untouched
 	// instead of being decoded and encoded again at a quality loss.
 	const auto videoCodecId = inVideoStream->codecpar->codec_id;
-	const auto copyVideo = !plan.bake
+	const auto copyVideo = !webm
+		&& !plan.bake
 		&& !trimmed
 		&& !limiting
 		&& (plan.target == coded)
@@ -1310,7 +1559,7 @@ struct TranscodeAttempt {
 		}
 	}
 
-	auto temp = QTemporaryFile(TempFileTemplate());
+	auto temp = QTemporaryFile(TempFileTemplate(webm ? u"webm"_q : u"mp4"_q));
 	if (!temp.open()) {
 		return {};
 	}
@@ -1328,7 +1577,7 @@ struct TranscodeAttempt {
 	if (AvErrorWrap(avformat_alloc_output_context2(
 			&rawOutput,
 			nullptr,
-			"mp4",
+			webm ? "webm" : "mp4",
 			pathUtf8.constData()))
 		|| !rawOutput) {
 		return {};
@@ -1366,12 +1615,15 @@ struct TranscodeAttempt {
 		outVideoStream->codecpar->codec_tag = 0;
 		outVideoStream->time_base = inVideoStream->time_base;
 	} else {
-		auto video = CreateH264Encoder(
-			output.get(),
-			target,
-			bitrate,
-			fps,
-			ReadColorDescription(inVideoStream->codecpar, plan.bake));
+		const auto color = ReadColorDescription(
+			inVideoStream->codecpar,
+			plan.bake);
+		const auto crf = source.webmCrf
+			? std::clamp(*source.webmCrf, 0, 63)
+			: kWebmStickerCrf;
+		auto video = webm
+			? CreateVp9WebmEncoder(output.get(), target, color, crf, fps)
+			: CreateH264Encoder(output.get(), target, bitrate, fps, color);
 		if (!video.codec) {
 			return {};
 		}
@@ -1424,7 +1676,7 @@ struct TranscodeAttempt {
 		? std::min(span + kSilentAudioFillMargin, kMaxSilentAudioFill)
 		: kMaxSilentAudioFill;
 	auto silentAudio = std::optional<SilentAudioWriter>();
-	if (!inAudioStream && source.silentAudio) {
+	if (!inAudioStream && source.silentAudio && !webm) {
 		silentAudio.emplace();
 		if (!silentAudio->init(output.get(), silentLimit)) {
 			return {};
@@ -1432,7 +1684,9 @@ struct TranscodeAttempt {
 	}
 
 	auto muxOptions = (AVDictionary*)nullptr;
-	av_dict_set(&muxOptions, "movflags", "+faststart", 0);
+	if (!webm) {
+		av_dict_set(&muxOptions, "movflags", "+faststart", 0);
+	}
 	error = AvErrorWrap(avformat_write_header(output.get(), &muxOptions));
 	av_dict_free(&muxOptions);
 	if (error) {
@@ -1448,7 +1702,7 @@ struct TranscodeAttempt {
 	if (!encodeFrame || !decodedFrame) {
 		return {};
 	}
-	encodeFrame->format = AV_PIX_FMT_YUV420P;
+	encodeFrame->format = webm ? AV_PIX_FMT_YUVA420P : AV_PIX_FMT_YUV420P;
 	encodeFrame->width = target.width();
 	encodeFrame->height = target.height();
 	error = AvErrorWrap(av_frame_get_buffer(encodeFrame.get(), 0));
@@ -1568,11 +1822,19 @@ struct TranscodeAttempt {
 				return false;
 			}
 			if (plan.bake) {
+				if (webm) {
+					composed = std::move(composed).convertToFormat(
+						QImage::Format_ARGB32);
+					if (composed.isNull()) {
+						failed = true;
+						return false;
+					}
+				}
 				fromRgb = MakeSwscalePointer(
 					target,
 					AV_PIX_FMT_BGRA,
 					target,
-					AV_PIX_FMT_YUV420P,
+					AVPixelFormat(encodeFrame->format),
 					&fromRgb);
 				if (!fromRgb) {
 					failed = true;
@@ -1599,7 +1861,7 @@ struct TranscodeAttempt {
 					QSize(decodedFrame->width, decodedFrame->height),
 					decodedFrame->format,
 					target,
-					AV_PIX_FMT_YUV420P,
+					AVPixelFormat(encodeFrame->format),
 					&swscale);
 				if (!swscale) {
 					failed = true;
@@ -1881,6 +2143,25 @@ Result Run(Job &&job, Fn<bool(float64)> progress) {
 			job.bitrate,
 			std::move(progress));
 	});
+}
+
+Result RunWebmSticker(
+		VideoSource source,
+		int64 maxBytes,
+		Fn<bool(float64)> progress) {
+	Expects(source.mode == VideoSource::Mode::WebmSticker);
+
+	auto result = Result();
+	for (const auto crf : kWebmStickerCrfLadder) {
+		source.webmCrf = crf;
+		result = Run({ .source = source }, progress);
+		if (result.empty()
+			|| result.bytes.size() <= maxBytes
+			|| (progress && !progress(1.))) {
+			break;
+		}
+	}
+	return result;
 }
 
 void ClearStaleTempFiles() {

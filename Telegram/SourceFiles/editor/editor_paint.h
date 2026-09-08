@@ -7,6 +7,7 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 */
 #pragma once
 
+#include "base/timer.h"
 #include "ui/rp_widget.h"
 #include "ui/effects/animations.h"
 
@@ -49,6 +50,7 @@ public:
 	void armShapeTool(ShapeType shape, const Brush &brush, bool fill);
 	void disarmShapeTool();
 	void clearSelection();
+	void applyTextPrefs(const TextPrefs &prefs);
 	void setTextColor(const QColor &color);
 	void setSelectedTextColor(const QColor &color);
 	void applyBrushToSelectedShape(const Brush &brush);
@@ -56,6 +58,7 @@ public:
 	[[nodiscard]] bool handleKeyPress(not_null<QKeyEvent*> e);
 
 	[[nodiscard]] rpl::producer<QColor> textColorRequests() const;
+	[[nodiscard]] rpl::producer<TextPrefs> textPrefsUsed() const;
 	[[nodiscard]] rpl::producer<QColor> textItemSelections() const;
 	[[nodiscard]] rpl::producer<> textItemDeselections() const;
 	[[nodiscard]] rpl::producer<bool> textEditStates() const;
@@ -86,6 +89,7 @@ private:
 
 	ItemBase::Data itemBaseData() const;
 	void applyViewTransform();
+	void bakeTextScales();
 
 	void clearRedoList();
 
@@ -123,6 +127,7 @@ private:
 	rpl::variable<bool> _hasUndo = true;
 	rpl::variable<bool> _hasRedo = true;
 	rpl::variable<bool> _textEditing = false;
+	base::Timer _textBakeTimer;
 
 
 };

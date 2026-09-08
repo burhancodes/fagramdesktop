@@ -86,6 +86,7 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 #include "ui/screen_reader_mode.h"
 #include "storage/storage_domain.h"
 #include "storage/storage_databases.h"
+#include "storage/storage_folder_archive.h"
 #include "storage/localstorage.h"
 #include "payments/payments_checkout_process.h"
 #include "export/export_manager.h"
@@ -367,6 +368,7 @@ void Application::run() {
 	startSystemDarkModeViewer();
 	Media::Player::start(_audio.get());
 	Media::Encode::ClearStaleTempFiles();
+	Storage::ClearStaleArchiveFiles();
 
 	if (MediaControlsManager::Supported()) {
 		_mediaControlsManager = std::make_unique<MediaControlsManager>();

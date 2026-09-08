@@ -145,7 +145,9 @@ MimeDataState ComputeMimeDataState(const QMimeData *data) {
 
 		const auto info = QFileInfo(file);
 		if (info.isDir()) {
-			return MimeDataState::None;
+			return (urls.size() == 1)
+				? MimeDataState::Folder
+				: MimeDataState::None;
 		}
 
 		using namespace Core;
@@ -177,6 +179,8 @@ MimeDataState ComputeMimeDataState(const QMimeData *data) {
 		? MimeDataState::PhotoFiles
 		: allAreMedia
 		? MimeDataState::MediaFiles
+		: (urls.size() > 1)
+		? MimeDataState::FilesArchive
 		: MimeDataState::Files;
 }
 

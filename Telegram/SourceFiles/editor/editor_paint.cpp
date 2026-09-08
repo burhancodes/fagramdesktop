@@ -57,6 +57,7 @@ constexpr auto kMaxItemZoom = 10.;
 constexpr auto kCanvasZoomStepFine = 1.015;
 constexpr auto kZoomSmoothTau = 60.;
 constexpr auto kZoomMaxFrameDelta = crl::time(64);
+constexpr auto kTextBakeDelay = crl::time(300);
 
 std::shared_ptr<Scene> EnsureScene(
 		PhotoModifications &mods,
@@ -97,7 +98,9 @@ Paint::Paint(
 		_scene->setTextDefaults(
 			QColor(255, 255, 255),
 			shortSide / kDefaultFontSizeDivisor,
-			int(TextStyle::Plain));
+			TextStyle::Plain,
+			TextTypeface::Default,
+			TextAlignment::Center);
 	}
 
 	keepResult();
@@ -111,11 +114,18 @@ Paint::Paint(
 	_viewport->setAutoFillBackground(false);
 	_viewport->setAttribute(Qt::WA_TranslucentBackground, true);
 	_viewport->installEventFilter(this);
+	_view->setAcceptDrops(false);
+	_viewport->setAcceptDrops(false);
 
 	_scene->textEditStates(
 	) | rpl::on_next([=](bool editing) {
 		_textEditing = editing;
+		if (editing) {
+			_textBakeTimer.cancel();
+		}
 	}, lifetime());
+
+	_textBakeTimer.setCallback([=] { bakeTextScales(); });
 
 	// Undo / Redo.
 	controllers->undoController->performRequestChanges(
@@ -240,8 +250,19 @@ bool Paint::zoomSceneItemsByFactor(float64 factor) {
 		}
 	} else if (applied) {
 		_zoomAtLimit = false;
+		_textBakeTimer.callOnce(kTextBakeDelay);
 	}
 	return applied;
+}
+
+void Paint::bakeTextScales() {
+	for (const auto &item : _scene->items()) {
+		if (item->isNormalStatus()
+			&& (item->type() == ItemText::Type)
+			&& item->isVisible()) {
+			static_cast<ItemText*>(item.get())->bakeScale();
+		}
+	}
 }
 
 void Paint::zoomCanvas(float64 factor, QPoint viewportPoint, bool animated) {
@@ -442,7 +463,7 @@ void Paint::applyBrushToSelectedShape(const Brush &brush) {
 
 void Paint::createTextItem() {
 	disarmShapeTool();
-	_scene->createTextAtCenter(-_transform.angle);
+	_scene->createTextAtCenter(-_transform.angle, _transform.flipped);
 }
 
 void Paint::createShapeItem(ShapeType shape, const Brush &brush, bool fill) {
@@ -490,6 +511,10 @@ void Paint::clearSelection() {
 	_scene->clearSelection();
 }
 
+void Paint::applyTextPrefs(const TextPrefs &prefs) {
+	_scene->applyTextPrefs(prefs);
+}
+
 void Paint::setTextColor(const QColor &color) {
 	_scene->setTextColor(color);
 }
@@ -500,6 +525,10 @@ void Paint::setSelectedTextColor(const QColor &color) {
 
 rpl::producer<QColor> Paint::textColorRequests() const {
 	return _scene->textColorRequests();
+}
+
+rpl::producer<TextPrefs> Paint::textPrefsUsed() const {
+	return _scene->textPrefsUsed();
 }
 
 rpl::producer<QColor> Paint::textItemSelections() const {
