@@ -141,6 +141,10 @@ void TopBar::enableBackButton() {
 	_back->entity()->clicks(
 	) | rpl::to_empty
 	| rpl::start_to_stream(_backClicks, _back->lifetime());
+	_back->widthValue(
+	) | rpl::on_next([this] {
+		updateControlsGeometry(width());
+	}, lifetime());
 	registerToggleControlCallback(_back.data(), [=] {
 		return !selectionMode();
 	});
@@ -320,7 +324,7 @@ void TopBar::createSearchView(
 	widthValue(
 	) | rpl::on_next([=](int newWidth) {
 		auto left = _back
-			? _st.back.width
+			? FA::Ui::TopBarBackPillSkip()
 			: _st.titlePosition.x();
 		wrap->setGeometryToLeft(
 			left,
@@ -377,17 +381,14 @@ void TopBar::updateDefaultControlsGeometry(int newWidth) {
 		_st.height,
 		_buttons);
 
-	if (_back) {
-		_back->setGeometryToLeft(
-			0,
-			0,
-			newWidth - right,
-			_back->height(),
-			newWidth);
-	}
+	const auto left = FA::Ui::LayoutTopBarBackButton(
+		newWidth,
+		_st.height,
+		_back.data());
+
 	if (_title) {
-		const auto x = _back
-			? _st.back.width
+		const auto x = (left > 0)
+			? left
 			: _subtitle
 			? _st.titleWithSubtitlePosition.x()
 			: _st.titlePosition.x();
@@ -398,8 +399,8 @@ void TopBar::updateDefaultControlsGeometry(int newWidth) {
 		_title->entity()->resizeToWidth(available);
 		_title->moveToLeft(x, y, newWidth);
 		if (_subtitle) {
-			const auto subtitleX = _back
-				? _st.back.width
+			const auto subtitleX = (left > 0)
+				? left
 				: _st.subtitlePosition.x();
 			_subtitle->entity()->resizeToWidth(
 				std::max(newWidth - right - subtitleX, 0));
@@ -451,7 +452,8 @@ void TopBar::updateStoriesGeometry(int newWidth) {
 	}
 
 	const auto &small = st::dialogsStories;
-	const auto wrapLeft = (_back ? _st.back.width : 0);
+	const auto backSkip = _back ? FA::Ui::TopBarBackPillSkip() : 0;
+	const auto wrapLeft = backSkip;
 	const auto left = _back
 		? 0
 		: (_st.titlePosition.x() - small.left - small.photoLeft);
@@ -492,6 +494,7 @@ void TopBar::paintEvent(QPaintEvent *e) {
 		width(),
 		_st.height,
 		_buttons,
+		_back.data(),
 		_searchModeEnabled,
 		selectionMode());
 }

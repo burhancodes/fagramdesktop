@@ -20,11 +20,19 @@ int LayoutTopBarPillButtons(
 	int topBarHeight,
 	const std::vector<base::unique_qptr<::Ui::RpWidget>> &buttons);
 
+int LayoutTopBarBackButton(
+	int newWidth,
+	int topBarHeight,
+	::Ui::RpWidget *backButton);
+
+int TopBarBackPillSkip();
+
 void PaintTopBarPill(
 	QPainter &p,
 	int widgetWidth,
 	int topBarHeight,
 	const std::vector<base::unique_qptr<::Ui::RpWidget>> &buttons,
+	const ::Ui::RpWidget *backButton,
 	bool searchModeEnabled,
 	bool selectionMode);
 

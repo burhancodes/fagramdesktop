@@ -141,10 +141,10 @@ infoTopBarBack: IconButton(defaultIconButton) {
 
 	icon: infoTopBarBackIcon;
 	iconOver: infoTopBarBackIconOver;
-	iconPosition: point(11px, -1px);
+	iconPosition: point(-1px, -1px);
 
-	rippleAreaPosition: point(6px, 6px);
-	rippleAreaSize: 42px;
+	rippleAreaPosition: point(0px, 0px);
+	rippleAreaSize: 36px;
 	ripple: defaultRippleAnimationBgOver;
 }
 infoTopBarTitle: FlatLabel(defaultFlatLabel) {
@@ -267,11 +267,11 @@ infoLayerTopBarBack: IconButton(infoTopBarBack) {
 	width: 60px;
 	height: infoLayerTopBarHeight;
 
-	iconPosition: point(10px, -1px);
+	iconPosition: point(-1px, -1px);
 	icon: infoLayerTopBarBackIcon;
 	iconOver: infoLayerTopBarBackIconOver;
-	rippleAreaSize: 40px;
-	rippleAreaPosition: point(6px, 8px);
+	rippleAreaSize: 36px;
+	rippleAreaPosition: point(0px, 0px);
 }
 infoLayerTopBarMediaCancel: IconButton(infoLayerTopBarBack) {
 	width: 48px;
@@ -908,6 +908,9 @@ editPeerUsernameFieldMargins: margins(22px, 0px, 22px, 0px);
 
 historyTopBarBack: IconButton(infoTopBarBack) {
 	width: 52px;
+	iconPosition: point(11px, -1px);
+	rippleAreaPosition: point(6px, 6px);
+	rippleAreaSize: 42px;
 }
 topBarHeight: 54px;
 topBarMenuPosition: point(-6px, 45px);
