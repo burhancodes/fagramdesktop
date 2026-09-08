@@ -61,6 +61,7 @@ optionsList = [
     'qt6',
     'skip-release',
     'build-stackwalk',
+    'qt-asserts',
 ]
 options = []
 runCommand = []
@@ -255,6 +256,8 @@ def filterByPlatform(commands):
                     inscope = False
                 elif len(scopes) == 1:
                     continue
+            if 'asserts' in scopes:
+                inscope = inscope and 'qt-asserts' in options
             skip = inscope if m.group(1) == '!' else not inscope
         elif not skip and not re.match(r'\s*#', command):
             if m and m.group(2) == 'version':
@@ -457,11 +460,11 @@ if customRunCommand:
 stage('patches', """
     git clone https://github.com/desktop-app/patches.git
     cd patches
-    git checkout 73a88cdaa13995c8666c956b80e2129ee9b6b34d
+    git checkout c2cc44fca4a8d0e20d1ef0f40884d717c750f0a4
 mac:
     git clone https://github.com/desktop-app/qt6_highsierra_patches.git qt6_highsierra
     cd qt6_highsierra
-    git checkout 4aae812a405f47553e001faf566de572d3eccd16
+    git checkout 7387476bb3b7200d3b044015696cb3c28f78593c
 """)
 
 stage('msys64', """
@@ -517,6 +520,27 @@ mac:
         --ignore-installed \\
         --target=$THIRDPARTY_DIR/gyp \\
         git+https://chromium.googlesource.com/external/gyp@master six
+""", 'ThirdParty')
+
+rustToolchain = '1.96.1'
+stage('rust', """
+win:
+    powershell -Command "iwr -OutFile ./rustup-init.exe https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe"
+    SET "RUSTUP_HOME=%THIRDPARTY_DIR%\\rust\\rustup"
+    SET "CARGO_HOME=%THIRDPARTY_DIR%\\rust\\cargo"
+    rustup-init.exe -y --no-modify-path --profile minimal ^
+        --default-toolchain """ + rustToolchain + """ ^
+        --component rust-src ^
+        --target aarch64-pc-windows-msvc
+    del rustup-init.exe
+mac:
+    wget -O rustup-init.sh https://sh.rustup.rs
+    export RUSTUP_HOME=$THIRDPARTY_DIR/rust/rustup
+    export CARGO_HOME=$THIRDPARTY_DIR/rust/cargo
+    sh rustup-init.sh -y --no-modify-path --profile minimal \\
+        --default-toolchain """ + rustToolchain + """ \\
+        --target aarch64-apple-darwin
+    rm rustup-init.sh
 """, 'ThirdParty')
 
 stage('lzma', """
@@ -623,7 +647,7 @@ win32_release:
 win64_release:
     perl Configure no-shared no-tests VC-WIN64A /FS
 winarm_release:
-    perl Configure no-shared no-tests VC-WIN64-ARM /FS
+    perl Configure no-shared no-tests VC-WIN64-ARM /FS /Gs4096
 win_release:
     jom -j%NUMBER_OF_PROCESSORS% build_libs
     mkdir out
@@ -1470,11 +1494,15 @@ mac:
     sed -i.bak 's/tqtc-//' {qtimageformats,qtsvg}/dependencies.yaml
 
     CONFIGURATIONS=-debug
+    ASSERTS=
 release:
     CONFIGURATIONS=-debug-and-release
+mac_asserts:
+    ASSERTS=-force-asserts
 mac:
     ./configure -prefix "$USED_PREFIX/Qt-$QT" \
         $CONFIGURATIONS \
+        $ASSERTS \
         -force-debug-info \
         -opensource \
         -confirm-license \
@@ -1509,8 +1537,11 @@ win:
     cd ..
 
     SET CONFIGURATIONS=-debug
+    SET ASSERTS=
 release:
     SET CONFIGURATIONS=-debug-and-release
+win_asserts:
+    SET ASSERTS=-force-asserts
 win:
     """ + removeDir('"%LIBS_DIR%\\Qt' + qt + '"') + """
     SET MOZJPEG_DIR=%LIBS_DIR%\\mozjpeg
@@ -1521,6 +1552,7 @@ win:
     SET LCMS2_DIR=%LIBS_DIR%\\liblcms2
     configure -prefix "%LIBS_DIR%\\Qt-%QT%" ^
         %CONFIGURATIONS% ^
+        %ASSERTS% ^
         -force-debug-info ^
         -opensource ^
         -confirm-license ^
@@ -1725,6 +1757,50 @@ mac:
     buildTd Debug
 release:
     buildTd Release
+""")
+
+stage('tlottie', """
+    git clone https://github.com/dkaraush/tlottie.git
+    cd tlottie
+    git checkout 8ca87fc25a
+win:
+    SET "RUSTUP_HOME=%THIRDPARTY_DIR%\\rust\\rustup"
+    SET "CARGO_HOME=%THIRDPARTY_DIR%\\rust\\cargo"
+    SET RUSTUP_TOOLCHAIN=""" + rustToolchain + """
+    SET "PATH=%CARGO_HOME%\\bin;%PATH%"
+win32:
+    SET "RUST_TARGET=i686-win7-windows-msvc"
+    SET "RUST_BUILD_STD=-Z build-std=std,panic_abort"
+    SET "RUSTC_BOOTSTRAP=1"
+win64:
+    SET "RUST_TARGET=x86_64-win7-windows-msvc"
+    SET "RUST_BUILD_STD=-Z build-std=std,panic_abort"
+    SET "RUSTC_BOOTSTRAP=1"
+winarm:
+    SET "RUST_TARGET=aarch64-pc-windows-msvc"
+    SET "RUST_BUILD_STD="
+win:
+    cargo rustc --lib --release --locked ^
+        --features c-api --crate-type staticlib ^
+        %RUST_BUILD_STD% ^
+        --target %RUST_TARGET% ^
+        --config "target.%RUST_TARGET%.rustflags=['-C','target-feature=+crt-static']" ^
+        -- --print native-static-libs
+    mkdir out\\lib out\\include
+    copy target\\%RUST_TARGET%\\release\\tlottie.lib out\\lib\\tlottie.lib
+    copy include\\tlottie.h out\\include\\tlottie.h
+mac:
+    export RUSTUP_HOME=$THIRDPARTY_DIR/rust/rustup
+    export CARGO_HOME=$THIRDPARTY_DIR/rust/cargo
+    export RUSTUP_TOOLCHAIN=""" + rustToolchain + """
+    export PATH=$CARGO_HOME/bin:$PATH
+    cargo rustc --lib --release --locked \\
+        --features c-api --crate-type staticlib \\
+        --target aarch64-apple-darwin \\
+        -- --print native-static-libs
+    mkdir -p $USED_PREFIX/lib $USED_PREFIX/include/tlottie
+    cp target/aarch64-apple-darwin/release/libtlottie.a $USED_PREFIX/lib/libtlottie.a
+    cp include/tlottie.h $USED_PREFIX/include/tlottie/tlottie.h
 """)
 
 if win:
