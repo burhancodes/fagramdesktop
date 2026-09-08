@@ -432,8 +432,6 @@ MainMenu::MainMenu(
 		updateInnerControlsGeometry();
 	}, _inner->lifetime());
 
-	parentResized();
-
 	_telegram->setMarkedText(tr::link(
 		u"FAgram Desktop"_q,
 		u"https://t.me/FAgramDesktop"_q));
@@ -448,9 +446,7 @@ MainMenu::MainMenu(
 					lt_version,
 					currentVersionShortText()),
 			1) // Link 1.
-		.append(QChar(' '))
-		.append(QChar(8211))
-		.append(QChar(' '))
+		.append(u"\n"_q)
 		.append(tr::link(tr::lng_menu_about(tr::now), 2))); // Link 2.
 	_version->setLink(
 		1,
@@ -460,6 +456,8 @@ MainMenu::MainMenu(
 		std::make_shared<LambdaClickHandler>([=] {
 			controller->show(Box(AboutBox));
 		}));
+
+	parentResized();
 
 	rpl::combine(
 		_toggleAccounts->rightSkipValue(),
@@ -898,11 +896,19 @@ void MainMenu::updateInnerControlsGeometry() {
 		+ st::mainMenuSkip
 		+ _menu->height();
 	const auto available = height() - st::mainMenuCoverHeight - contentHeight;
+	const auto cardMarginX = 12;
+	const auto cardMarginBottom = 12;
+	const auto cardPaddingY = 10;
+	const auto cardHeight = _telegram->height() + 3 + _version->height() + 2 * cardPaddingY;
+	const auto minFooterHeight = std::max(
+		st::mainMenuFooterHeightMin,
+		cardHeight + cardMarginBottom + cardMarginX);
 	const auto footerHeight = std::max(
 		available,
-		st::mainMenuFooterHeightMin);
-	if (_footer->height() != footerHeight) {
-		_footer->resize(_footer->width(), footerHeight);
+		minFooterHeight);
+	const auto footerWidth = _footer->width() ? _footer->width() : width();
+	if (_footer->height() != footerHeight || _footer->width() != footerWidth) {
+		_footer->resize(footerWidth, footerHeight);
 	}
 }
 
