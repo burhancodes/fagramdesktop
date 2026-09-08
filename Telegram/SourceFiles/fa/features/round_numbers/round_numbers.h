@@ -30,7 +30,7 @@ namespace FA::Features::RoundNumbers {
 
 [[nodiscard]] lngtag_count ResolveCountTag(ushort keyBase, lngtag_count tag);
 
-[[nodiscard]] not_null<::Ui::RpWidget*> AddToggle(
+not_null<::Ui::RpWidget*> AddToggle(
 	not_null<::Ui::VerticalLayout*> card,
 	not_null<Window::SessionController*> controller);
 
