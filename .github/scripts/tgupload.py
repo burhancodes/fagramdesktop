@@ -39,6 +39,8 @@ def resolve_caption(args) -> str:
             changelog = f.read()
     if not changelog and "CHANGELOG" in environ:
         changelog = environ["CHANGELOG"]
+    if changelog:
+        changelog = changelog.strip()
 
     title = getattr(args, "title", None) or environ.get("TITLE")
     tgd_version = getattr(args, "tgd_version", None) or environ.get("TGD_VERSION")
@@ -103,14 +105,16 @@ async def upload_single(app, file, chat_id_list, caption, message_thread_id=None
     print("Upload Successful!")
 
 
-async def upload_group(app, files, chat_id_list, caption, message_thread_id=None):
+async def upload_group(app, files, chat_id_list, caption, message_thread_id=None, caption_position="last"):
     media = []
     caption = await prepare_caption(app, caption)
+    caption_index = (len(files) - 1) if caption_position == "last" else 0
     for i, file in enumerate(files):
+        has_caption = (i == caption_index)
         media.append(InputMediaDocument(
             media=file,
-            caption=caption if i == 0 else "",
-            parse_mode=enums.ParseMode.HTML if i == 0 else None,
+            caption=caption if has_caption else "",
+            parse_mode=enums.ParseMode.HTML if has_caption else None,
         ))
     for chat_id in chat_id_list:
         await app.send_media_group(
@@ -129,6 +133,7 @@ async def main():
     parser.add_argument("--topic-id", "--message-thread-id", type=int, dest="message_thread_id", help="Forum topic/thread ID")
     parser.add_argument("--caption", type=str, help="Caption for the file")
     parser.add_argument("--caption-file", type=str, help="File containing caption")
+    parser.add_argument("--caption-position", choices=["first", "last"], default="last", help="Position of caption in media group (default: last)")
     parser.add_argument("--title", type=str, help="Title for the post")
     parser.add_argument("--tgd-version", type=str, help="TGD Base version")
     parser.add_argument("--build-type", type=str, help="Build type (ci or rel)")
@@ -163,7 +168,20 @@ async def main():
     app = Client("Uploader", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
     async with app:
         if args.files:
-            await upload_group(app, args.files, chat_id_list, caption, message_thread_id=message_thread_id)
+            valid_files = [f for f in args.files if f and f.strip()]
+            if not valid_files:
+                parser.error("No valid files provided to --files")
+            if len(valid_files) == 1:
+                await upload_single(app, valid_files[0], chat_id_list, caption, message_thread_id=message_thread_id)
+            else:
+                await upload_group(
+                    app,
+                    valid_files,
+                    chat_id_list,
+                    caption,
+                    message_thread_id=message_thread_id,
+                    caption_position=args.caption_position,
+                )
         else:
             await upload_single(app, args.file, chat_id_list, caption, message_thread_id=message_thread_id)
 

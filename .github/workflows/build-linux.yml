@@ -286,18 +286,18 @@ jobs:
               COMPARE=$(curl -s -H "Accept: application/vnd.github+json" \
                 -H "Authorization: Bearer $GITHUB_TOKEN" \
                 "https://api.github.com/repos/$REPO/compare/$PREV_TAG...$HEAD_SHA")
-              CHANGELOG=$(echo "$COMPARE" | jq -r '[.commits[] | select(.author.login == "Burhanverse" or .committer.login == "Burhanverse") | "• " + (.commit.message | split("\n")[0]) + " [֍](" + .html_url + ")"] | join("\n")')
+              CHANGELOG=$(echo "$COMPARE" | jq -r '[.commits[]? | select(.author.login == "Burhanverse" or .committer.login == "Burhanverse") | "• " + (.commit.message | split("\n")[0]) + " [֍](" + .html_url + ")"] | reverse | join("\n")')
             fi
           else
             LAST_SHA=$(curl -s -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer $GITHUB_TOKEN" \
               "https://api.github.com/repos/$REPO/actions/workflows/$WORKFLOW_ID/runs?status=completed&conclusion=success&branch=$BRANCH&per_page=2" \
-              | jq -r --arg head "$HEAD_SHA" '[.workflow_runs[] | select(.head_sha != $head)][0].head_sha // empty')
+              | jq -r --arg head "$HEAD_SHA" '[.workflow_runs[]? | select(.head_sha != $head)][0].head_sha // empty')
             if [ -n "$LAST_SHA" ]; then
               COMPARE=$(curl -s -H "Accept: application/vnd.github+json" \
                 -H "Authorization: Bearer $GITHUB_TOKEN" \
                 "https://api.github.com/repos/$REPO/compare/$LAST_SHA...$HEAD_SHA")
-              CHANGELOG=$(echo "$COMPARE" | jq -r '[.commits[] | select(.author.login == "Burhanverse" or .committer.login == "Burhanverse") | "• " + (.commit.message | split("\n")[0]) + " [֍](" + .html_url + ")"] | join("\n")')
+              CHANGELOG=$(echo "$COMPARE" | jq -r '[.commits[]? | select(.author.login == "Burhanverse" or .committer.login == "Burhanverse") | "• " + (.commit.message | split("\n")[0]) + " [֍](" + .html_url + ")"] | reverse | join("\n")')
             fi
           fi
 
@@ -331,9 +331,13 @@ jobs:
           CHANGELOG: ${{ env.CHANGELOG }}
         run: |
           LINUX_FILE=$(find artifacts/linux -name "fagram-*.tar.zst" | head -1)
-          python3 .github/scripts/tgupload.py "$LINUX_FILE" \
-            --chat-id ${{ secrets.CHAT_ID }} \
-            --title "FAgram Linux ${{ inputs.tagname }}" \
-            --tgd-version "${{ env.TGD_VERSION }}" \
-            --build-type "${{ inputs.build_type }}" \
-            --branch "${{ github.ref_name }}"
+          if [ -n "$LINUX_FILE" ]; then
+            python3 .github/scripts/tgupload.py "$LINUX_FILE" \
+              --chat-id ${{ secrets.CHAT_ID }} \
+              --title "FAgram Linux ${{ inputs.tagname }}" \
+              --tgd-version "${{ env.TGD_VERSION }}" \
+              --build-type "${{ inputs.build_type }}" \
+              --branch "${{ github.ref_name }}"
+          else
+            echo "No Linux artifact found to upload."
+          fi

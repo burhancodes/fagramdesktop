@@ -7,6 +7,14 @@ on:
         description: "Release tag name"
         type: string
         required: true
+      build_type:
+        description: "Build type (ci or rel)"
+        type: choice
+        required: false
+        default: "rel"
+        options:
+          - rel
+          - ci
       linux_run_id:
         description: "Linux build workflow run ID"
         type: string
@@ -25,6 +33,11 @@ on:
         description: "Release tag name"
         type: string
         required: true
+      build_type:
+        description: "Build type (ci or rel)"
+        type: string
+        required: false
+        default: "rel"
       linux_run_id:
         description: "Linux build workflow run ID"
         type: string
@@ -46,6 +59,8 @@ jobs:
   create-release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
+    outputs:
+      is_prerelease: ${{ steps.release_type.outputs.is_prerelease }}
 
     steps:
       - name: Checkout repository
@@ -128,14 +143,14 @@ jobs:
           echo "$FILES" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Check if beta release
+      - name: Check release type
         id: release_type
         run: |
-          IS_BETA="false"
-          if [[ "${{ inputs.tagname }}" =~ beta ]]; then
-            IS_BETA="true"
+          IS_PRERELEASE="false"
+          if [ "${{ inputs.build_type }}" = "ci" ] || [[ "${{ inputs.tagname }}" =~ (beta|alpha|dev) ]]; then
+            IS_PRERELEASE="true"
           fi
-          echo "is_beta=$IS_BETA" >> $GITHUB_OUTPUT
+          echo "is_prerelease=$IS_PRERELEASE" >> $GITHUB_OUTPUT
 
       - name: Create Release
         uses: softprops/action-gh-release@v3
@@ -143,7 +158,7 @@ jobs:
           tag_name: ${{ inputs.tagname }}
           name: FAgram ${{ inputs.tagname }}
           draft: false
-          prerelease: ${{ steps.release_type.outputs.is_beta == 'true' }}
+          prerelease: ${{ steps.release_type.outputs.is_prerelease == 'true' }}
           body_path: body.txt
           files: ${{ steps.release-files.outputs.files }}
         env:
@@ -153,6 +168,7 @@ jobs:
     name: Trigger RPM Build
     runs-on: ubuntu-latest
     needs: create-release
+    if: needs.create-release.outputs.is_prerelease != 'true'
     steps:
       - name: Trigger repository dispatch event
         uses: peter-evans/repository-dispatch@v4
@@ -164,6 +180,7 @@ jobs:
   update-scoop:
     name: Scoop Manifest
     needs: create-release
+    if: needs.create-release.outputs.is_prerelease != 'true'
     uses: ./.github/workflows/scoop-manifest.yml
     with:
       release_tag: ${{ inputs.tagname }}
@@ -172,8 +189,8 @@ jobs:
   update-homebrew:
     name: Homebrew Cask
     needs: create-release
+    if: needs.create-release.outputs.is_prerelease != 'true' && inputs.mac_run_id != ''
     uses: ./.github/workflows/homebrew-cask.yml
-    if: ${{ inputs.mac_run_id != '' }}
     with:
       release_tag: ${{ inputs.tagname }}
     secrets: inherit
@@ -181,6 +198,7 @@ jobs:
   update-nix:
     name: Nix Flake
     needs: create-release
+    if: needs.create-release.outputs.is_prerelease != 'true'
     uses: ./.github/workflows/nix-flake.yml
     with:
       release_tag: ${{ inputs.tagname }}
