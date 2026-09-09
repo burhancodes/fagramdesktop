@@ -44,7 +44,6 @@ public:
 	[[nodiscard]] bool disableAnimatedAvatars() const { return _disableAnimatedAvatars.current(); }
 	[[nodiscard]] bool disableAutoDownload() const { return _disableAutoDownload.current(); }
 	[[nodiscard]] bool disableAutoUpdate() const { return _disableAutoUpdate.current(); }
-	[[nodiscard]] bool installBetaUpdate() const { return _installBetaUpdate.current(); }
 	[[nodiscard]] bool showStartToken() const { return _showStartToken.current(); }
 	[[nodiscard]] bool showPeerId() const { return _showPeerId.current(); }
 	[[nodiscard]] bool showDcId() const { return _showDcId.current(); }
@@ -101,7 +100,6 @@ public:
 	void setDisableAnimatedAvatars(bool val);
 	void setDisableAutoDownload(bool val);
 	void setDisableAutoUpdate(bool val);
-	void setInstallBetaUpdate(bool val);
 	void setShowStartToken(bool val);
 	void setShowPeerId(bool val);
 	void setShowDcId(bool val);
@@ -158,7 +156,6 @@ public:
 	[[nodiscard]] rpl::producer<bool> disableAnimatedAvatarsValue() const { return _disableAnimatedAvatars.value(); }
 	[[nodiscard]] rpl::producer<bool> disableAutoDownloadValue() const { return _disableAutoDownload.value(); }
 	[[nodiscard]] rpl::producer<bool> disableAutoUpdateValue() const { return _disableAutoUpdate.value(); }
-	[[nodiscard]] rpl::producer<bool> installBetaUpdateValue() const { return _installBetaUpdate.value(); }
 	[[nodiscard]] rpl::producer<bool> showStartTokenValue() const { return _showStartToken.value(); }
 	[[nodiscard]] rpl::producer<bool> showPeerIdValue() const { return _showPeerId.value(); }
 	[[nodiscard]] rpl::producer<bool> showDcIdValue() const { return _showDcId.value(); }
@@ -214,7 +211,6 @@ public:
 	[[nodiscard]] rpl::producer<bool> disableAnimatedAvatarsChanges() const { return _disableAnimatedAvatars.changes(); }
 	[[nodiscard]] rpl::producer<bool> disableAutoDownloadChanges() const { return _disableAutoDownload.changes(); }
 	[[nodiscard]] rpl::producer<bool> disableAutoUpdateChanges() const { return _disableAutoUpdate.changes(); }
-	[[nodiscard]] rpl::producer<bool> installBetaUpdateChanges() const { return _installBetaUpdate.changes(); }
 	[[nodiscard]] rpl::producer<bool> showStartTokenChanges() const { return _showStartToken.changes(); }
 	[[nodiscard]] rpl::producer<bool> showPeerIdChanges() const { return _showPeerId.changes(); }
 	[[nodiscard]] rpl::producer<bool> showDcIdChanges() const { return _showDcId.changes(); }
@@ -276,7 +272,6 @@ private:
 	rpl::variable<bool> _disableAnimatedAvatars = false;
 	rpl::variable<bool> _disableAutoDownload = false;
 	rpl::variable<bool> _disableAutoUpdate = false;
-	rpl::variable<bool> _installBetaUpdate = false;
 	rpl::variable<bool> _showStartToken = true;
 	rpl::variable<bool> _showPeerId = true;
 	rpl::variable<bool> _showDcId = true;

@@ -1193,7 +1193,6 @@ void BuildUpdateSection(SectionBuilder &builder, bool atTop) {
 				return (toggled != cInstallBetaVersion());
 			}) | rpl::on_next([=](bool toggled) {
 				cSetInstallBetaVersion(toggled);
-				FASettings::FASettings::getInstance().setInstallBetaUpdate(toggled);
 				Core::Launcher::Instance().writeInstallBetaVersionsSetting();
 				Core::UpdateChecker checker;
 				checker.stop();
@@ -1549,7 +1548,6 @@ void SetupUpdate(not_null<Ui::VerticalLayout*> container) {
 			return (toggled != cInstallBetaVersion());
 		}) | rpl::on_next([=](bool toggled) {
 			cSetInstallBetaVersion(toggled);
-			FASettings::FASettings::getInstance().setInstallBetaUpdate(toggled);
 			Core::Launcher::Instance().writeInstallBetaVersionsSetting();
 
 			Core::UpdateChecker checker;

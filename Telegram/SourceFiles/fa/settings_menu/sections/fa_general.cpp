@@ -30,7 +30,6 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 #include "window/window_session_controller.h"
 #include "lang/lang_instance.h"
 #include "core/application.h"
-#include "core/launcher.h"
 #include "core/update_checker.h"
 #include "ui/controls/compose_ai_button_factory.h"
 #include "base/options.h"
@@ -182,30 +181,6 @@ namespace Settings {
 			});
 		Settings::FADeepLinkMenu::AttachSettingsContextMenu(
 			autoUpdateRow, u"fa/general/disable-auto-update"_q, controller);
-
-		FA::Ui::AddCardDivider(privacyCard);
-
-		const auto betaUpdatesRow = FA::Ui::AddCardToggle(
-			privacyCard,
-			fatr::fa_beta_updates(),
-			fatr::fa_beta_updates_desc(),
-			settings.installBetaUpdateValue(),
-			[&settings](bool enabled) {
-				settings.setInstallBetaUpdate(enabled);
-				cSetInstallBetaVersion(enabled);
-				Core::Launcher::Instance().writeInstallBetaVersionsSetting();
-
-				Core::UpdateChecker checker;
-				checker.stop();
-				if (enabled) {
-					cSetLastUpdateCheck(0);
-				}
-				if (cAutoUpdate()) {
-					checker.start();
-				}
-			});
-		Settings::FADeepLinkMenu::AttachSettingsContextMenu(
-			betaUpdatesRow, u"fa/general/beta-updates"_q, controller);
 
 		FA::Ui::AddModernSectionHeader(container, fatr::fa_developer_and_profile());
 		const auto devCard = FA::Ui::CreateCardContainer(container);
