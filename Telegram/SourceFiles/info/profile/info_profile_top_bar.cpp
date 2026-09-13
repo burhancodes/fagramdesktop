@@ -584,6 +584,12 @@ TopBar::TopBar(
 			update();
 		}, lifetime());
 	}
+	rpl::merge(
+		windowActiveValue() | rpl::to_empty,
+		descriptor.controller->gifPauseLevelChanged()
+	) | rpl::on_next([=] {
+		update();
+	}, lifetime());
 
 	rpl::merge(
 		style::PaletteChanged(),
@@ -2832,11 +2838,17 @@ void TopBar::paintUserpic(QPainter &p, const QRect &geometry) {
 		&& !FASettings::FASettings::getInstance().disableAnimatedAvatars()
 		&& !FASettings::FASettings::getInstance().disablePremiumAnimation()) {
 		const auto size = st::infoProfileTopBarPhotoSize;
-		const auto frame = _videoUserpicPlayer->frame(Size(size), _peer);
+		const auto paused = _gifPausedChecker();
+		const auto frame = _videoUserpicPlayer->frame(
+			Size(size),
+			_peer,
+			paused);
 		if (!frame.isNull()) {
 			auto hq = PainterHighQualityEnabler(p);
 			p.drawImage(geometry, frame);
-			update();
+			if (!paused) {
+				update();
+			}
 			return;
 		}
 	}

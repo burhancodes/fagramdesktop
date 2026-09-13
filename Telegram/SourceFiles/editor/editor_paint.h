@@ -19,6 +19,10 @@ class QGraphicsItem;
 class QGraphicsView;
 class QKeyEvent;
 
+namespace Storage {
+struct PhotoEditorMedia;
+} // namespace Storage
+
 namespace Editor {
 
 struct Controllers;
@@ -33,7 +37,7 @@ public:
 		const QSize &imageSize,
 		std::shared_ptr<Controllers> controllers,
 		Fn<QImage(QRect)> blurSource,
-		bool fixedCrop = false);
+		const EditorData &data);
 	~Paint() override;
 
 	[[nodiscard]] std::shared_ptr<Scene> saveScene() const;
@@ -66,6 +70,7 @@ public:
 	[[nodiscard]] rpl::producer<> shapeItemDeselections() const;
 	[[nodiscard]] rpl::producer<bool> shapeToolStates() const;
 
+	[[nodiscard]] bool canHandleMimeData(const QMimeData *data) const;
 	void handleMimeData(const QMimeData *data);
 	void paintImage(QPainter &p, const QPixmap &image) const;
 	void resetView();
@@ -88,6 +93,13 @@ private:
 	};
 
 	ItemBase::Data itemBaseData() const;
+	ItemBase::Data mediaItemData(QSize mediaSize) const;
+	void addMediaItem(std::shared_ptr<ItemBase> item);
+	void addMedia(Storage::PhotoEditorMedia &&media);
+	void readMediaFile(const QString &path, const QByteArray &content);
+	void addImageItem(QImage &&image);
+	void addVideoItem(Storage::PhotoEditorMedia &&media);
+	void choosePhotoFile();
 	void applyViewTransform();
 	void bakeTextScales();
 
@@ -99,6 +111,7 @@ private:
 	QPointer<QWidget> _viewport;
 	const QSize _imageSize;
 	const bool _fixedCrop = false;
+	const bool _composeAnimated = false;
 	QRect _imageGeometry;
 	QRect _outerGeometry;
 

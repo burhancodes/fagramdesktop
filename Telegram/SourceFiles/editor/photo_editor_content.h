@@ -49,12 +49,15 @@ public:
 	[[nodiscard]] rpl::producer<QColor> shapeItemSelections() const;
 	[[nodiscard]] rpl::producer<> shapeItemDeselections() const;
 	[[nodiscard]] rpl::producer<bool> shapeToolStates() const;
+	[[nodiscard]] rpl::producer<> paintModeRequests() const;
 	void applyAspectRatio(float64 ratio);
 	void save(PhotoModifications &modifications);
 
-	bool handleKeyPress(not_null<QKeyEvent*> e) const;
+	bool handleKeyPress(not_null<QKeyEvent*> e);
 
 	void setupDragArea();
+	void addMimeData(not_null<const QMimeData*> data);
+	bool pasteFromClipboard();
 
 	[[nodiscard]] rpl::producer<QRect> innerRect() const {
 		return _innerRect.value();
@@ -64,6 +67,7 @@ private:
 
 	const QSize _photoSize;
 	const bool _fixedCrop = false;
+	const bool _composeAnimated = false;
 	const base::unique_qptr<Paint> _paint;
 	const base::unique_qptr<Crop> _crop;
 	const std::shared_ptr<Image> _photo;
@@ -71,6 +75,7 @@ private:
 	rpl::variable<QRect> _innerRect;
 	rpl::variable<PhotoModifications> _modifications;
 	rpl::event_stream<int> _keyPresses;
+	rpl::event_stream<> _paintModeRequests;
 
 	QRect _imageRect;
 	QTransform _imageMatrix;

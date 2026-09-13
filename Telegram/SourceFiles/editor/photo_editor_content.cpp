@@ -13,6 +13,9 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 #include "media/view/media_view_pip.h"
 #include "storage/storage_media_prepare.h"
 
+#include <QtGui/QClipboard>
+#include <QtGui/QGuiApplication>
+#include <QtGui/QKeyEvent>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QWheelEvent>
 
@@ -30,6 +33,7 @@ PhotoEditorContent::PhotoEditorContent(
 : RpWidget(parent)
 , _photoSize(photo->size())
 , _fixedCrop(data.fixedCrop)
+, _composeAnimated(data.composeAnimated)
 , _paint(base::make_unique_q<Paint>(
 	this,
 	modifications,
@@ -47,7 +51,7 @@ PhotoEditorContent::PhotoEditorContent(
 		result.setDevicePixelRatio(dpr);
 		return result;
 	},
-	data.fixedCrop))
+	data))
 , _crop(base::make_unique_q<Crop>(
 	this,
 	modifications,
@@ -287,15 +291,36 @@ rpl::producer<bool> PhotoEditorContent::shapeToolStates() const {
 	return _paint->shapeToolStates();
 }
 
-bool PhotoEditorContent::handleKeyPress(not_null<QKeyEvent*> e) const {
+rpl::producer<> PhotoEditorContent::paintModeRequests() const {
+	return _paintModeRequests.events();
+}
+
+bool PhotoEditorContent::handleKeyPress(not_null<QKeyEvent*> e) {
+	if (e->matches(QKeySequence::Paste)) {
+		return pasteFromClipboard();
+	}
 	return _paint->handleKeyPress(e);
+}
+
+bool PhotoEditorContent::pasteFromClipboard() {
+	const auto data = QGuiApplication::clipboard()->mimeData();
+	if (!_paint->canHandleMimeData(data)) {
+		return false;
+	}
+	addMimeData(data);
+	return true;
+}
+
+void PhotoEditorContent::addMimeData(not_null<const QMimeData*> data) {
+	if (_mode.mode != PhotoEditorMode::Mode::Paint) {
+		_paintModeRequests.fire({});
+	}
+	_paint->handleMimeData(data);
 }
 
 void PhotoEditorContent::setupDragArea() {
 	auto dragEnterFilter = [=](const QMimeData *data) {
-		return (_mode.mode == PhotoEditorMode::Mode::Paint)
-			? Storage::ValidatePhotoEditorMediaDragData(data)
-			: false;
+		return _paint->canHandleMimeData(data);
 	};
 
 	const auto areas = DragArea::SetupDragAreaToContainer(
@@ -303,12 +328,16 @@ void PhotoEditorContent::setupDragArea() {
 		std::move(dragEnterFilter),
 		nullptr,
 		nullptr,
-		[](const QMimeData *d) { return Storage::MimeDataState::Image; },
+		[=](const QMimeData *data) {
+			return _composeAnimated
+				? Storage::MimeDataState::Media
+				: Storage::MimeDataState::Image;
+		},
 		nullptr,
 		true);
 
 	areas.photo->setDroppedCallback([=](const QMimeData *data) {
-		_paint->handleMimeData(data);
+		addMimeData(data);
 	});
 }
 

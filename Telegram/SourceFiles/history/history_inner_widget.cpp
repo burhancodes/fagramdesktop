@@ -1731,11 +1731,9 @@ void HistoryInner::paintEvent(QPaintEvent *e) {
 		// paint the userpic if it intersects the painted rect
 		if (userpicTop + st::msgPhotoSize > clip.top()) {
 			const auto item = view->data();
-			const auto hasTranslation = context.gestureHorizontal.translation
-				&& (context.gestureHorizontal.msgBareId
-					== item->fullId().msg.bare);
-			const auto shift = context.gestureHorizontal.visualTranslation();
-			if (hasTranslation) {
+			const auto shift = context.gestureHorizontal.visualTranslationFor(
+				item->id.bare);
+			if (shift) {
 				p.translate(shift, 0);
 				update(
 					QRect(
@@ -1782,7 +1780,6 @@ void HistoryInner::paintEvent(QPaintEvent *e) {
 			} else {
 				Unexpected("Corrupt forwarded information in message.");
 			}
-
 			if (showStatusDot && fromPeer) {
 				if (const auto user = fromPeer->asUser()) {
 					if (!user->isBot() && !user->isServiceUser()) {
@@ -1821,7 +1818,7 @@ void HistoryInner::paintEvent(QPaintEvent *e) {
 				}
 			}
 
-			if (hasTranslation) {
+			if (shift) {
 				p.translate(-shift, 0);
 			}
 		}

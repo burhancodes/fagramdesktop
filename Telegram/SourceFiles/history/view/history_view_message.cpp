@@ -1724,10 +1724,9 @@ void Message::draw(Painter &p, const PaintContext &context) const {
 	const auto item = data();
 	const auto media = this->media();
 
-	const auto hasGesture = context.gestureHorizontal.translation
-		&& (context.gestureHorizontal.msgBareId == item->fullId().msg.bare);
-	const auto gestureShift = context.gestureHorizontal.visualTranslation();
-	if (hasGesture) {
+	const auto gestureShift = context.gestureHorizontal.visualTranslationFor(
+		item->id.bare);
+	if (gestureShift) {
 		p.translate(gestureShift, 0);
 	}
 	const auto selectionModeResult = delegate()->elementInSelectionMode(this);
@@ -2231,7 +2230,7 @@ void Message::draw(Painter &p, const PaintContext &context) const {
 			}
 		}
 	}
-	if (hasGesture) {
+	if (gestureShift) {
 		p.translate(-gestureShift, 0);
 		if (context.reactionInfo && context.reactionInfo->effectPaint) {
 			context.reactionInfo->effectOffset += QPoint(gestureShift, 0);
@@ -2290,14 +2289,10 @@ void Message::draw(Painter &p, const PaintContext &context) const {
 			p.setPen(Qt::NoPen);
 			p.setBrush(context.st->msgServiceBg());
 			p.setOpacity(ratio);
+			const auto scale = 1. + 1. * reachScale;
 			p.translate(center);
-			if (reachScale) {
-				p.scale(-(1. + 1. * reachScale), (1. + 1. * reachScale));
-			} else {
-				p.scale(-1., 1.);
-			}
+			p.scale(mirrored ? scale : -scale, scale);
 			p.translate(-center);
-			// All the next draws are mirrored.
 			p.drawEllipse(rect);
 			context.st->historyFastShareIcon().paintInCenter(p, rect);
 			p.setPen(pen);

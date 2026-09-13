@@ -1309,7 +1309,7 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 "lng_proxy_edit_share_list_button" = "Share Proxy List";
 "lng_proxy_edit_share_list_toast" = "Proxy List copied to clipboard.";
 "lng_proxy_address_label" = "Socket address";
-"lng_proxy_web_host_label" = "Web proxy hostname";
+"lng_proxy_web_server_label" = "Web proxy server";
 "lng_proxy_web_host_ph" = "proxy.example.com";
 "lng_proxy_credentials_optional" = "Credentials (optional)";
 "lng_proxy_credentials" = "Credentials";
@@ -1408,9 +1408,9 @@ https://github.com/fagramdesktop/fadesktop/blob/dev/LEGAL
 "lng_passkey_cable_error" = "Couldn't connect to your phone.\nPlease try again.";
 
 "lng_settings_quick_dialog_action_title" = "Chat list quick action";
-"lng_settings_quick_dialog_action_about" = "Choose the action you want to perform when you middle-click or swipe left in the chat list.";
-"lng_settings_quick_dialog_action_both" = "Swipe left and Middle-click";
-"lng_settings_quick_dialog_action_swipe" = "Swipe left";
+"lng_settings_quick_dialog_action_about" = "Choose the action you want to perform when you middle-click or swipe in the chat list.";
+"lng_settings_quick_dialog_action_both" = "Swipe and Middle-click";
+"lng_settings_quick_dialog_action_swipe" = "Swipe";
 "lng_settings_quick_dialog_action_mute" = "Mute";
 "lng_settings_quick_dialog_action_unmute" = "Unmute";
 "lng_settings_quick_dialog_action_pin" = "Pin";

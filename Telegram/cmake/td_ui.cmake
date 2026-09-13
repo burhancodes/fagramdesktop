@@ -185,6 +185,8 @@ PRIVATE
     editor/photo_editor_inner_common.h
     editor/scene/scene.cpp
     editor/scene/scene.h
+    editor/scene/scene_item_animated.cpp
+    editor/scene/scene_item_animated.h
     editor/scene/scene_item_base.cpp
     editor/scene/scene_item_base.h
     editor/scene/scene_item_canvas.cpp
@@ -197,6 +199,8 @@ PRIVATE
     editor/scene/scene_item_shape.h
     editor/scene/scene_item_text.cpp
     editor/scene/scene_item_text.h
+    editor/scene/scene_item_video.cpp
+    editor/scene/scene_item_video.h
     editor/scene/scene_emoji_document.cpp
     editor/scene/scene_emoji_document.h
     editor/scene/scene_text_editing.cpp
