@@ -152,11 +152,22 @@ jobs:
           fi
           echo "is_prerelease=$IS_PRERELEASE" >> $GITHUB_OUTPUT
 
+          if [ "$IS_PRERELEASE" = "true" ]; then
+            if [[ "${{ inputs.tagname }}" =~ (beta|alpha|dev) ]]; then
+              RELEASE_NAME="FAgram ${{ inputs.tagname }}"
+            else
+              RELEASE_NAME="FAgram ${{ inputs.tagname }} beta"
+            fi
+          else
+            RELEASE_NAME="FAgram ${{ inputs.tagname }}"
+          fi
+          echo "release_name=$RELEASE_NAME" >> $GITHUB_OUTPUT
+
       - name: Create Release
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ inputs.tagname }}
-          name: FAgram ${{ inputs.tagname }}
+          name: ${{ steps.release_type.outputs.release_name }}
           draft: false
           prerelease: ${{ steps.release_type.outputs.is_prerelease == 'true' }}
           body_path: body.txt
